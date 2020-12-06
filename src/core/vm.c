@@ -111,7 +111,7 @@ void vm_push(SCRIPT_CTX * THIS, UWORD value) __banked {
 // do..while loop, callee cleanups stack
 void vm_loop_rel(SCRIPT_CTX * THIS, INT16 idx, INT8 ofs, UBYTE n) __banked {
     UWORD * counter;
-    if (idx < 0) counter = THIS->stack_ptr + idx; else counter = &(script_memory[idx]);
+    if (idx < 0) counter = THIS->stack_ptr + idx; else counter = script_memory + idx;
     if (*counter) {
         THIS->PC += ofs, (*counter)--; 
     } else {
@@ -121,7 +121,7 @@ void vm_loop_rel(SCRIPT_CTX * THIS, INT16 idx, INT8 ofs, UBYTE n) __banked {
 // loop absolute, callee cleanups stack
 void vm_loop(SCRIPT_CTX * THIS, INT16 idx, UINT8 * pc, UBYTE n) __banked {
     UWORD * counter;
-    if (idx < 0) counter = THIS->stack_ptr + idx; else counter = &(script_memory[idx]);
+    if (idx < 0) counter = THIS->stack_ptr + idx; else counter = script_memory + idx;
     if (*counter) {
         THIS->PC = pc, (*counter)--; 
     } else {
@@ -141,7 +141,7 @@ void vm_jump(SCRIPT_CTX * THIS, UBYTE * pc) __banked {
 // returns systime 
 void vm_systime(SCRIPT_CTX * THIS, INT16 idx) __banked {
     UWORD * A;
-    if (idx < 0) A = THIS->stack_ptr + idx; else A = &(script_memory[idx]);
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     *A = sys_time;
 } 
 
@@ -183,7 +183,7 @@ void vm_invoke(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * fn, UBYTE nparams, INT16 i
 void vm_beginthread(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE bank, UBYTE * pc, INT16 idx, UBYTE nargs) __nonbanked {
     dummy0; dummy1;
     UWORD * A;
-    if (idx < 0) A = THIS->stack_ptr + idx; else A = &(script_memory[idx]);
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     SCRIPT_CTX * ctx = ExecuteScript(bank, pc, A, 0);
     // initialize thread locals if any
     if (!(nargs)) return;
@@ -192,7 +192,7 @@ void vm_beginthread(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE bank, U
         SWITCH_ROM_MBC1(THIS->bank);        // then switch to bytecode bank
         for (UBYTE i = 0; i < nargs; i++) {
             UWORD * A;
-            if (idx < 0) A = THIS->stack_ptr + idx; else A = &(script_memory[idx]);
+            if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
             *(ctx->stack_ptr++) = *A;
             THIS->PC += 2;
         }
@@ -202,13 +202,13 @@ void vm_beginthread(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE bank, U
 // 
 void vm_join(SCRIPT_CTX * THIS, INT16 idx) __banked {
     UWORD * A;
-    if (idx < 0) A = THIS->stack_ptr + idx; else A = &(script_memory[idx]);
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     if (!(*A >> 8)) THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx)), THIS->waitable = 1;
 }
 // 
 void vm_terminate(SCRIPT_CTX * THIS, INT16 idx) __banked {
     UWORD * A;
-    if (idx < 0) A = THIS->stack_ptr + idx; else A = &(script_memory[idx]);
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     TerminateScript((UBYTE)(*A));
 }
 
@@ -221,12 +221,12 @@ void vm_if(SCRIPT_CTX * THIS, UBYTE condition, INT16 idxA, INT16 idxB, UBYTE * p
     if (idxB < 0) B = *(THIS->stack_ptr + idxB); else B = script_memory[idxB];
     UBYTE res = 0;
     switch (condition) {
-        case 0: res = (A == B); break;
-        case 1: res = (A <  B); break;
-        case 2: res = (A <= B); break;
-        case 3: res = (A >  B); break;
-        case 4: res = (A >= B); break;
-        case 5: res = (A != B); break;
+        case VM_OP_EQ: res = (A == B); break;
+        case VM_OP_LT: res = (A <  B); break;
+        case VM_OP_LE: res = (A <= B); break;
+        case VM_OP_GT: res = (A >  B); break;
+        case VM_OP_GE: res = (A >= B); break;
+        case VM_OP_NE: res = (A != B); break;
     }
     if (res) THIS->PC = pc;
     if (n) THIS->stack_ptr -= n;
@@ -239,12 +239,12 @@ void vm_if_const(SCRIPT_CTX * THIS, UBYTE condition, INT16 idxA, INT16 B, UBYTE 
     if (idxA < 0) A = *(THIS->stack_ptr + idxA); else A = script_memory[idxA];
     UBYTE res = 0;
     switch (condition) {
-        case 0: res = (A == B); break;
-        case 1: res = (A <  B); break;
-        case 2: res = (A <= B); break;
-        case 3: res = (A >  B); break;
-        case 4: res = (A >= B); break;
-        case 5: res = (A != B); break;
+        case VM_OP_EQ: res = (A == B); break;
+        case VM_OP_LT: res = (A <  B); break;
+        case VM_OP_LE: res = (A <= B); break;
+        case VM_OP_GT: res = (A >  B); break;
+        case VM_OP_GE: res = (A >= B); break;
+        case VM_OP_NE: res = (A != B); break;
     }
     if (res) THIS->PC = pc;
     if (n) THIS->stack_ptr -= n;
@@ -262,21 +262,21 @@ void vm_reserve(SCRIPT_CTX * THIS, INT8 ofs) __banked {
 // sets value on stack indexed by idxA to value on stack indexed by idxB 
 void vm_set(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked {
     INT16 * A, * B;
-    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = &(script_memory[idxA]);
-    if (idxB < 0) B = THIS->stack_ptr + idxB; else B = &(script_memory[idxB]);
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    if (idxB < 0) B = THIS->stack_ptr + idxB; else B = script_memory + idxB;
     *A = *B;
 }
 // sets value on stack indexed by idx to value
 void vm_set_const(SCRIPT_CTX * THIS, INT16 idx, UWORD value) __banked {
     UWORD * A;
-    if (idx < 0) A = THIS->stack_ptr + idx; else A = &(script_memory[idx]);
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     *A = value;
 }
 // sets value on stack indexed by idxA to value on stack indexed by idxB 
 void vm_get_tlocal(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked {
     INT16 * A, * B;
-    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = &(script_memory[idxA]);
-    if (idxB < 0) B = THIS->stack_ptr + idxB; else B = &(THIS->base_addr[idxB]);
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    if (idxB < 0) B = THIS->stack_ptr + idxB; else B = THIS->base_addr + idxB;
     *A = *B;
 }
 // rpn calculator; must be __nonbanked because we access VM bytecode
@@ -297,7 +297,7 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 // reference
                 case -3:
                     idx = *((INT16 *)(THIS->PC)); 
-                    if (idx < 0) A = ARGS + idx; else A = &(script_memory[idx]);
+                    if (idx < 0) A = ARGS + idx; else A = script_memory + idx;
                     *(THIS->stack_ptr) = *A;
                     THIS->PC += 2;
                     break;
@@ -326,17 +326,17 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 case '/': *A = *A  /  *B; break;
                 case '%': *A = *A  %  *B; break;
                 // logical
-                case 'E': *A = (*A  ==  *B); break;
-                case 'L': *A = (*A  <   *B); break;
-                case 'l': *A = (*A  <=  *B); break;
-                case 'G': *A = (*A  >   *B); break;
-                case 'g': *A = (*A  >=  *B); break;
-                case 'N': *A = (*A  !=  *B); break;
-                case 'a': *A = ((bool)(*A)  &&  (bool)(*B)); break;
-                case 'o': *A = ((bool)(*A)  ||  (bool)(*B)); break;
+                case VM_OP_EQ:  *A = (*A  ==  *B); break;
+                case VM_OP_LT:  *A = (*A  <   *B); break;
+                case VM_OP_LE:  *A = (*A  <=  *B); break;
+                case VM_OP_GT:  *A = (*A  >   *B); break;
+                case VM_OP_GE:  *A = (*A  >=  *B); break;
+                case VM_OP_NE:  *A = (*A  !=  *B); break;
+                case VM_OP_AND: *A = ((bool)(*A)  &&  (bool)(*B)); break;
+                case VM_OP_OR:  *A = ((bool)(*A)  ||  (bool)(*B)); break;
                 // bit
-                case '|': *A = *A  |  *B; break;
                 case '&': *A = *A  &  *B; break;
+                case '|': *A = *A  |  *B; break;
                 case '^': *A = *A  ^  *B; break;
                 // unary
                 case '@': *B = abs(*B); continue;
@@ -400,19 +400,19 @@ void vm_idle(SCRIPT_CTX * THIS) __banked {
 // gets unsigned int8 from RAM by address
 void vm_get_uint8(SCRIPT_CTX * THIS, INT16 idxA, UINT8 * addr) __banked {
     INT16 * A;
-    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = &(script_memory[idxA]);
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *A = *addr;
 }
 // gets int8 from RAM by address
 void vm_get_int8(SCRIPT_CTX * THIS, INT16 idxA, INT8 * addr) __banked {
     INT16 * A;
-    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = &(script_memory[idxA]);
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *A = *addr;
 }
 // gets int16 from RAM by address
 void vm_get_int16(SCRIPT_CTX * THIS, INT16 idxA, INT16 * addr) __banked {
     INT16 * A;
-    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = &(script_memory[idxA]);
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *A = *addr;
 }
 // executes one step in the passed context
@@ -624,7 +624,7 @@ UBYTE ScriptRunnerUpdate() __nonbanked {
             // next context
             if (old_ctx) ctx = old_ctx->next; else ctx = first_ctx;
         } else {
-            if ((counter--) && !(ctx->waitable)) continue;
+            if (!(ctx->waitable) && (counter--)) continue;
             waitable &= ctx->waitable; 
             old_ctx = ctx, ctx = ctx->next;
             counter = 0x10;
