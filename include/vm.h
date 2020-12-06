@@ -41,6 +41,8 @@ typedef struct SCRIPT_CTX {
 #define CONTEXT_STACK_SIZE 16
 // number of shared variables
 #define MAX_GLOBAL_VARS 32
+// quant size
+#define INSTRUCTIONS_PER_QUANT 0x10
 
 // logical operators
 #define VM_OP_EQ  1

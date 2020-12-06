@@ -611,7 +611,7 @@ UBYTE ScriptRunnerUpdate() __nonbanked {
     static UBYTE counter;
     old_ctx = 0, ctx = first_ctx;
     waitable = 1;
-    counter = 0x10;
+    counter = INSTRUCTIONS_PER_QUANT;
     while (ctx) {
         ctx->waitable = 0;
         if ((ctx->terminated) || (!STEP_VM(ctx))) {
@@ -627,7 +627,7 @@ UBYTE ScriptRunnerUpdate() __nonbanked {
             if (!(ctx->waitable) && (counter--)) continue;
             waitable &= ctx->waitable; 
             old_ctx = ctx, ctx = ctx->next;
-            counter = 0x10;
+            counter = INSTRUCTIONS_PER_QUANT;
         }
     }
     // return 0 if all threads are finished
