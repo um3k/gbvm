@@ -153,14 +153,13 @@ UBYTE wait_frames(void * THIS, UBYTE start, UWORD * stack_frame) __banked {
 }
 // calls C handler until it returns true; callee cleanups stack
 void vm_invoke(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * fn, UBYTE nparams, INT16 idx) __banked {
-    FAR_PTR newptr = to_far_ptr(fn, bank);
     UWORD * stack_frame = (idx < 0) ? THIS->stack_ptr + idx : script_memory + idx;
     // update function pointer
-    UBYTE start = (THIS->update_fn != newptr) ? THIS->update_fn = newptr, 1 : 0;
+    UBYTE start = ((THIS->update_fn != fn) || (THIS->update_fn_bank != bank)) ? THIS->update_fn = fn, THIS->update_fn_bank = bank, 1 : 0;
     // call handler
-    if (FAR_CALL(newptr, SCRIPT_UPDATE_FN, THIS, start, stack_frame)) {
+    if (FAR_CALL_EX(fn, bank, SCRIPT_UPDATE_FN, THIS, start, stack_frame)) {
         if (nparams) THIS->stack_ptr -= nparams;
-        THIS->update_fn = 0;
+        THIS->update_fn = 0, THIS->update_fn_bank = 0;
         return;
     }
     // call handler again, wait condition is not met
