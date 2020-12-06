@@ -608,8 +608,10 @@ UBYTE TerminateScript(UBYTE ID) __banked {
 UBYTE ScriptRunnerUpdate() __nonbanked {
     static SCRIPT_CTX * old_ctx, * ctx;
     static UBYTE waitable;
+    static UBYTE counter;
     old_ctx = 0, ctx = first_ctx;
     waitable = 1;
+    counter = 0x10;
     while (ctx) {
         ctx->waitable = 0;
         if ((ctx->terminated) || (!STEP_VM(ctx))) {
@@ -622,8 +624,10 @@ UBYTE ScriptRunnerUpdate() __nonbanked {
             // next context
             if (old_ctx) ctx = old_ctx->next; else ctx = first_ctx;
         } else {
+            if ((counter--) && !(ctx->waitable)) continue;
             waitable &= ctx->waitable; 
             old_ctx = ctx, ctx = ctx->next;
+            counter = 0x10;
         }
     }
     // return 0 if all threads are finished

@@ -17,7 +17,7 @@ _SCRIPT_3::
 1$:
         ; Wait 1 Second
         VM_PUSH         60
-        VM_INVOKE       b_wait_frames, _wait_frames, 1, .ARG0           ; wait 1 second
+        VM_INVOKE       b_wait_frames, _wait_frames, 1, .ARG0           ; wait 1 second, dispose argument on stack
 
         ; Actor Move To
         VM_SET_CONST    .ARG3, 0
@@ -26,11 +26,10 @@ _SCRIPT_3::
 
         ; Wait 1 Second
         VM_PUSH         60
-        VM_INVOKE       b_wait_frames, _wait_frames, 1, .ARG0           ; call actor_move_to(), dispose 5 parameter on stack after
+        VM_INVOKE       b_wait_frames, _wait_frames, 1, .ARG0           ; wait 1 second, dispose argument on stack
 
         ; Actor Move To
         VM_SET_CONST    .ARG3, 32
         VM_SET_CONST    .ARG2, 64
-        VM_INVOKE       b_actor_move_to, _actor_move_to, 0, .ARG4       ; call actor_move_to(), dispose 5 parameter on stack after
-
+        VM_INVOKE       b_actor_move_to, _actor_move_to, 0, .ARG4       ; call actor_move_to()
         VM_JUMP 1$
