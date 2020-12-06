@@ -5,12 +5,12 @@
 #include "GameTime.h"
 #include <stdio.h>
 
-UBYTE actor_move_to(void * THIS, UBYTE start, UBYTE nparams, UWORD * stack_frame) __banked
+UBYTE actor_move_to(void * THIS, UBYTE start, UWORD * stack_frame) __banked
 {
     actor_t *actor;
     BYTE new_dir_x = 0;
     BYTE new_dir_y = 0;
-    nparams, start; // suppress warnings
+    start; // suppress warnings
 
     // indicate waitable state of context
     ((SCRIPT_CTX *)THIS)->waitable = 1;
