@@ -33,8 +33,8 @@ void process_VM() {
         switch (ScriptRunnerUpdate()) {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
-                wait_vbl_done();
                 update_actors();
+                wait_vbl_done();
                 game_time++;
                 break;
             }
@@ -90,6 +90,8 @@ void init_actors() {
 }
 
 void main() {
+    display_off();
+
     LCDC_REG = 0x67;
 
     BGP_REG = OBP0_REG = 0xE4U;
@@ -107,7 +109,7 @@ void main() {
     
     ScriptRunnerInit();
     // // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
-    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, (INT16)5, (INT16)0, (INT16)16, (INT16)0, (INT16)0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0);
 
