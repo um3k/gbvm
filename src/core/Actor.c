@@ -25,83 +25,59 @@ void update_actors() __banked
 {
   actor = actors_active_head;
 
-  while (actor)
-  {
-    // Handle pinned position
-    if (actor->pinned)
-    {
-      screen_x = actor->x;
-      screen_y = actor->y;
-      goto move_actor;
-    }
+  while (actor) {
+    if (actor->pinned) 
+      screen_x = actor->x, screen_y = actor->y;
+    else 
+      screen_x = actor->x - camera_x + 8, screen_y = actor->y - camera_y;
 
-    // Translate position to screen coordinates
-    screen_x = actor->x - camera_x + 8;
-    screen_y = actor->y - camera_y;
-
-    // Check if offscreen
-    if ((UINT8)(screen_x + 8) > 176 || (UINT8)(screen_y) > 160)
-    {
+    if ((UINT8)(screen_x + 8) > 176 || (UINT8)(screen_y) > 160) {
       // Deactivate if offscreen
-      actor_t *next = actor->next;
+      actor_t * next = actor->next;
       deactivate_actor(actor);
       actor = next;
       continue;
-    }
-    else
-    {
-      if (WX_REG != 7 && WX_REG < (UINT8)screen_x + 8 && WY_REG < (UINT8)(screen_y)-8)
-      {
-        // Hide if under window (don't deactivate)
-        move_sprite(actor->sprite_no, 0, 0);
-        move_sprite(actor->sprite_no + 1, 0, 0);
-        actor = actor->next;
-        continue;
-      }
-    move_actor:
-      // Position onscreen
-      move_sprite(actor->sprite_no, screen_x, screen_y);
-      move_sprite(actor->sprite_no + 1, screen_x + 8, screen_y);
+    } else if ((WX_REG != 7) && (WX_REG < (UINT8)screen_x + 8) && (WY_REG < (UINT8)(screen_y)-8)) {
+      // Hide if under window (don't deactivate)
+      move_sprite(actor->sprite_no,     0, 0);
+      move_sprite(actor->sprite_no + 1, 0, 0);
+      actor = actor->next;
+      continue;
     }
 
+    move_sprite(actor->sprite_no,     screen_x,     screen_y);
+    move_sprite(actor->sprite_no + 1, screen_x + 8, screen_y);
+
     // Check if should animate
-    if ((game_time & 0x3) == 0 && actor->animate)
-    {
+    if (((game_time & 0x3) == 0) && (actor->animate)) {
       // Check reached animation tick frame
-      if ((game_time & actor->anim_tick) == 0)
-      {
+      if ((game_time & actor->anim_tick) == 0) {
         actor->frame += 4;
 
         // Check reached end of animation
-        if (actor->frame == actor->frame_end)
-        {
+        if (actor->frame == actor->frame_end) {
           actor->frame = actor->frame_start;
         }
 
-        goto rerender;
+        actor->rerender = TRUE;
       }
     }
 
     // Check for forced rerender
-    if (actor->rerender)
-    {
-      rerender:
-        actor->rerender = FALSE;
-
-        if (actor->flip_x)
-        {
+    if (actor->rerender) {
+        if (actor->flip_x) {
           set_sprite_tile(actor->sprite_no + 1, actor->frame);
           set_sprite_tile(actor->sprite_no, actor->frame + 2);
-        }
-        else
-        {
+        } else  {
           set_sprite_tile(actor->sprite_no, actor->frame);
           set_sprite_tile(actor->sprite_no + 1, actor->frame + 2);
         }      
+        actor->rerender = FALSE;
     }
 
     actor = actor->next;
   }
+  return;
 }
 
 void deactivate_actor(actor_t *actor) __banked
