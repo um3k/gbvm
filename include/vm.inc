@@ -103,8 +103,8 @@ OP_VM_GET_SYSTIME  = 0x0C
 
 ; invokes <bank>:<address> C function until it returns true
 OP_VM_INVOKE       = 0x0D
-.macro VM_INVOKE ARG0, ARG1, ARG2
-        .db OP_VM_INVOKE, #<ARG2, #>ARG1, #<ARG1, #<ARG0
+.macro VM_INVOKE ARG0, ARG1, ARG2, ARG3
+        .db OP_VM_INVOKE, #>ARG3, #<ARG3, #<ARG2, #>ARG1, #<ARG1, #<ARG0
 .endm
 
 ; spawns a thread in a separate context

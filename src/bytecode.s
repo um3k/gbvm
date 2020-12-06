@@ -102,7 +102,7 @@ _BYTECODE::
         .dw .ARG0
         .asciz "wait(1s) bank: %d"
         VM_SET_CONST    .ARG0, 60       ; reuse value on the top of stack, set to 60
-        VM_INVOKE       b_wait_frames, _wait_frames, 1  ; call wait_frames(), dispose 1 parameter on stack after
+        VM_INVOKE       b_wait_frames, _wait_frames, 1, .ARG0  ; call wait_frames(), dispose 1 parameter on stack after
         VM_RET
 
 ___bank_THREAD1 = 3
@@ -146,7 +146,7 @@ _THREAD1::
         VM_DEBUG        0
         .asciz "wait(1.5s) thread"
         VM_PUSH         90              ; 60 frames == 1s
-        VM_INVOKE       b_wait_frames, _wait_frames, 1  ; call wait_frames(); dispose 1 parameter on stack after
+        VM_INVOKE       b_wait_frames, _wait_frames, 1, .ARG0  ; call wait_frames(); dispose 1 parameter on stack after
         VM_PUSH         75
         VM_CALL_FAR     ___bank_libfuncs, _LIB01
         VM_DEBUG        0

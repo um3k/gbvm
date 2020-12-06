@@ -26,7 +26,7 @@ HOME const SCRIPT_CMD script_cmds[] = {
     {&vm_call_far,     3}, // 0x0A
     {&vm_ret_far,      1}, // 0x0B
     {&vm_systime,      2}, // 0x0C
-    {&vm_invoke,       4}, // 0x0D
+    {&vm_invoke,       6}, // 0x0D
     {&vm_beginthread,  6}, // 0x0E
     {&vm_if,           8}, // 0x0F
     {&vm_debug,        1}, // 0x10
@@ -153,27 +153,28 @@ UBYTE wait_frames(void * THIS, UBYTE start, UBYTE nparams, UWORD * stack_frame) 
     return ((sys_time - stack_frame[1]) > stack_frame[0]);
 }
 // calls C handler until it returns true; callee cleanups stack
-void vm_invoke(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * fn, UBYTE nparams) __banked {
+void vm_invoke(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * fn, UBYTE nparams, INT16 idx) __banked {
     FAR_PTR newptr = to_far_ptr(fn, bank);
-    UWORD * stack_frame = THIS->stack_ptr - nparams;
+    UWORD * stack_frame;
+    if (idx < 0) stack_frame = THIS->stack_ptr + idx; else stack_frame = script_memory + idx;
 
     // update function pointer
     if (THIS->update_fn != newptr) {
         THIS->update_fn = newptr;
         // call here with init == true
         if (FAR_CALL(newptr, SCRIPT_UPDATE_FN, THIS, 1, nparams, stack_frame)) {
-            THIS->stack_ptr = stack_frame;
+            THIS->stack_ptr -= nparams;
             THIS->update_fn = 0;
             return;
         }
     }
     if (FAR_CALL(newptr, SCRIPT_UPDATE_FN, THIS, 0, nparams, stack_frame)) {
-        THIS->stack_ptr = stack_frame;
+        THIS->stack_ptr -= nparams;
         THIS->update_fn = 0;
         return;
     }
     // call handler again, wait condition is not met
-    THIS->PC -= (INSTRUCTION_SIZE + sizeof(bank) + sizeof(fn) + sizeof(nparams));
+    THIS->PC -= (INSTRUCTION_SIZE + sizeof(bank) + sizeof(fn) + sizeof(nparams) + sizeof(idx));
     // indicate waitable state
     THIS->waitable = 1;
 } 

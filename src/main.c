@@ -34,8 +34,8 @@ void process_VM() {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
                 update_actors();
-                wait_vbl_done();
                 game_time++;
+                wait_vbl_done();
                 break;
             }
 //            case RUNNER_BUSY: ;
@@ -109,7 +109,7 @@ void main() {
     
     ScriptRunnerInit();
     // // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
-    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, (INT16)5, (INT16)0, (INT16)16, (INT16)0, (INT16)0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0);
 

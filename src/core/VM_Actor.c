@@ -7,6 +7,8 @@
 
 UBYTE actor_move_to(void *THIS, UBYTE start, UBYTE nparams, UWORD *stack_frame) __banked
 {
+    if (start) return FALSE; // initialization is not needed
+
     actor_t *actor;
     BYTE new_dir_x = 0;
     BYTE new_dir_y = 0;
