@@ -17,8 +17,9 @@ CSRC = $(foreach dir,src,$(notdir $(wildcard $(dir)/*.c)))
 
 ACORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.s))) 
 CCORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.c))) 
+CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c))) 
 
-OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o)
+OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
 
 all:	$(TARGET) symbols
 
@@ -50,6 +51,12 @@ $(OBJDIR)/%.o:	src/core/%.c
 
 $(OBJDIR)/%.o:	src/core/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/data/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/data/%.s
+	$(CC) $(CFLAGS) -c -o $@ $<	
 
 $(OBJDIR)/%.o:	src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
