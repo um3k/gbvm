@@ -87,6 +87,22 @@ void init_actors() {
     actors[3].x = 0;
     actors[3].y = 80;
     activate_actor(&actors[3]);
+
+//    actors[8].x = 4*8;
+//    actors[8].y = 144;
+    activate_actor(&actors[8]);
+//    actors[9].x = 6*8;
+//    actors[9].y = 144;
+    activate_actor(&actors[9]);
+//    actors[10].x = 8*8;
+//    actors[10].y = 144;
+    activate_actor(&actors[10]);
+//    actors[11].x = 10*8;
+//    actors[11].y = 144;
+    activate_actor(&actors[11]);
+//    actors[12].x = 12*8;
+//    actors[12].y = 144;
+    activate_actor(&actors[12]);
 }
 
 void main() {
@@ -109,9 +125,16 @@ void main() {
     
     ScriptRunnerInit();
     // // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
-    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0);
+
+    // load up engine with more actors
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  8,  4 * 8,  144, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  9,  6 * 8,  144, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  10, 8 * 8,  144, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  11, 10 * 8, 144, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  12, 12 * 8, 144, 0, 0);
 
     printf(">> VM START\n");
     process_VM();
