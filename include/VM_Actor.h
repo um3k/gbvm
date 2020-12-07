@@ -3,6 +3,6 @@
 
 #include "vm.h"
 
-void actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked;
+void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked;
 
 #endif
