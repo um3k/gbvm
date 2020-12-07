@@ -103,6 +103,10 @@ void init_actors() {
 //    actors[12].x = 12*8;
 //    actors[12].y = 144;
     activate_actor(&actors[12]);
+    activate_actor(&actors[13]);
+//    activate_actor(&actors[14]);
+//    activate_actor(&actors[15]);
+//    activate_actor(&actors[16]);
 }
 
 void main() {
@@ -135,6 +139,10 @@ void main() {
     ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  10, 8 * 8,  144, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  11, 10 * 8, 144, 0, 0);
     ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  12, 12 * 8, 144, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  13, 14 * 8, 96,  0, 0);
+//    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  14, 10 * 8, 96,  0, 0);
+//    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  15, 12 * 8, 64,  0, 0);
+//    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  16, 14 * 8, 64,  0, 0);
 
     printf(">> VM START\n");
     process_VM();

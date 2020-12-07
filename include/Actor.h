@@ -4,7 +4,7 @@
 #include <gb/gb.h>
 
 #define MAX_ACTORS 20
-#define MAX_ACTORS_ACTIVE 10
+#define MAX_ACTORS_ACTIVE 12
 
 typedef struct actor_t
 {
