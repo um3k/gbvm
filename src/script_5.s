@@ -1,7 +1,5 @@
 .include "vm.inc"
         
-.globl b_actor_move_to, _actor_move_to
-
 .area _CODE_3
 
 ___bank_SCRIPT_5 = 3
@@ -17,10 +15,10 @@ _SCRIPT_5::
 1$:
         ; Actor Move To
         VM_SET_CONST    .ARG3, 144
-        VM_INVOKE       b_actor_move_to, _actor_move_to, 0, .ARG4       ; call actor_move_to()
+        VM_ACTOR_MOVE_TO .ARG4       ; call actor_move_to()
 
         ; Actor Move To
         VM_SET_CONST    .ARG3, 0
-        VM_INVOKE       b_actor_move_to, _actor_move_to, 0, .ARG4       ; call actor_move_to()
+        VM_ACTOR_MOVE_TO .ARG4       ; call actor_move_to()
 
         VM_JUMP 1$

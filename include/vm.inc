@@ -237,3 +237,8 @@ OP_VM_GET_INT16  = 0x1D
 .macro VM_GET_INT16 IDXA, ADDR
         .db OP_VM_GET_INT16, #>ADDR, #<ADDR, #>IDXA, #<IDXA
 .endm
+
+OP_VM_ACTOR_MOVE_TO = 0x1E
+.macro VM_ACTOR_MOVE_TO IDX
+        .db OP_VM_ACTOR_MOVE_TO, #>IDX, #<IDX
+.endm

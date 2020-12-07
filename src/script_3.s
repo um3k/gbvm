@@ -1,6 +1,5 @@
 .include "vm.inc"
         
-.globl b_actor_move_to, _actor_move_to
 .globl b_wait_frames, _wait_frames
 
 .area _CODE_3
@@ -32,7 +31,7 @@ _SCRIPT_3::
         VM_SET          .ARG5, .ARG1
         VM_SET          .ARG4, .ARG0
         VM_POP          2                                               ; dispose results of RPN eval
-        VM_INVOKE       b_actor_move_to, _actor_move_to, 0, .ARG4       ; call actor_move_to()
+        VM_ACTOR_MOVE_TO .ARG4
 
         ; Wait 1 Second
         VM_PUSH         60
@@ -50,5 +49,5 @@ _SCRIPT_3::
         VM_SET          .ARG5, .ARG1
         VM_SET          .ARG4, .ARG0
         VM_POP          2                                               ; dispose results of RPN eval
-        VM_INVOKE       b_actor_move_to, _actor_move_to, 0, .ARG4       ; call actor_move_to()
+        VM_ACTOR_MOVE_TO .ARG4
         VM_JUMP 1$

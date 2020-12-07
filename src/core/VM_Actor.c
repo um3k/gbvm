@@ -1,19 +1,21 @@
 #pragma bank 2
 
-#include "vm.h"
-#include "Actor.h"
-#include "GameTime.h"
 #include <stdio.h>
 
-UBYTE actor_move_to(void * THIS, UBYTE start, UWORD * stack_frame) __banked
-{
+#include "vm.h"
+
+#include "Actor.h"
+#include "GameTime.h"
+
+void actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     actor_t *actor;
     BYTE new_dir_x = 0;
     BYTE new_dir_y = 0;
-    start; // suppress warnings
+
+    UWORD * stack_frame = (idx < 0) ? THIS->stack_ptr + idx : script_memory + idx;
 
     // indicate waitable state of context
-    ((SCRIPT_CTX *)THIS)->waitable = 1;
+    THIS->waitable = 1;
 
     actor = &actors[stack_frame[0]];
 
@@ -28,7 +30,7 @@ UBYTE actor_move_to(void * THIS, UBYTE start, UWORD * stack_frame) __banked
         actor->y == stack_frame[2])
     {
         actor_set_anim(actor, FALSE);
-        return TRUE;
+        return;
     }
 
     // Actor not at horizontal destination
@@ -100,5 +102,6 @@ UBYTE actor_move_to(void * THIS, UBYTE start, UWORD * stack_frame) __banked
         actor->y += (WORD)(new_dir_y * actor->move_speed);
     }
 
-    return FALSE;
+    THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx));
+    return;
 }
