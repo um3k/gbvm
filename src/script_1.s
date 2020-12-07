@@ -1,8 +1,8 @@
 .include "vm.inc"
         
 .globl b_wait_frames, _wait_frames
-.globl b_vm_actor_activate, _vm_actor_activate
-.globl b_vm_actor_set_dir, _vm_actor_set_dir
+; .globl b_vm_actor_activate, _vm_actor_activate
+; .globl b_vm_actor_set_dir, _vm_actor_set_dir
 
 .area _CODE_3
 
