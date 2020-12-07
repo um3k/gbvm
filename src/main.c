@@ -61,6 +61,8 @@ void init_actors() {
     {
         actors[i].x = (i * 8) % 120;
         actors[i].y = (i * 8) % 120;
+        actors[i].dir_x = 0;
+        actors[i].dir_y = 1;        
         actors[i].sprite_no = 0;
         actors[i].frame = 0;
         actors[i].frame_start = 0;
@@ -69,7 +71,7 @@ void init_actors() {
         actors[i].rerender = TRUE;
         actors[i].flip_x = FALSE;
         actors[i].pinned = FALSE;
-        actors[i].animate = TRUE;
+        actors[i].animate = FALSE;
         actors[i].move_speed = 1;
         actors[i].collision_enabled = TRUE;
 

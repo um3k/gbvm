@@ -10,6 +10,8 @@ typedef struct actor_t
 {
   UINT16 x;
   UINT16 y;
+  BYTE dir_x;
+  BYTE dir_y;
   UINT8 sprite_no;
   UINT8 pinned;
   UINT8 animate;

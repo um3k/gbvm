@@ -27,6 +27,7 @@ UBYTE actor_move_to(void * THIS, UBYTE start, UWORD * stack_frame) __banked
     if (actor->x == stack_frame[1] &&
         actor->y == stack_frame[2])
     {
+        actor_set_anim(actor, FALSE);
         return TRUE;
     }
 
@@ -57,15 +58,31 @@ UBYTE actor_move_to(void * THIS, UBYTE start, UWORD * stack_frame) __banked
         }
     }
 
-    // Not implemented direction yet 
     // If changed direction, trigger actor rerender
-    // if ((actor->dir.x != new_dir_x) ||
-    //     (actor->dir.y != new_dir_y))
-    // {
-    //     actor->rerender = TRUE;
-    // }
-    // actor->dir.x = new_dir_x;
-    // actor->dir.y = new_dir_y;
+    if ((actor->dir_x != new_dir_x) ||
+        (actor->dir_y != new_dir_y))
+    {
+        actor->dir_x = new_dir_x;
+        actor->dir_y = new_dir_y;
+        if (new_dir_x == -1) {
+            actor_set_frames(actor, 16, 24);
+            actor_set_flip_x(actor, TRUE);
+            actor_set_anim(actor, TRUE);
+        } else if (new_dir_x == 1) {
+            actor_set_frames(actor, 16, 24);
+            actor_set_flip_x(actor, FALSE);
+            actor_set_anim(actor, TRUE);
+        } else if (new_dir_y == -1) {
+            actor_set_frames(actor, 8, 16);
+            actor_set_flip_x(actor, FALSE);
+            actor_set_anim(actor, TRUE);
+        } else if (new_dir_y == 1) {
+            actor_set_frames(actor, 0, 8);
+            actor_set_flip_x(actor, FALSE);
+            actor_set_anim(actor, TRUE);
+        }
+        actor->rerender = TRUE;
+    }
 
     // Move actor
     if (actor->move_speed == 0)
