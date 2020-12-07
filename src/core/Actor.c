@@ -94,7 +94,11 @@ void deactivate_actor(actor_t *actor) __banked
     return;
   }
 #endif
+  if (!actor->enabled) {
+    return;
+  }
   actors_active_len--;
+  actor->enabled = FALSE;
   DL_REMOVE_ITEM(actors_active_head, actor);
   move_sprite(actor->sprite_no, 0, 0);
   move_sprite(actor->sprite_no + 1, 0, 0);
@@ -120,7 +124,11 @@ void activate_actor(actor_t *actor)
   {
     return;
   }
+  if (actor->enabled) {
+    return;
+  }
   actors_active_len++;
+  actor->enabled = TRUE;
   actor->sprite_no = get_free_sprite();
   DL_REMOVE_ITEM(actors_inactive_head, actor);
   DL_PUSH_HEAD(actors_active_head, actor);
@@ -156,6 +164,26 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
 void actor_set_anim(actor_t *actor, UBYTE animate) __banked
 {
   actor->animate = animate;
+}
+
+void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
+{
+  actor->dir_x = dir_x;
+  actor->dir_y = dir_y;
+  if (dir_x == -1) {
+      actor_set_frames(actor, 16, 24);
+      actor_set_flip_x(actor, TRUE);
+  } else if (dir_x == 1) {
+      actor_set_frames(actor, 16, 24);
+      actor_set_flip_x(actor, FALSE);
+  } else if (dir_y == -1) {
+      actor_set_frames(actor, 8, 16);
+      actor_set_flip_x(actor, FALSE);
+  } else if (dir_y == 1) {
+      actor_set_frames(actor, 0, 8);
+      actor_set_flip_x(actor, FALSE);
+  }
+  actor->rerender = TRUE;
 }
 
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked

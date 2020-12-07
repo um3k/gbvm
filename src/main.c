@@ -59,6 +59,7 @@ void init_actors() {
 
     for (i = 0; i != MAX_ACTORS; i++)
     {
+        actors[i].enabled = FALSE;
         actors[i].x = (i * 8) % 120;
         actors[i].y = (i * 8) % 120;
         actors[i].dir_x = 0;

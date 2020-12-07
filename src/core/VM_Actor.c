@@ -62,29 +62,11 @@ void actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
     // If changed direction, trigger actor rerender
     if ((actor->dir_x != new_dir_x) ||
-        (actor->dir_y != new_dir_y))
-    {
-        actor->dir_x = new_dir_x;
-        actor->dir_y = new_dir_y;
-        if (new_dir_x == -1) {
-            actor_set_frames(actor, 16, 24);
-            actor_set_flip_x(actor, TRUE);
-            actor_set_anim(actor, TRUE);
-        } else if (new_dir_x == 1) {
-            actor_set_frames(actor, 16, 24);
-            actor_set_flip_x(actor, FALSE);
-            actor_set_anim(actor, TRUE);
-        } else if (new_dir_y == -1) {
-            actor_set_frames(actor, 8, 16);
-            actor_set_flip_x(actor, FALSE);
-            actor_set_anim(actor, TRUE);
-        } else if (new_dir_y == 1) {
-            actor_set_frames(actor, 0, 8);
-            actor_set_flip_x(actor, FALSE);
-            actor_set_anim(actor, TRUE);
-        }
-        actor->rerender = TRUE;
+        (actor->dir_y != new_dir_y)) {
+        actor_set_dir(actor, new_dir_x, new_dir_y);
     }
+
+    actor_set_anim(actor, TRUE);
 
     // Move actor
     if (actor->move_speed == 0)
@@ -104,4 +86,20 @@ void actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
     THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx));
     return;
+}
+
+UBYTE vm_actor_activate(void * THIS, UBYTE start, UWORD * stack_frame) __banked {    
+    THIS, start;
+    actor_t *actor;
+    actor = &actors[stack_frame[0]];
+    activate_actor(actor);
+    return TRUE;
+}
+
+UBYTE vm_actor_set_dir(void * THIS, UBYTE start, UWORD * stack_frame) __banked {
+    THIS, start;
+    actor_t *actor;
+    actor = &actors[stack_frame[0]];
+    actor_set_dir(actor, stack_frame[1], stack_frame[2]);
+    return TRUE;
 }
