@@ -21,7 +21,7 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     BYTE new_dir_x = 0;
     BYTE new_dir_y = 0;
 
-    act_move_to_t * params = (act_move_to_t *)((idx < 0) ? THIS->stack_ptr + idx : script_memory + idx);
+    act_move_to_t * params = VM_REF_TO_PTR(idx);
 
     // indicate waitable state of context
     THIS->waitable = 1;
