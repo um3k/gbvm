@@ -1,13 +1,9 @@
 #include "vm.h"
 #include "VM_Actor.h"
 
-// define addressmod for HOME
-void ___vm_dummy_fn(void) NONBANKED __preserves_regs(a, b, c, d, e, h, l);
-__addressmod ___vm_dummy_fn const HOME;
-
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
-HOME const SCRIPT_CMD script_cmds[] = {
+const SCRIPT_CMD script_cmds[] = {
     {&vm_push,         2}, // 0x01
     {&vm_pop,          1}, // 0x02
     {&vm_call_rel,     1}, // 0x03
@@ -40,6 +36,3 @@ HOME const SCRIPT_CMD script_cmds[] = {
 
     {actor_move_to,    2}, // 0x1E
 };
-
-// dummy function for __addressmod attribure, it never gets called
-void ___vm_dummy_fn(void) __nonbanked __preserves_regs(a, b, c, d, e, h, l) __naked { __asm__("ret"); }
