@@ -251,6 +251,6 @@ OP_VM_LOAD_TEXT     = 0x1F
 .endm
 
 OP_VM_DISPLAY_TEXT = 0x20
-.macro VM_DISPLAY_TEXT
-        .db OP_VM_DISPLAY_TEXT
+.macro VM_DISPLAY_TEXT AVATAR
+        .db OP_VM_DISPLAY_TEXT, #<AVATAR
 .endm

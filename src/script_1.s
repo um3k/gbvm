@@ -10,10 +10,11 @@ ___bank_SCRIPT_1 = 3
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
-        VM_LOAD_TEXT    0
-        .asciz "The quick red fox jumps over the lazy brown dog"
+        VM_LOAD_TEXT    3
+        .dw 4, 2, 5
+        .asciz "The %tquick%t red\nfox jumps over\nthe lazy brown\n%tdog!"
 
-        VM_DISPLAY_TEXT
+        VM_DISPLAY_TEXT 1
 
         VM_STOP
         ; VM_PUSH         2

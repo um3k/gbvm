@@ -4,6 +4,6 @@
 #include "vm.h"
 
 void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonbanked;
-void vm_display_text(SCRIPT_CTX * THIS) __banked;
+void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_index) __banked;
 
 #endif

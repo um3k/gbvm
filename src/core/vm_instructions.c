@@ -38,5 +38,5 @@ const SCRIPT_CMD script_cmds[] = {
 
     {vm_actor_move_to,  2}, // 0x1E
     {vm_load_text,      1}, // 0x1F
-    {vm_display_text,   0}, // 0x20
+    {vm_display_text,   1}, // 0x20
 };

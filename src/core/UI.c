@@ -27,8 +27,6 @@ UBYTE win_pos_y;
 UBYTE win_dest_pos_x;
 UBYTE win_dest_pos_y;
 UBYTE text_drawn;
-UBYTE text_count;
-UBYTE text_tile_count;
 UBYTE win_speed;
 UBYTE current_text_speed;
 UBYTE text_wait;
@@ -122,16 +120,18 @@ void ui_draw_text_buffer_char_b() {
     // current char pointer
     ui_text_ptr = ui_text_data;
     // VRAM destination
-    ui_dest_base = ui_dest_ptr = GetWinAddr() + 32 + 1;
+    ui_dest_base = GetWinAddr() + 32 + 1;
     // text width
     ui_text_width = 18;
     // with and initial pos correction
     if (avatar_enabled) { 
-      ui_text_width -= 2;
-      ui_dest_base += 2;
+      ui_text_width -= 4;
+      ui_dest_base += 4;
     }
     ui_text_width -= menu_enabled;
     ui_dest_base += menu_enabled;
+    // initialize current pointer with corrected base value
+    ui_dest_ptr = ui_dest_base;
     // character counter
     ui_width_left = ui_text_width;
     // tileno destination

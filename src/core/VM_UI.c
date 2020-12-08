@@ -6,10 +6,9 @@
 #include "vm.h"
 
 extern UBYTE text_drawn;
-extern UBYTE text_count;
-extern UBYTE text_tile_count;
 extern UBYTE text_wait;
 extern UBYTE text_num_lines;
+extern UBYTE avatar_enabled;
 
 extern unsigned char ui_text_data[80];
 
@@ -31,10 +30,17 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
         if (*s == '%') {
             s++;
             switch (*s) {
+                // variable by index
                 case 'd':
                     idx = *((INT16 *)args);
                     if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
                     d += strlen(itoa(idx, d));
+                    s++;
+                    args += 2;
+                    continue;
+                // text tempo
+                case 't':
+                    *d++ = *((UINT8 *)args) + 0x10;
                     s++;
                     args += 2;
                     continue;
@@ -52,12 +58,11 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
     THIS->PC = s;
 }
 
-void vm_display_text(SCRIPT_CTX * THIS) __banked {
-    THIS;    
+void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_index) __banked {
+    THIS;
     text_drawn = FALSE;
-    text_count = 0;
-    text_tile_count = 0;
     text_wait = 0;
     text_num_lines = 3;
+    avatar_enabled = (avatar_index != 0);
     ui_draw_frame(0, 0, 19, 4);
 }
