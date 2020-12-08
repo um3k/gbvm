@@ -1,13 +1,13 @@
 #pragma bank 2
-#include <stdio.h>
-#include "vm.h"
+
+#include <string.h>
+
 #include "UI.h"
 #include "GameTime.h"
 #include "data/frame_image.h"
 #include "data/font_image.h"
 #include "BankData.h"
 #include "Scroll.h"
-#include <string.h>
 
 #define ui_frame_tl_tiles 0xC0u
 #define ui_frame_bl_tiles 0xC6u
@@ -19,8 +19,7 @@
 #define ui_frame_r_tiles  0xC5u
 #define ui_frame_bg_tiles 0xC4u
 
-UBYTE ui_load_text_n(SCRIPT_CTX * THIS) __nonbanked;
-void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height);
+void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 void ui_draw_text_buffer_char_b();
 
 UBYTE win_pos_x;
@@ -66,42 +65,7 @@ void init_ui() __nonbanked {
     SWITCH_ROM_MBC1(_save);
 }
 
-UBYTE ui_text(SCRIPT_CTX * THIS, UBYTE start, UWORD * stack_frame) __banked {    
-    stack_frame;
-    if (start) {
-        text_drawn = FALSE;
-        text_count = 0;
-        text_tile_count = 0;
-        text_wait = 0;
-        text_num_lines = 3;
-        ui_draw_frame(0, 0, 19, 4);
-        ui_load_text_n(THIS);
-    }
-    return TRUE;    
-}
-
-UBYTE ui_load_text_n(SCRIPT_CTX * THIS) __nonbanked {    
-    UBYTE _save = _current_bank;
-    SWITCH_ROM_MBC1(THIS->bank);
-    
-    const UBYTE * args = THIS->PC;
-    unsigned char * d = ui_text_data; 
-    const unsigned char * s = args;
-
-    while (*s) {
-        *d++ = *s++;
-    }
-    *d = 0, s++;
-
-    // puts(ui_text_data);
-
-    SWITCH_ROM_MBC1(_save);
-    THIS->PC = s;
-
-    return TRUE;
-}
-
-void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) {
+void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
   fill_win_rect(x,         y,              1,         1,      ui_frame_tl_tiles);  // top-left
   fill_win_rect(x + 1,     y,              width - 1, 1,      ui_frame_t_tiles);   // top
   fill_win_rect(x + width, y,              1,         1,      ui_frame_tr_tiles);  // top-right

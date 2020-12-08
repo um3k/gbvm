@@ -10,9 +10,10 @@ ___bank_SCRIPT_1 = 3
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
-        VM_INVOKE       b_ui_text, _ui_text, 0, 0
- ;       .asciz "Hello World!"
+        VM_LOAD_TEXT    0
         .asciz "The quick red fox jumps over the lazy brown dog"
+
+        VM_DISPLAY_TEXT
 
         VM_STOP
         ; VM_PUSH         2

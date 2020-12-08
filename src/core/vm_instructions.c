@@ -1,5 +1,7 @@
 #include "vm.h"
+
 #include "VM_Actor.h"
+#include "VM_UI.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
@@ -35,4 +37,6 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_get_int16,      4}, // 0x1D
 
     {vm_actor_move_to,  2}, // 0x1E
+    {vm_load_text,      1}, // 0x1F
+    {vm_display_text,   0}, // 0x20
 };

@@ -238,7 +238,19 @@ OP_VM_GET_INT16  = 0x1D
         .db OP_VM_GET_INT16, #>ADDR, #<ADDR, #>IDXA, #<IDXA
 .endm
 
+; --- engine-specific instructions ------------------------------------------
+
 OP_VM_ACTOR_MOVE_TO = 0x1E
 .macro VM_ACTOR_MOVE_TO IDX
         .db OP_VM_ACTOR_MOVE_TO, #>IDX, #<IDX
+.endm
+
+OP_VM_LOAD_TEXT     = 0x1F
+.macro VM_LOAD_TEXT ARG0
+        .db OP_VM_LOAD_TEXT, #<ARG0
+.endm
+
+OP_VM_DISPLAY_TEXT = 0x20
+.macro VM_DISPLAY_TEXT
+        .db OP_VM_DISPLAY_TEXT
 .endm

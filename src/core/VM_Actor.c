@@ -1,7 +1,5 @@
 #pragma bank 2
 
-#include <stdio.h>
-
 #include "vm.h"
 
 #include "Actor.h"
