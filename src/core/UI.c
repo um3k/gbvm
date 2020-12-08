@@ -38,7 +38,6 @@ UBYTE menu_enabled;
 UBYTE text_num_lines;
 
 unsigned char ui_text_data[80];
-const UBYTE text_draw_speeds[] = {0x0, 0x1, 0x3, 0x7, 0xF, 0x1F};
 
 // char printer internals
 static UBYTE * ui_text_ptr  = 0;
@@ -185,13 +184,22 @@ void ui_draw_text_buffer_char_b() {
       ui_width_left = ui_text_width;
       break; 
     case 0x10:
+      current_text_speed = 0;
+      break;
     case 0x11:
+      current_text_speed = 1;
+      break;
     case 0x12:
+      current_text_speed = 3;
+      break;
     case 0x13:
+      current_text_speed = 7;
+      break;
     case 0x14:
+      current_text_speed = 0x0f;
+      break;
     case 0x15:
-    case 0x16:
-      current_text_speed = text_draw_speeds[*ui_text_ptr - 0x10];
+      current_text_speed = 0x1f;
       break;
     default:
       if (ui_width_left == 0) {
