@@ -9,11 +9,7 @@ ___bank_SCRIPT_3 = 3
 
 _SCRIPT_3::
 ; five initial arguments are pushed by script caller
-;        VM_PUSH         5       ; Actor 5
-;        VM_PUSH         32      ; X = 0
-;        VM_PUSH         64      ; Y = 0
-;        VM_PUSH         0       ; Horizonal movement first
-;        VM_PUSH         0       ; Don't check collisions
+;        VM_RESERVE      5
 1$:
         ; Wait 1 Second
         VM_PUSH         60

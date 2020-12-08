@@ -16,6 +16,8 @@ typedef struct _SCRIPT_CMD {
 #define FAR_CALL_EX(addr, seg, typ, ...) (__call_banked_addr=(addr),__call_banked_bank=(seg),((typ)(&__call__banked))(__VA_ARGS__))
 typedef UBYTE (*SCRIPT_UPDATE_FN)(void * THIS, UBYTE start, UWORD * stack_frame) __banked;
 
+#define VM_REF_TO_PTR(idx) (void *)(((idx) < 0) ? THIS->stack_ptr + (idx) : script_memory + (idx))
+
 typedef struct SCRIPT_CTX {
   const UBYTE * PC;
   UBYTE bank;
