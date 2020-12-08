@@ -14,7 +14,7 @@ extern unsigned char ui_text_data[80];
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 
-// prints debug string into the text buffer then outputs to screen
+// renders UI text into buffer
 void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonbanked {
     dummy0; dummy1; // suppress warnings
 

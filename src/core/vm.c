@@ -301,8 +301,10 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
     }
 }
 
+#ifdef VM_DEBUG_OUTPUT
 // text buffer
 unsigned char display_text[80];
+#endif
 
 // prints debug string into the text buffer then outputs to screen
 void vm_debug(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonbanked {
@@ -312,10 +314,11 @@ void vm_debug(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonb
     SWITCH_ROM_MBC1(THIS->bank);
     
     const UBYTE * args = THIS->PC;
-    unsigned char * d = display_text; 
     const unsigned char * s = args + (nargs << 1);
+     
+#ifdef VM_DEBUG_OUTPUT
+    unsigned char * d = display_text; 
     INT16 idx;
-
     while (*s) {
         if (*s == '%') {
             s++;
@@ -338,6 +341,9 @@ void vm_debug(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonb
     *d = 0, s++;
 
     puts(display_text);
+#else
+    s += strlen(s) + 1;
+#endif
 
     SWITCH_ROM_MBC1(_save);
     THIS->PC = s;

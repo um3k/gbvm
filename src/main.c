@@ -1,6 +1,6 @@
 #include <gb/gb.h>
 #include <gb/font.h>
-#include <stdio.h>
+
 #include "gfx.h"
 #include "GameTime.h"
 #include "Actor.h"
