@@ -110,22 +110,14 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) {
   fill_win_rect(x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
+static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
+
 void update_ui() __banked {
   UBYTE interval;
 
-  if (win_speed == 5 && ((game_time & 0x7) != 0)) {
-    return;
-  } else if (win_speed == 4 && ((game_time & 0x3) != 0)) {
-    return;
-  } else if (win_speed == 3 && ((game_time & 0x1) != 0)) {
-    return;
-  }
+  if (game_time & time_masks[win_speed]) return;
 
-  if (win_speed == 1) {
-    interval = 2;
-  } else {
-    interval = 1;
-  }
+  interval = (win_speed == 1) ? 2 : 1;
 
   if (win_pos_x != win_dest_pos_x) {
     if (win_pos_x < win_dest_pos_x) {
@@ -143,7 +135,9 @@ void update_ui() __banked {
     }
   } else if(!text_drawn) {
     if (((game_time & current_text_speed) == 0) ) {
-      ui_draw_text_buffer_char_b();
+      do {
+        ui_draw_text_buffer_char_b();
+      } while ((current_text_speed == 0) && (!text_drawn));
     }
   }
 
@@ -223,9 +217,6 @@ void ui_draw_text_buffer_char_b() {
       text_y++;
     }
 
-    if (current_text_speed == 0) {
-      ui_draw_text_buffer_char_b();
-    }
   } else {
     text_drawn = TRUE;
   }
