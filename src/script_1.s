@@ -11,7 +11,8 @@ ___bank_SCRIPT_1 = 3
 
 _SCRIPT_1::
         VM_INVOKE       b_ui_text, _ui_text, 0, 0
-        .asciz "Hello World!"
+ ;       .asciz "Hello World!"
+        .asciz "The quick red fox jumps over the lazy brown dog"
 
         VM_STOP
         ; VM_PUSH         2

@@ -47,7 +47,7 @@ void RenderScreen();
  * @param r address of tile to write to
  * @param t address of new tile value
  */
-void SetTile(UINT16 r, UINT8 t) __preserves_regs(b, c);
+void SetTile(UBYTE * r, UINT8 t) __preserves_regs(b, c);
 
 /**
  * Wait for LCD controller mode 1 or 0 (Can access OAM)

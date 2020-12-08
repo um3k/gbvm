@@ -27,8 +27,6 @@ UBYTE win_pos_x;
 UBYTE win_pos_y;
 UBYTE win_dest_pos_x;
 UBYTE win_dest_pos_y;
-UBYTE text_x;
-UBYTE text_y;
 UBYTE text_drawn;
 UBYTE text_count;
 UBYTE text_tile_count;
@@ -41,6 +39,14 @@ UBYTE text_num_lines;
 
 unsigned char ui_text_data[80];
 const UBYTE text_draw_speeds[] = {0x0, 0x1, 0x3, 0x7, 0xF, 0x1F};
+
+// char printer internals
+static UBYTE * ui_text_ptr  = 0;
+static UBYTE * ui_dest_ptr  = 0;
+static UBYTE * ui_dest_base = 0;
+static UBYTE ui_text_width  = 0;
+static UBYTE ui_width_left  = 0;
+static UBYTE ui_tile_no     = 0;
 
 // const far_ptr_t far_font_image = TO_FAR_PTR(font_image);
 // const far_ptr_t far_frame_image = TO_FAR_PTR(frame_image);
@@ -65,8 +71,6 @@ UBYTE ui_text(SCRIPT_CTX * THIS, UBYTE start, UWORD * stack_frame) __banked {
     stack_frame;
     if (start) {
         text_drawn = FALSE;
-        text_x = 0;
-        text_y = 0;
         text_count = 0;
         text_tile_count = 0;
         text_wait = 0;
@@ -146,78 +150,59 @@ void update_ui() __banked {
 }
 
 void ui_draw_text_buffer_char_b() {
-  UBYTE letter;
-  UBYTE i, text_remaining, word_len;
-  UBYTE text_size;
-  UBYTE tile;
-  UINT16 id;
-
   if (text_wait != 0) {
     text_wait--;
     return;
   }
 
-  text_size = strlen(ui_text_data);
-
-  if (text_count < text_size) {
-    text_drawn = FALSE;
-
-    if (text_count == 0) {
-      text_x = 0;
-      text_y = 0;
+  if (ui_text_ptr == 0) {
+    // current char pointer
+    ui_text_ptr = ui_text_data;
+    // VRAM destination
+    ui_dest_base = ui_dest_ptr = GetWinAddr() + 32 + 1;
+    // text width
+    ui_text_width = 18;
+    // with and initial pos correction
+    if (avatar_enabled) { 
+      ui_text_width -= 2;
+      ui_dest_base += 2;
     }
-
-    letter = ui_text_data[text_count] - 32;
-
-    // Determine if text can fit on line
-    text_remaining = 18 - text_x;
-    word_len = 0;
-    for (i = text_count; i != text_size; i++) {
-      // Skip special characters when calculating word length
-      if (ui_text_data[i] < ' ') {
-        break;
-      }
-      word_len++;
-    }
-    if ((text_remaining < word_len) && (word_len < 18u)) {
-      text_x = 0;
-      text_y++;
-    }
-
-    // Skip special characters when drawing text
-    if (ui_text_data[text_count] >= ' ') {
-      i = text_tile_count + avatar_enabled * 4;
-
-      SetBankedBkgData(TEXT_BUFFER_START + i, 1, (unsigned char* )((UWORD)font_image + (letter * 16)), __bank_font_image);
-
-      tile = TEXT_BUFFER_START + i;
-      id = (UINT16)GetWinAddr() +
-           MOD_32((text_x + 1 + avatar_enabled * 2 + menu_enabled +
-                   (text_y >= text_num_lines ? 9 : 0))) +
-           ((UINT16)MOD_32((text_y % text_num_lines) + 1) << 5);
-      SetTile(id, tile);
-
-      text_tile_count++;
-    }
-
-    // Dynamic switch text speed
-    if (ui_text_data[text_count] >= 0x10 && ui_text_data[text_count] < 0x16) {
-      current_text_speed = text_draw_speeds[ui_text_data[text_count] - 0x10];
-      text_x--;
-    }
-
-    text_count++;
-    text_x++;
-    if (ui_text_data[text_count] == '\n') {
-      text_x = 0;
-      text_y++;
-      text_count++;
-    } else if (UBYTE_GT_THAN(text_x, 17u)) {
-      text_x = 0;
-      text_y++;
-    }
-
-  } else {
-    text_drawn = TRUE;
+    ui_text_width -= menu_enabled;
+    ui_dest_base += menu_enabled;
+    // character counter
+    ui_width_left = ui_text_width;
+    // tileno destination
+    ui_tile_no = TEXT_BUFFER_START;
   }
+
+  switch (*ui_text_ptr) {
+    case 0x00:
+      ui_text_ptr = 0; 
+      text_drawn = TRUE;
+      return;
+    case '\n':
+      ui_dest_ptr = ui_dest_base += 32;
+      ui_width_left = ui_text_width;
+      break; 
+    case 0x10:
+    case 0x11:
+    case 0x12:
+    case 0x13:
+    case 0x14:
+    case 0x15:
+    case 0x16:
+      current_text_speed = text_draw_speeds[*ui_text_ptr - 0x10];
+      break;
+    default:
+      if (ui_width_left == 0) {
+        ui_dest_ptr = ui_dest_base += 32;
+        ui_width_left = ui_text_width; 
+      }
+      ui_width_left--;
+      SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), __bank_font_image);
+      SetTile(ui_dest_ptr++, ui_tile_no);
+      ui_tile_no++;
+      break;
+  }
+  ui_text_ptr++;
 }
