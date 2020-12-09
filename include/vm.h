@@ -42,7 +42,7 @@ typedef struct SCRIPT_CTX {
 // maximum number of concurrent running VM threads
 #define SCRIPT_MAX_CONTEXTS 16
 // stack size of each VM thread
-#define CONTEXT_STACK_SIZE 16
+#define CONTEXT_STACK_SIZE 64
 // number of shared variables
 #define MAX_GLOBAL_VARS 32
 // quant size

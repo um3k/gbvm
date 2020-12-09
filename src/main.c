@@ -81,6 +81,10 @@ void init_actors() {
         DL_PUSH_HEAD(actors_inactive_head, &actors[i]);
     }    
 
+    actors[3].x = 32;
+    actors[3].y = 32;
+    activate_actor(&actors[3]);
+
     actors[5].x = 32;
     actors[5].y = 64;
     // activate_actor(&actors[5]);
@@ -88,10 +92,6 @@ void init_actors() {
     actors[7].x = 64;
     actors[7].y = 64;
     // activate_actor(&actors[7]);
-
-    actors[3].x = 96;
-    actors[3].y = 64;
-    // activate_actor(&actors[3]);
 
 //    actors[8].x = 4*8;
 //    actors[8].y = 144;
@@ -140,7 +140,8 @@ void main() {
     // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0);
+
+    ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
 
     // load up engine with more actors
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1,  8);

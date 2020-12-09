@@ -94,9 +94,9 @@ void vm_overlay_hide() __banked {
 // wait until overlay window reaches destination
 void vm_overlay_wait(SCRIPT_CTX * THIS, UBYTE is_modal) __banked {
     if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y) || !(text_drawn)) {
-        if (!is_modal) {
+        if (is_modal == 0) {
             THIS->waitable = 1;
-            THIS->PC -= 1;
+            THIS->PC -= INSTRUCTION_SIZE + sizeof(is_modal);
         } else ui_run_modal();
     }
 }

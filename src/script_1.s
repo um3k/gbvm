@@ -13,9 +13,9 @@ _SCRIPT_1::
         ; black window
         VM_OVERLAY_SHOW         0, 20, .UI_COLOR_BLACK
         VM_OVERLAY_MOVE_TO      0, 0, 1
-        VM_OVERLAY_WAIT         .UI_MODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL
         VM_OVERLAY_MOVE_TO      0, 20, 1
-        VM_OVERLAY_WAIT         .UI_MODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL
 
         ; init some variables on stack
         VM_RPN
