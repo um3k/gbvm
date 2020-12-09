@@ -38,7 +38,7 @@ _SCRIPT_1::
             ;                          ^^ char in var                           ^^ CR
 
         ; dispose variables on stack
-        VM_POP                  7
+        VM_POP                  9
 
         ; move window to 12 tiles by Y
         VM_OVERLAY_MOVE_TO      0, 12, 1
