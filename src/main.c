@@ -31,6 +31,17 @@ extern void __bank_SCRIPT_4;
 extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
+void LCD_isr() __nonbanked {
+    if ((LYC_REG < 144u) && (WX_REG < 160u)) HIDE_SPRITES;
+    WY_REG = LYC_REG;
+}
+
+void VBL_isr() __nonbanked {
+    SHOW_SPRITES; 
+    WX_REG = win_pos_x + 7;
+    LYC_REG = win_pos_y;
+}
+
 void process_VM() {
     while (1) {
         switch (ScriptRunnerUpdate()) {
@@ -127,6 +138,15 @@ void main() {
 
     init_actors();
     ui_init();
+
+    __critical {
+        add_LCD(LCD_isr);
+        add_VBL(VBL_isr);
+        IE_REG |= LCD_IFLAG;
+        STAT_REG |= 0x40u; 
+        LYC_REG = 144;
+    }
+
 
     DISPLAY_ON;
 

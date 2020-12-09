@@ -104,11 +104,7 @@ void ui_update() __nonbanked {
         if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
         is_moving = TRUE;
     }
-    
-    // must be on VBlank to make movement smooth
-    WX_REG = win_pos_x + 7;
-    WY_REG = win_pos_y;
-    
+
     // don't draw text while moving
     if (is_moving) return;
     // all drawn - nothing to do

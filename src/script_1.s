@@ -59,6 +59,12 @@ _SCRIPT_1::
             .asciz "\020option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
         VM_DISPLAY_TEXT         0       ; no avatars
-        VM_OVERLAY_WAIT         .UI_MODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL
+
+        VM_PUSH                 ^/(30*60)/      ; !!! always use escaping and brackets
+        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+
+        VM_OVERLAY_MOVE_TO      20, 9, 1
+        VM_OVERLAY_WAIT         .UI_NONMODAL
 
         VM_STOP

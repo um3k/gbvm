@@ -113,7 +113,7 @@ UBYTE wait_frames(void * THIS, UBYTE start, UWORD * stack_frame) __banked {
     // we allocate one local variable (just write ahead of VM stack pointer, we have no interrupts, our local variables won't get spoiled)
     if (start) stack_frame[1] = sys_time;
     // check wait condition
-    return ((sys_time - stack_frame[1]) < stack_frame[0]) ? ((SCRIPT_CTX *)THIS)->waitable = 1, 0 : 1;
+    return (((UWORD)sys_time - stack_frame[1]) < stack_frame[0]) ? ((SCRIPT_CTX *)THIS)->waitable = 1, 0 : 1;
 }
 // calls C handler until it returns true; callee cleanups stack
 void vm_invoke(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * fn, UBYTE nparams, INT16 idx) __banked {
