@@ -20,14 +20,15 @@
 #define ui_frame_bg_tiles 0xC4u
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
-void ui_draw_text_buffer_char_b();
+void ui_draw_text_buffer_char() __banked;
 
 UBYTE win_pos_x;
 UBYTE win_pos_y;
 UBYTE win_dest_pos_x;
 UBYTE win_dest_pos_y;
-UBYTE text_drawn;
 UBYTE win_speed;
+
+UBYTE text_drawn;
 UBYTE current_text_speed;
 UBYTE text_wait;
 UBYTE avatar_enabled;
@@ -47,20 +48,14 @@ static UBYTE ui_tile_no     = 0;
 // const far_ptr_t far_font_image = TO_FAR_PTR(font_image);
 // const far_ptr_t far_frame_image = TO_FAR_PTR(frame_image);
 
-void init_ui() __nonbanked {
-    UBYTE _save = _current_bank;
-    win_pos_x = 0;
-    win_pos_y = 0;
-    win_dest_pos_x = 0;
-    win_dest_pos_y = 0;
+void ui_init() __banked {
+    ui_set_pos(0, MENU_CLOSED_Y);
     avatar_enabled = 0;
     menu_enabled = 0;
     text_num_lines = 0;
     win_speed = 1;
     current_text_speed = 1;
-    SWITCH_ROM_MBC1(__bank_frame_image);
-    set_bkg_data(192, 9, frame_image);
-    SWITCH_ROM_MBC1(_save);
+    SetBankedBkgData(192, 9, frame_image, __bank_frame_image);
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
@@ -77,40 +72,39 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
 
 static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
 
-void update_ui() __banked {
-  UBYTE interval;
+void ui_update() __nonbanked {
+  UBYTE interval, is_moving = FALSE;
 
   if (game_time & time_masks[win_speed]) return;
 
   interval = (win_speed == 1) ? 2 : 1;
 
   if (win_pos_x != win_dest_pos_x) {
-    if (win_pos_x < win_dest_pos_x) {
-      win_pos_x += interval;
-    } else {
-      win_pos_x -= interval;
-    }
+    // move window left/right
+    if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
+    is_moving = TRUE;
   }
 
   if (win_pos_y != win_dest_pos_y) {
-    if (win_pos_y < win_dest_pos_y) {
-      win_pos_y += interval;
-    } else {
-      win_pos_y -= interval;
-    }
-  } else if(!text_drawn) {
-    if (((game_time & current_text_speed) == 0) ) {
-      do {
-        ui_draw_text_buffer_char_b();
-      } while ((current_text_speed == 0) && (!text_drawn));
-    }
+    // move window up/down
+    if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
+    is_moving = TRUE;
   }
-
+  
+  // must be on VBlank to make movement smooth
   WX_REG = win_pos_x + 7;
   WY_REG = win_pos_y;
+  
+  if (is_moving) return;
+
+  if (!text_drawn && !(game_time & current_text_speed)) {
+    do {
+      ui_draw_text_buffer_char();
+    } while ((current_text_speed == 0) && (!text_drawn));
+  }
 }
 
-void ui_draw_text_buffer_char_b() {
+void ui_draw_text_buffer_char() __banked {
   if (text_wait != 0) {
     text_wait--;
     return;
@@ -120,16 +114,18 @@ void ui_draw_text_buffer_char_b() {
     // current char pointer
     ui_text_ptr = ui_text_data;
     // VRAM destination
-    ui_dest_base = GetWinAddr() + 32 + 1;
+    ui_dest_base = GetWinAddr() + 32 + 1; // current width of window in tiles
     // text width
     ui_text_width = 18;
     // with and initial pos correction
     if (avatar_enabled) { 
-      ui_text_width -= 4;
-      ui_dest_base += 4;
+      ui_text_width -= AVATAR_WIDTH;
+      ui_dest_base += AVATAR_WIDTH;
     }
-    ui_text_width -= menu_enabled;
-    ui_dest_base += menu_enabled;
+    if (menu_enabled) {
+      ui_text_width -= SELECTOR_WIDTH;
+      ui_dest_base += SELECTOR_WIDTH;
+    }
     // initialize current pointer with corrected base value
     ui_dest_ptr = ui_dest_base;
     // character counter

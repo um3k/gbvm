@@ -35,7 +35,7 @@ void process_VM() {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
                 update_actors();
-                update_ui();
+                ui_update();
                 game_time++;
                 wait_vbl_done();
                 break;
@@ -125,7 +125,7 @@ void main() {
     WY_REG = 96;
 
     init_actors();
-    init_ui();
+    ui_init();
 
     DISPLAY_ON;
 

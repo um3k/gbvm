@@ -240,17 +240,37 @@ OP_VM_GET_INT16  = 0x1D
 
 ; --- engine-specific instructions ------------------------------------------
 
-OP_VM_ACTOR_MOVE_TO = 0x1E
+OP_VM_ACTOR_MOVE_TO     = 0x1E
 .macro VM_ACTOR_MOVE_TO IDX
         .db OP_VM_ACTOR_MOVE_TO, #>IDX, #<IDX
 .endm
 
-OP_VM_LOAD_TEXT     = 0x1F
+OP_VM_LOAD_TEXT         = 0x1F
 .macro VM_LOAD_TEXT ARG0
         .db OP_VM_LOAD_TEXT, #<ARG0
 .endm
 
-OP_VM_DISPLAY_TEXT = 0x20
+OP_VM_DISPLAY_TEXT      = 0x20
 .macro VM_DISPLAY_TEXT AVATAR
         .db OP_VM_DISPLAY_TEXT, #<AVATAR
+.endm
+
+OP_VM_OVERLAY_SETPOS    = 0x21
+.macro VM_OVERLAY_SETPOS X, Y
+        .db OP_VM_OVERLAY_SETPOS, #<Y, #<X
+.endm
+
+OP_VM_OVERLAY_HIDE      = 0x22
+.macro VM_OVERLAY_HIDE
+        .db OP_VM_OVERLAY_HIDE
+.endm
+
+OP_VM_OVERLAY_WAIT      = 0x23
+.macro VM_OVERLAY_WAIT
+        .db OP_VM_OVERLAY_WAIT
+.endm
+
+OP_VM_OVERLAY_MOVE_TO   = 0x24
+.macro VM_OVERLAY_MOVE_TO X, Y, SPEED
+        .db OP_VM_OVERLAY_MOVE_TO, #<SPEED, #<Y, #<X
 .endm

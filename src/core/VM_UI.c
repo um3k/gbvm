@@ -4,13 +4,7 @@
 #include <stdlib.h>
 
 #include "vm.h"
-
-extern UBYTE text_drawn;
-extern UBYTE text_wait;
-extern UBYTE text_num_lines;
-extern UBYTE avatar_enabled;
-
-extern unsigned char ui_text_data[80];
+#include "UI.h"
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 
@@ -58,6 +52,7 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
     THIS->PC = s;
 }
 
+// start displaying text
 void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_index) __banked {
     THIS;
     text_drawn = FALSE;
@@ -65,4 +60,29 @@ void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_index) __banked {
     text_num_lines = 3;
     avatar_enabled = (avatar_index != 0);
     ui_draw_frame(0, 0, 19, 4);
+}
+
+// set position of overlayed window
+void vm_overlay_setpos(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y) __banked {
+    THIS;
+    ui_set_pos(pos_x << 3, pos_y << 3);
+}
+
+// hides overlayed window
+void vm_overlay_hide() __banked {
+    ui_set_pos(0, MENU_CLOSED_Y);
+}
+
+// wait until overlay window reaches destination
+void vm_overlay_wait(SCRIPT_CTX * THIS) __banked {
+    if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) {
+        THIS->waitable = 1;
+        THIS->PC -= 1;
+    }
+}
+
+// set position of overlayed window
+void vm_overlay_move_to(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE speed) __banked {
+    THIS;
+    ui_move_to(pos_x << 3, pos_y << 3, speed);
 }
