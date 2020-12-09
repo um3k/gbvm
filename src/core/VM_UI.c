@@ -30,13 +30,21 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
                     if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
                     d += strlen(itoa(idx, d));
                     s++;
-                    args += 2;
+                    args += 2u;
+                    continue;
+                // char in variable
+                case 'c':
+                    idx = *((INT16 *)args);
+                    if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
+                    *d++ = (unsigned char)idx;
+                    s++;
+                    args += 2u;
                     continue;
                 // text tempo
                 case 't':
-                    *d++ = *((UINT8 *)args) + 0x10;
+                    *d++ = *((UINT8 *)args) + 0x10u;
                     s++;
-                    args += 2;
+                    args += 2u;
                     continue;
                 case '%':
                     break;
