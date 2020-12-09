@@ -32,14 +32,14 @@ void ui_init() __banked;
 void ui_update() __nonbanked; // critical path, __nonbanked for speed
 
 inline void ui_set_pos(UBYTE x, UBYTE y) {
-  win_pos_x = win_dest_pos_x = x;
-  win_pos_y = win_dest_pos_y = y;
+    win_pos_x = win_dest_pos_x = x;
+    win_pos_y = win_dest_pos_y = y;
 }
 
 inline void ui_move_to(UBYTE x, UBYTE y, UBYTE speed) {
-  win_dest_pos_x = x;
-  win_dest_pos_y = y;
-  if (speed == 0) win_pos_x = x, win_pos_y = y; else win_speed = speed;
+    win_dest_pos_x = x;
+    win_dest_pos_y = y;
+    if (speed == 0) win_pos_x = x, win_pos_y = y; else win_speed = speed;
 }
 
 #endif

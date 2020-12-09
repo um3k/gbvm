@@ -59,118 +59,121 @@ void ui_init() __banked {
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
-  fill_win_rect(x,         y,              1,         1,      ui_frame_tl_tiles);  // top-left
-  fill_win_rect(x + 1,     y,              width - 1, 1,      ui_frame_t_tiles);   // top
-  fill_win_rect(x + width, y,              1,         1,      ui_frame_tr_tiles);  // top-right
-  fill_win_rect(x,         y + 1,          1,         height, ui_frame_l_tiles);   // left
-  fill_win_rect(x + width, y + 1,          1,         height, ui_frame_r_tiles);   // right
-  fill_win_rect(x,         y + height + 1, 1,         1,      ui_frame_bl_tiles);  // bottom-left
-  fill_win_rect(x + 1,     y + height + 1, width - 1, 1,      ui_frame_b_tiles);   // bottom
-  fill_win_rect(x + width, y + height + 1, 1,         1,      ui_frame_br_tiles);  // bottom-right
-  fill_win_rect(x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
+    fill_win_rect(x,         y,              1,         1,      ui_frame_tl_tiles);  // top-left
+    fill_win_rect(x + 1,     y,              width - 1, 1,      ui_frame_t_tiles);   // top
+    fill_win_rect(x + width, y,              1,         1,      ui_frame_tr_tiles);  // top-right
+    fill_win_rect(x,         y + 1,          1,         height, ui_frame_l_tiles);   // left
+    fill_win_rect(x + width, y + 1,          1,         height, ui_frame_r_tiles);   // right
+    fill_win_rect(x,         y + height + 1, 1,         1,      ui_frame_bl_tiles);  // bottom-left
+    fill_win_rect(x + 1,     y + height + 1, width - 1, 1,      ui_frame_b_tiles);   // bottom
+    fill_win_rect(x + width, y + height + 1, 1,         1,      ui_frame_br_tiles);  // bottom-right
+    fill_win_rect(x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
 static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
 
 void ui_update() __nonbanked {
-  UBYTE interval, is_moving = FALSE;
+    UBYTE interval, is_moving = FALSE;
 
-  if (game_time & time_masks[win_speed]) return;
+    if (game_time & time_masks[win_speed]) return;
 
-  interval = (win_speed == 1) ? 2 : 1;
+    interval = (win_speed == 1) ? 2 : 1;
 
-  if (win_pos_x != win_dest_pos_x) {
-    // move window left/right
-    if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
-    is_moving = TRUE;
-  }
+    if (win_pos_x != win_dest_pos_x) {
+        // move window left/right
+        if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
+        is_moving = TRUE;
+    }
 
-  if (win_pos_y != win_dest_pos_y) {
-    // move window up/down
-    if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
-    is_moving = TRUE;
-  }
-  
-  // must be on VBlank to make movement smooth
-  WX_REG = win_pos_x + 7;
-  WY_REG = win_pos_y;
-  
-  if (is_moving) return;
-
-  if (!text_drawn && !(game_time & current_text_speed)) {
+    if (win_pos_y != win_dest_pos_y) {
+        // move window up/down
+        if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
+        is_moving = TRUE;
+    }
+    
+    // must be on VBlank to make movement smooth
+    WX_REG = win_pos_x + 7;
+    WY_REG = win_pos_y;
+    
+    // don't draw text while moving
+    if (is_moving) return;
+    // all drawn - nothing to do
+    if (text_drawn) return;
+    // too fast - wait
+    if (game_time & current_text_speed) return;
+    // render next char
     do {
-      ui_draw_text_buffer_char();
+        ui_draw_text_buffer_char();
     } while ((current_text_speed == 0) && (!text_drawn));
-  }
 }
 
 void ui_draw_text_buffer_char() __banked {
-  if (text_wait != 0) {
-    text_wait--;
-    return;
-  }
-
-  if (ui_text_ptr == 0) {
-    // current char pointer
-    ui_text_ptr = ui_text_data;
-    // VRAM destination
-    ui_dest_base = GetWinAddr() + 32 + 1; // current width of window in tiles
-    // text width
-    ui_text_width = 18;
-    // with and initial pos correction
-    if (avatar_enabled) { 
-      ui_text_width -= AVATAR_WIDTH;
-      ui_dest_base += AVATAR_WIDTH;
+    if (text_wait != 0) {
+        text_wait--;
+        return;
     }
-    if (menu_enabled) {
-      ui_text_width -= SELECTOR_WIDTH;
-      ui_dest_base += SELECTOR_WIDTH;
-    }
-    // initialize current pointer with corrected base value
-    ui_dest_ptr = ui_dest_base;
-    // character counter
-    ui_width_left = ui_text_width;
-    // tileno destination
-    ui_tile_no = TEXT_BUFFER_START;
-  }
 
-  switch (*ui_text_ptr) {
-    case 0x00:
-      ui_text_ptr = 0; 
-      text_drawn = TRUE;
-      return;
-    case '\n':
-      ui_dest_ptr = ui_dest_base += 32;
-      ui_width_left = ui_text_width;
-      break; 
-    case 0x10:
-      current_text_speed = 0;
-      break;
-    case 0x11:
-      current_text_speed = 1;
-      break;
-    case 0x12:
-      current_text_speed = 3;
-      break;
-    case 0x13:
-      current_text_speed = 7;
-      break;
-    case 0x14:
-      current_text_speed = 0x0f;
-      break;
-    case 0x15:
-      current_text_speed = 0x1f;
-      break;
-    default:
-      if (ui_width_left == 0) {
-        ui_dest_ptr = ui_dest_base += 32;
-        ui_width_left = ui_text_width; 
-      }
-      ui_width_left--;
-      SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), __bank_font_image);
-      SetTile(ui_dest_ptr++, ui_tile_no);
-      ui_tile_no++;
-      break;
-  }
-  ui_text_ptr++;
+    if (ui_text_ptr == 0) {
+        // current char pointer
+        ui_text_ptr = ui_text_data;
+        // VRAM destination
+        ui_dest_base = GetWinAddr() + 32 + 1; // current width of window in tiles
+        // text width
+        ui_text_width = 18;
+        // with and initial pos correction
+        if (avatar_enabled) { 
+            ui_text_width -= AVATAR_WIDTH;
+            ui_dest_base += AVATAR_WIDTH;
+        }
+        if (menu_enabled) {
+            ui_text_width -= SELECTOR_WIDTH;
+            ui_dest_base += SELECTOR_WIDTH;
+        }
+        // initialize current pointer with corrected base value
+        ui_dest_ptr = ui_dest_base;
+        // character counter
+        ui_width_left = ui_text_width;
+        // tileno destination
+        ui_tile_no = TEXT_BUFFER_START;
+    }
+
+    switch (*ui_text_ptr) {
+        case 0x00:
+            ui_text_ptr = 0; 
+            text_drawn = TRUE;
+            return;
+        case '\n':
+            ui_dest_ptr = ui_dest_base += 32;
+            ui_width_left = ui_text_width;
+            break; 
+        case 0x10:
+            current_text_speed = 0;
+            break;
+        case 0x11:
+            current_text_speed = 1;
+            break;
+        case 0x12:
+            current_text_speed = 3;
+            break;
+        case 0x13:
+            current_text_speed = 7;
+            break;
+        case 0x14:
+            current_text_speed = 0x0f;
+            break;
+        case 0x15:
+            current_text_speed = 0x1f;
+            break;
+        default:
+            if (ui_width_left == 0) {
+                ui_dest_ptr = ui_dest_base += 32;
+                ui_width_left = ui_text_width; 
+            }
+            ui_width_left--;
+            SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), __bank_font_image);
+            SetTile(ui_dest_ptr++, ui_tile_no);
+            ui_tile_no++;
+            break;
+    }
+    ui_text_ptr++;
 }
