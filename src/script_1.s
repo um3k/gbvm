@@ -44,9 +44,21 @@ _SCRIPT_1::
         VM_OVERLAY_MOVE_TO      0, 12, 1
 
         ; start displaying text
-        VM_DISPLAY_TEXT         1
+        VM_DISPLAY_TEXT         1       ; avatar 1
 
         ; wait for window to slide
+        VM_OVERLAY_WAIT
+
+        ; slide out
+        VM_OVERLAY_MOVE_TO      0, 18, 1
+        VM_OVERLAY_WAIT
+
+        ; show menu
+        VM_OVERLAY_SETPOS       20, 9
+        VM_LOAD_TEXT            0
+            .asciz "option1\noption2\noption3\noption4\noption5\noption6\ncancel"
+        VM_OVERLAY_MOVE_TO      10, 9, 1
+        VM_DISPLAY_TEXT         0       ; no avatars
         VM_OVERLAY_WAIT
 
         VM_STOP

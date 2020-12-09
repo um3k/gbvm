@@ -37,9 +37,12 @@ UBYTE win_speed;
 UBYTE text_drawn;
 UBYTE current_text_speed;
 UBYTE text_wait;
+UBYTE text_line_count;
+
 UBYTE avatar_enabled;
+
 UBYTE menu_enabled;
-UBYTE text_num_lines;
+UBYTE menu_index;
 
 unsigned char ui_text_data[80];
 
@@ -56,11 +59,13 @@ static UBYTE ui_tile_no     = 0;
 
 void ui_init() __banked {
     ui_set_pos(0, MENU_CLOSED_Y);
+
     avatar_enabled = 0;
     menu_enabled = 0;
-    text_num_lines = 0;
     win_speed = 1;
+    text_drawn = TRUE;
     current_text_speed = 1;
+
     SetBankedBkgData(192, 9, frame_image, (UBYTE)&__bank_frame_image);
 
     set_bkg_data(ui_while_tile, 1, ui_white);
@@ -185,4 +190,10 @@ void ui_draw_text_buffer_char() __banked {
             break;
     }
     ui_text_ptr++;
+}
+
+void ui_draw_menu_cursor() __banked {
+    UBYTE x = (avatar_enabled) ? 3 : 1;
+    fill_win_rect(x, 1, text_line_count, 1, ui_bg_tile);
+    fill_win_rect(x, menu_index + 1, 1, 1, ui_cursor_tile);
 }

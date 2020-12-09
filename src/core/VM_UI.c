@@ -58,6 +58,11 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
     }
     *d = 0, s++;
 
+    // count newlines (no wrapping)
+    text_line_count = 1;
+    for (UBYTE * i = ui_text_data; (*i); i++)
+        if (*i == '\n') text_line_count++;
+
     SWITCH_ROM_MBC1(_save);
     THIS->PC = s;
 }
@@ -67,9 +72,12 @@ void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_index) __banked {
     THIS;
     text_drawn = FALSE;
     text_wait = 0;
-    text_num_lines = 3;
     avatar_enabled = (avatar_index != 0);
-    ui_draw_frame(0, 0, 19, 4);
+    INT8 width = 20 - (win_dest_pos_x >> 3);
+    if (width > 2) {
+        // don't draw if too small 
+        ui_draw_frame(0, 0, width - 1, text_line_count);
+    }
 }
 
 // set position of overlayed window
@@ -85,7 +93,7 @@ void vm_overlay_hide() __banked {
 
 // wait until overlay window reaches destination
 void vm_overlay_wait(SCRIPT_CTX * THIS) __banked {
-    if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) {
+    if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y) || !(text_drawn)) {
         THIS->waitable = 1;
         THIS->PC -= 1;
     }
@@ -97,9 +105,15 @@ void vm_overlay_move_to(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE speed
     ui_move_to(pos_x << 3, pos_y << 3, speed);
 }
 
+// clears overlay window
+void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE color) __banked {
+    THIS;
+    fill_win_rect(0, 0, 20, 18, ((color) ? ui_while_tile : ui_black_tile));
+}
+
 // shows overlay
 void vm_overlay_show(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE color) __banked {
     THIS;
-    fill_win_rect(0, 0, 20, 18, ((color) ? ui_while_tile : ui_black_tile));
+    vm_overlay_clear(THIS, color);
     ui_set_pos(pos_x << 3, pos_y << 3);
 }

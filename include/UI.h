@@ -19,6 +19,9 @@
 #define ui_while_tile 0xC9u
 #define ui_black_tile 0xCAu
 
+#define ui_cursor_tile 0xCBu
+#define ui_bg_tile 0xC4u
+
 extern UBYTE win_pos_x;
 extern UBYTE win_pos_y;
 extern UBYTE win_dest_pos_x;
@@ -27,7 +30,8 @@ extern UBYTE win_speed;
 
 extern UBYTE text_drawn;
 extern UBYTE text_wait;
-extern UBYTE text_num_lines;
+extern UBYTE text_line_count;
+
 extern UBYTE avatar_enabled;
 
 extern unsigned char ui_text_data[80];

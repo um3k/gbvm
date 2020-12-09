@@ -283,3 +283,8 @@ OP_VM_OVERLAY_SHOW      = 0x25
 .macro VM_OVERLAY_SHOW X, Y, COLOR
         .db OP_VM_OVERLAY_SHOW, #<COLOR, #<Y, #<X
 .endm
+
+OP_VM_OVERLAY_CLEAR     = 0x26
+.macro VM_OVERLAY_CLEAR COLOR
+        .db OP_VM_OVERLAY_CLEAR, #<COLOR
+.endm

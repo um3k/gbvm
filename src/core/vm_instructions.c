@@ -44,4 +44,5 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_overlay_wait,           0}, // 0x23
     {vm_overlay_move_to,        3}, // 0x24
     {vm_overlay_show,           3}, // 0x25
+    {vm_overlay_clear,          1}, // 0x26
 };
