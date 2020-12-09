@@ -13,9 +13,9 @@ _SCRIPT_1::
         ; black window
         VM_OVERLAY_SHOW         0, 20, .UI_COLOR_BLACK
         VM_OVERLAY_MOVE_TO      0, 0, 1
-        VM_OVERLAY_WAIT
+        VM_OVERLAY_WAIT         .UI_MODAL
         VM_OVERLAY_MOVE_TO      0, 20, 1
-        VM_OVERLAY_WAIT
+        VM_OVERLAY_WAIT         .UI_MODAL
 
         ; init some variables on stack
         VM_RPN
@@ -47,11 +47,11 @@ _SCRIPT_1::
         VM_DISPLAY_TEXT         1       ; avatar 1
 
         ; wait for window to slide
-        VM_OVERLAY_WAIT
+        VM_OVERLAY_WAIT         .UI_MODAL
 
         ; slide out
         VM_OVERLAY_MOVE_TO      0, 18, 1
-        VM_OVERLAY_WAIT
+        VM_OVERLAY_WAIT         .UI_MODAL
 
         ; show menu
         VM_OVERLAY_SETPOS       20, 9
@@ -59,6 +59,6 @@ _SCRIPT_1::
             .asciz "option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
         VM_DISPLAY_TEXT         0       ; no avatars
-        VM_OVERLAY_WAIT
+        VM_OVERLAY_WAIT         .UI_MODAL
 
         VM_STOP

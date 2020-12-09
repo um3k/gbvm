@@ -197,3 +197,10 @@ void ui_draw_menu_cursor() __banked {
     fill_win_rect(x, 1, text_line_count, 1, ui_bg_tile);
     fill_win_rect(x, menu_index + 1, 1, 1, ui_cursor_tile);
 }
+
+void ui_run_modal() __banked {
+    while ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y) || !(text_drawn)) {
+        ui_update();
+        wait_vbl_done();
+    }    
+}

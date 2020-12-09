@@ -37,7 +37,8 @@ extern UBYTE avatar_enabled;
 extern unsigned char ui_text_data[80];
 
 void ui_init() __banked;
-void ui_update() __nonbanked; // critical path, __nonbanked for speed
+void ui_update() __nonbanked;  // critical path, __nonbanked for speed
+void ui_run_modal() __banked;  // process UI until closed
 
 inline void ui_set_pos(UBYTE x, UBYTE y) {
     win_pos_x = win_dest_pos_x = x;
