@@ -1,4 +1,8 @@
 CC = ../../gbdk/bin/lcc
+TEST_DIR = ./test
+TEST_FW	= $(TEST_DIR)/framework
+EMU	= ../../bgb/bgb
+TEST_CHK = python $(TEST_FW)/unit_checker.py
 
 CART_SIZE = 8
 
@@ -20,10 +24,13 @@ CCORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.c)))
 CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c))) 
 
 OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
 
 all:	$(TARGET) symbols
+test: pretest runtest
 
-.PHONY: clean release debug color profile
+.PHONY: clean release debug color profile test
+.SECONDARY: $(OBJS) 
 
 release:
 	$(eval CFLAGS += -Wf'--max-allocs-per-node 50000')
@@ -43,8 +50,6 @@ color:
 profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
-
-.SECONDARY: $(OBJS) 
 
 $(OBJDIR)/%.o:	src/core/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -68,12 +73,31 @@ $(ROM_BUILD_DIR)/%.gb:	$(OBJS)
 	mkdir -p $(ROM_BUILD_DIR)
 	$(CC) $(LFLAGS) -o $@ $^
 
+$(OBJDIR)/test_main.o: test/framework/main.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
 clean:
 	@echo "CLEANUP..."
 	rm -rf obj/*
 	rm -rf $(ROM_BUILD_DIR)
+	rm -f $(TEST_DIR)/*.noi
+	rm -f $(TEST_DIR)/*.map
+	rm -f $(TEST_DIR)/*.gb
+	rm -f $(TEST_DIR)/*.sna
+	rm -f $(TEST_DIR)/*.bmp	
 
 rom: $(TARGET)
 
 symbols:
 	python ./utils/noi2sym.py $(patsubst %.gb,%.noi,$(TARGET)) >$(patsubst %.gb,%.sym,$(TARGET))
+
+pretest: $(COREOBJS)
+	$(CC) -c -o $(OBJDIR)/test_main.o $(TEST_FW)/main.c
+
+runtest: $(TEST_DIR)/*.json
+	@echo "Running tests..."
+	@for file in $(patsubst %.json,%,$^) ; do \
+		$(CC) $(CFLAGS) $(LFLAGS) -o $${file}.gb $(OBJDIR)/test_main.o $(COREOBJS) $${file}.c; \
+		$(EMU) -set "DebugSrcBrk=1" -hf -stateonexit -screenonexit ./$${file}.bmp -rom $${file}.gb; \
+		$(TEST_CHK) $${file}.json $${file}.noi $${file}.sna $${file}.bmp ; \
+	done

@@ -1,0 +1,6 @@
+{
+  "description": "display actor in top left of screen",
+  "rules": [
+    "CHECKSCREEN('test2.png')"
+  ]
+}
