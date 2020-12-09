@@ -1,4 +1,4 @@
-#pragma bank 2
+#pragma bank 1
 
 #include <string.h>
 
@@ -61,7 +61,7 @@ void ui_init() __banked {
     text_num_lines = 0;
     win_speed = 1;
     current_text_speed = 1;
-    SetBankedBkgData(192, 9, frame_image, __bank_frame_image);
+    SetBankedBkgData(192, 9, frame_image, (UBYTE)&__bank_frame_image);
 
     set_bkg_data(ui_while_tile, 1, ui_white);
     set_bkg_data(ui_black_tile, 1, ui_black);
@@ -179,7 +179,7 @@ void ui_draw_text_buffer_char() __banked {
                 ui_width_left = ui_text_width; 
             }
             ui_width_left--;
-            SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), __bank_font_image);
+            SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), (UBYTE)&__bank_font_image);
             SetTile(ui_dest_ptr++, ui_tile_no);
             ui_tile_no++;
             break;

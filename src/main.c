@@ -1,7 +1,7 @@
 #include <gb/gb.h>
 #include <gb/font.h>
 
-#include "gfx.h"
+#include "BankData.h"
 #include "GameTime.h"
 #include "Actor.h"
 #include "Camera.h"
@@ -10,6 +10,8 @@
 #include "UI.h"
 
 #include "vm.h"
+
+#include "gfx.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
@@ -48,10 +50,9 @@ void process_VM() {
 void init_actors() {
     UBYTE i;
 
-    SWITCH_ROM_MBC1(2);
     // set_bkg_data(0, 186, tile_data);
     // set_bkg_tiles(0, 0, 20, 18, bg_data);
-    set_sprite_data(0, 24, sprite_1_data);
+    SetBankedSpriteData(0, 24, sprite_1_data, (UBYTE)&__bank_sprite_1_data);
 
     init_sprite_pool();
 

@@ -4,9 +4,9 @@
 ; .globl b_vm_actor_activate, _vm_actor_activate
 ; .globl b_vm_actor_set_dir, _vm_actor_set_dir
 
-.area _CODE_3
+.area _CODE_4
 
-___bank_SCRIPT_1 = 3
+___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::

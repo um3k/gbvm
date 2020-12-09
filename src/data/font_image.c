@@ -4,7 +4,7 @@
 
 #include "VM.h"
 
-const void __at(255) __bank_font_image;
+const void __at(3) __bank_font_image;
 
 const unsigned char font_image[] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

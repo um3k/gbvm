@@ -1,6 +1,6 @@
 CC = ../../gbdk/bin/lcc
 
-CART_SIZE = 4
+CART_SIZE = 8
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
