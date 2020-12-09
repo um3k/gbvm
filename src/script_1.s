@@ -12,6 +12,8 @@ ___bank_SCRIPT_1 = 3
 _SCRIPT_1::
         ; init some variables on stack
         VM_RPN
+            .R_INT8 2
+            .R_INT8 4           ; speed in variable
             .R_INT8 'f'
             .R_INT8 'o'
             .R_INT8 'x'
@@ -23,8 +25,10 @@ _SCRIPT_1::
 
         ; render text with all features
         VM_LOAD_TEXT            11
-            .dw 4, 2, .ARG6, .ARG5, .ARG4, 5, .ARG3, .ARG2, .ARG1, 2, .ARG0
-            .asciz "The %tquick%t red\n%c%c%c jumps over\nthe lazy brown\n%t%c%c%c%t %dx!"
+            .dw .ARG7, .ARG8, .ARG6, .ARG5, .ARG4, .ARG7, .ARG3, .ARG2, .ARG1, .ARG8, .ARG0
+            .asciz "The %tquick%t red\n%c%c%c \025jumps\022 over\nthe lazy brown\n%t%c%c%c%t %dx!"
+            ;           ^^ temp in var        ^^^^ temp hardcoded (octal)                    ^^ var itself
+            ;                          ^^ char in var                           ^^ CR
 
         ; dispose variables on stack
         VM_POP                  7

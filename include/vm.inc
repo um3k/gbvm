@@ -12,6 +12,8 @@
 .ARG5 = -6
 .ARG6 = -7
 .ARG7 = -8
+.ARG8 = -9
+.ARG9 = -10
 
 ; stops execution of context
 OP_VM_STOP         = 0x00

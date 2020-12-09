@@ -24,7 +24,7 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
         if (*s == '%') {
             s++;
             switch (*s) {
-                // variable by index
+                // variable value
                 case 'd':
                     idx = *((INT16 *)args);
                     if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
@@ -32,7 +32,7 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
                     s++;
                     args += 2u;
                     continue;
-                // char in variable
+                // char from variable
                 case 'c':
                     idx = *((INT16 *)args);
                     if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
@@ -40,9 +40,11 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
                     s++;
                     args += 2u;
                     continue;
-                // text tempo
+                // text tempo from variable
                 case 't':
-                    *d++ = *((UINT8 *)args) + 0x10u;
+                    idx = *((INT16 *)args);
+                    if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
+                    *d++ = (unsigned char)idx + 0x10u;
                     s++;
                     args += 2u;
                     continue;
