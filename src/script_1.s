@@ -56,7 +56,7 @@ _SCRIPT_1::
         ; show menu
         VM_OVERLAY_SETPOS       20, 9
         VM_LOAD_TEXT            0
-            .asciz "option1\noption2\noption3\noption4\noption5\noption6\ncancel"
+            .asciz "\020option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
         VM_DISPLAY_TEXT         0       ; no avatars
         VM_OVERLAY_WAIT         .UI_MODAL

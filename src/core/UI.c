@@ -201,6 +201,7 @@ void ui_draw_menu_cursor() __banked {
 void ui_run_modal() __banked {
     while ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y) || !(text_drawn)) {
         ui_update();
+        game_time++;
         wait_vbl_done();
     }    
 }
