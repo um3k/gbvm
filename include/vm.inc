@@ -276,3 +276,10 @@ OP_VM_OVERLAY_MOVE_TO   = 0x24
 .macro VM_OVERLAY_MOVE_TO X, Y, SPEED
         .db OP_VM_OVERLAY_MOVE_TO, #<SPEED, #<Y, #<X
 .endm
+
+OP_VM_OVERLAY_SHOW      = 0x25
+.UI_COLOR_BLACK         = 0
+.UI_COLOR_WHITE         = 1
+.macro VM_OVERLAY_SHOW X, Y, COLOR
+        .db OP_VM_OVERLAY_SHOW, #<COLOR, #<Y, #<X
+.endm

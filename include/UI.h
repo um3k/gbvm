@@ -15,6 +15,10 @@
 #define MENU_CANCEL_ON_LAST_OPTION 0x01U
 #define MENU_CANCEL_ON_B_PRESSED 0x02U
 
+#define ui_bkg_tile   0x07u
+#define ui_while_tile 0xC9u
+#define ui_black_tile 0xCAu
+
 extern UBYTE win_pos_x;
 extern UBYTE win_pos_y;
 extern UBYTE win_dest_pos_x;

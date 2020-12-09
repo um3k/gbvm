@@ -10,6 +10,13 @@ ___bank_SCRIPT_1 = 3
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+        ; black window
+        VM_OVERLAY_SHOW         0, 20, .UI_COLOR_BLACK
+        VM_OVERLAY_MOVE_TO      0, 0, 1
+        VM_OVERLAY_WAIT
+        VM_OVERLAY_MOVE_TO      0, 20, 1
+        VM_OVERLAY_WAIT
+
         ; init some variables on stack
         VM_RPN
             .R_INT8 2

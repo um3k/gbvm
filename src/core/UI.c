@@ -19,6 +19,12 @@
 #define ui_frame_r_tiles  0xC5u
 #define ui_frame_bg_tiles 0xC4u
 
+const unsigned char ui_white[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+const unsigned char ui_black[16] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+                                    0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 void ui_draw_text_buffer_char() __banked;
 
@@ -56,6 +62,9 @@ void ui_init() __banked {
     win_speed = 1;
     current_text_speed = 1;
     SetBankedBkgData(192, 9, frame_image, __bank_frame_image);
+
+    set_bkg_data(ui_while_tile, 1, ui_white);
+    set_bkg_data(ui_black_tile, 1, ui_black);
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {

@@ -96,3 +96,10 @@ void vm_overlay_move_to(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE speed
     THIS;
     ui_move_to(pos_x << 3, pos_y << 3, speed);
 }
+
+// shows overlay
+void vm_overlay_show(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE color) __banked {
+    THIS;
+    fill_win_rect(0, 0, 20, 18, ((color) ? ui_while_tile : ui_black_tile));
+    ui_set_pos(pos_x << 3, pos_y << 3);
+}
