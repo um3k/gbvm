@@ -1,4 +1,4 @@
-.include "vm.inc"
+.include "vm.i"
         
 .area _CODE_4
 
