@@ -1,9 +1,7 @@
-.include "vm.inc"
+.include "vm.i"
         
 .globl b_wait_frames, _wait_frames
-; .globl b_vm_actor_activate, _vm_actor_activate
 .globl ___bank_spritesheet_1, _spritesheet_1
-; .globl b_vm_actor_set_dir, _vm_actor_set_dir
 
 .area _CODE_4
 

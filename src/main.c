@@ -95,7 +95,7 @@ void init_actors() {
 
     actors[3].x = 32;
     actors[3].y = 32;
-    activate_actor(&actors[3]);
+//    activate_actor(&actors[3]);
 
     actors[5].x = 32;
     actors[5].y = 64;

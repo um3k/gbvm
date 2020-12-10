@@ -80,18 +80,12 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     return;
 }
 
-UBYTE vm_actor_activate(void * THIS, UBYTE start, UWORD * stack_frame) __banked {    
-    THIS, start;
-    actor_t *actor;
-    actor = &actors[stack_frame[0]];
-    activate_actor(actor);
-    return TRUE;
+void vm_actor_activate(void * THIS, UBYTE actor) __banked {    
+    THIS;
+    activate_actor(actors + actor);
 }
 
-UBYTE vm_actor_set_dir(void * THIS, UBYTE start, UWORD * stack_frame) __banked {
-    THIS, start;
-    actor_t *actor;
-    actor = &actors[stack_frame[0]];
-    actor_set_dir(actor, stack_frame[1], stack_frame[2]);
-    return TRUE;
+void vm_actor_set_dir(void * THIS, UBYTE actor, INT8 dir_x, INT8 dir_y) __banked {
+    THIS;
+    actor_set_dir(actors + actor, dir_x, dir_y);
 }
