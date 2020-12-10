@@ -8,6 +8,7 @@
 #include "data/font_image.h"
 #include "BankData.h"
 #include "Scroll.h"
+#include "Sprite.h"
 
 #define ui_frame_tl_tiles 0xC0u
 #define ui_frame_bl_tiles 0xC6u
@@ -23,7 +24,7 @@ const unsigned char ui_white[16] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x
                                     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 const unsigned char ui_black[16] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
                                     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-
+const unsigned char avatar_tiles[4] = {TEXT_BUFFER_START, TEXT_BUFFER_START + 2U, TEXT_BUFFER_START + 1U, TEXT_BUFFER_START + 3U};
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 void ui_draw_text_buffer_char() __banked;
@@ -144,7 +145,10 @@ void ui_draw_text_buffer_char() __banked {
         // character counter
         ui_width_left = ui_text_width;
         // tileno destination
-        ui_tile_no = TEXT_BUFFER_START;
+        ui_tile_no = TEXT_BUFFER_START;  
+        if (avatar_enabled) {
+            ui_tile_no += 4;
+        }    
     }
 
     switch (*ui_text_ptr) {
@@ -200,4 +204,16 @@ void ui_run_modal() __banked {
         game_time++;
         wait_vbl_done();
     }    
+}
+
+void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __nonbanked {
+    UBYTE *avatar_ui_ptr = GetWinAddr() + 32 + 1;
+    UBYTE avatar_tile = TEXT_BUFFER_START;
+    UBYTE _save = _current_bank;
+    SWITCH_ROM_MBC1(avatar_bank);
+    set_bkg_data(TEXT_BUFFER_START, AVATAR_TILE_SIZE, avatar->frames);
+    
+    SWITCH_ROM_MBC1(1);  // <-- Can't hard code a bank switch (is there a way to find bank of avatar_tiles?)
+    set_win_tiles(1, 1, 2, 2, avatar_tiles);
+    SWITCH_ROM_MBC1(_save);
 }
