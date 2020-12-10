@@ -6,22 +6,47 @@
 /**
  * Call set_bkg_data with data stored in banked memory
  * 
- * @param bank bank to read from
  * @param i first tile to write to
  * @param l number of tiles to write
  * @param ptr memory address of tile data within bank
+ * @param bank bank to read from
  */
 void SetBankedBkgData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
 
 /**
  * Call set_sprite_data with data stored in banked memory
  * 
- * @param bank bank to read from
  * @param i first tile to write to
  * @param l number of tiles to write
  * @param ptr memory address of tile data within bank
+ * @param bank bank to read from
  */
 void SetBankedSpriteData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
+
+/** 
+ * Sets a rectangular region of Tile Map entries for the Background layer.
+ * 
+ * @param x      X Start position in Background Map tile coordinates. Range 0 - 31
+ * @param y      Y Start position in Background Map tile coordinates. Range 0 - 31
+ * @param w      Width of area to set in tiles. Range 0 - 31
+ * @param h      Height of area to set in tiles.   Range 0 - 31
+ * @param tiles  Pointer to source Tile Map data
+ * @param bank   bank to read from
+ */
+void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank);
+
+/** 
+ * Sets a rectangular region of Tile Map entries for the Window layer.
+ * 
+ * @param x      X Start position in Window Map tile coordinates. Range 0 - 31
+ * @param y      Y Start position in Window Map tile coordinates. Range 0 - 31
+ * @param w      Width of area to set in tiles. Range 0 - 31
+ * @param h      Height of area to set in tiles.   Range 0 - 31
+ * @param tiles  Pointer to source Tile Map data
+ * @param bank   bank to read from
+ */
+void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank);
+
 
 /**
  * Read UBYTE from banked memory location
