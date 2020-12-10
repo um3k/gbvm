@@ -2,6 +2,7 @@
         
 .globl b_wait_frames, _wait_frames
 ; .globl b_vm_actor_activate, _vm_actor_activate
+.globl ___bank_spritesheet_1, _spritesheet_1
 ; .globl b_vm_actor_set_dir, _vm_actor_set_dir
 
 .area _CODE_4
@@ -33,7 +34,7 @@ _SCRIPT_1::
         ; render text with all features
         VM_LOAD_TEXT            11
             .dw .ARG7, .ARG8, .ARG6, .ARG5, .ARG4, .ARG7, .ARG3, .ARG2, .ARG1, .ARG8, .ARG0
-            .asciz "The %tquick%t red\n%c%c%c \025jumps\022 over\nthe lazy brown\n%t%c%c%c%t %dx!"
+            .asciz "The %tquick%t red\n%c%c%c \025jumps\022 over\nthe lazy brown\n%t%c%c%c%t %dx"
             ;           ^^ temp in var        ^^^^ temp hardcoded (octal)                    ^^ var itself
             ;                          ^^ char in var                           ^^ CR
 
@@ -44,7 +45,7 @@ _SCRIPT_1::
         VM_OVERLAY_MOVE_TO      0, 12, 1
 
         ; start displaying text
-        VM_DISPLAY_TEXT         1       ; avatar 1
+        VM_DISPLAY_TEXT         ___bank_spritesheet_1, _spritesheet_1       ; avatar 1
 
         ; wait for window to slide
         VM_OVERLAY_WAIT         .UI_MODAL
@@ -58,7 +59,7 @@ _SCRIPT_1::
         VM_LOAD_TEXT            0
             .asciz "\020option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
-        VM_DISPLAY_TEXT         0       ; no avatars
+        VM_DISPLAY_TEXT         0, 0       ; no avatars
         VM_OVERLAY_WAIT         .UI_NONMODAL
 
         VM_PUSH                 ^/(30*60)/      ; !!! always use escaping and brackets

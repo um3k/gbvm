@@ -5,8 +5,10 @@
 
 #include "vm.h"
 #include "UI.h"
+#include "Sprite.h"
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
+void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __nonbanked;
 
 // renders UI text into buffer
 void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonbanked {
@@ -68,15 +70,20 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
 }
 
 // start displaying text
-void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_index) __banked {
+void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar) __banked {
     THIS;
+
     text_drawn = FALSE;
     text_wait = 0;
-    avatar_enabled = (avatar_index != 0);
+    avatar_enabled = (avatar_bank != 0);
+
     INT8 width = 20 - (win_dest_pos_x >> 3);
     if (width > 2) {
         // don't draw if too small 
         ui_draw_frame(0, 0, width - 1, text_line_count);
+        if (avatar_enabled) {
+            ui_draw_avatar(avatar, avatar_bank);
+        }
     }
 }
 

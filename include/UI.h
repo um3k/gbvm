@@ -6,7 +6,7 @@
 #define TEXT_BUFFER_START 0xCCU
 #define AVATAR_WIDTH 2
 #define SELECTOR_WIDTH 1
-
+#define AVATAR_TILE_SIZE 4
 #define MENU_OPEN_Y 112
 #define WIN_LEFT_X 7
 #define MENU_CLOSED_Y (MAXWNDPOSY + 1U)
