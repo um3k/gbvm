@@ -8,7 +8,7 @@
 #include "Sprite.h"
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
-void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __nonbanked;
+void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __banked;
 
 // renders UI text into buffer
 void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonbanked {
