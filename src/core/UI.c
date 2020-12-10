@@ -209,7 +209,6 @@ void ui_run_modal() __banked {
 
 void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __banked {
     UBYTE *avatar_ui_ptr = GetWinAddr() + 32 + 1;
-    UBYTE avatar_tile = TEXT_BUFFER_START;
     SetBankedBkgData(TEXT_BUFFER_START, AVATAR_TILE_SIZE, avatar->frames, avatar_bank);
     set_win_tiles(1, 1, 2, 2, avatar_tiles);
 }
