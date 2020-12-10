@@ -290,3 +290,17 @@ OP_VM_OVERLAY_CLEAR     = 0x26
 .macro VM_OVERLAY_CLEAR COLOR
         .db OP_VM_OVERLAY_CLEAR, #<COLOR
 .endm
+
+OP_VM_ACTOR_ACTIVATE    = 0x27
+.macro VM_ACTOR_ACTIVATE ACTOR
+        .db OP_VM_ACTOR_ACTIVATE, #<ACTOR
+.endm
+
+OP_VM_ACTOR_SET_DIR     = 0x28
+.DIR_LEFT               = -1
+.DIR_RIGHT              = 1
+.DIR_UP                 = -1
+.DIR_DOWN               = 1
+.macro VM_ACTOR_SET_DIR ACTOR, DIR_X, DIR_Y
+        .db OP_VM_ACTOR_SET_DIR, #<DIR_Y, #<DIR_X, #<ACTOR
+.endm
