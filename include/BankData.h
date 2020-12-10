@@ -4,7 +4,7 @@
 #include <gb/gb.h>
 
 /**
- * Call set_bkg_data with data stored in banked memory
+ * Call set_bkg_data with data stored in banked memory (non-reentrant!)
  * 
  * @param i first tile to write to
  * @param l number of tiles to write
@@ -14,7 +14,7 @@
 void SetBankedBkgData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
 
 /**
- * Call set_sprite_data with data stored in banked memory
+ * Call set_sprite_data with data stored in banked memory (non-reentrant!)
  * 
  * @param i first tile to write to
  * @param l number of tiles to write
@@ -24,7 +24,7 @@ void SetBankedBkgData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
 void SetBankedSpriteData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
 
 /** 
- * Sets a rectangular region of Tile Map entries for the Background layer.
+ * Sets a rectangular region of Tile Map entries for the Background layer (non-reentrant!)
  * 
  * @param x      X Start position in Background Map tile coordinates. Range 0 - 31
  * @param y      Y Start position in Background Map tile coordinates. Range 0 - 31
@@ -36,7 +36,7 @@ void SetBankedSpriteData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
 void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank);
 
 /** 
- * Sets a rectangular region of Tile Map entries for the Window layer.
+ * Sets a rectangular region of Tile Map entries for the Window layer (non-reentrant!)
  * 
  * @param x      X Start position in Window Map tile coordinates. Range 0 - 31
  * @param y      Y Start position in Window Map tile coordinates. Range 0 - 31
@@ -49,7 +49,7 @@ void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles,
 
 
 /**
- * Read UBYTE from banked memory location
+ * Read UBYTE from banked memory location (non-reentrant!)
  * 
  * @param bank bank to read from
  * @param ptr memory address of data within bank
@@ -58,7 +58,7 @@ void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles,
 UBYTE ReadBankedUBYTE(UBYTE bank, unsigned char *ptr);
 
 /**
- * memcpy data from banked memory location
+ * memcpy data from banked memory location (non-reentrant!)
  * 
  * @param bank bank to read from
  * @param to destination to write fetched data
