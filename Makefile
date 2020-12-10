@@ -73,7 +73,7 @@ $(ROM_BUILD_DIR)/%.gb:	$(OBJS)
 	mkdir -p $(ROM_BUILD_DIR)
 	$(CC) $(LFLAGS) -o $@ $^
 
-$(OBJDIR)/test_main.o: test/framework/main.c
+$(OBJDIR)/test_main.o: test/framework/test_main.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
