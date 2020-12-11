@@ -10,7 +10,7 @@ _SCRIPT_5::
         VM_PUSH                 3       ; Actor 3
         VM_PUSH                 0       ; X = 80
         VM_PUSH                 32      ; Y = 80
-        VM_PUSH                 ^\(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)\ ; attributes
+        VM_PUSH                 ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/ ; attributes
 1$:
         VM_ACTOR_ACTIVATE       .ARG3
         ; Actor Move To
