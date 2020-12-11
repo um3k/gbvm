@@ -48,5 +48,5 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_actor_activate,         2}, // 0x27
     {vm_actor_set_dir,          4}, // 0x28
     {vm_actor_deactivate,       2}, // 0x29
-    {vm_actor_set_anim,         3}, // 0x2A
+    {vm_actor_set_anim,         4}, // 0x2A
 };
