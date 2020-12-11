@@ -82,6 +82,11 @@ void vm_actor_activate(SCRIPT_CTX * THIS, INT16 idx) __banked {
     activate_actor(actors + *n_actor);
 }
 
+void vm_actor_deactivate(SCRIPT_CTX * THIS, INT16 idx) __banked {    
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    deactivate_actor(actors + *n_actor);
+}
+
 void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, INT8 dir_x, INT8 dir_y) __banked {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
     actor_set_dir(actors + *n_actor, dir_x, dir_y);

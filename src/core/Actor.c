@@ -150,10 +150,6 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
     }
 }
 
-void actor_set_anim(actor_t *actor, UBYTE animate) __banked {
-    actor->animate = animate;
-}
-
 void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
 {
     actor->dir_x = dir_x;
