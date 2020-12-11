@@ -3,8 +3,11 @@
 
 #include <gb/gb.h>
 
-#define MAX_ACTORS 20
-#define MAX_ACTORS_ACTIVE 12
+#define MAX_ACTORS            20
+#define MAX_ACTORS_ACTIVE     12
+
+#define ACTOR_ATTR_H_FIRST    0x01
+#define ACTOR_ATTR_CHECK_COLL 0x02
 
 typedef struct actor_t
 {
