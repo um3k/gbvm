@@ -91,3 +91,8 @@ void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, INT8 dir_x, INT8 dir_y) __ba
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
     actor_set_dir(actors + *n_actor, dir_x, dir_y);
 }
+
+void vm_actor_set_anim(SCRIPT_CTX * THIS, INT16 idx, INT8 animate) __banked {
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    actor_set_anim(actors + *n_actor, animate);
+}
