@@ -49,7 +49,7 @@ void update_actors() __banked
         move_sprite(actor->sprite_no + 1, screen_x + 8, screen_y);
 
         // Check if should animate
-        if (((game_time & 0x3) == 0) && (actor->animate)) {
+        if ((actor->animate) && ((game_time & 0x3) == 0)) {
           // Check reached animation tick frame
             if ((game_time & actor->anim_tick) == 0) {
                 actor->frame += 4;
