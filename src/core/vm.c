@@ -291,6 +291,7 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 case '^': *A = *A  ^  *B; break;
                 // unary
                 case '@': *B = abs(*B); continue;
+                case '~': *B = ~(*B);   continue;
                 // terminator
                 default:
                     SWITCH_ROM_MBC1(_save);         // restore bank

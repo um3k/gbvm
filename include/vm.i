@@ -169,7 +169,8 @@ OP_VM_RPN        = 0x15
 .B_AND           = '&'
 .B_OR            = '|'
 .B_XOR           = '^'
-.ABS             = '@' 
+.B_NOT           = '~' 
+.ABS             = '@'
 .macro VM_RPN
         .db OP_VM_RPN
 .endm
