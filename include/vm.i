@@ -272,8 +272,11 @@ OP_VM_OVERLAY_HIDE      = 0x22
 OP_VM_OVERLAY_WAIT      = 0x23
 .UI_NONMODAL            = 0
 .UI_MODAL               = 1
-.macro VM_OVERLAY_WAIT IS_MODAL
-        .db OP_VM_OVERLAY_WAIT, #<IS_MODAL
+.UI_WAIT_NONE           = 0
+.UI_WAIT_WINDOW         = 1
+.UI_WAIT_TEXT           = 2
+.macro VM_OVERLAY_WAIT IS_MODAL, WAIT_FLAGS
+        .db OP_VM_OVERLAY_WAIT, #<WAIT_FLAGS, #<IS_MODAL
 .endm
 
 OP_VM_OVERLAY_MOVE_TO   = 0x24

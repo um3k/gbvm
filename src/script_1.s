@@ -12,9 +12,9 @@ _SCRIPT_1::
         ; black window
         VM_OVERLAY_SHOW         0, 20, .UI_COLOR_BLACK
         VM_OVERLAY_MOVE_TO      0, 0, 1
-        VM_OVERLAY_WAIT         .UI_NONMODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL, .UI_WAIT_WINDOW
         VM_OVERLAY_MOVE_TO      0, 20, 1
-        VM_OVERLAY_WAIT         .UI_NONMODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL, .UI_WAIT_WINDOW
 
         ; init some variables on stack
         VM_RPN
@@ -46,11 +46,11 @@ _SCRIPT_1::
         VM_DISPLAY_TEXT         ___bank_spritesheet_1, _spritesheet_1       ; avatar 1
 
         ; wait for window to slide
-        VM_OVERLAY_WAIT         .UI_MODAL
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; slide out
         VM_OVERLAY_MOVE_TO      0, 18, 1
-        VM_OVERLAY_WAIT         .UI_MODAL
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
 
         ; show menu
         VM_OVERLAY_SETPOS       20, 9
@@ -58,12 +58,12 @@ _SCRIPT_1::
             .asciz "\020option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
         VM_DISPLAY_TEXT         0, 0       ; no avatars
-        VM_OVERLAY_WAIT         .UI_NONMODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         VM_PUSH                 ^/(30*60)/      ; !!! always use escaping and brackets
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         VM_OVERLAY_MOVE_TO      20, 9, 1
-        VM_OVERLAY_WAIT         .UI_NONMODAL
+        VM_OVERLAY_WAIT         .UI_NONMODAL, .UI_WAIT_WINDOW
 
         VM_STOP

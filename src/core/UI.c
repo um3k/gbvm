@@ -199,12 +199,22 @@ void ui_draw_menu_cursor() __banked {
     fill_win_rect(x, menu_index + 1, 1, 1, ui_cursor_tile);
 }
 
-void ui_run_modal() __banked {
-    while ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y) || !(text_drawn)) {
+void ui_run_modal(UBYTE wait_flags) __banked {
+    UBYTE fail;
+    do {
+        fail = 0;
+    
+        if (wait_flags & UI_WAIT_WINDOW)
+            if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) fail = 1;
+        if (wait_flags & UI_WAIT_TEXT)
+            if (!text_drawn) fail = 1;
+
+        if (!fail) return;
+        
         ui_update();
         game_time++;
         wait_vbl_done();
-    }    
+    } while (fail);    
 }
 
 void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __banked {

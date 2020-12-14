@@ -38,7 +38,11 @@ extern unsigned char ui_text_data[80];
 
 void ui_init() __banked;
 void ui_update() __nonbanked;  // critical path, __nonbanked for speed
-void ui_run_modal() __banked;  // process UI until closed
+
+#define UI_WAIT_WINDOW  1
+#define UI_WAIT_TEXT    2
+
+void ui_run_modal(UBYTE wait_flags) __banked;  // process UI until closed
 
 inline void ui_set_pos(UBYTE x, UBYTE y) {
     win_pos_x = win_dest_pos_x = x;
