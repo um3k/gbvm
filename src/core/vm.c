@@ -399,7 +399,7 @@ __asm
         ldh (__current_bank), a
         ld (0x2000), a          ; switch bank with vm code
         
-        ld a, (HL+)             ; load current command and return if terminator
+        ld a, (hl+)             ; load current command and return if terminator
         ld e, a
         or a
         jr z, 3$
@@ -423,15 +423,15 @@ __asm
         ld c, (hl)              ; bc = fn
 
         pop hl                  ; hl points to the next VM instruction or a first byte of the args
-        ld d, e                 ; d = param count
+        ld d, e                 ; d = arg count
         srl d
-        jr nc, 4$
-        ld a, (hl+)
+        jr nc, 4$               ; d is even?
+        ld a, (hl+)             ; copy one arg onto stack
         push af
         inc sp
 4$:
-        jr z, 1$
-2$:                             ; copy args onto stack
+        jr z, 1$                ; only one arg?
+2$:                             
         ld a, (hl+)
         push af
         inc sp
@@ -439,7 +439,7 @@ __asm
         push af
         inc sp
         dec d
-        jr nz, 2$
+        jr nz, 2$               ; loop through remaining args, copy 2 bytes at a time
 1$:
         push bc                 ; save function pointer
 
