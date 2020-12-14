@@ -275,6 +275,9 @@ OP_VM_OVERLAY_WAIT      = 0x23
 .UI_WAIT_NONE           = 0
 .UI_WAIT_WINDOW         = 1
 .UI_WAIT_TEXT           = 2
+.UI_WAIT_BTN_A          = 4
+.UI_WAIT_BTN_B          = 8
+.UI_WAIT_BTN_ANY        = 16
 .macro VM_OVERLAY_WAIT IS_MODAL, WAIT_FLAGS
         .db OP_VM_OVERLAY_WAIT, #<WAIT_FLAGS, #<IS_MODAL
 .endm

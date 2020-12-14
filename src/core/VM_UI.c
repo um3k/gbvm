@@ -6,6 +6,7 @@
 #include "vm.h"
 #include "UI.h"
 #include "Sprite.h"
+#include "Input.h"
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 void ui_draw_avatar(spritesheet_t *avatar, UBYTE avatar_bank) __banked;
@@ -110,6 +111,12 @@ void vm_overlay_wait(SCRIPT_CTX * THIS, UBYTE is_modal, UBYTE wait_flags) __bank
         if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) fail = 1;
     if (wait_flags & UI_WAIT_TEXT)
         if (!text_drawn) fail = 1;
+    if (wait_flags & UI_WAIT_BTN_A)
+        if (!INPUT_A_PRESSED) fail = 1;
+    if (wait_flags & UI_WAIT_BTN_B)
+        if (!INPUT_B_PRESSED) fail = 1;
+    if (wait_flags & UI_WAIT_BTN_ANY)
+        if (!INPUT_ANY_PRESSED) fail = 1;
 
     if (fail) {
         THIS->waitable = 1;

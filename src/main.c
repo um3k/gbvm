@@ -8,6 +8,7 @@
 #include "LinkedList.h"
 #include "Sprite.h"
 #include "UI.h"
+#include "Input.h"
 
 #include "vm.h"
 
@@ -47,6 +48,7 @@ void process_VM() {
         switch (ScriptRunnerUpdate()) {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
+                input_update();
                 update_actors();
                 ui_update();
                 game_time++;

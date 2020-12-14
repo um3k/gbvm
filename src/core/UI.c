@@ -9,6 +9,7 @@
 #include "BankData.h"
 #include "Scroll.h"
 #include "Sprite.h"
+#include "Input.h"
 
 #define ui_frame_tl_tiles 0xC0u
 #define ui_frame_bl_tiles 0xC6u
@@ -208,9 +209,16 @@ void ui_run_modal(UBYTE wait_flags) __banked {
             if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) fail = 1;
         if (wait_flags & UI_WAIT_TEXT)
             if (!text_drawn) fail = 1;
+        if (wait_flags & UI_WAIT_BTN_A)
+            if (!INPUT_A_PRESSED) fail = 1;
+        if (wait_flags & UI_WAIT_BTN_B)
+            if (!INPUT_B_PRESSED) fail = 1;
+        if (wait_flags & UI_WAIT_BTN_ANY)
+            if (!INPUT_ANY_PRESSED) fail = 1;
 
         if (!fail) return;
         
+        input_update();
         ui_update();
         game_time++;
         wait_vbl_done();

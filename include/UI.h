@@ -41,6 +41,9 @@ void ui_update() __nonbanked;  // critical path, __nonbanked for speed
 
 #define UI_WAIT_WINDOW  1
 #define UI_WAIT_TEXT    2
+#define UI_WAIT_BTN_A   4
+#define UI_WAIT_BTN_B   8
+#define UI_WAIT_BTN_ANY 16
 
 void ui_run_modal(UBYTE wait_flags) __banked;  // process UI until closed
 

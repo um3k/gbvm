@@ -46,7 +46,7 @@ _SCRIPT_1::
         VM_DISPLAY_TEXT         ___bank_spritesheet_1, _spritesheet_1       ; avatar 1
 
         ; wait for window to slide
-        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
 
         ; slide out
         VM_OVERLAY_MOVE_TO      0, 18, 1
