@@ -264,6 +264,9 @@ OP_VM_SET_CONST_INT8 = 0x21
 .macro VM_SET_CONST_INT8 ADDR, V
         .db OP_VM_SET_CONST_INT8, #<V, #>ADDR, #<ADDR
 .endm
+.macro VM_SET_CONST_UINT8 ADDR, V
+        .db OP_VM_SET_CONST_INT8, #<V, #>ADDR, #<ADDR
+.endm
 
 ; sets int8 from VM RAM. second argument is a VM RAM address of int8
 OP_VM_SET_CONST_INT16 = 0x22
