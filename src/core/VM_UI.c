@@ -75,7 +75,9 @@ void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar
     THIS;
 
     text_drawn = FALSE;
-    text_wait = 0;
+    text_wait  = FALSE;
+    text_ff    = FALSE;
+    
     avatar_enabled = (avatar_bank != 0);
 
     INT8 width = 20 - (win_dest_pos_x >> 3);

@@ -69,6 +69,9 @@
 /* TRUE on first frame that Select button is pressed */
 #define INPUT_SELECT_PRESSED ((joy & J_SELECT) && !(last_joy & J_SELECT))
 
+/* resets the input */
+#define INPUT_RESET (last_joy = joy)
+
 #define NUM_INPUTS 8
 
 #define INPUT_DPAD 0xF

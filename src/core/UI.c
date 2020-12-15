@@ -47,6 +47,9 @@ UBYTE avatar_enabled;
 UBYTE menu_enabled;
 UBYTE menu_index;
 
+UBYTE text_ff_joypad = 1;
+UBYTE text_ff; 
+
 unsigned char ui_text_data[80];
 
 // char printer internals
@@ -114,14 +117,18 @@ void ui_update() __nonbanked {
     if (text_drawn) return;
     // too fast - wait
     if (game_time & current_text_speed) return;
-    // render next char
+    // render next charsss
     do {
         ui_draw_text_buffer_char();
-    } while ((current_text_speed == 0) && (!text_drawn));
+    } while (((text_ff) || (current_text_speed == 0)) && (!text_drawn));
+    
+    if (text_ff) INPUT_RESET; 
 }
 
 void ui_draw_text_buffer_char() __banked {
-    if (text_wait != 0) {
+    if ((text_ff_joypad) && (INPUT_A)) text_ff = TRUE;
+
+    if ((!text_ff) && (text_wait != 0)) {
         text_wait--;
         return;
     }

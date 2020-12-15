@@ -34,6 +34,9 @@ extern UBYTE text_line_count;
 
 extern UBYTE avatar_enabled;
 
+extern UBYTE text_ff_joypad;
+extern UBYTE text_ff;
+
 extern unsigned char ui_text_data[80];
 
 void ui_init() __banked;
