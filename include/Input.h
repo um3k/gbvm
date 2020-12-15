@@ -36,6 +36,9 @@
 /* TRUE if B button is being held */
 #define INPUT_B (joy & J_B)
 
+/* TRUE if A OR B button is being held */
+#define INPUT_A_OR_B ((joy & (J_A | J_B)) != 0)
+
 /* TRUE if Start button is being held */
 #define INPUT_START (joy & J_START)
 

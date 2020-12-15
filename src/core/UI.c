@@ -116,17 +116,15 @@ void ui_update() __nonbanked {
     // all drawn - nothing to do
     if (text_drawn) return;
     // too fast - wait
-    if (game_time & current_text_speed) return;
+    if ((!INPUT_A_OR_B) && game_time & current_text_speed) return;
     // render next char
     do {
         ui_draw_text_buffer_char();
     } while (((text_ff) || (current_text_speed == 0)) && (!text_drawn));
-    
-    if (text_ff) INPUT_RESET; 
 }
 
 void ui_draw_text_buffer_char() __banked {
-    if ((text_ff_joypad) && (INPUT_A)) text_ff = TRUE;
+    if ((text_ff_joypad) && (INPUT_A_OR_B)) text_ff = TRUE;
 
     if ((!text_ff) && (text_wait != 0)) {
         text_wait--;
@@ -225,10 +223,10 @@ void ui_run_modal(UBYTE wait_flags) __banked {
 
         if (!fail) return;
         
-        input_update();
         ui_update();
         game_time++;
         wait_vbl_done();
+        input_update();
     } while (fail);    
 }
 
