@@ -35,18 +35,48 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_get_uint8,              4}, // 0x1B
     {vm_get_int8,               4}, // 0x1C
     {vm_get_int16,              4}, // 0x1D
+    {vm_set_uint8,              4}, // 0x1E
+    {vm_set_int8,               4}, // 0x1F
+    {vm_set_int16,              4}, // 0x20
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
 
-    {vm_actor_move_to,          2}, // 0x1E
-    {vm_load_text,              1}, // 0x1F
-    {vm_display_text,           3}, // 0x20
-    {vm_overlay_setpos,         2}, // 0x21
-    {vm_overlay_hide,           0}, // 0x22
-    {vm_overlay_wait,           2}, // 0x23
-    {vm_overlay_move_to,        3}, // 0x24
-    {vm_overlay_show,           3}, // 0x25
-    {vm_overlay_clear,          1}, // 0x26
-    {vm_actor_activate,         2}, // 0x27
-    {vm_actor_set_dir,          4}, // 0x28
-    {vm_actor_deactivate,       2}, // 0x29
-    {vm_actor_set_anim,         4}, // 0x2A
+    {vm_actor_move_to,          2}, // 0x30
+    {vm_actor_activate,         2}, // 0x31
+    {vm_actor_set_dir,          4}, // 0x32
+    {vm_actor_deactivate,       2}, // 0x33
+    {vm_actor_set_anim,         4}, // 0x34
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+
+    {vm_load_text,              1}, // 0x40
+    {vm_display_text,           3}, // 0x41
+    {vm_overlay_setpos,         2}, // 0x42
+    {vm_overlay_hide,           0}, // 0x43
+    {vm_overlay_wait,           2}, // 0x44
+    {vm_overlay_move_to,        3}, // 0x45
+    {vm_overlay_show,           3}, // 0x46
+    {vm_overlay_clear,          1}, // 0x47
 };

@@ -241,36 +241,79 @@ OP_VM_GET_INT16  = 0x1D
         .db OP_VM_GET_INT16, #>ADDR, #<ADDR, #>IDXA, #<IDXA
 .endm
 
+; sets unsigned int8 from VM RAM. second argument is a VM RAM address of unsigned int8
+OP_VM_SET_UINT8 = 0x1E
+.macro VM_SET_UINT8 ADDR, IDXA
+        .db OP_VM_SET_UINT8, #>IDXA, #<IDXA, #>ADDR, #<ADDR
+.endm
+
+; sets int8 from VM RAM. second argument is a VM RAM address of int8
+OP_VM_SET_INT8  = 0x1F
+.macro VM_SET_INT8 ADDR, IDXA
+        .db OP_VM_SET_INT8, #>IDXA, #<IDXA, #>ADDR, #<ADDR
+.endm
+
+; sets int8 from VM RAM. second argument is a VM RAM address of int8
+OP_VM_SET_INT16  = 0x20
+.macro VM_SET_INT16 ADDR, IDXA
+        .db OP_VM_SET_INT16, #>IDXA, #<IDXA, #>ADDR, #<ADDR
+.endm
+
 ; --- engine-specific instructions ------------------------------------------
 
-OP_VM_ACTOR_MOVE_TO     = 0x1E
+OP_VM_ACTOR_MOVE_TO     = 0x30
 .ACTOR_ATTR_H_FIRST     = 0x01
 .ACTOR_ATTR_CHECK_COLL  = 0x02
 .macro VM_ACTOR_MOVE_TO IDX
         .db OP_VM_ACTOR_MOVE_TO, #>IDX, #<IDX
 .endm
 
-OP_VM_LOAD_TEXT         = 0x1F
+OP_VM_ACTOR_ACTIVATE    = 0x31
+.macro VM_ACTOR_ACTIVATE ACTOR
+        .db OP_VM_ACTOR_ACTIVATE, #>ACTOR, #<ACTOR
+.endm
+
+OP_VM_ACTOR_SET_DIR     = 0x32
+.DIR_LEFT               = -1
+.DIR_RIGHT              = 1
+.DIR_UP                 = -1
+.DIR_DOWN               = 1
+.macro VM_ACTOR_SET_DIR ACTOR, DIR_X, DIR_Y
+        .db OP_VM_ACTOR_SET_DIR, #<DIR_Y, #<DIR_X, #>ACTOR, #<ACTOR
+.endm
+
+OP_VM_ACTOR_DEACTIVATE  = 0x33
+.macro VM_ACTOR_DEACTIVATE ACTOR
+        .db OP_VM_ACTOR_DEACTIVATE, #>ACTOR, #<ACTOR
+.endm
+
+OP_VM_ACTOR_SET_ANIM    = 0x34
+.macro VM_ACTOR_SET_ANIM ACTOR, ANIM
+        .db OP_VM_ACTOR_SET_ANIM, #>ANIM, #<ANIM, #>ACTOR, #<ACTOR
+.endm
+
+
+OP_VM_LOAD_TEXT         = 0x40
 .macro VM_LOAD_TEXT ARG0
         .db OP_VM_LOAD_TEXT, #<ARG0
 .endm
 
-OP_VM_DISPLAY_TEXT      = 0x20
+OP_VM_DISPLAY_TEXT      = 0x41
 .macro VM_DISPLAY_TEXT AVATAR_BANK, AVATAR
         .db OP_VM_DISPLAY_TEXT, #>AVATAR, #<AVATAR, #<AVATAR_BANK
 .endm
 
-OP_VM_OVERLAY_SETPOS    = 0x21
+OP_VM_OVERLAY_SETPOS    = 0x42
 .macro VM_OVERLAY_SETPOS X, Y
         .db OP_VM_OVERLAY_SETPOS, #<Y, #<X
 .endm
 
-OP_VM_OVERLAY_HIDE      = 0x22
+OP_VM_OVERLAY_HIDE      = 0x43
 .macro VM_OVERLAY_HIDE
         .db OP_VM_OVERLAY_HIDE
 .endm
 
-OP_VM_OVERLAY_WAIT      = 0x23
+OP_VM_OVERLAY_WAIT      = 0x44
 .UI_NONMODAL            = 0
 .UI_MODAL               = 1
 .UI_WAIT_NONE           = 0
@@ -283,43 +326,20 @@ OP_VM_OVERLAY_WAIT      = 0x23
         .db OP_VM_OVERLAY_WAIT, #<WAIT_FLAGS, #<IS_MODAL
 .endm
 
-OP_VM_OVERLAY_MOVE_TO   = 0x24
+OP_VM_OVERLAY_MOVE_TO   = 0x45
 .macro VM_OVERLAY_MOVE_TO X, Y, SPEED
         .db OP_VM_OVERLAY_MOVE_TO, #<SPEED, #<Y, #<X
 .endm
 
-OP_VM_OVERLAY_SHOW      = 0x25
+OP_VM_OVERLAY_SHOW      = 0x46
 .UI_COLOR_BLACK         = 0
 .UI_COLOR_WHITE         = 1
 .macro VM_OVERLAY_SHOW X, Y, COLOR
         .db OP_VM_OVERLAY_SHOW, #<COLOR, #<Y, #<X
 .endm
 
-OP_VM_OVERLAY_CLEAR     = 0x26
+OP_VM_OVERLAY_CLEAR     = 0x47
 .macro VM_OVERLAY_CLEAR COLOR
         .db OP_VM_OVERLAY_CLEAR, #<COLOR
 .endm
 
-OP_VM_ACTOR_ACTIVATE    = 0x27
-.macro VM_ACTOR_ACTIVATE ACTOR
-        .db OP_VM_ACTOR_ACTIVATE, #>ACTOR, #<ACTOR
-.endm
-
-OP_VM_ACTOR_SET_DIR     = 0x28
-.DIR_LEFT               = -1
-.DIR_RIGHT              = 1
-.DIR_UP                 = -1
-.DIR_DOWN               = 1
-.macro VM_ACTOR_SET_DIR ACTOR, DIR_X, DIR_Y
-        .db OP_VM_ACTOR_SET_DIR, #<DIR_Y, #<DIR_X, #>ACTOR, #<ACTOR
-.endm
-
-OP_VM_ACTOR_DEACTIVATE  = 0x29
-.macro VM_ACTOR_DEACTIVATE ACTOR
-        .db OP_VM_ACTOR_DEACTIVATE, #>ACTOR, #<ACTOR
-.endm
-
-OP_VM_ACTOR_SET_ANIM    = 0x2A
-.macro VM_ACTOR_SET_ANIM ACTOR, ANIM
-        .db OP_VM_ACTOR_SET_ANIM, #>ANIM, #<ANIM, #>ACTOR, #<ACTOR
-.endm

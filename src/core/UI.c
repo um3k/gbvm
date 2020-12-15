@@ -117,7 +117,7 @@ void ui_update() __nonbanked {
     if (text_drawn) return;
     // too fast - wait
     if (game_time & current_text_speed) return;
-    // render next charsss
+    // render next char
     do {
         ui_draw_text_buffer_char();
     } while (((text_ff) || (current_text_speed == 0)) && (!text_drawn));

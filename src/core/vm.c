@@ -373,6 +373,24 @@ void vm_get_int16(SCRIPT_CTX * THIS, INT16 idxA, INT16 * addr) __banked {
     if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *A = *addr;
 }
+// sets unsigned int8 in RAM by address
+void vm_set_uint8(SCRIPT_CTX * THIS, UINT8 * addr, INT16 idxA) __banked {
+    INT16 * A;
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    *addr = *A;
+}
+// sets int8 in RAM by address
+void vm_set_int8(SCRIPT_CTX * THIS, INT8 * addr, INT16 idxA) __banked {
+    INT16 * A;
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    *addr = *A;
+}
+// sets int16 in RAM by address
+void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) __banked {
+    INT16 * A;
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    *addr = *A;
+}
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active
