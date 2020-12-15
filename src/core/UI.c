@@ -46,6 +46,7 @@ UBYTE avatar_enabled;
 
 UBYTE menu_enabled;
 UBYTE menu_index;
+UBYTE menu_item_count;
 
 UBYTE text_ff_joypad = 1;
 UBYTE text_ff; 
@@ -76,6 +77,8 @@ void ui_init() __banked {
 
     set_bkg_data(ui_while_tile, 1, ui_white);
     set_bkg_data(ui_black_tile, 1, ui_black);
+
+    set_bkg_data(ui_cursor_tile, 1, ui_black);
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
@@ -203,8 +206,34 @@ void ui_draw_text_buffer_char() __banked {
 
 void ui_draw_menu_cursor() __banked {
     UBYTE x = (avatar_enabled) ? 3 : 1;
-    fill_win_rect(x, 1, text_line_count, 1, ui_bg_tile);
+    fill_win_rect(x, 1, 1, menu_item_count, ui_bg_tile);
     fill_win_rect(x, menu_index + 1, 1, 1, ui_cursor_tile);
+}
+
+INT8 ui_run_menu() __banked {
+    // no menu items
+    if (menu_item_count == 0) return 0;
+    // run menu
+    menu_index = 0;
+    ui_draw_menu_cursor();
+    while (1) {
+        if (INPUT_UP_PRESSED) {
+            if (menu_index > 0) menu_index--; else menu_index = menu_item_count - 1;
+            ui_draw_menu_cursor();
+        } else if (INPUT_DOWN_PRESSED) {
+            menu_index++;
+            if (menu_index >= menu_item_count) menu_index = 0;
+            ui_draw_menu_cursor();
+        } else if (INPUT_A_PRESSED) {
+            return menu_index;
+        } else if (INPUT_B_PRESSED) {
+            return menu_item_count - 1;
+        }
+        input_update();
+        ui_update();
+        game_time++;
+        wait_vbl_done();
+    };
 }
 
 void ui_run_modal(UBYTE wait_flags) __banked {
