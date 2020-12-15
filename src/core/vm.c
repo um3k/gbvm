@@ -391,6 +391,16 @@ void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) __banked {
     if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *addr = *A;
 }
+// sets unsigned int8 in RAM by address
+void vm_set_const_int8(SCRIPT_CTX * THIS, UINT8 * addr, UINT8 v) __banked {
+    THIS;
+    *addr = v;
+}
+// sets int16 in RAM by address
+void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) __banked {
+    THIS;
+    *addr = v;
+}
 
 
 // executes one step in the passed context

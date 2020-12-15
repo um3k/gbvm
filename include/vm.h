@@ -94,6 +94,8 @@ void vm_get_int16(SCRIPT_CTX * THIS, INT16 idxA, INT16 * addr) __banked;
 void vm_set_uint8(SCRIPT_CTX * THIS, UINT8 * addr, INT16 idxA) __banked;
 void vm_set_int8(SCRIPT_CTX * THIS, INT8 * addr, INT16 idxA) __banked;
 void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) __banked;
+void vm_set_const_int8(SCRIPT_CTX * THIS, UINT8 * addr, UINT8 v) __banked;
+void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) __banked;
 
 // return zero if script end
 // bank with VM code must be active

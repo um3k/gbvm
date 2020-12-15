@@ -38,8 +38,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_set_uint8,              4}, // 0x1E
     {vm_set_int8,               4}, // 0x1F
     {vm_set_int16,              4}, // 0x20
-    {0, 0},
-    {0, 0},
+    {vm_set_const_int8,         3}, // 0x21
+    {vm_set_const_int16,        4}, // 0x22
     {0, 0},
     {0, 0},
     {0, 0},
