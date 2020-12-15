@@ -14,7 +14,7 @@ _SCRIPT_1::
             .asciz "Hello World\nHello World"
 
         ; move window to 12 tiles by Y
-        VM_OVERLAY_MOVE_TO      0, 13, 1
+        VM_OVERLAY_MOVE_TO      0, 14, 1
 
         ; start displaying text
         VM_DISPLAY_TEXT         0, 0, 0    ; no avatar
@@ -34,7 +34,7 @@ _SCRIPT_1::
             .asciz "GLOBAL SLOW!!!\n\022Faster!!!"
 
         ; move window to 12 tiles by Y
-        VM_OVERLAY_MOVE_TO      0, 13, 1
+        VM_OVERLAY_MOVE_TO      0, 14, 1
 
         ; start displaying text
         VM_DISPLAY_TEXT         0, 0, 0    ; no avatar
