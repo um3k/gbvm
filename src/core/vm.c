@@ -391,6 +391,8 @@ void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) __banked {
     if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *addr = *A;
 }
+
+
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active

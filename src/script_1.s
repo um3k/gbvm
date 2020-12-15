@@ -43,7 +43,7 @@ _SCRIPT_1::
         VM_OVERLAY_MOVE_TO      0, 12, 1
 
         ; start displaying text
-        VM_DISPLAY_TEXT         ___bank_spritesheet_1, _spritesheet_1       ; avatar 1
+        VM_DISPLAY_TEXT         ___bank_spritesheet_1, _spritesheet_1, 0    ; avatar 1
 
         ; wait for window to slide
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
@@ -57,8 +57,12 @@ _SCRIPT_1::
         VM_LOAD_TEXT            0
             .asciz "\020option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
-        VM_DISPLAY_TEXT         0, 0       ; no avatars
-        VM_OVERLAY_WAIT         .UI_NONMODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU                       ; no avatars, menu
+
+        VM_PUSH                 0
+        VM_CHOICE               .ARG0
+        VM_POP                  1
+;        VM_OVERLAY_WAIT         .UI_NONMODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         VM_PUSH                 ^/(30*60)/      ; !!! always use escaping and brackets
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0

@@ -71,14 +71,16 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
 }
 
 // start displaying text
-void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar) __banked {
+void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar, UBYTE options) __banked {
     THIS;
 
     text_drawn = FALSE;
     text_wait  = FALSE;
     text_ff    = FALSE;
-    
-    avatar_enabled = (avatar_bank != 0);
+
+    avatar_enabled = (avatar != 0);
+    menu_enabled = (options & MENU_ENABLE);
+    menu_item_count = (menu_enabled) ? text_line_count : 0;
 
     INT8 width = 20 - (win_dest_pos_x >> 3);
     if (width > 2) {
@@ -143,4 +145,9 @@ void vm_overlay_show(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE color) _
     THIS;
     vm_overlay_clear(THIS, color);
     ui_set_pos(pos_x << 3, pos_y << 3);
+}
+
+void vm_choice(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    INT16 * v = VM_REF_TO_PTR(idx);
+    *v = ui_run_menu();
 }

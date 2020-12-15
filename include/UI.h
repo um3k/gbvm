@@ -3,6 +3,8 @@
 
 #include <gb/gb.h>
 
+#define MENU_ENABLE 1
+
 #define TEXT_BUFFER_START 0xCCU
 #define AVATAR_WIDTH 2
 #define SELECTOR_WIDTH 1
@@ -33,6 +35,8 @@ extern UBYTE text_wait;
 extern UBYTE text_line_count;
 
 extern UBYTE avatar_enabled;
+extern UBYTE menu_enabled;
+extern UBYTE menu_item_count;
 
 extern UBYTE text_ff_joypad;
 extern UBYTE text_ff;
@@ -60,5 +64,7 @@ inline void ui_move_to(UBYTE x, UBYTE y, UBYTE speed) {
     win_dest_pos_y = y;
     if (speed == 0) win_pos_x = x, win_pos_y = y; else win_speed = speed;
 }
+
+INT8 ui_run_menu() __banked;
 
 #endif
