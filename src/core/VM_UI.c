@@ -77,7 +77,8 @@ void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar
     text_drawn = FALSE;
     text_wait  = FALSE;
     text_ff    = FALSE;
-
+    current_text_speed = text_draw_speed;
+    
     avatar_enabled = (avatar != 0);
     menu_enabled = (options & MENU_ENABLE);
     menu_item_count = (menu_enabled) ? text_line_count : 0;

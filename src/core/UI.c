@@ -48,6 +48,9 @@ UBYTE menu_enabled;
 UBYTE menu_index;
 UBYTE menu_item_count;
 
+UBYTE text_in_speed = 1;
+UBYTE text_out_speed = 1;
+UBYTE text_draw_speed = 1;
 UBYTE text_ff_joypad = 1;
 UBYTE text_ff; 
 
@@ -71,7 +74,7 @@ void ui_init() __banked {
     menu_enabled = 0;
     win_speed = 1;
     text_drawn = TRUE;
-    current_text_speed = 1;
+    text_draw_speed = 1;
 
     SetBankedBkgData(192, 9, frame_image, (UBYTE)&__bank_frame_image);
 

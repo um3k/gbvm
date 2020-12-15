@@ -9,6 +9,46 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+        ; render text 
+        VM_LOAD_TEXT            0
+            .asciz "Hello World\nHello World"
+
+        ; move window to 12 tiles by Y
+        VM_OVERLAY_MOVE_TO      0, 13, 1
+
+        ; start displaying text
+        VM_DISPLAY_TEXT         0, 0, 0    ; no avatar
+
+        ; wait for window to slide
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+
+        ; slide out
+        VM_OVERLAY_MOVE_TO      0, 18, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; Set slow text globally
+        VM_SET_CONST_INT8      _text_draw_speed, 31
+
+        ; render text 
+        VM_LOAD_TEXT            0
+            .asciz "GLOBAL SLOW!!!\n\022Faster!!!"
+
+        ; move window to 12 tiles by Y
+        VM_OVERLAY_MOVE_TO      0, 13, 1
+
+        ; start displaying text
+        VM_DISPLAY_TEXT         0, 0, 0    ; no avatar
+
+        ; wait for window to slide
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+
+        ; slide out
+        VM_OVERLAY_MOVE_TO      0, 18, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; Restore text speed globally
+        VM_SET_CONST_INT8      _text_draw_speed, 1
+
         ; black window
         VM_OVERLAY_SHOW         0, 20, .UI_COLOR_BLACK
         VM_OVERLAY_MOVE_TO      0, 0, 1

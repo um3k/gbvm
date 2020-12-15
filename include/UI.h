@@ -38,6 +38,10 @@ extern UBYTE avatar_enabled;
 extern UBYTE menu_enabled;
 extern UBYTE menu_item_count;
 
+extern UBYTE current_text_speed;
+extern UBYTE text_in_speed;
+extern UBYTE text_out_speed;
+extern UBYTE text_draw_speed;
 extern UBYTE text_ff_joypad;
 extern UBYTE text_ff;
 
