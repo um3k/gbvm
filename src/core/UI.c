@@ -6,6 +6,7 @@
 #include "GameTime.h"
 #include "data/frame_image.h"
 #include "data/font_image.h"
+#include "data/cursor_image.h"
 #include "BankData.h"
 #include "Scroll.h"
 #include "Sprite.h"
@@ -77,11 +78,11 @@ void ui_init() __banked {
     text_draw_speed = 1;
 
     SetBankedBkgData(192, 9, frame_image, (UBYTE)&__bank_frame_image);
+    SetBankedBkgData(ui_cursor_tile, 1, cursor_image, (UBYTE)&__bank_cursor_image);
 
     set_bkg_data(ui_while_tile, 1, ui_white);
     set_bkg_data(ui_black_tile, 1, ui_black);
 
-    set_bkg_data(ui_cursor_tile, 1, ui_black);
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
