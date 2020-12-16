@@ -11,6 +11,7 @@
 #include "Scroll.h"
 #include "Sprite.h"
 #include "Input.h"
+#include "Math.h"
 
 #define ui_frame_tl_tiles 0xC0u
 #define ui_frame_bl_tiles 0xC6u
@@ -54,6 +55,9 @@ UBYTE text_out_speed = 1;
 UBYTE text_draw_speed = 1;
 UBYTE text_ff_joypad = 1;
 UBYTE text_ff; 
+UBYTE menu_layout = MENU_LAYOUT_1_COLUMN;
+UBYTE menu_cancel_on_last_option = 0;
+UBYTE menu_cancel_on_b = 0;
 
 unsigned char ui_text_data[80];
 
@@ -64,6 +68,7 @@ static UBYTE * ui_dest_base = 0;
 static UBYTE ui_text_width  = 0;
 static UBYTE ui_width_left  = 0;
 static UBYTE ui_tile_no     = 0;
+static UBYTE ui_line_no     = 0;
 
 // const far_ptr_t far_font_image = TO_FAR_PTR(font_image);
 // const far_ptr_t far_frame_image = TO_FAR_PTR(frame_image);
@@ -139,6 +144,8 @@ void ui_draw_text_buffer_char() __banked {
     }
 
     if (ui_text_ptr == 0) {
+        // reset to first line
+        ui_line_no = 0;
         // current char pointer
         ui_text_ptr = ui_text_data;
         // VRAM destination
@@ -171,8 +178,13 @@ void ui_draw_text_buffer_char() __banked {
             text_drawn = TRUE;
             return;
         case '\n':
-            ui_dest_ptr = ui_dest_base += 32;
-            ui_width_left = ui_text_width;
+            ui_line_no++;
+            if (menu_enabled && menu_layout == MENU_LAYOUT_2_COLUMN && ui_line_no == 4) {
+                ui_dest_base = GetWinAddr() + 32 + 1 + 9;
+                ui_dest_ptr = ui_dest_base;
+            } else {
+                ui_dest_ptr = ui_dest_base += 32;
+            }
             break; 
         case 0x10:
             current_text_speed = 0;
@@ -193,11 +205,6 @@ void ui_draw_text_buffer_char() __banked {
             current_text_speed = 0x1f;
             break;
         default:
-            if (ui_width_left == 0) {
-                ui_dest_ptr = ui_dest_base += 32;
-                ui_width_left = ui_text_width; 
-            }
-            ui_width_left--;
             SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), (UBYTE)&__bank_font_image);
             SetTile(ui_dest_ptr++, ui_tile_no);
             ui_tile_no++;
@@ -208,8 +215,16 @@ void ui_draw_text_buffer_char() __banked {
 
 void ui_draw_menu_cursor() __banked {
     UBYTE x = (avatar_enabled) ? 3 : 1;
-    fill_win_rect(x, 1, 1, menu_item_count, ui_bg_tile);
-    set_win_tile_xy(x, menu_index + 1, ui_cursor_tile);
+    if (menu_layout == MENU_LAYOUT_2_COLUMN) {
+        UBYTE height = MIN(4, menu_item_count);
+        fill_win_rect(x, 1, 1, height, ui_bg_tile);
+        fill_win_rect(9, 1, 1, height, ui_bg_tile);
+        if (menu_index >= 4) x = 9;
+        set_win_tile_xy(x, (menu_index%4) + 1, ui_cursor_tile);
+    } else {
+        fill_win_rect(x, 1, 1, menu_item_count, ui_bg_tile);
+        set_win_tile_xy(x, menu_index + 1, ui_cursor_tile);
+    }
 }
 
 INT8 ui_run_menu() __banked {
@@ -220,11 +235,24 @@ INT8 ui_run_menu() __banked {
     ui_draw_menu_cursor();
     while (1) {
         if (INPUT_UP_PRESSED) {
-            if (menu_index > 0) menu_index--; else menu_index = menu_item_count - 1;
+            if (menu_index != 0) menu_index--;
             ui_draw_menu_cursor();
         } else if (INPUT_DOWN_PRESSED) {
-            menu_index++;
-            if (menu_index >= menu_item_count) menu_index = 0;
+            if (menu_index != menu_item_count - 1) menu_index++;
+            ui_draw_menu_cursor();
+        } else if (INPUT_LEFT_PRESSED) {
+            if (menu_layout == MENU_LAYOUT_2_COLUMN) {
+                menu_index = MAX(menu_index - 4, 0);
+            } else {
+                menu_index = 0;
+            }
+            ui_draw_menu_cursor();
+        } else if (INPUT_RIGHT_PRESSED) {
+            if (menu_layout == MENU_LAYOUT_2_COLUMN) {
+                menu_index = MIN(menu_index + 4, menu_item_count - 1);
+            } else {
+                menu_index = menu_item_count - 1;
+            }
             ui_draw_menu_cursor();
         } else if (INPUT_A_PRESSED) {
             return menu_index;

@@ -4,6 +4,9 @@
 #include <gb/gb.h>
 
 #define MENU_ENABLE 1
+#define MENU_LAYOUT 2
+#define MENU_CANCEL_LAST 1
+#define MENU_CANCEL_B 2
 
 #define TEXT_BUFFER_START 0xCCU
 #define AVATAR_WIDTH 2
@@ -16,6 +19,8 @@
 #define MENU_LAYOUT_INITIAL_X 88
 #define MENU_CANCEL_ON_LAST_OPTION 0x01U
 #define MENU_CANCEL_ON_B_PRESSED 0x02U
+#define MENU_LAYOUT_2_COLUMN 1
+#define MENU_LAYOUT_1_COLUMN 0
 
 #define ui_bkg_tile   0x07u
 #define ui_while_tile 0xC9u
@@ -37,7 +42,9 @@ extern UBYTE text_line_count;
 extern UBYTE avatar_enabled;
 extern UBYTE menu_enabled;
 extern UBYTE menu_item_count;
-
+extern UBYTE menu_layout;
+extern UBYTE menu_cancel_on_last_option;
+extern UBYTE menu_cancel_on_b;
 extern UBYTE current_text_speed;
 extern UBYTE text_in_speed;
 extern UBYTE text_out_speed;
