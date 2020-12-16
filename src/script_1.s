@@ -11,16 +11,17 @@ ___bank_SCRIPT_1 = 4
 _SCRIPT_1::
         ; render multiple choice 
         VM_LOAD_TEXT            0
-            .asciz "1) Option One\n2) Option Two"
+            .asciz "\0201) Option One\n2) Option Two"
 
         ; Layout One Column ============== 
 
         ; slide in
         VM_OVERLAY_MOVE_TO      0, 14, 1
-        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
 
         ; start displaying menu
         VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL                       ; no avatars, menu
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
         VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
 
         ; slide out
@@ -30,14 +31,15 @@ _SCRIPT_1::
         ; Layout Two Column ============== 
 
         VM_LOAD_TEXT            0
-            .asciz "One\nTwo\nThree\nFour\nFive\nSix"
+            .asciz "\020One\nTwo\nThree\nFour\nFive\nSix"
 
         ; slide in
         VM_OVERLAY_MOVE_TO      0, 12, 1
-        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
 
         ; start displaying text
         VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_TWOCOL                       ; no avatars, menu
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
         VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
 
         ; slide out
@@ -49,10 +51,11 @@ _SCRIPT_1::
         ; move window to 12 tiles by Y
         VM_OVERLAY_MOVE_TO      10, 18, 0
         VM_OVERLAY_MOVE_TO      10, 10, 1
-        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
 
         ; start displaying text
         VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL                       ; no avatars, menu
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
         VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
 
         ; slide out
