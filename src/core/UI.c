@@ -30,10 +30,8 @@ const unsigned char ui_black[16] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x
 
 const unsigned char avatar_tiles[4] = {TEXT_BUFFER_START, TEXT_BUFFER_START + 2U, TEXT_BUFFER_START + 1U, TEXT_BUFFER_START + 3U};
 
-UBYTE win_pos_x;
-UBYTE win_pos_y;
-UBYTE win_dest_pos_x;
-UBYTE win_dest_pos_y;
+UBYTE win_pos_x, win_dest_pos_x;
+UBYTE win_pos_y, win_dest_pos_y;
 UBYTE win_speed;
 
 UBYTE text_drawn;
@@ -186,15 +184,16 @@ void ui_update() __nonbanked {
 
     interval = (win_speed == 1) ? 2 : 1;
 
-    if (win_pos_x != win_dest_pos_x) {
-        // move window left/right
-        if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
-        is_moving = TRUE;
-    }
-
+    // y should always move first
     if (win_pos_y != win_dest_pos_y) {
         // move window up/down
         if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
+        is_moving = TRUE;
+    }
+
+    if (win_pos_x != win_dest_pos_x) {
+        // move window left/right
+        if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
         is_moving = TRUE;
     }
 
@@ -224,42 +223,42 @@ static void ui_draw_menu_cursor() {
     }
 }
 
-INT8 ui_run_menu() __banked {
+UBYTE ui_run_menu() __banked {
     // no menu items
     if (menu_item_count == 0) return 0;
     // run menu
     menu_index = 0;
     ui_draw_menu_cursor();
     while (1) {
+        input_update();
+        ui_update();
+        game_time++;
+        wait_vbl_done();
+
         if (INPUT_UP_PRESSED) {
             if (menu_index != 0) menu_index--;
-            ui_draw_menu_cursor();
         } else if (INPUT_DOWN_PRESSED) {
             if (menu_index != menu_item_count - 1) menu_index++;
-            ui_draw_menu_cursor();
         } else if (INPUT_LEFT_PRESSED) {
             if (menu_layout == MENU_LAYOUT_2_COLUMN) {
                 menu_index = MAX(menu_index - 4, 0);
             } else {
                 menu_index = 0;
             }
-            ui_draw_menu_cursor();
         } else if (INPUT_RIGHT_PRESSED) {
             if (menu_layout == MENU_LAYOUT_2_COLUMN) {
                 menu_index = MIN(menu_index + 4, menu_item_count - 1);
             } else {
                 menu_index = menu_item_count - 1;
             }
-            ui_draw_menu_cursor();
         } else if (INPUT_A_PRESSED) {
             return menu_index;
         } else if ((INPUT_B_PRESSED) && (menu_cancel_on_b))  {
             return (menu_cancel_on_last_option) ? menu_item_count - 1 : 0;
+        } else {
+            continue;
         }
-        input_update();
-        ui_update();
-        game_time++;
-        wait_vbl_done();
+        ui_draw_menu_cursor();
     };
 }
 

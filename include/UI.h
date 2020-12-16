@@ -29,10 +29,8 @@
 #define ui_cursor_tile 0xCBu
 #define ui_bg_tile 0xC4u
 
-extern UBYTE win_pos_x;
-extern UBYTE win_pos_y;
-extern UBYTE win_dest_pos_x;
-extern UBYTE win_dest_pos_y;
+extern UBYTE win_pos_x, win_dest_pos_x;
+extern UBYTE win_pos_y, win_dest_pos_y;
 extern UBYTE win_speed;
 
 extern UBYTE text_drawn;
@@ -66,16 +64,16 @@ void ui_update() __nonbanked;  // critical path, __nonbanked for speed
 void ui_run_modal(UBYTE wait_flags) __banked;  // process UI until closed
 
 inline void ui_set_pos(UBYTE x, UBYTE y) {
-    win_pos_x = win_dest_pos_x = x;
     win_pos_y = win_dest_pos_y = y;
+    win_pos_x = win_dest_pos_x = x;
 }
 
 inline void ui_move_to(UBYTE x, UBYTE y, UBYTE speed) {
-    win_dest_pos_x = x;
     win_dest_pos_y = y;
-    if (speed == 0) win_pos_x = x, win_pos_y = y; else win_speed = speed;
+    win_dest_pos_x = x;
+    if (speed == 0) win_pos_y = y, win_pos_x = x; else win_speed = speed;
 }
 
-INT8 ui_run_menu() __banked;
+UBYTE ui_run_menu() __banked;
 
 #endif

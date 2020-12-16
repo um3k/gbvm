@@ -33,14 +33,16 @@ extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
 void LCD_isr() __nonbanked {
-    if ((LYC_REG < 144u) && (WX_REG == 7u)) HIDE_SPRITES;
-    WY_REG = LYC_REG;
+    if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
 void VBL_isr() __nonbanked {
-    SHOW_SPRITES; 
-    WX_REG = win_pos_x + 7;
-    LYC_REG = win_pos_y;
+    SHOW_SPRITES;
+    if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
+        LYC_REG = WY_REG = win_pos_y;
+        WX_REG = win_pos_x + 7u;
+        SHOW_WIN;
+    } else HIDE_WIN;
 }
 
 void process_VM() {
@@ -137,7 +139,7 @@ void main() {
     OBP1_REG = 0xD2U;
 
     WX_REG = MINWNDPOSX;
-    WY_REG = 96;
+    WY_REG = MENU_CLOSED_Y;
 
     init_actors();
     ui_init();
