@@ -9,6 +9,64 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+
+        ; Text Multiple Choice
+        VM_LOAD_TEXT            0
+        .asciz "\020First choice\nSecond choice"
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        ; Text Dialogue
+        VM_LOAD_TEXT            1
+        .dw 0
+        .asciz "You chose %d\n"
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        ; Text Menu
+        VM_LOAD_TEXT            0
+        .asciz "\020Item 1\nItem 2\nItem 3\nItem 4\nItem 5\nItem 6"
+        VM_OVERLAY_MOVE_TO      0, 12, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_TWOCOL
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_CHOICE               1, ^/(.UI_MENU_CANCEL_B)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        ; Text Dialogue
+        VM_LOAD_TEXT            1
+        .dw 1
+        .asciz "You chose %d\n"
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        ; Text Menu
+        VM_LOAD_TEXT            0
+        .asciz "\020Item 1\nItem 2\nItem 3\nItem 4\nItem 5\nItem 6"
+        VM_OVERLAY_MOVE_TO      10, 18, 0
+        VM_OVERLAY_MOVE_TO      10, 10, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_CHOICE               2, ^/(.UI_MENU_CANCEL_B)/
+        VM_OVERLAY_MOVE_TO      10, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_OVERLAY_MOVE_TO      0, 18, 0
+        ; Text Dialogue
+        VM_LOAD_TEXT            1
+        .dw 2
+        .asciz "You chose %d\n"
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
         ; Set text box open/close speed globally
         VM_SET_CONST_INT8      _text_in_speed, 1
         VM_SET_CONST_INT8      _text_out_speed, 2
