@@ -252,9 +252,13 @@ INT8 ui_run_menu() __banked {
             }
             ui_draw_menu_cursor();
         } else if (INPUT_A_PRESSED) {
-            return menu_index;
+            if (menu_cancel_on_last_option && (menu_index == menu_item_count - 1)) {
+                return 0;
+            } else {
+                return menu_index + 1;
+            }
         } else if ((INPUT_B_PRESSED) && (menu_cancel_on_b))  {
-            return (menu_cancel_on_last_option) ? menu_item_count - 1 : 0;
+            return 0;
         }
         input_update();
         ui_update();
