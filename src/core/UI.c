@@ -30,9 +30,6 @@ const unsigned char ui_black[16] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x
 
 const unsigned char avatar_tiles[4] = {TEXT_BUFFER_START, TEXT_BUFFER_START + 2U, TEXT_BUFFER_START + 1U, TEXT_BUFFER_START + 3U};
 
-void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
-void ui_draw_text_buffer_char() __banked;
-
 UBYTE win_pos_x;
 UBYTE win_pos_y;
 UBYTE win_dest_pos_x;
@@ -102,40 +99,7 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
     fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
-static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
-
-void ui_update() __nonbanked {
-    UBYTE interval, is_moving = FALSE;
-
-    if (game_time & time_masks[win_speed]) return;
-
-    interval = (win_speed == 1) ? 2 : 1;
-
-    if (win_pos_x != win_dest_pos_x) {
-        // move window left/right
-        if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
-        is_moving = TRUE;
-    }
-
-    if (win_pos_y != win_dest_pos_y) {
-        // move window up/down
-        if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
-        is_moving = TRUE;
-    }
-
-    // don't draw text while moving
-    if (is_moving) return;
-    // all drawn - nothing to do
-    if (text_drawn) return;
-    // too fast - wait
-    if ((!INPUT_A_OR_B) && game_time & current_text_speed) return;
-    // render next char
-    do {
-        ui_draw_text_buffer_char();
-    } while (((text_ff) || (current_text_speed == 0)) && (!text_drawn));
-}
-
-void ui_draw_text_buffer_char() __banked {
+static void ui_draw_text_buffer_char() {
     if ((text_ff_joypad) && (INPUT_A_OR_B)) text_ff = TRUE;
 
     if ((!text_ff) && (text_wait != 0)) {
@@ -213,7 +177,40 @@ void ui_draw_text_buffer_char() __banked {
     ui_text_ptr++;
 }
 
-void ui_draw_menu_cursor() __banked {
+static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
+
+void ui_update() __nonbanked {
+    UBYTE interval, is_moving = FALSE;
+
+    if (game_time & time_masks[win_speed]) return;
+
+    interval = (win_speed == 1) ? 2 : 1;
+
+    if (win_pos_x != win_dest_pos_x) {
+        // move window left/right
+        if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
+        is_moving = TRUE;
+    }
+
+    if (win_pos_y != win_dest_pos_y) {
+        // move window up/down
+        if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
+        is_moving = TRUE;
+    }
+
+    // don't draw text while moving
+    if (is_moving) return;
+    // all drawn - nothing to do
+    if (text_drawn) return;
+    // too fast - wait
+    if ((!INPUT_A_OR_B) && game_time & current_text_speed) return;
+    // render next char
+    do {
+        ui_draw_text_buffer_char();
+    } while (((text_ff) || (current_text_speed == 0)) && (!text_drawn));
+}
+
+static void ui_draw_menu_cursor() {
     UBYTE x = (avatar_enabled) ? 3 : 1;
     if (menu_layout == MENU_LAYOUT_2_COLUMN) {
         UBYTE height = MIN(4, menu_item_count);
