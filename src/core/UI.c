@@ -86,15 +86,15 @@ void ui_init() __banked {
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
-    fill_win_rect(x,         y,              1,         1,      ui_frame_tl_tiles);  // top-left
-    fill_win_rect(x + 1,     y,              width - 1, 1,      ui_frame_t_tiles);   // top
-    fill_win_rect(x + width, y,              1,         1,      ui_frame_tr_tiles);  // top-right
-    fill_win_rect(x,         y + 1,          1,         height, ui_frame_l_tiles);   // left
-    fill_win_rect(x + width, y + 1,          1,         height, ui_frame_r_tiles);   // right
-    fill_win_rect(x,         y + height + 1, 1,         1,      ui_frame_bl_tiles);  // bottom-left
-    fill_win_rect(x + 1,     y + height + 1, width - 1, 1,      ui_frame_b_tiles);   // bottom
-    fill_win_rect(x + width, y + height + 1, 1,         1,      ui_frame_br_tiles);  // bottom-right
-    fill_win_rect(x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
+    set_win_tile_xy (x,         y,                                 ui_frame_tl_tiles);
+    fill_win_rect   (x + 1,     y,              width - 1, 1,      ui_frame_t_tiles );   // top
+    set_win_tile_xy (x + width, y,                                 ui_frame_tr_tiles);
+    fill_win_rect   (x,         y + 1,          1,         height, ui_frame_l_tiles );   // left
+    fill_win_rect   (x + width, y + 1,          1,         height, ui_frame_r_tiles );   // right
+    set_win_tile_xy (x,         y + height + 1,                    ui_frame_bl_tiles);
+    fill_win_rect   (x + 1,     y + height + 1, width - 1, 1,      ui_frame_b_tiles );   // bottom
+    set_win_tile_xy (x + width, y + height + 1,                    ui_frame_br_tiles);
+    fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
 static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
@@ -209,7 +209,7 @@ void ui_draw_text_buffer_char() __banked {
 void ui_draw_menu_cursor() __banked {
     UBYTE x = (avatar_enabled) ? 3 : 1;
     fill_win_rect(x, 1, 1, menu_item_count, ui_bg_tile);
-    fill_win_rect(x, menu_index + 1, 1, 1, ui_cursor_tile);
+    set_win_tile_xy(x, menu_index + 1, ui_cursor_tile);
 }
 
 INT8 ui_run_menu() __banked {

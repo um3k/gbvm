@@ -57,4 +57,7 @@ void WaitForMode0Or1() __preserves_regs(b, c, d, e, h, l);
 UINT8 * GetWinAddr() __preserves_regs(b, c, h, l);
 UINT8 * GetBkgAddr() __preserves_regs(b, c, h, l);
 
+void set_win_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
+void set_bkg_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
+
 #endif
