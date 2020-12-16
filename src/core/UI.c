@@ -213,17 +213,17 @@ void ui_draw_text_buffer_char() __banked {
     ui_text_ptr++;
 }
 
-void ui_draw_menu_cursor() __banked {
+void ui_draw_menu_cursor(UBYTE show) __banked {
     UBYTE x = (avatar_enabled) ? 3 : 1;
     if (menu_layout == MENU_LAYOUT_2_COLUMN) {
         UBYTE height = MIN(4, menu_item_count);
         fill_win_rect(x, 1, 1, height, ui_bg_tile);
         fill_win_rect(9, 1, 1, height, ui_bg_tile);
         if (menu_index >= 4) x = 9;
-        set_win_tile_xy(x, (menu_index%4) + 1, ui_cursor_tile);
+        if (show) set_win_tile_xy(x, (menu_index%4) + 1, ui_cursor_tile);
     } else {
         fill_win_rect(x, 1, 1, menu_item_count, ui_bg_tile);
-        set_win_tile_xy(x, menu_index + 1, ui_cursor_tile);
+        if (show) set_win_tile_xy(x, menu_index + 1, ui_cursor_tile);
     }
 }
 
@@ -232,37 +232,38 @@ INT8 ui_run_menu() __banked {
     if (menu_item_count == 0) return 0;
     // run menu
     menu_index = 0;
-    ui_draw_menu_cursor();
+    ui_draw_menu_cursor(TRUE);
     while (1) {
+        input_update();
+        ui_update();
+        game_time++;
+        wait_vbl_done();
         if (INPUT_UP_PRESSED) {
             if (menu_index != 0) menu_index--;
-            ui_draw_menu_cursor();
         } else if (INPUT_DOWN_PRESSED) {
             if (menu_index != menu_item_count - 1) menu_index++;
-            ui_draw_menu_cursor();
         } else if (INPUT_LEFT_PRESSED) {
             if (menu_layout == MENU_LAYOUT_2_COLUMN) {
                 menu_index = MAX(menu_index - 4, 0);
             } else {
                 menu_index = 0;
             }
-            ui_draw_menu_cursor();
         } else if (INPUT_RIGHT_PRESSED) {
             if (menu_layout == MENU_LAYOUT_2_COLUMN) {
                 menu_index = MIN(menu_index + 4, menu_item_count - 1);
             } else {
                 menu_index = menu_item_count - 1;
             }
-            ui_draw_menu_cursor();
         } else if (INPUT_A_PRESSED) {
+            ui_draw_menu_cursor(FALSE);
             return menu_index;
         } else if (INPUT_B_PRESSED) {
+            ui_draw_menu_cursor(FALSE);
             return menu_item_count - 1;
+        } else {
+            continue;
         }
-        input_update();
-        ui_update();
-        game_time++;
-        wait_vbl_done();
+        ui_draw_menu_cursor(TRUE);
     };
 }
 
