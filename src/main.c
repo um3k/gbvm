@@ -33,7 +33,7 @@ extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
 void LCD_isr() __nonbanked {
-    if ((LYC_REG < 144u) && (WX_REG < 160u)) HIDE_SPRITES;
+    if ((LYC_REG < 144u) && (WX_REG == 7u)) HIDE_SPRITES;
     WY_REG = LYC_REG;
 }
 
