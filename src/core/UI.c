@@ -252,16 +252,15 @@ UBYTE ui_run_menu() __banked {
                 menu_index = menu_item_count - 1;
             }
         } else if (INPUT_A_PRESSED) {
-            if (menu_cancel_on_last_option && (menu_index == menu_item_count - 1)) {
-                return 0;
-            } else {
-                return menu_index + 1;
-            }
+            return ((menu_cancel_on_last_option) && (menu_index == menu_item_count - 1)) ? 0 : menu_index + 1;
         } else if ((INPUT_B_PRESSED) && (menu_cancel_on_b))  {
-            return (menu_cancel_on_last_option) ? menu_item_count - 1 : 0;
+            return 0;
         } else {
             continue;
         }
+
+
+        
         ui_draw_menu_cursor();
     };
 }
