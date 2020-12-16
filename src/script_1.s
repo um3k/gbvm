@@ -9,6 +9,59 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+        ; render multiple choice 
+        VM_LOAD_TEXT            0
+            .asciz "1) Option One\n2) Option Two"
+
+        ; Layout One Column ============== 
+
+        ; slide in
+        VM_OVERLAY_MOVE_TO      0, 14, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; start displaying menu
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL                       ; no avatars, menu
+        VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
+
+        ; slide out
+        VM_OVERLAY_MOVE_TO      0, 18, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; Layout Two Column ============== 
+
+        VM_LOAD_TEXT            0
+            .asciz "One\nTwo\nThree\nFour\nFive\nSix"
+
+        ; slide in
+        VM_OVERLAY_MOVE_TO      0, 12, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; start displaying text
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_TWOCOL                       ; no avatars, menu
+        VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
+
+        ; slide out
+        VM_OVERLAY_MOVE_TO      0, 18, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; Layout One Column Pin Right ============== 
+
+        ; move window to 12 tiles by Y
+        VM_OVERLAY_MOVE_TO      10, 18, 0
+        VM_OVERLAY_MOVE_TO      10, 10, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; start displaying text
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL                       ; no avatars, menu
+        VM_CHOICE               0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
+
+        ; slide out
+        VM_OVERLAY_MOVE_TO      10, 18, 1
+        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
+
+        ; reset overlay position
+        VM_OVERLAY_MOVE_TO      0, 18, 0
+
         ; render text 
         VM_LOAD_TEXT            0
             .asciz "Hello World\nHello World"
@@ -97,10 +150,11 @@ _SCRIPT_1::
         VM_LOAD_TEXT            0
             .asciz "\020option1\noption2\noption3\noption4\noption5\noption6\ncancel"
         VM_OVERLAY_MOVE_TO      10, 9, 1
-        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU                       ; no avatars, menu
+        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL                ; no avatars, menu
 
         VM_PUSH                 0
-        VM_CHOICE               .ARG0
+        VM_CHOICE               .ARG0, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
+
         VM_POP                  1
 ;        VM_OVERLAY_WAIT         .UI_NONMODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 

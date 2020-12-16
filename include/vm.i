@@ -314,7 +314,8 @@ OP_VM_LOAD_TEXT         = 0x40
 .endm
 
 OP_VM_DISPLAY_TEXT      = 0x41
-.UI_ENABLE_MENU         = 1
+.UI_ENABLE_MENU_ONECOL  = 1
+.UI_ENABLE_MENU_TWOCOL  = 3
 .macro VM_DISPLAY_TEXT AVATAR_BANK, AVATAR, OPTIONS
         .db OP_VM_DISPLAY_TEXT, #<OPTIONS, #>AVATAR, #<AVATAR, #<AVATAR_BANK
 .endm
@@ -360,6 +361,8 @@ OP_VM_OVERLAY_CLEAR     = 0x47
 .endm
 
 OP_VM_CHOICE            = 0x48
-.macro VM_CHOICE IDX
-        .db OP_VM_CHOICE, #>IDX, #<IDX
+.UI_MENU_LAST_0         = 1
+.UI_MENU_CANCEL_B       = 2
+.macro VM_CHOICE IDX, OPTIONS
+        .db OP_VM_CHOICE, #<OPTIONS, #>IDX, #<IDX
 .endm
