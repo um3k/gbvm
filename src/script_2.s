@@ -10,6 +10,7 @@ ___bank_KEYS_SCRIPT     = 4
 .globl ___bank_SCRIPT_2, ___bank_KEYS_SCRIPT
 
 _UP_SCRIPT::
+        VM_IF_CONST     .LTE    14, 16, 1$, 0
         VM_RPN
             .R_REF              14
             .R_INT16            16
@@ -17,9 +18,14 @@ _UP_SCRIPT::
             .R_STOP
         VM_SET                  14, .ARG0
         VM_POP                  1
+        VM_ACTOR_MOVE_TO        12
+        VM_STOP
+1$:
+        VM_SET_CONST            14, 16
         VM_ACTOR_MOVE_TO        12
         VM_STOP
 _DOWN_SCRIPT::
+        VM_IF_CONST     .GTE    14, ^/18 * 8/, 1$, 0
         VM_RPN
             .R_REF              14
             .R_INT16            16
@@ -29,7 +35,12 @@ _DOWN_SCRIPT::
         VM_POP                  1
         VM_ACTOR_MOVE_TO        12
         VM_STOP
+1$:
+        VM_SET_CONST            14, ^/18 * 8/
+        VM_ACTOR_MOVE_TO        12
+        VM_STOP
 _LEFT_SCRIPT::
+        VM_IF_CONST     .LTE    13, 0, 1$, 0
         VM_RPN
             .R_REF              13
             .R_INT16            16
@@ -39,7 +50,12 @@ _LEFT_SCRIPT::
         VM_POP                  1
         VM_ACTOR_MOVE_TO        12
         VM_STOP
+1$:
+        VM_SET_CONST            13, 0
+        VM_ACTOR_MOVE_TO        12
+        VM_STOP
 _RIGHT_SCRIPT::
+        VM_IF_CONST     .GTE    13, ^/18 * 8/, 1$, 0
         VM_RPN
             .R_REF              13
             .R_INT16            16
@@ -47,6 +63,10 @@ _RIGHT_SCRIPT::
             .R_STOP
         VM_SET                  13, .ARG0
         VM_POP                  1
+        VM_ACTOR_MOVE_TO        12
+        VM_STOP
+1$:
+        VM_SET_CONST            13, ^/18 * 8/
         VM_ACTOR_MOVE_TO        12
         VM_STOP
 
