@@ -546,10 +546,10 @@ void ScriptRunnerInit() __banked {
 
     SCRIPT_CTX * nxt = 0;
     SCRIPT_CTX * tmp = CTXS + (SCRIPT_MAX_CONTEXTS - 1);
-    for (UBYTE i = 0; i < SCRIPT_MAX_CONTEXTS; i++) {
+    for (UBYTE i = SCRIPT_MAX_CONTEXTS; i != 0; i--) {
         tmp->next = nxt;
         tmp->base_addr = base_addr;
-        tmp->ID = i + 1;
+        tmp->ID = i;
         base_addr += CONTEXT_STACK_SIZE;
         nxt = tmp--;
     }

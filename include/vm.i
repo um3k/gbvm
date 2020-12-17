@@ -404,6 +404,11 @@ OP_VM_HIDE_SPRITES      = 0x51
 .endm
 
 OP_VM_INPUT_WAIT        = 0x52
-.macro VM_VM_INPUT_WAIT MASK
+.macro VM_INPUT_WAIT MASK
         .db OP_VM_INPUT_WAIT, #<MASK
+.endm
+
+OP_VM_INPUT_ATTACH      = 0x53
+.macro VM_INPUT_ATTACH MASK, BANK, ADDR
+        .db OP_VM_INPUT_ATTACH, #>ADDR, #<ADDR, #<BANK, #<MASK
 .endm

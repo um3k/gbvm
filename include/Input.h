@@ -86,6 +86,15 @@ extern UBYTE joy;
 extern UBYTE last_joy;
 extern UBYTE recent_joy;
 
-void input_update();
+typedef struct script_event_t {
+    UWORD handle;
+    UBYTE script_bank;
+    void * script_addr;
+} script_event_t;
+
+extern script_event_t input_events[8]; 
+
+void input_init() __banked;
+void input_update() __nonbanked;
 
 #endif

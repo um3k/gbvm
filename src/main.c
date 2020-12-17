@@ -145,8 +145,9 @@ void main() {
 
     initrand(DIV_REG);
 
-    init_actors();
+    input_init();
     ui_init();
+    init_actors();
 
     __critical {
         add_LCD(LCD_isr);
