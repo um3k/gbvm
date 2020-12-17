@@ -98,7 +98,7 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
 }
 
 static void ui_draw_text_buffer_char() {
-    if ((text_ff_joypad) && (INPUT_A_OR_B)) text_ff = TRUE;
+    if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
     if ((!text_ff) && (text_wait != 0)) {
         text_wait--;
@@ -202,7 +202,7 @@ void ui_update() __nonbanked {
     // all drawn - nothing to do
     if (text_drawn) return;
     // too fast - wait
-    if ((!INPUT_A_OR_B) && game_time & current_text_speed) return;
+    if ((!INPUT_A_OR_B_PRESSED) && game_time & current_text_speed) return;
     // render next char
     do {
         ui_draw_text_buffer_char();

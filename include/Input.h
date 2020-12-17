@@ -66,6 +66,9 @@
 /* TRUE on first frame that B button is pressed */
 #define INPUT_B_PRESSED ((joy & J_B) && !(last_joy & J_B))
 
+/* TRUE on first frame that A OR B button is pressed */
+#define INPUT_A_OR_B_PRESSED (((joy & (J_A | J_B)) != 0) && ((last_joy & (J_A | J_B)) == 0))
+
 /* TRUE on first frame that Start button is pressed */
 #define INPUT_START_PRESSED ((joy & J_START) && !(last_joy & J_START))
 

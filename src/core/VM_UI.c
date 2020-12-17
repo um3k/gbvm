@@ -77,6 +77,7 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
 void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar, UBYTE options) __banked {
     THIS;
 
+    INPUT_RESET;
     text_drawn = FALSE;
     text_wait  = FALSE;
     text_ff    = FALSE;
