@@ -274,7 +274,12 @@ OP_VM_SET_CONST_INT16 = 0x22
         .db OP_VM_SET_CONST_INT16, #>V, #<V, #>ADDR, #<ADDR
 .endm
 
+
+
 ; --- engine-specific instructions ------------------------------------------
+
+
+; --- ACTOR ------------------------------------------
 
 OP_VM_ACTOR_MOVE_TO     = 0x30
 .ACTOR_ATTR_H_FIRST     = 0x01
@@ -307,6 +312,8 @@ OP_VM_ACTOR_SET_ANIM    = 0x34
         .db OP_VM_ACTOR_SET_ANIM, #>ANIM, #<ANIM, #>ACTOR, #<ACTOR
 .endm
 
+
+; --- UI ------------------------------------------
 
 OP_VM_LOAD_TEXT         = 0x40
 .macro VM_LOAD_TEXT ARG0
@@ -368,4 +375,17 @@ OP_VM_CHOICE            = 0x48
 .UI_MENU_CANCEL_B       = 2
 .macro VM_CHOICE IDX, OPTIONS
         .db OP_VM_CHOICE, #<OPTIONS, #>IDX, #<IDX
+.endm
+
+
+; --- GAMEBOY ------------------------------------------
+
+OP_VM_SHOW_SPRITES      = 0x50
+.macro VM_SHOW_SPRITES
+        .db OP_VM_SHOW_SPRITES
+.endm
+
+OP_VM_HIDE_SPRITES      = 0x51
+.macro VM_HIDE_SPRITES
+        .db OP_VM_HIDE_SPRITES
 .endm

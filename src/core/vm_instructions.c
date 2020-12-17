@@ -2,10 +2,12 @@
 
 #include "VM_Actor.h"
 #include "VM_UI.h"
+#include "VM_gameboy.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
 const SCRIPT_CMD script_cmds[] = {
+    // system instructions section
     {vm_push,                   2}, // 0x01
     {vm_pop,                    1}, // 0x02
     {vm_call_rel,               1}, // 0x03
@@ -54,6 +56,7 @@ const SCRIPT_CMD script_cmds[] = {
     {0, 0},
     {0, 0},
 
+    // actor instructions section
     {vm_actor_move_to,          2}, // 0x30
     {vm_actor_activate,         2}, // 0x31
     {vm_actor_set_dir,          4}, // 0x32
@@ -71,6 +74,7 @@ const SCRIPT_CMD script_cmds[] = {
     {0, 0},
     {0, 0},
 
+    // user interface instructions section
     {vm_load_text,              1}, // 0x40
     {vm_display_text,           4}, // 0x41
     {vm_overlay_setpos,         2}, // 0x42
@@ -80,4 +84,16 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_overlay_show,           3}, // 0x46
     {vm_overlay_clear,          1}, // 0x47
     {vm_choice,                 3}, // 0x48
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+
+    // gameboy features instructions section
+    {vm_show_sprites,           0}, // 0x50
+    {vm_hide_sprites,           0}, // 0x51
+
 };
