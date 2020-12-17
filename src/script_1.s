@@ -10,6 +10,27 @@ ___bank_SCRIPT_1 = 4
 
 _SCRIPT_1::
 
+        ; Text Dialogue
+        VM_LOAD_TEXT            0
+        .asciz "Textboxes without\nslide in/out\npart 1"
+        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_LOAD_TEXT            0
+        .asciz "Textboxes without\nslide in/out\npart 2"
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_LOAD_TEXT            0
+        .asciz "One Line\n\n"
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_LOAD_TEXT            0
+        .asciz "Two\nLines\n"
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
         .asciz "\020First choice\nSecond choice"
