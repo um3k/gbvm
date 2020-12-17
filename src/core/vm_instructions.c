@@ -95,5 +95,6 @@ const SCRIPT_CMD script_cmds[] = {
     // gameboy features instructions section
     {vm_show_sprites,           0}, // 0x50
     {vm_hide_sprites,           0}, // 0x51
+    {vm_input_wait,             1}, // 0x52
 
 };

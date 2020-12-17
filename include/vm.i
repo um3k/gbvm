@@ -402,3 +402,8 @@ OP_VM_HIDE_SPRITES      = 0x51
 .macro VM_HIDE_SPRITES
         .db OP_VM_HIDE_SPRITES
 .endm
+
+OP_VM_INPUT_WAIT        = 0x52
+.macro VM_VM_INPUT_WAIT MASK
+        .db OP_VM_INPUT_WAIT, #<MASK
+.endm
