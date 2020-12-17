@@ -9,6 +9,7 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+        VM_JUMP                 1$
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
@@ -245,6 +246,7 @@ _SCRIPT_1::
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
 
+1$:
         ; show menu
         VM_OVERLAY_SETPOS       20, 9
         VM_LOAD_TEXT            0
@@ -265,5 +267,4 @@ _SCRIPT_1::
         VM_OVERLAY_WAIT         .UI_NONMODAL, .UI_WAIT_WINDOW
 
         VM_OVERLAY_HIDE
-
         VM_STOP

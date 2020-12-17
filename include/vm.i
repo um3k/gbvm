@@ -412,3 +412,8 @@ OP_VM_INPUT_ATTACH      = 0x53
 .macro VM_INPUT_ATTACH MASK, BANK, ADDR
         .db OP_VM_INPUT_ATTACH, #>ADDR, #<ADDR, #<BANK, #<MASK
 .endm
+
+OP_VM_INPUT_GET         = 0x54
+.macro VM_INPUT_GET IDX
+        .db OP_VM_INPUT_GET, #>IDX, #<IDX
+.endm

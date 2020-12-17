@@ -10,6 +10,7 @@
 #include "Sprite.h"
 #include "UI.h"
 #include "Input.h"
+#include "events.h"
 
 #include "vm.h"
 
@@ -53,6 +54,7 @@ void process_VM() {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
                 input_update();
+                if (joy != 0) events_update();
                 update_actors();
                 ui_update();
                 game_time++;
@@ -145,7 +147,7 @@ void main() {
 
     initrand(DIV_REG);
 
-    input_init();
+    events_init();
     ui_init();
     init_actors();
 
@@ -166,6 +168,9 @@ void main() {
     ScriptRunnerInit();
 
     ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
+
+    // grid walking
+    ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);
 
     // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);

@@ -1,6 +1,10 @@
 #include "VM_gameboy.h"
+
+#include "vm.h"
+
 #include "Sprite.h"
 #include "Input.h"
+#include "events.h"
 
 void vm_show_sprites() __banked {
     hide_sprites = FALSE;
@@ -27,4 +31,10 @@ void vm_input_attach(SCRIPT_CTX * THIS, UBYTE mask, UBYTE bank, UBYTE * pc) __ba
             event->script_addr = pc;
         }
     }
+}
+
+void vm_input_get(SCRIPT_CTX * THIS, INT16 idx) __banked { 
+    INT16 * A;
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
+    *A = joy;
 }
