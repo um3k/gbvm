@@ -96,6 +96,8 @@ void vm_set_int8(SCRIPT_CTX * THIS, INT8 * addr, INT16 idxA) __banked;
 void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) __banked;
 void vm_set_const_int8(SCRIPT_CTX * THIS, UINT8 * addr, UINT8 v) __banked;
 void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) __banked;
+void vm_randomize() __banked;
+void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) __banked;
 
 // return zero if script end
 // bank with VM code must be active

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <rand.h>
 
 #include "vm.h"
 
@@ -402,6 +403,21 @@ void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) __banked {
     *addr = v;
 }
 
+// initializes random number generator
+void vm_randomize() __banked {
+    initrand(DIV_REG);
+}
+
+// sets value on stack indexed by idx to random value from given range 0 <= n < limit, mask is calculated by macro 
+void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) __banked {
+    UINT16 value = rand() | (rand() << 8);
+    value &= mask;
+    if (value >= limit) value -= limit;
+    if (value >= limit) value -= limit;
+    UINT16 * A;
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
+    *A = value + min;
+}
 
 // executes one step in the passed context
 // return zero if script end

@@ -37,11 +37,15 @@ _SCRIPT_1::
         VM_CHOICE               1, ^/(.UI_MENU_CANCEL_B)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_RANDOMIZE
+        
+        VM_RAND                 2, 20, 10 
         ; Text Dialogue
-        VM_LOAD_TEXT            1
-        .dw 1
-        .asciz "You chose %d\n"
-        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_LOAD_TEXT            2
+        .dw 1, 2
+        .asciz "You chose %d\nrand: %d\n"
+
+        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED

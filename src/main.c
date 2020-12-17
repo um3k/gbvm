@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 #include <gb/font.h>
+#include <rand.h>
 
 #include "BankData.h"
 #include "GameTime.h"
@@ -141,6 +142,8 @@ void main() {
 
     WX_REG = MINWNDPOSX;
     WY_REG = MENU_CLOSED_Y;
+
+    initrand(DIV_REG);
 
     init_actors();
     ui_init();

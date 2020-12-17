@@ -42,8 +42,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_set_int16,              4}, // 0x20
     {vm_set_const_int8,         3}, // 0x21
     {vm_set_const_int16,        4}, // 0x22
-    {0, 0},
-    {0, 0},
+    {vm_randomize,              0}, // 0x23
+    {vm_rand,                   8}, // 0x24
     {0, 0},
     {0, 0},
     {0, 0},
