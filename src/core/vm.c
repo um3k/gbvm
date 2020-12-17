@@ -410,8 +410,7 @@ void vm_randomize() __banked {
 
 // sets value on stack indexed by idx to random value from given range 0 <= n < limit, mask is calculated by macro 
 void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) __banked {
-    UINT16 value = rand() | (rand() << 8);
-    value &= mask;
+    UINT16 value = randw() & mask;
     if (value >= limit) value -= limit;
     if (value >= limit) value -= limit;
     UINT16 * A;

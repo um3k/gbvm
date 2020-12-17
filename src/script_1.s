@@ -60,13 +60,22 @@ _SCRIPT_1::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         VM_RANDOMIZE
         
-        VM_RAND                 2, 20, 10 
+        VM_RAND                 2, 0, 10 
+        VM_RAND                 3, 0, 10 
+        VM_RAND                 4, 0, 10 
+        VM_RAND                 5, 0, 10 
+        VM_RAND                 6, 0, 10 
+        VM_RAND                 7, 0, 10 
+        VM_RAND                 8, 0, 10 
+        VM_RAND                 9, 0, 10 
+        VM_RAND                 10, 0, 10 
+        VM_RAND                 11, 0, 10 
         ; Text Dialogue
-        VM_LOAD_TEXT            2
-        .dw 1, 2
-        .asciz "You chose %d\nrand: %d\n"
+        VM_LOAD_TEXT            11
+        .dw 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+        .asciz "You chose %d\nrand:\n%d %d %d %d %d\n%d %d %d %d %d\n"
 
-        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
+        VM_OVERLAY_MOVE_TO      0, 11, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
