@@ -363,6 +363,7 @@ OP_VM_OVERLAY_CLEAR     = 0x47
 .endm
 
 OP_VM_CHOICE            = 0x48
+.UI_MENU_STANDARD       = 0
 .UI_MENU_LAST_0         = 1
 .UI_MENU_CANCEL_B       = 2
 .macro VM_CHOICE IDX, OPTIONS

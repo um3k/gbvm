@@ -259,8 +259,6 @@ UBYTE ui_run_menu() __banked {
             continue;
         }
 
-
-        
         ui_draw_menu_cursor();
     };
 }
