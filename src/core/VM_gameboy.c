@@ -22,14 +22,19 @@ void vm_input_wait(SCRIPT_CTX * THIS, UBYTE mask) __banked {
     THIS->PC -= INSTRUCTION_SIZE + sizeof(mask);
 }
 
-void vm_input_attach(SCRIPT_CTX * THIS, UBYTE mask, UBYTE bank, UBYTE * pc) __banked {
+void vm_context_prepate(SCRIPT_CTX * THIS, UBYTE slot, UBYTE bank, UBYTE * pc) __banked {
     THIS;
-    script_event_t * event = input_events;
-    for (UBYTE tmp = mask; (tmp); tmp = tmp >> 1, event++) {
-        if (tmp & 1) {
-            event->script_bank = bank; 
-            event->script_addr = pc;
-        }
+    if (!slot) return;
+    script_event_t * event = &input_events[slot - 1];
+    event->script_bank = bank; 
+    event->script_addr = pc;
+}
+
+void vm_input_attach(SCRIPT_CTX * THIS, UBYTE mask, UBYTE slot) __banked {
+    THIS;
+    UBYTE * current_slot = event_slots;
+    for (UBYTE tmp = mask; (tmp); tmp = tmp >> 1, current_slot++) {
+        if (tmp & 1) *current_slot = slot;
     }
 }
 

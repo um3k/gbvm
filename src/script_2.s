@@ -70,15 +70,33 @@ _RIGHT_SCRIPT::
         VM_ACTOR_MOVE_TO        12
         VM_STOP
 
+_GRID_MOVE::
+        ; event ID is already pushed onto vm thread stack
+        VM_IF_CONST     .EQ     .ARG0, 0x01, _RIGHT_SCRIPT, 0
+        VM_IF_CONST     .EQ     .ARG0, 0x02, _LEFT_SCRIPT, 0
+        VM_IF_CONST     .EQ     .ARG0, 0x04, _UP_SCRIPT, 0
+        VM_IF_CONST     .EQ     .ARG0, 0x08, _DOWN_SCRIPT, 0
+        VM_STOP
+
 _SCRIPT_2::
         VM_SET_CONST            12, 4
         VM_SET_CONST            13, 64
         VM_SET_CONST            14, 64
         VM_SET_CONST            15, ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
-        VM_INPUT_ATTACH         0x01, ___bank_KEYS_SCRIPT, _RIGHT_SCRIPT
-        VM_INPUT_ATTACH         0x02, ___bank_KEYS_SCRIPT, _LEFT_SCRIPT
-        VM_INPUT_ATTACH         0x04, ___bank_KEYS_SCRIPT, _UP_SCRIPT
-        VM_INPUT_ATTACH         0x08, ___bank_KEYS_SCRIPT, _DOWN_SCRIPT
+
+        ; instead ot this:
+;        VM_CONTEXT_PREPARE      1, ___bank_KEYS_SCRIPT, _RIGHT_SCRIPT
+;        VM_INPUT_ATTACH         0x01, 1
+;        VM_CONTEXT_PREPARE      2, ___bank_KEYS_SCRIPT, _LEFT_SCRIPT
+;        VM_INPUT_ATTACH         0x02, 2
+;        VM_CONTEXT_PREPARE      3, ___bank_KEYS_SCRIPT, _UP_SCRIPT
+;        VM_INPUT_ATTACH         0x04, 3
+;        VM_CONTEXT_PREPARE      4, ___bank_KEYS_SCRIPT, _DOWN_SCRIPT
+;        VM_INPUT_ATTACH         0x08, 4
+
+        ; we now able to use this:
+        VM_CONTEXT_PREPARE      1, ___bank_KEYS_SCRIPT, _GRID_MOVE
+        VM_INPUT_ATTACH         0x0f, 1
 
         VM_ACTOR_ACTIVATE       12
         VM_ACTOR_MOVE_TO        12

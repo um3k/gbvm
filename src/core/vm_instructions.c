@@ -96,7 +96,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_show_sprites,           0}, // 0x50
     {vm_hide_sprites,           0}, // 0x51
     {vm_input_wait,             1}, // 0x52
-    {vm_input_attach,           4}, // 0x53
+    {vm_input_attach,           2}, // 0x53
     {vm_input_get,              2}, // 0x54
+    {vm_context_prepate,        4}, // 0x55
 
 };

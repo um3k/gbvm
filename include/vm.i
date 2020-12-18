@@ -409,11 +409,16 @@ OP_VM_INPUT_WAIT        = 0x52
 .endm
 
 OP_VM_INPUT_ATTACH      = 0x53
-.macro VM_INPUT_ATTACH MASK, BANK, ADDR
-        .db OP_VM_INPUT_ATTACH, #>ADDR, #<ADDR, #<BANK, #<MASK
+.macro VM_INPUT_ATTACH MASK, SLOT
+        .db OP_VM_INPUT_ATTACH, #<SLOT, #<MASK
 .endm
 
 OP_VM_INPUT_GET         = 0x54
 .macro VM_INPUT_GET IDX
         .db OP_VM_INPUT_GET, #>IDX, #<IDX
+.endm
+
+OP_VM_CONTEXT_PREPARE   = 0x55
+.macro VM_CONTEXT_PREPARE SLOT, BANK, ADDR
+        .db OP_VM_CONTEXT_PREPARE, #>ADDR, #<ADDR, #<BANK, #<SLOT
 .endm
