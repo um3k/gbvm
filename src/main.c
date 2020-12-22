@@ -11,10 +11,13 @@
 #include "UI.h"
 #include "Input.h"
 #include "events.h"
-
+#include "DataManager.h"
+#include "Scroll.h"
 #include "vm.h"
 
 #include "gfx.h"
+#include "data/tileset_0.h"
+#include "data/background_1.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
@@ -159,6 +162,10 @@ void main() {
         LYC_REG = 144;
     }
 
+    // load_tiles(&tileset_0, (UBYTE)&__bank_tileset_0);
+    load_image(&background_1, (UBYTE)&__bank_background_1);
+
+    RenderScreen();
 
     DISPLAY_ON;
 
@@ -176,7 +183,7 @@ void main() {
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
 
-    ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
+    // ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
 
     // load up engine with more actors
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1,  8);

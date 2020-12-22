@@ -1,10 +1,10 @@
-#pragma bank 3
+#pragma bank 255
 
 // Frame
 
-#include "VM.h"
+#include "data/data_types.h"
 
-const void __at(3) __bank_frame_image;
+const void __at(255) __bank_frame_image;
 
 const unsigned char frame_image[] = {
   63, 0, 127, 63, 192, 64, 223, 95, 240, 80, 208, 80, 240, 80, 240, 80,

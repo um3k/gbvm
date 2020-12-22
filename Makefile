@@ -2,12 +2,15 @@ CC = ../../gbdk/bin/lcc
 TEST_DIR = ./test
 TEST_FW	= $(TEST_DIR)/framework
 EMU	= ../../bgb/bgb
+GBSPACK = ../../gbspack/gbspack
 TEST_CHK = python $(TEST_FW)/unit_checker.py
 
 CART_SIZE = 8
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
+REL_OBJDIR = obj/_rel
+
 CFLAGS = -Iinclude -Wa-Iinclude
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
@@ -21,15 +24,18 @@ CSRC = $(foreach dir,src,$(notdir $(wildcard $(dir)/*.c)))
 
 ACORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.s))) 
 CCORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.c))) 
-CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c))) 
+ADATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.s)))
+CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c)))
 
-OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
-COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all:	$(TARGET) symbols
+all: directories $(TARGET) symbols
 test: pretest runtest
 
-.PHONY: clean release debug color profile test
+.PHONY: clean release debug color profile test directories
 .SECONDARY: $(OBJS) 
 
 release:
@@ -51,6 +57,17 @@ profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
 
+directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
+
+$(ROM_BUILD_DIR):
+	mkdir -p $(ROM_BUILD_DIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(REL_OBJDIR):
+	mkdir -p $(REL_OBJDIR)
+
 $(OBJDIR)/%.o:	src/core/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
@@ -69,8 +86,11 @@ $(OBJDIR)/%.o:	src/%.c
 $(OBJDIR)/%.o:	src/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(ROM_BUILD_DIR)/%.gb:	$(OBJS)
-	mkdir -p $(ROM_BUILD_DIR)
+$(REL_OBJS):	$(OBJS)
+	mkdir -p $(REL_OBJDIR)
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 2 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+
+$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
 
 $(OBJDIR)/test_main.o: test/framework/test_main.c
@@ -78,7 +98,7 @@ $(OBJDIR)/test_main.o: test/framework/test_main.c
 
 clean:
 	@echo "CLEANUP..."
-	rm -rf obj/*
+	rm -rf $(OBJDIR)
 	rm -rf $(ROM_BUILD_DIR)
 	rm -f $(TEST_DIR)/*.noi
 	rm -f $(TEST_DIR)/*.map

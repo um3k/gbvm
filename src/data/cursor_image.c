@@ -1,10 +1,10 @@
-#pragma bank 3
+#pragma bank 255
 
 // Cursor
 
-#include "VM.h"
+#include "data/data_types.h"
 
-const void __at(3) __bank_cursor_image;
+const void __at(255) __bank_cursor_image;
 
 const unsigned char cursor_image[] = {
   0, 0, 62, 62, 193, 193, 206, 142, 204, 132, 196, 132, 248, 248, 0, 0

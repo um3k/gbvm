@@ -3,6 +3,15 @@
 
 #include <gb/gb.h>
 
+#define __BANK_PREFIX(A) __bank_##A
+#define TO_FAR_PTR_T(A) {.bank = (char)&(__BANK_PREFIX(A)), .ptr = (void *)&(A)}
+#define TO_FAR_ARGS(T, A) (T)(A).ptr, (A).bank
+
+typedef struct far_ptr_t {
+    UINT8 bank;
+    void * ptr;
+} far_ptr_t;
+
 /**
  * Call set_bkg_data with data stored in banked memory (non-reentrant!)
  * 
