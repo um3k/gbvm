@@ -91,7 +91,6 @@ $(REL_OBJS):	$(OBJS)
 	$(eval CART_SIZE=$(shell $(GBSPACK) -b 2 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
-	mkdir -p $(ROM_BUILD_DIR)
 	$(CC) $(LFLAGS) -o $@ $^
 
 $(OBJDIR)/test_main.o: test/framework/test_main.c
