@@ -11,10 +11,11 @@
 #include "UI.h"
 #include "Input.h"
 #include "events.h"
-
+#include "DataManager.h"
 #include "vm.h"
 
 #include "gfx.h"
+#include "data/tileset_0.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
@@ -159,6 +160,7 @@ void main() {
         LYC_REG = 144;
     }
 
+    load_tiles(&tileset_0, (UBYTE)&__bank_tileset_0);
 
     DISPLAY_ON;
 
