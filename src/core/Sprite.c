@@ -2,6 +2,7 @@
 
 UINT8 sprites_pool[MAX_SPRITES];
 UINT8 sprites_pool_next;
+UINT8 hide_sprites = FALSE;
 
 void init_sprite_pool() __banked
 {

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <rand.h>
 
 #include "vm.h"
 
@@ -291,6 +292,7 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 case '^': *A = *A  ^  *B; break;
                 // unary
                 case '@': *B = abs(*B); continue;
+                case '~': *B = ~(*B);   continue;
                 // terminator
                 default:
                     SWITCH_ROM_MBC1(_save);         // restore bank
@@ -372,6 +374,50 @@ void vm_get_int16(SCRIPT_CTX * THIS, INT16 idxA, INT16 * addr) __banked {
     if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
     *A = *addr;
 }
+// sets unsigned int8 in RAM by address
+void vm_set_uint8(SCRIPT_CTX * THIS, UINT8 * addr, INT16 idxA) __banked {
+    INT16 * A;
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    *addr = *A;
+}
+// sets int8 in RAM by address
+void vm_set_int8(SCRIPT_CTX * THIS, INT8 * addr, INT16 idxA) __banked {
+    INT16 * A;
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    *addr = *A;
+}
+// sets int16 in RAM by address
+void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) __banked {
+    INT16 * A;
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    *addr = *A;
+}
+// sets unsigned int8 in RAM by address
+void vm_set_const_int8(SCRIPT_CTX * THIS, UINT8 * addr, UINT8 v) __banked {
+    THIS;
+    *addr = v;
+}
+// sets int16 in RAM by address
+void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) __banked {
+    THIS;
+    *addr = v;
+}
+
+// initializes random number generator
+void vm_randomize() __banked {
+    initrand(DIV_REG);
+}
+
+// sets value on stack indexed by idx to random value from given range 0 <= n < limit, mask is calculated by macro 
+void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) __banked {
+    UINT16 value = randw() & mask;
+    if (value >= limit) value -= limit;
+    if (value >= limit) value -= limit;
+    UINT16 * A;
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
+    *A = value + min;
+}
+
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active
@@ -399,7 +445,7 @@ __asm
         ldh (__current_bank), a
         ld (0x2000), a          ; switch bank with vm code
         
-        ld a, (HL+)             ; load current command and return if terminator
+        ld a, (hl+)             ; load current command and return if terminator
         ld e, a
         or a
         jr z, 3$
@@ -407,33 +453,31 @@ __asm
         push bc                 ; store bc
         push hl
 
-        add a
-        add e                   ; a = a * sizeof(SCRIPT_CMD)
-
-        ld hl, #_script_cmds
-        add l
-        ld l, a
-        adc h
-        sub l
-        ld h, a                 ; hl = &script_cmds[command+1]
-        dec hl                  ; hl = &script_cmds[command].args_len
+        ld d, #0
+        ld h, d
+        ld l, e
+        add hl, hl
+        add hl, de              ; hl = de * sizeof(SCRIPT_CMD)
+        dec hl
+        ld de, #_script_cmds
+        add hl, de              ; hl = &script_cmds[command].args_len
 
         ld a, (hl-)
         ld e, a                 ; e = args_len
-        ld b, (hl)
-        dec hl
+        ld a, (hl-)
+        ld b, a
         ld c, (hl)              ; bc = fn
 
         pop hl                  ; hl points to the next VM instruction or a first byte of the args
-        ld d, e                 ; d = param count
+        ld d, e                 ; d = arg count
         srl d
-        jr nc, 4$
-        ld a, (hl+)
+        jr nc, 4$               ; d is even?
+        ld a, (hl+)             ; copy one arg onto stack
         push af
         inc sp
 4$:
-        jr z, 1$
-2$:                             ; copy args onto stack
+        jr z, 1$                ; only one arg?
+2$:                             
         ld a, (hl+)
         push af
         inc sp
@@ -441,7 +485,7 @@ __asm
         push af
         inc sp
         dec d
-        jr nz, 2$
+        jr nz, 2$               ; loop through remaining args, copy 2 bytes at a time
 1$:
         push bc                 ; save function pointer
 
@@ -464,7 +508,7 @@ __asm
         push bc                 ; pushing THIS
 
         push de                 ; not used
-        push de                 ; d: fn_bank, e: args_len
+        push de                 ; de: args_len
 
         ld a, #b_vm_call        ; a = script_bank (all script functions in one bank: take any complimantary symbol)
         ldh (__current_bank), a
@@ -472,14 +516,10 @@ __asm
 
         rst 0x20                ; call hl
 
-        pop hl                  ; h: _current_bank, l: args_len
-
-        ld  h, #0
-        ld  a, #4
-        add l
-        ld l, a
-        add hl, sp              ; deallocate dummy word, this and args_len bytes from the stack
-        ld sp, hl
+        pop hl                  ; hl: args_len
+        add hl, sp
+        ld sp, hl               ; deallocate args_len bytes from the stack
+        add sp, #4              ; deallocate dummy word and THIS
 
         pop bc                  ; restore bc
 
@@ -506,10 +546,10 @@ void ScriptRunnerInit() __banked {
 
     SCRIPT_CTX * nxt = 0;
     SCRIPT_CTX * tmp = CTXS + (SCRIPT_MAX_CONTEXTS - 1);
-    for (UBYTE i = 0; i < SCRIPT_MAX_CONTEXTS; i++) {
+    for (UBYTE i = SCRIPT_MAX_CONTEXTS; i != 0; i--) {
         tmp->next = nxt;
         tmp->base_addr = base_addr;
-        tmp->ID = i + 1;
+        tmp->ID = i;
         base_addr += CONTEXT_STACK_SIZE;
         nxt = tmp--;
     }

@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 #include <gb/font.h>
+#include <rand.h>
 
 #include "BankData.h"
 #include "GameTime.h"
@@ -8,6 +9,8 @@
 #include "LinkedList.h"
 #include "Sprite.h"
 #include "UI.h"
+#include "Input.h"
+#include "events.h"
 
 #include "vm.h"
 
@@ -32,14 +35,17 @@ extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
 void LCD_isr() __nonbanked {
-    if ((LYC_REG < 144u) && (WX_REG < 160u)) HIDE_SPRITES;
-    WY_REG = LYC_REG;
+    if (hide_sprites) return;
+    if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
 void VBL_isr() __nonbanked {
-    SHOW_SPRITES; 
-    WX_REG = win_pos_x + 7;
-    LYC_REG = win_pos_y;
+    if (!hide_sprites) SHOW_SPRITES;
+    if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
+        LYC_REG = WY_REG = win_pos_y;
+        WX_REG = win_pos_x + 7u;
+        SHOW_WIN;
+    } else HIDE_WIN;
 }
 
 void process_VM() {
@@ -47,6 +53,8 @@ void process_VM() {
         switch (ScriptRunnerUpdate()) {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
+                input_update();
+                if (joy != 0) events_update();
                 update_actors();
                 ui_update();
                 game_time++;
@@ -135,10 +143,13 @@ void main() {
     OBP1_REG = 0xD2U;
 
     WX_REG = MINWNDPOSX;
-    WY_REG = 96;
+    WY_REG = MENU_CLOSED_Y;
 
-    init_actors();
+    initrand(DIV_REG);
+
+    events_init();
     ui_init();
+    init_actors();
 
     __critical {
         add_LCD(LCD_isr);
@@ -157,6 +168,9 @@ void main() {
     ScriptRunnerInit();
 
     ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
+
+    // grid walking
+    ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);
 
     // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);

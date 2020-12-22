@@ -8,10 +8,8 @@
 typedef struct act_move_to_t {
     UBYTE ID;
     UBYTE _pad0; 
-    INT16 X, Y; 
-    UBYTE H_FIRST;
-    UBYTE _pad1; 
-    UBYTE COLL;
+    INT16 X, Y;
+    UBYTE ATTR; 
 } act_move_to_t;
 
 void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
@@ -19,11 +17,10 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     BYTE new_dir_x = 0;
     BYTE new_dir_y = 0;
 
-    act_move_to_t * params = VM_REF_TO_PTR(idx);
-
     // indicate waitable state of context
     THIS->waitable = 1;
 
+    act_move_to_t * params = VM_REF_TO_PTR(idx);
     actor = actors + params->ID;
 
     // if (start && stack_frame[4]) {
@@ -40,7 +37,7 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
     // Actor not at horizontal destination
     if ((actor->x != params->X) &&
-        (!(params->H_FIRST) || (actor->y == params->Y))) {
+        (!(params->ATTR & ACTOR_ATTR_H_FIRST) || (actor->y == params->Y))) {
         if (actor->x < params->X) {
             new_dir_x = 1;
         } else if (actor->x > params->X) {
@@ -80,12 +77,23 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     return;
 }
 
-void vm_actor_activate(void * THIS, UBYTE actor) __banked {    
-    THIS;
-    activate_actor(actors + actor);
+void vm_actor_activate(SCRIPT_CTX * THIS, INT16 idx) __banked {    
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    activate_actor(actors + *n_actor);
 }
 
-void vm_actor_set_dir(void * THIS, UBYTE actor, INT8 dir_x, INT8 dir_y) __banked {
-    THIS;
-    actor_set_dir(actors + actor, dir_x, dir_y);
+void vm_actor_deactivate(SCRIPT_CTX * THIS, INT16 idx) __banked {    
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    deactivate_actor(actors + *n_actor);
+}
+
+void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, INT8 dir_x, INT8 dir_y) __banked {
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    actor_set_dir(actors + *n_actor, dir_x, dir_y);
+}
+
+void vm_actor_set_anim(SCRIPT_CTX * THIS, INT16 idx, INT16 idx_anim) __banked {
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    UBYTE * n_anim = VM_REF_TO_PTR(idx_anim);
+    actor_set_anim(actors + *n_actor, *n_anim);
 }

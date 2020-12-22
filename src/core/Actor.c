@@ -49,7 +49,7 @@ void update_actors() __banked
         move_sprite(actor->sprite_no + 1, screen_x + 8, screen_y);
 
         // Check if should animate
-        if (((game_time & 0x3) == 0) && (actor->animate)) {
+        if ((actor->animate) && ((game_time & 0x3) == 0)) {
           // Check reached animation tick frame
             if ((game_time & actor->anim_tick) == 0) {
                 actor->frame += 4;
@@ -148,10 +148,6 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
         actor->frame_end = frame_end;
         actor->rerender = TRUE;
     }
-}
-
-void actor_set_anim(actor_t *actor, UBYTE animate) __banked {
-    actor->animate = animate;
 }
 
 void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
