@@ -2,7 +2,7 @@ CC = ../../gbdk/bin/lcc
 TEST_DIR = ./test
 TEST_FW	= $(TEST_DIR)/framework
 EMU	= ../../bgb/bgb
-GBSPACK = gbspack
+GBSPACK = ../../gbspack/gbspack
 TEST_CHK = python $(TEST_FW)/unit_checker.py
 
 CART_SIZE = 8
