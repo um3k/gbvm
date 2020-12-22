@@ -32,10 +32,10 @@ COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(O
 DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all:	$(TARGET) symbols
+all: directories $(TARGET) symbols
 test: pretest runtest
 
-.PHONY: clean release debug color profile test
+.PHONY: clean release debug color profile test directories
 .SECONDARY: $(OBJS) 
 
 release:
@@ -56,6 +56,17 @@ color:
 profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
+
+directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
+
+$(ROM_BUILD_DIR):
+	mkdir -p $(ROM_BUILD_DIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(REL_OBJDIR):
+	mkdir -p $(REL_OBJDIR)
 
 $(OBJDIR)/%.o:	src/core/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -88,7 +99,7 @@ $(OBJDIR)/test_main.o: test/framework/test_main.c
 
 clean:
 	@echo "CLEANUP..."
-	rm -rf obj/*
+	rm -rf $(OBJDIR)
 	rm -rf $(ROM_BUILD_DIR)
 	rm -f $(TEST_DIR)/*.noi
 	rm -f $(TEST_DIR)/*.map
