@@ -58,13 +58,13 @@ void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles,
 
 
 /**
- * Read UBYTE from banked memory location (non-reentrant!)
+ * Read UWORD from banked memory location (non-reentrant!)
  * 
  * @param bank bank to read from
  * @param ptr memory address of data within bank
  * @return value stored in banked location
  */
-UBYTE ReadBankedUBYTE(UBYTE bank, unsigned char *ptr);
+UWORD ReadBankedUWORD(UBYTE bank, unsigned char *ptr);
 
 /**
  * memcpy data from banked memory location (non-reentrant!)

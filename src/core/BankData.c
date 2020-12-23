@@ -98,7 +98,7 @@ __asm
 __endasm;  
 }
 
-UBYTE ReadBankedUBYTE(UBYTE bank, unsigned char* ptr) __naked {
+UWORD ReadBankedUWORD(UBYTE bank, unsigned char *ptr) __naked {
   ptr; bank;
 __asm
     ldh a, (__current_bank)
@@ -112,7 +112,9 @@ __asm
     ld  a, (hl+)
     ld  h, (hl)
     ld  l, a
-    ld  e, (hl)
+    ld  a, (hl+)
+    ld  e, a
+    ld  d, (hl)
 
     ld  a, (#__save)
     ldh (__current_bank),a
