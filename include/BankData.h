@@ -69,11 +69,11 @@ UBYTE ReadBankedUBYTE(UBYTE bank, unsigned char *ptr);
 /**
  * memcpy data from banked memory location (non-reentrant!)
  * 
- * @param bank bank to read from
  * @param to destination to write fetched data
  * @param from memory address of data within bank
  * @param n number of bytes to fetch from bank
+ * @param bank bank to read from
  */
-void MemcpyBanked(UBYTE bank, void* to, void* from, size_t n);
+void MemcpyBanked(void* to, void* from, size_t n, UBYTE bank);
 
 #endif
