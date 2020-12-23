@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 #include <gb/font.h>
+#include <gb/crash_handler.h>
 #include <rand.h>
 
 #include "BankData.h"
@@ -162,7 +163,7 @@ void main() {
         LYC_REG = 144;
     }
 
-    // load_tiles(&tileset_0, (UBYTE)&__bank_tileset_0);
+    load_tiles(&tileset_0, (UBYTE)&__bank_tileset_0);
     load_image(&background_1, (UBYTE)&__bank_background_1);
 
     RenderScreen();

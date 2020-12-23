@@ -5,13 +5,13 @@ EMU	= ../../bgb/bgb
 GBSPACK = ../../gbspack/gbspack
 TEST_CHK = python $(TEST_FW)/unit_checker.py
 
-CART_SIZE = 8
+CART_SIZE = 16
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
-CFLAGS = -Iinclude -Wa-Iinclude
+CFLAGS = -Iinclude -Wa-Iinclude -Wl-a
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
@@ -88,7 +88,7 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -b 2 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 5 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
