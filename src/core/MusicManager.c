@@ -2,6 +2,7 @@
 #include "BankData.h"
 
 #ifdef GBT_PLAYER
+    #undef HUGE_TRACKER 
     #include "gbt_player.h"
 #endif
 #ifdef HUGE_TRACKER
