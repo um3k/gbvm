@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "events.h"
 #include "DataManager.h"
+#include "MusicManager.h"
 #include "Scroll.h"
 #include "vm.h"
 
@@ -155,12 +156,26 @@ void main() {
     ui_init();
     init_actors();
 
+  
+    NR52_REG = 0x80;
+    NR51_REG = 0xFF;
+    NR50_REG = 0x77;
+
     __critical {
         add_LCD(LCD_isr);
         add_VBL(VBL_isr);
-        IE_REG |= LCD_IFLAG;
         STAT_REG |= 0x40u; 
         LYC_REG = 144;
+
+        add_TIM(MusicUpdate);
+        #ifdef CGB
+            TMA_REG = _cpu == CGB_TYPE ? 120U : 0xBCU;
+        #else
+            TMA_REG = 0xBCU;
+        #endif
+        TAC_REG = 0x04U;
+
+        IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
 
     load_tiles(&tileset_0, (UBYTE)&__bank_tileset_0);

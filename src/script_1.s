@@ -9,6 +9,8 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+        VM_MUSIC_PLAY           1, 1
+        
         VM_JUMP                 1$
 
         ; Text Dialogue

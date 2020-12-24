@@ -11,11 +11,14 @@ ROM_BUILD_DIR = build
 OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
-CFLAGS = -Iinclude -Wa-Iinclude -Wl-a
+MUSIC_DRIVER = GBT_PLAYER
+#MUSIC_DRIVER = HUGE_TRACKER
+
+CFLAGS = -Iinclude -Wa-Iinclude -Wl-a -Wf-DGBT_PLAYER
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
-LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS)
+LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
 TARGET = $(ROM_BUILD_DIR)/rom.gb
 
@@ -88,7 +91,7 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -b 5 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 6 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^

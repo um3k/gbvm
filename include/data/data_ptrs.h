@@ -8,6 +8,8 @@
 #define TMP_VAR_1 -1
 #define TMP_VAR_2 -1
 
+extern const far_ptr_t music_tracks[];
+
 extern int start_scene_x;
 extern int start_scene_y;
 extern char start_scene_dir_x;

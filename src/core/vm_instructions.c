@@ -3,6 +3,7 @@
 #include "VM_Actor.h"
 #include "VM_UI.h"
 #include "VM_gameboy.h"
+#include "VM_music.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
@@ -99,5 +100,18 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_input_attach,           2}, // 0x53
     {vm_input_get,              2}, // 0x54
     {vm_context_prepate,        4}, // 0x55
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
 
+    // music and sound instructions section
+    {vm_music_play,             2}, // 0x60
+    {vm_music_stop,             0}, // 0x61
 };
