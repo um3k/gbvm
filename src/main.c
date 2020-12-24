@@ -1,5 +1,6 @@
 #include <gb/gb.h>
 #include <gb/font.h>
+#include <gb/crash_handler.h>
 #include <rand.h>
 
 #include "BankData.h"
@@ -11,10 +12,14 @@
 #include "UI.h"
 #include "Input.h"
 #include "events.h"
-
+#include "DataManager.h"
+#include "MusicManager.h"
+#include "Scroll.h"
 #include "vm.h"
 
 #include "gfx.h"
+#include "data/tileset_0.h"
+#include "data/background_1.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
@@ -151,14 +156,32 @@ void main() {
     ui_init();
     init_actors();
 
+  
+    NR52_REG = 0x80;
+    NR51_REG = 0xFF;
+    NR50_REG = 0x77;
+
     __critical {
         add_LCD(LCD_isr);
         add_VBL(VBL_isr);
-        IE_REG |= LCD_IFLAG;
         STAT_REG |= 0x40u; 
         LYC_REG = 144;
+
+        add_TIM(MusicUpdate);
+        #ifdef CGB
+            TMA_REG = _cpu == CGB_TYPE ? 120U : 0xBCU;
+        #else
+            TMA_REG = 0xBCU;
+        #endif
+        TAC_REG = 0x04U;
+
+        IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
 
+    load_tiles(&tileset_0, (UBYTE)&__bank_tileset_0);
+    load_image(&background_1, (UBYTE)&__bank_background_1);
+
+    RenderScreen();
 
     DISPLAY_ON;
 
@@ -176,7 +199,7 @@ void main() {
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
 
-    ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
+    // ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
 
     // load up engine with more actors
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1,  8);

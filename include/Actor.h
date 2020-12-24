@@ -2,6 +2,7 @@
 #define ACTOR_H
 
 #include <gb/gb.h>
+#include "BankData.h"
 
 #define MAX_ACTORS            20
 #define MAX_ACTORS_ACTIVE     12
@@ -26,6 +27,12 @@ typedef struct actor_t
   UINT8 flip_x;
   UINT8 rerender;
   UINT8 move_speed;
+
+  UINT8 sprite, sprite_type, palette;
+  UINT8 n_frames, initial_frame;
+  UINT8 direction;
+  UINT8 anim_speed;
+  far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
 
   // Collisions
   UBYTE collision_group;

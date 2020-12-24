@@ -422,3 +422,15 @@ OP_VM_CONTEXT_PREPARE   = 0x55
 .macro VM_CONTEXT_PREPARE SLOT, BANK, ADDR
         .db OP_VM_CONTEXT_PREPARE, #>ADDR, #<ADDR, #<BANK, #<SLOT
 .endm
+
+; --- MUSIC AND SOUND -------------------------------
+
+OP_VM_MUSIC_PLAY        = 0x60
+.macro VM_MUSIC_PLAY TRACK, LOOP
+        .db OP_VM_MUSIC_PLAY, #<LOOP, #<TRACK
+.endm
+
+OP_VM_MUSIC_STOP        = 0x61
+.macro VM_MUSIC_STOP
+        .db OP_VM_MUSIC_STOP
+.endm

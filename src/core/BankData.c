@@ -98,7 +98,7 @@ __asm
 __endasm;  
 }
 
-UBYTE ReadBankedUBYTE(UBYTE bank, unsigned char* ptr) __naked {
+UWORD ReadBankedUWORD(UBYTE bank, unsigned char *ptr) __naked {
   ptr; bank;
 __asm
     ldh a, (__current_bank)
@@ -112,7 +112,9 @@ __asm
     ld  a, (hl+)
     ld  h, (hl)
     ld  l, a
-    ld  e, (hl)
+    ld  a, (hl+)
+    ld  e, a
+    ld  d, (hl)
 
     ld  a, (#__save)
     ldh (__current_bank),a
@@ -121,9 +123,25 @@ __asm
 __endasm;  
 }
 
-void MemcpyBanked(UBYTE bank, void* to, void* from, size_t n) {
-  _save = _current_bank;
-  SWITCH_ROM_MBC1(bank);
-  memcpy(to, from, n);
-  SWITCH_ROM_MBC1(_save);
+void MemcpyBanked(void* to, void* from, size_t n, UBYTE bank)  __naked {
+  to; from; n; bank;
+__asm
+    ldh a, (__current_bank)
+    ld  (#__save),a
+
+    ldhl  sp,	#8
+    ld  a, (hl)
+    ldh	(__current_bank),a
+    ld  (#0x2000), a
+
+    pop bc
+    call  _memcpy
+
+    ld  a, (#__save)
+    ldh (__current_bank),a
+    ld  (#0x2000), a
+    ld  h, b
+    ld  l, c
+    jp  (hl)
+__endasm;  
 }

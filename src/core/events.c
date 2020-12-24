@@ -13,8 +13,7 @@ void events_init() __banked {
 
 void events_update() __nonbanked {
     UBYTE * slot = event_slots;
-    UBYTE key = 1;    
-    for (UBYTE tmp = joy; (tmp); tmp = tmp >> 1, key = key << 1, slot++) {
+    for (UBYTE tmp = joy, key = 1; (tmp); tmp = tmp >> 1, key = key << 1, slot++) {
         if (tmp & 1) {
             if (*slot == 0) continue;
             script_event_t * event = &input_events[*slot - 1u];

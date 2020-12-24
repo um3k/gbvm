@@ -510,7 +510,7 @@ __asm
         push de                 ; not used
         push de                 ; de: args_len
 
-        ld a, #b_vm_call        ; a = script_bank (all script functions in one bank: take any complimantary symbol)
+        ld a, #<b_vm_call       ; a = script_bank (all script functions in one bank: take any complimantary symbol)
         ldh (__current_bank), a
         ld (0x2000), a          ; switch bank with functions
 

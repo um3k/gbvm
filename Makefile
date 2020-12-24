@@ -2,17 +2,23 @@ CC = ../../gbdk/bin/lcc
 TEST_DIR = ./test
 TEST_FW	= $(TEST_DIR)/framework
 EMU	= ../../bgb/bgb
+GBSPACK = ../../gbspack/gbspack
 TEST_CHK = python $(TEST_FW)/unit_checker.py
 
-CART_SIZE = 8
+CART_SIZE = 16
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
-CFLAGS = -Iinclude -Wa-Iinclude
+REL_OBJDIR = obj/_rel
+
+#MUSIC_DRIVER = GBT_PLAYER
+MUSIC_DRIVER = HUGE_TRACKER
+
+CFLAGS = -Iinclude -Wa-Iinclude -Wl-a -Wf-D$(MUSIC_DRIVER)
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
-LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS)
+LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
 TARGET = $(ROM_BUILD_DIR)/rom.gb
 
@@ -21,15 +27,20 @@ CSRC = $(foreach dir,src,$(notdir $(wildcard $(dir)/*.c)))
 
 ACORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.s))) 
 CCORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.c))) 
-CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c))) 
+ADATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.s)))
+CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c)))
+MDRVR = $(foreach dir,src/core/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.s)))
+MDATA = $(foreach dir,src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
 
-OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
-COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o) $(MDRVR:%.s=$(OBJDIR)/%.o)
+COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
+DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
+REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all:	$(TARGET) symbols
+all: directories $(TARGET) symbols
 test: pretest runtest
 
-.PHONY: clean release debug color profile test
+.PHONY: clean release debug color profile test directories
 .SECONDARY: $(OBJS) 
 
 release:
@@ -51,10 +62,27 @@ profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
 
+directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
+
+$(ROM_BUILD_DIR):
+	mkdir -p $(ROM_BUILD_DIR)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(REL_OBJDIR):
+	mkdir -p $(REL_OBJDIR)
+
 $(OBJDIR)/%.o:	src/core/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:	src/core/%.s
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/core/$(MUSIC_DRIVER)/%.s
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/data/$(MUSIC_DRIVER)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:	src/data/%.c
@@ -69,8 +97,11 @@ $(OBJDIR)/%.o:	src/%.c
 $(OBJDIR)/%.o:	src/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(ROM_BUILD_DIR)/%.gb:	$(OBJS)
-	mkdir -p $(ROM_BUILD_DIR)
+$(REL_OBJS):	$(OBJS)
+	mkdir -p $(REL_OBJDIR)
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 6 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+
+$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
 
 $(OBJDIR)/test_main.o: test/framework/test_main.c
@@ -78,7 +109,7 @@ $(OBJDIR)/test_main.o: test/framework/test_main.c
 
 clean:
 	@echo "CLEANUP..."
-	rm -rf obj/*
+	rm -rf $(OBJDIR)
 	rm -rf $(ROM_BUILD_DIR)
 	rm -f $(TEST_DIR)/*.noi
 	rm -f $(TEST_DIR)/*.map
