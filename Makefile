@@ -11,10 +11,10 @@ ROM_BUILD_DIR = build
 OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
-MUSIC_DRIVER = GBT_PLAYER
-#MUSIC_DRIVER = HUGE_TRACKER
+#MUSIC_DRIVER = GBT_PLAYER
+MUSIC_DRIVER = HUGE_TRACKER
 
-CFLAGS = -Iinclude -Wa-Iinclude -Wl-a -Wf-DGBT_PLAYER
+CFLAGS = -Iinclude -Wa-Iinclude -Wl-a -Wf-D$(MUSIC_DRIVER)
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
@@ -29,10 +29,12 @@ ACORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.s)))
 CCORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.c))) 
 ADATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.s)))
 CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c)))
+MDRVR = $(foreach dir,src/core/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.s)))
+MDATA = $(foreach dir,src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
 
-OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
-COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
-DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o)
+OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o) $(MDRVR:%.s=$(OBJDIR)/%.o)
+COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
+DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 all: directories $(TARGET) symbols
@@ -75,6 +77,12 @@ $(OBJDIR)/%.o:	src/core/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:	src/core/%.s
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/core/$(MUSIC_DRIVER)/%.s
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/data/$(MUSIC_DRIVER)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:	src/data/%.c

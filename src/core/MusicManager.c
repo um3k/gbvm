@@ -1,7 +1,12 @@
 #include "MusicManager.h"
 #include "BankData.h"
+
 #ifdef GBT_PLAYER
     #include "gbt_player.h"
+#endif
+#ifdef HUGE_TRACKER
+    #undef GBT_PLAYER
+    #include "hUGEDriver.h"
 #endif
 
 #include "data/data_ptrs.h"
@@ -10,8 +15,12 @@
 
 UBYTE current_index = MAX_MUSIC;
 UBYTE tone_frames = 0;
+#ifdef HUGE_TRACKER
+UBYTE music_stopped = TRUE;
+UBYTE current_track_bank = 0;
+#endif
 
-void MusicPlay(UBYTE index, UBYTE loop) __banked {
+void MusicPlay(UBYTE index, UBYTE loop) __nonbanked {
     if (index != current_index) {
 #ifdef GBT_PLAYER
         UBYTE _save = _current_bank;
@@ -20,6 +29,17 @@ void MusicPlay(UBYTE index, UBYTE loop) __banked {
         SWITCH_ROM_MBC1(_save);
 #endif
 #ifdef HUGE_TRACKER
+        loop;
+        UBYTE _save = _current_bank;
+        current_track_bank = music_tracks[index].bank;
+        SWITCH_ROM_MBC1(current_track_bank);
+        __critical {
+            hUGE_init(music_tracks[index].ptr);
+            for (UBYTE i = HT_CH1; i <= HT_CH4; i++) 
+                hUGE_mute_channel(i, HT_CH_PLAY);
+        }
+        SWITCH_ROM_MBC1(_save);
+        music_stopped = FALSE;
 #endif
         current_index = index;
     }
@@ -33,21 +53,31 @@ void MusicStop() __banked {
     current_index = MAX_MUSIC;
 #endif
 #ifdef HUGE_TRACKER
+    __critical {
+        for (UBYTE i = HT_CH1; i <= HT_CH4; i++) 
+            hUGE_mute_channel(i, HT_CH_MUTE);
+        music_stopped = TRUE;
+    }
 #endif
 }
 
 void MusicUpdate() __nonbanked {
-#ifdef GBT_PLAYER 
-    UBYTE _save = _current_bank;
-    gbt_update();
-    SWITCH_ROM_MBC1(_save);
-
     if (tone_frames != 0) {
         tone_frames--;
         if (tone_frames == 0) SoundStopTone();
     }
+#ifdef GBT_PLAYER 
+    UBYTE _save = _current_bank;
+    gbt_update();
+    SWITCH_ROM_MBC1(_save);
 #endif
 #ifdef HUGE_TRACKER
+    if (music_stopped) return;
+    if (!current_track_bank) return;
+    UBYTE _save = _current_bank;
+    SWITCH_ROM_MBC1(current_track_bank);
+    hUGE_dosound();
+    SWITCH_ROM_MBC1(_save);
 #endif
 }
 

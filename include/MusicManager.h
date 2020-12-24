@@ -9,7 +9,7 @@
  * @param index index of music in data_ptrs.h
  * @param loop if TRUE will infinitely loop the music
  */
-void MusicPlay(UBYTE index, UBYTE loop) __banked;
+void MusicPlay(UBYTE index, UBYTE loop) __nonbanked;
 
 /**
  * Stop currently playing music
