@@ -434,3 +434,18 @@ OP_VM_MUSIC_STOP        = 0x61
 .macro VM_MUSIC_STOP
         .db OP_VM_MUSIC_STOP
 .endm
+
+OP_VM_MUSIC_MUTE        = 0x62
+.macro VM_MUSIC_MUTE MASK
+        .db OP_VM_MUSIC_MUTE, #<MASK
+.endm
+
+OP_VM_SOUND_MASTERVOL   = 0x63
+.macro VM_SOUND_MASTERVOL VOL
+        .db OP_VM_SOUND_MASTERVOL, #<VOL
+.endm
+
+OP_VM_SOUND_PLAY        = 0x64
+.macro VM_SOUND_PLAY FRAMES, CH, ?A, ?B, ?C, ?D, ?E
+        .db OP_VM_SOUND_PLAY, #<E, #<D, #<C, #<B, #<A, #<CH, #<FRAMES
+.endm
