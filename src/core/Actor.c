@@ -122,6 +122,7 @@ void activate_actor(actor_t *actor)
     if (actor->enabled) return;
     actors_active_len++;
     actor->enabled = TRUE;
+    actor->rerender = TRUE;
     actor->sprite_no = get_free_sprite();
     DL_REMOVE_ITEM(actors_inactive_head, actor);
     DL_PUSH_HEAD(actors_active_head, actor);
