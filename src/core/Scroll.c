@@ -72,6 +72,8 @@ void ScrollUpdateRowR() {
 }
 
 void ScrollUpdateRowWithDelay(INT16 x, INT16 y) {
+    actor_t *actor;
+
     while (pending_w_i) {
         ScrollUpdateRowR();
     }
@@ -82,16 +84,21 @@ void ScrollUpdateRowWithDelay(INT16 x, INT16 y) {
     pending_w_i = SCREEN_TILE_REFRES_W;
     pending_w_map = image_ptr + image_tile_width * y + x;
 
-    // // Activate Actors in Row
-    // for (i = 1; i != actors_len; i++) {
-    //   if (actors[i].pos.y >> 3 == y) {
-    //     INT16 tx = actors[i].pos.x >> 3;
-    //     if (U_LESS_THAN(x, tx) && U_LESS_THAN(tx, x + SCREEN_TILE_REFRES_W))
-    //     {
-    //       ActivateActor(i);
-    //     }
-    //   }
-    // }
+    // Activate Actors in Row
+    actor = actors_inactive_head;
+    while (actor) {
+        INT16 ty = actor->y >> 3;
+        if (ty == y) {
+            INT16 tx = actor->x >> 3;
+            if ((tx + 1 > x) && (tx < x + SCREEN_TILE_REFRES_W)) {
+                actor_t * next = actor->next;
+                activate_actor(actor);
+                actor=next;
+                continue;
+            }
+        }
+        actor = actor->next;
+    }
 
 #ifdef CGB
     pending_w_cmap = image_attr_ptr + image_tile_width * y + x;
@@ -100,6 +107,7 @@ void ScrollUpdateRowWithDelay(INT16 x, INT16 y) {
 
 void ScrollUpdateRow(INT16 x, INT16 y) {
     UINT8 _save = _current_bank;
+    actor_t *actor;
     UINT8 i = 0u;
     UBYTE* id;
     UBYTE screen_x, screen_y;
@@ -126,15 +134,21 @@ void ScrollUpdateRow(INT16 x, INT16 y) {
         SetTile(id, *(map++));
     }
 
-    // // Activate Actors in Row
-    // for (i = 1; i != actors_len; i++) {
-    //   if (actors[i].pos.y >> 3 == y) {
-    //     INT16 tx = actors[i].pos.x >> 3;
-    //     if (U_LESS_THAN(x, tx + 1) && U_LESS_THAN(tx, x + 24)) {
-    //       ActivateActor(i);
-    //     }
-    //   }
-    // }
+    // Activate Actors in Row
+    actor = actors_inactive_head;
+    while (actor) {
+        INT16 ty = actor->y >> 3;
+        if (ty == y) {
+            INT16 tx = actor->x >> 3;
+            if ((tx + 1 > x) && (tx < x + SCREEN_TILE_REFRES_W)) {
+                actor_t * next = actor->next;
+                activate_actor(actor);
+                actor=next;
+                continue;
+            }
+        }
+        actor = actor->next;
+    }
 
     SWITCH_ROM_MBC1(_save);
 }
@@ -186,22 +200,29 @@ void ScrollUpdateColumnR() {
 }
 
 void ScrollUpdateColumnWithDelay(INT16 x, INT16 y) {
+    actor_t *actor;
+    
     while (pending_h_i) {
         // If previous column wasn't fully rendered
         // render it now before starting next column
         ScrollUpdateColumnR();
     }
 
-    // // Activate Actors in Column
-    // for (i = 1; i != actors_len; i++) {
-    //   if (actors[i].pos.x >> 3 == x) {
-    //     INT16 ty = actors[i].pos.y >> 3;
-    //     if (U_LESS_THAN(y, ty) && U_LESS_THAN(ty, y + SCREEN_TILE_REFRES_H))
-    //     {
-    //       ActivateActor(i);
-    //     }
-    //   }
-    // }
+    // Activate Actors in Column
+    actor = actors_inactive_head;
+    while (actor) {
+        INT16 tx = actor->x >> 3;
+        if (tx == x) {
+            INT16 ty = actor->y >> 3;
+            if ((ty > y) && (ty < y + SCREEN_TILE_REFRES_H)) {
+                actor_t * next = actor->next;
+                activate_actor(actor);
+                actor=next;
+                continue;
+            }
+        }
+        actor = actor->next;
+    }
 
     pending_h_x = x;
     pending_h_y = y;

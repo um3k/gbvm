@@ -155,12 +155,5 @@ void load_scene(const scene_t* scene, UBYTE bank) {
         }
     }
 
-    // @todo in Scroll.c, activate onscreen actors
-    activate_actor(&actors[1]);
-    activate_actor(&actors[2]);
-    activate_actor(&actors[3]);
-    activate_actor(&actors[4]);
-    activate_actor(&actors[5]);
-
     SWITCH_ROM_MBC1(_save);
 }
