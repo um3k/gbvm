@@ -70,8 +70,8 @@ void MusicMute(UBYTE channels) __nonbanked {
     SWITCH_ROM_MBC1(_save);
 #endif
 #ifdef HUGE_TRACKER
-    for (UBYTE i = HT_CH1; i <= HT_CH4; i++, channels >>= 1) 
-        hUGE_mute_channel(i, !(channels & 1));
+    for (UBYTE i = HT_CH1, ch = channels; i <= HT_CH4; i++, ch >>= 1) 
+        hUGE_mute_channel(i, !(ch & 1));
 #endif
 }
 
@@ -108,7 +108,7 @@ void SoundPlay(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
         sound_channel = channel--;
         MusicMute(channel_mask & channel_masks[channel]);
         UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[channel];
-        for (UBYTE i = 0; i < FX_REG_SIZES[channel]; i++) *reg++ = *data++;
+        for (UBYTE i = FX_REG_SIZES[channel], *p = data; i != 0; i--) *reg++ = *p++;
         tone_frames = frames;
     }
 }

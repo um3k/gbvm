@@ -1,4 +1,4 @@
-#pragma bank 5
+#pragma bank 255
 
 #include "hUGEDriver.h"
 #include <stddef.h>
@@ -1402,21 +1402,21 @@ static const unsigned char waves[] = {
     181,227,77,77,177,104,107,42,177,178,59,177,43,106,177,153,
 };
 
-const void __at(5) __bank_music_track_101__Data;
+const void __at(255) __bank_music_track_101__Data;
 const hUGESong_t music_track_101__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_102__Data;
+const void __at(255) __bank_music_track_102__Data;
 const hUGESong_t music_track_102__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_103__Data;
+const void __at(255) __bank_music_track_103__Data;
 const hUGESong_t music_track_103__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_104__Data;
+const void __at(255) __bank_music_track_104__Data;
 const hUGESong_t music_track_104__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_105__Data;
+const void __at(255) __bank_music_track_105__Data;
 const hUGESong_t music_track_105__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_106__Data;
+const void __at(255) __bank_music_track_106__Data;
 const hUGESong_t music_track_106__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_107__Data;
+const void __at(255) __bank_music_track_107__Data;
 const hUGESong_t music_track_107__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_108__Data;
+const void __at(255) __bank_music_track_108__Data;
 const hUGESong_t music_track_108__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(5) __bank_music_track_109__Data;
+const void __at(255) __bank_music_track_109__Data;
 const hUGESong_t music_track_109__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
