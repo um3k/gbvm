@@ -12,6 +12,7 @@
 #include "Sprite.h"
 #include "Input.h"
 #include "Math.h"
+#include "Actor.h"
 
 #define ui_frame_tl_tiles 0xC0u
 #define ui_frame_bl_tiles 0xC6u
@@ -232,6 +233,7 @@ UBYTE ui_run_menu() __banked {
     while (1) {
         input_update();
         ui_update();
+        update_actors();
         game_time++;
         wait_vbl_done();
 
@@ -282,6 +284,7 @@ void ui_run_modal(UBYTE wait_flags) __banked {
         if (!fail) return;
         
         ui_update();
+        update_actors();
         game_time++;
         wait_vbl_done();
         input_update();
