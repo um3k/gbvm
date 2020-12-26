@@ -1,6 +1,4 @@
 #include <gb/gb.h>
-#include <gb/font.h>
-#include <gb/crash_handler.h>
 #include <rand.h>
 
 #include "BankData.h"
@@ -185,9 +183,6 @@ void main() {
 
     DISPLAY_ON;
 
-    // font_init();
-    // font_set(font_load(font_spect));
-    
     ScriptRunnerInit();
 
     ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);

@@ -15,12 +15,12 @@
 #define MAX_MUSIC 255
 
 UBYTE current_index = MAX_MUSIC;
-UBYTE tone_frames = 0;
-UBYTE channel_mask = 0x0f;
+UBYTE tone_frames   = 0;
+UBYTE channel_mask  = 0x0f;
 UBYTE sound_channel = 0;
 #ifdef HUGE_TRACKER
-UBYTE music_stopped = TRUE;
-UBYTE current_track_bank = 0;
+    UBYTE current_track_bank = 0;
+    UBYTE music_stopped      = TRUE;
 #endif
 
 void MusicPlay(UBYTE index, UBYTE loop) __nonbanked {
@@ -103,14 +103,14 @@ const UINT8 FX_ADDR_LO[]    = {0x10, 0x16, 0x1a, 0x20};
 const UINT8 channel_masks[] = {0x0e, 0x0d, 0x0b, 0x07};
 
 void SoundPlay(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
-    if ((frames == 0) || (tone_frames)) return; // sound already playing or length in frames is zero.
-    if ((channel) && (channel < 5)) { 
-        sound_channel = channel--;
-        MusicMute(channel_mask & channel_masks[channel]);
-        UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[channel];
-        for (UBYTE i = FX_REG_SIZES[channel], *p = data; i != 0; i--) *reg++ = *p++;
-        tone_frames = frames;
-    }
+    if (frames == 0) return;                        // exit if length in frames is zero
+    if (tone_frames) return;                        // exit if sound is already playing.
+    if ((channel == 0) || (channel > 4)) return;    // exit if channel is out of bounds
+    sound_channel = channel - 1;
+    MusicMute(channel_mask & channel_masks[sound_channel]);
+    UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[sound_channel];
+    for (UBYTE i = FX_REG_SIZES[sound_channel], *p = data; i != 0; i--) *reg++ = *p++;
+    tone_frames = frames;
 }
 
 void SoundStop(UBYTE channel) __banked {
