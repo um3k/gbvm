@@ -89,6 +89,7 @@ void main() {
 
     events_init();
     ui_init();
+    fade_init();
 
   
     NR52_REG = 0x80;
