@@ -18,7 +18,7 @@ void scroll_init() __banked {
     scroll_y = 0x7FFF;
 }
 
-void RefreshScroll_b() __banked {
+void scroll_update() __banked {
   INT16 x, y;
   INT16 current_column, new_column, current_row, new_row;
   UBYTE render = FALSE;

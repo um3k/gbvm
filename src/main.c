@@ -68,7 +68,7 @@ void process_VM() {
                 if (joy != 0) events_update();
                 camera_x++;
                 camera_y++;
-                RefreshScroll_b();
+                scroll_update();
                 update_actors();
                 ui_update();
                 game_time++;
@@ -119,7 +119,7 @@ void main() {
     }
 
     load_scene(&scene_1, (UBYTE)&__bank_scene_1);
-    RefreshScroll_b();
+    scroll_update();
 
     DISPLAY_ON;
 

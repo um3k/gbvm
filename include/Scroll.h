@@ -34,7 +34,7 @@ void scroll_init() __banked;
 /**
  * Update scroll position and load in any newly visible background tiles and actors
  */
-void RefreshScroll_b() __banked;
+void scroll_update() __banked;
 
 /**
  * Rerender all onscreen tiles and load all onscreen actors
