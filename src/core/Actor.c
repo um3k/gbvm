@@ -15,7 +15,7 @@
 actor_t actors[MAX_ACTORS];
 actor_t *actors_active_head;
 actor_t *actors_inactive_head;
-UBYTE actors_active_len;
+UBYTE actors_active_len = 0;
 
 actor_t *actor;
 INT8 screen_x, screen_y;
