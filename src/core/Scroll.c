@@ -246,6 +246,9 @@ void RenderScreen() {
     INT16 y;
     UBYTE i;
 
+    draw_scroll_x = scroll_x;
+    draw_scroll_y = scroll_y;
+
     // if (!fade_style)
     // {
     //   DISPLAY_OFF

@@ -20,7 +20,7 @@
 #include "gfx.h"
 #include "data/tileset_0.h"
 #include "data/background_1.h"
-#include "data/scene_0.h"
+#include "data/scene_1.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
@@ -46,6 +46,11 @@ void LCD_isr() __nonbanked {
 }
 
 void VBL_isr() __nonbanked {
+    // Update background scroll in vbl
+    // interupt to prevent tearing
+    SCX_REG = draw_scroll_x;
+    SCY_REG = draw_scroll_y;
+
     if (!hide_sprites) SHOW_SPRITES;
     if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
         LYC_REG = WY_REG = win_pos_y;
@@ -61,6 +66,9 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
+                camera_x++;
+                camera_y++;
+                RefreshScroll_b();
                 update_actors();
                 ui_update();
                 game_time++;
@@ -110,7 +118,7 @@ void main() {
         IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
 
-    load_scene(&scene_0, (UBYTE)&__bank_scene_0);
+    load_scene(&scene_1, (UBYTE)&__bank_scene_1);
 
     RenderScreen();
 
@@ -124,7 +132,7 @@ void main() {
     ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
 
     // grid walking
-    ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);
+    // ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);
 
     // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
     // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
