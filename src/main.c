@@ -12,9 +12,11 @@
 #include "events.h"
 #include "DataManager.h"
 #include "MusicManager.h"
+#include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
 
+#include "data/data_ptrs.h"
 #include "data/scene_1.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
@@ -87,11 +89,12 @@ void main() {
 
     initrand(DIV_REG);
 
+    ScriptRunnerInit();
+
     events_init();
     ui_init();
     fade_init();
 
-  
     NR52_REG = 0x80;
     NR51_REG = 0xFF;
     NR50_REG = 0x77;
@@ -112,13 +115,26 @@ void main() {
 
         IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
+    DISPLAY_ON;
+
+    // fade out
+    fade_out();
+    while (fade_isfading()) {
+        wait_vbl_done();
+        fade_update();
+    }
+    if (!fade_style) DISPLAY_OFF;
 
     load_scene(&scene_1, (UBYTE)&__bank_scene_1);
     scroll_update();
 
+    // fade in
     DISPLAY_ON;
-
-    ScriptRunnerInit();
+    fade_in();
+    while (fade_isfading()) {
+        wait_vbl_done();
+        fade_update();
+    }
 
     ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
 
