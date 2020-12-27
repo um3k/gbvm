@@ -1,0 +1,8 @@
+#ifndef _VM_CAMERA_H_INCLUDE
+#define _VM_CAMERA_H_INCLUDE
+
+#include "vm.h"
+
+void vm_camera_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked;
+
+#endif

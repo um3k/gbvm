@@ -66,8 +66,6 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
-                camera_x++;
-                camera_y++;
                 scroll_update();
                 update_actors();
                 ui_update();

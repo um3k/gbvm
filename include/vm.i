@@ -434,3 +434,10 @@ OP_VM_MUSIC_STOP        = 0x61
 .macro VM_MUSIC_STOP
         .db OP_VM_MUSIC_STOP
 .endm
+
+; --- CAMERA -------------------------------
+
+OP_VM_CAMERA_MOVE_TO     = 0x70
+.macro VM_CAMERA_MOVE_TO IDX
+        .db OP_VM_CAMERA_MOVE_TO, #>IDX, #<IDX
+.endm
