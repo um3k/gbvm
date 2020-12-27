@@ -126,6 +126,7 @@ void main() {
     if (!fade_style) DISPLAY_OFF;
 
     load_scene(&scene_1, (UBYTE)&__bank_scene_1);
+    camera_update();
     scroll_update();
 
     // fade in
