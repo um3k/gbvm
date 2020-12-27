@@ -40,7 +40,7 @@ _SCRIPT_1::
         VM_CAMERA_MOVE_TO       .ARG1, 0, 1
         VM_POP                  2
 
-        ; VM_MUSIC_PLAY           1, 1
+        VM_MUSIC_PLAY           1, 1
         VM_STOP
    
         VM_JUMP                 1$
