@@ -39,7 +39,7 @@ void RefreshScroll_b() __banked;
 /**
  * Rerender all onscreen tiles and load all onscreen actors
  */
-void RenderScreen();
+void RenderScreen() __banked;
 
 /**
  * Set vram tile at memory location to a value from a second memory location

@@ -119,8 +119,7 @@ void main() {
     }
 
     load_scene(&scene_1, (UBYTE)&__bank_scene_1);
-
-    RenderScreen();
+    RefreshScroll_b();
 
     DISPLAY_ON;
 

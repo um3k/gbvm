@@ -9,6 +9,7 @@ void ScrollUpdateRowWithDelay(INT16 x, INT16 y);
 void ScrollUpdateColumnWithDelay(INT16 x, INT16 y);
 void ScrollUpdateRowR();
 void ScrollUpdateColumnR();
+void ScrollUpdateRow(INT16 x, INT16 y);
 
 void RefreshScroll_b() __banked {
   INT16 x, y;
@@ -77,4 +78,49 @@ void RefreshScroll_b() __banked {
       ScrollUpdateColumnR();
     }
   }
+}
+
+void RenderScreen() __banked {
+    INT16 y;
+    UBYTE i;
+
+    draw_scroll_x = scroll_x;
+    draw_scroll_y = scroll_y;
+
+    // if (!fade_style)
+    // {
+    //   DISPLAY_OFF
+    // } else if (!fade_timer == 0)
+    // {
+    //   // Immediately set all palettes black while screen renders.
+    //   #ifdef CGB
+    //   if (_cpu == CGB_TYPE) {
+    //     for (UBYTE c = 0; c != 32; ++c) {
+    //       BkgPaletteBuffer[c] = RGB_BLACK;
+    //     }
+    //     set_bkg_palette(0, 8, BkgPaletteBuffer);
+    //     set_sprite_palette(0, 8, BkgPaletteBuffer);
+    //   } else
+    //   #endif
+    //     OBP0_REG = 0xFF;
+    //     BGP_REG = 0xFF;
+    // }
+
+    // Clear pending rows/ columns
+    pending_w_i = 0;
+    pending_h_i = 0;
+
+    y = scroll_y >> 3;
+    for (i = 0u; i != (SCREEN_TILE_REFRES_H) && y != image_height; ++i, y++) {
+        ScrollUpdateRow((scroll_x >> 3) - SCREEN_PAD_LEFT, y - SCREEN_PAD_TOP);
+    }
+
+    game_time = 0;
+
+    DISPLAY_ON;
+    // if (!fade_timer == 0) {
+    //   // Screen palate to nornmal if not fading
+    //   ApplyPaletteChange();
+    // }
+
 }
