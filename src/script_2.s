@@ -2,10 +2,10 @@
         
 .globl b_wait_frames, _wait_frames
 
-.area _CODE_4
+.area _CODE_255
 
-___bank_SCRIPT_2        = 4
-___bank_KEYS_SCRIPT     = 4
+___bank_SCRIPT_2        = 255
+___bank_KEYS_SCRIPT     = 255
 
 .globl ___bank_SCRIPT_2, ___bank_KEYS_SCRIPT
 
@@ -87,9 +87,9 @@ _GRID_MOVE::
         VM_STOP
 
 _SCRIPT_2::
-        VM_SET_CONST            12, 4
-        VM_SET_CONST            13, 64
-        VM_SET_CONST            14, 64
+        VM_SET_CONST            12, 0
+        VM_SET_CONST            13, 96
+        VM_SET_CONST            14, 96
         VM_SET_CONST            15, ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
 
         ; instead ot this:

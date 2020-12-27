@@ -4,6 +4,7 @@
 #include "VM_UI.h"
 #include "VM_gameboy.h"
 #include "VM_music.h"
+#include "VM_camera.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
@@ -117,4 +118,20 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_music_mute,             1}, // 0x62
     {vm_sound_mastervol,        1}, // 0x63
     {vm_sound_play,             7}, // 0x64
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+    {0, 0},
+
+    // camera instructions section
+    {vm_camera_move_to,         4}, // 0x70
+    {vm_camera_set_pos,         2}, // 0x71
+
 };

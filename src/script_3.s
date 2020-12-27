@@ -2,9 +2,9 @@
         
 .globl b_wait_frames, _wait_frames
 
-.area _CODE_4
+.area _CODE_255
 
-___bank_SCRIPT_3 = 4
+___bank_SCRIPT_3 = 255
 .globl ___bank_SCRIPT_3
 
 _SCRIPT_3::

@@ -3,8 +3,6 @@
 
 #include <gb/gb.h>
 
-#include "Math.h"
-
 #define SCROLL_BANK 1
 #define SCREEN_TILES_W 20  // 160 >> 3 = 20
 #define SCREEN_TILES_H 18  // 144 >> 3 = 18
@@ -29,17 +27,12 @@ extern UINT8 pending_h_i;
 /**
  * Initialise scroll variables, call on scene load
  */
-void InitScroll();
+void scroll_init() __banked;
 
 /**
  * Update scroll position and load in any newly visible background tiles and actors
  */
-void RefreshScroll_b() __banked;
-
-/**
- * Rerender all onscreen tiles and load all onscreen actors
- */
-void RenderScreen();
+void scroll_update() __banked;
 
 /**
  * Set vram tile at memory location to a value from a second memory location

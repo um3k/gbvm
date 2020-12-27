@@ -449,3 +449,15 @@ OP_VM_SOUND_PLAY        = 0x64
 .macro VM_SOUND_PLAY FRAMES, CH, ?A, ?B, ?C, ?D, ?E
         .db OP_VM_SOUND_PLAY, #<E, #<D, #<C, #<B, #<A, #<CH, #<FRAMES
 .endm
+
+; --- CAMERA -------------------------------
+
+OP_VM_CAMERA_MOVE_TO     = 0x70
+.macro VM_CAMERA_MOVE_TO IDX, SPEED, AFTER_LOCK
+        .db OP_VM_CAMERA_MOVE_TO, #<AFTER_LOCK, #<SPEED, #>IDX, #<IDX
+.endm
+
+OP_VM_CAMERA_SET_POS     = 0x71
+.macro VM_CAMERA_SET_POS IDX
+        .db OP_VM_CAMERA_SET_POS, #>IDX, #<IDX
+.endm
