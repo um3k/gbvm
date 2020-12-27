@@ -17,9 +17,6 @@
 #include "Scroll.h"
 #include "vm.h"
 
-#include "gfx.h"
-#include "data/tileset_0.h"
-#include "data/background_1.h"
 #include "data/scene_1.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
