@@ -11,9 +11,9 @@ actor_t.y       = 2
 actor_t.ID      = 4
 sizeof_actor_t  = 6
 
-.area _CODE_3
+.area _CODE_255
 
-___bank_BYTECODE = 3
+___bank_BYTECODE = 255
 .globl ___bank_BYTECODE
 
 _BYTECODE::

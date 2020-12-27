@@ -1,8 +1,8 @@
 .include "vm.i"
         
-.area _CODE_4
+.area _CODE_255
 
-___bank_SCRIPT_5 = 4
+___bank_SCRIPT_5 = 255
 .globl ___bank_SCRIPT_5
 
 _SCRIPT_5::
