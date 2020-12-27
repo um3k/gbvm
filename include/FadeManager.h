@@ -52,7 +52,7 @@ void fade_setspeed(UBYTE speed) __banked;
  * 
  * @return TRUE if fade is currently running
  */
-inline UBYTE fade_isfading() __banked {
+inline UBYTE fade_isfading() {
   return fade_running;
 }
 
