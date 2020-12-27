@@ -119,7 +119,7 @@ void scroll_render_screen() {
 
     // if (!fade_style)
     // {
-    //   DISPLAY_OFF
+    DISPLAY_OFF
     // } else if (!fade_timer == 0)
     // {
     //   // Immediately set all palettes black while screen renders.

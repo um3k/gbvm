@@ -132,5 +132,6 @@ const SCRIPT_CMD script_cmds[] = {
 
     // camera instructions section
     {vm_camera_move_to,         2}, // 0x70
+    {vm_camera_set_pos,         2}, // 0x71
 
 };

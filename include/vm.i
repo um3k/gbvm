@@ -441,3 +441,8 @@ OP_VM_CAMERA_MOVE_TO     = 0x70
 .macro VM_CAMERA_MOVE_TO IDX
         .db OP_VM_CAMERA_MOVE_TO, #>IDX, #<IDX
 .endm
+
+OP_VM_CAMERA_SET_POS     = 0x71
+.macro VM_CAMERA_SET_POS IDX
+        .db OP_VM_CAMERA_SET_POS, #>IDX, #<IDX
+.endm

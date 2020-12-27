@@ -3,12 +3,17 @@
 #include "vm.h"
 
 #include "Camera.h"
+#include "Scroll.h"
 #include "GameTime.h"
 
 typedef struct cam_move_to_t {
     INT16 X, Y;
     UBYTE speed;
 } cam_move_to_t;
+
+typedef struct cam_set_pos_t {
+    INT16 X, Y;
+} cam_set_pos_t;
 
 void vm_camera_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
@@ -40,5 +45,14 @@ void vm_camera_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     }
 
     THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx));
+    return;
+}
+
+
+void vm_camera_set_pos(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    cam_set_pos_t * params = VM_REF_TO_PTR(idx);
+    camera_x = params->X;
+    camera_y = params->Y;
+    scroll_update();
     return;
 }

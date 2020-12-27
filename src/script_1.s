@@ -9,11 +9,24 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
-        VM_PUSH                 256
-        VM_PUSH                 256
+        ; Camera Set Position
+        VM_PUSH                 128
+        VM_PUSH                 128
+        VM_CAMERA_SET_POS       .ARG1
+        VM_POP                  2
+
+        ; Camera Move To
+        VM_PUSH                 168
+        VM_PUSH                 168
         VM_PUSH                 1
         VM_CAMERA_MOVE_TO       .ARG2
         VM_POP                  3
+
+        ; Camera Set Position
+        VM_PUSH                 32
+        VM_PUSH                 168
+        VM_CAMERA_SET_POS       .ARG1
+        VM_POP                  2
 
         VM_MUSIC_PLAY           1, 1
         
