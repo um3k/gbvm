@@ -29,7 +29,7 @@ extern UINT8 pending_h_i;
 /**
  * Initialise scroll variables, call on scene load
  */
-void InitScroll();
+void scroll_init() __banked;
 
 /**
  * Update scroll position and load in any newly visible background tiles and actors

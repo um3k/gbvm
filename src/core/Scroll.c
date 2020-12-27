@@ -234,9 +234,3 @@ void ScrollUpdateColumnWithDelay(INT16 x, INT16 y) {
 #endif
 }
 
-void InitScroll() {
-    pending_w_i = 0;
-    pending_h_i = 0;
-    scroll_x = 0x7FFF;
-    scroll_y = 0x7FFF;
-}

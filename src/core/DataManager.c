@@ -142,7 +142,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
         MemcpyBanked(&triggers, far_scene_triggers.ptr, sizeof(trigger_t) * triggers_len, far_scene_triggers.bank);
     }
 
-    InitScroll();
+    scroll_init();
 
     // Reset last trigger
     last_trigger_tx = 0xFF;
