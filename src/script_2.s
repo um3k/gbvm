@@ -76,6 +76,14 @@ _GRID_MOVE::
         VM_IF_CONST     .EQ     .ARG0, 0x02, _LEFT_SCRIPT, 0
         VM_IF_CONST     .EQ     .ARG0, 0x04, _UP_SCRIPT, 0
         VM_IF_CONST     .EQ     .ARG0, 0x08, _DOWN_SCRIPT, 0
+
+        VM_IF_CONST     .NE     .ARG0, 0x10, 1$, 0                      ; NOT J_A?
+        VM_SOUND_PLAY           42, 1, 0x1C,0x81,0xF3,0x73,0x86         ; BO-O-O-OW
+        VM_STOP
+1$:
+        VM_IF_CONST     .NE     .ARG0, 0x20, 2$, 0                      ; NOT J_B?
+        VM_SOUND_PLAY           3,  1, 0x24,0x81,0xF3,0x73,0x86         ; BLUP
+2$:
         VM_STOP
 
 _SCRIPT_2::
@@ -96,7 +104,7 @@ _SCRIPT_2::
 
         ; we now able to use this:
         VM_CONTEXT_PREPARE      1, ___bank_KEYS_SCRIPT, _GRID_MOVE
-        VM_INPUT_ATTACH         0x0f, 1
+        VM_INPUT_ATTACH         0x3f, 1         ; cursors, A, B
 
         VM_ACTOR_ACTIVATE       12
         VM_ACTOR_MOVE_TO        12

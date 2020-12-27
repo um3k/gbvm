@@ -15,10 +15,12 @@
 #define MAX_MUSIC 255
 
 UBYTE current_index = MAX_MUSIC;
-UBYTE tone_frames = 0;
+UBYTE tone_frames   = 0;
+UBYTE channel_mask  = 0x0f;
+UBYTE sound_channel = 0;
 #ifdef HUGE_TRACKER
-UBYTE music_stopped = TRUE;
-UBYTE current_track_bank = 0;
+    UBYTE current_track_bank = 0;
+    UBYTE music_stopped      = TRUE;
 #endif
 
 void MusicPlay(UBYTE index, UBYTE loop) __nonbanked {
@@ -42,6 +44,7 @@ void MusicPlay(UBYTE index, UBYTE loop) __nonbanked {
         SWITCH_ROM_MBC1(_save);
         music_stopped = FALSE;
 #endif
+        channel_mask = 0x0f;
         current_index = index;
     }
 }
@@ -54,18 +57,31 @@ void MusicStop() __banked {
     current_index = MAX_MUSIC;
 #endif
 #ifdef HUGE_TRACKER
-    __critical {
-        for (UBYTE i = HT_CH1; i <= HT_CH4; i++) 
-            hUGE_mute_channel(i, HT_CH_MUTE);
-        music_stopped = TRUE;
-    }
+    music_stopped = TRUE;
+    for (UBYTE i = HT_CH1; i <= HT_CH4; i++) 
+        hUGE_mute_channel(i, HT_CH_MUTE);
+#endif
+}
+
+void MusicMute(UBYTE channels) __nonbanked {
+#ifdef GBT_PLAYER
+    UBYTE _save = _current_bank;
+    gbt_enable_channels(channels);
+    SWITCH_ROM_MBC1(_save);
+#endif
+#ifdef HUGE_TRACKER
+    for (UBYTE i = HT_CH1, ch = channels; i <= HT_CH4; i++, ch >>= 1) 
+        hUGE_mute_channel(i, !(ch & 1));
 #endif
 }
 
 void MusicUpdate() __nonbanked {
-    if (tone_frames != 0) {
-        tone_frames--;
-        if (tone_frames == 0) SoundStopTone();
+    if (tone_frames) {
+        if (--tone_frames == 0) {
+            SoundStop(sound_channel);
+            MusicMute(channel_mask);
+            sound_channel = 0;
+        }
     }
 #ifdef GBT_PLAYER 
     UBYTE _save = _current_bank;
@@ -82,60 +98,26 @@ void MusicUpdate() __nonbanked {
 #endif
 }
 
-void SoundPlayTone(UWORD tone, UBYTE frames) __banked {
+const UINT8 FX_REG_SIZES[]  = {5, 4, 5, 4};
+const UINT8 FX_ADDR_LO[]    = {0x10, 0x16, 0x1a, 0x20};
+const UINT8 channel_masks[] = {0x0e, 0x0d, 0x0b, 0x07};
+
+void SoundPlay(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
+    if (frames == 0) return;                        // exit if length in frames is zero
+    if (tone_frames) return;                        // exit if sound is already playing.
+    if ((channel == 0) || (channel > 4)) return;    // exit if channel is out of bounds
+    sound_channel = channel - 1;
+    MusicMute(channel_mask & channel_masks[sound_channel]);
+    UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[sound_channel];
+    for (UBYTE i = FX_REG_SIZES[sound_channel], *p = data; i != 0; i--) *reg++ = *p++;
     tone_frames = frames;
-
-    // enable sound
-    NR52_REG = 0x80;
-
-    // play tone on channel 1
-    NR10_REG = 0x00;
-    NR11_REG = (0x0U << 6U) | 0x01U;
-    NR12_REG = (0x0FU << 4U) | 0x00U;
-    NR13_REG = (tone & 0x00FF);
-    NR14_REG = 0x80 | ((tone & 0x0700) >> 8U);
-
-    // enable volume
-    NR50_REG = 0x77;
-
-    // enable channel 1
-    NR51_REG |= 0x11;
 }
 
-void SoundPlayBeep(UBYTE pitch) __banked {
-    // enable sound
-    NR52_REG = 0x80;
-
-    // play beep sound on channel 4
-    NR41_REG = 0x01;
-    NR42_REG = (0x0FU << 4U);
-    NR43_REG = 0x20 | 0x08 | pitch;
-    NR44_REG = 0x80 | 0x40;
-
-    // enable volume
-    NR50_REG = 0x77;
-
-    // enable channel 4
-    NR51_REG |= 0x88;
-
-    // no delay
-}
-
-void SoundPlayCrash() __banked {
-    // enable sound
-    NR52_REG = 0x80;
-
-    // play crash sound on channel 4
-    NR41_REG = 0x01;
-    NR42_REG = (0x0FU << 4U) | 0x02U;
-    NR43_REG = 0x13;
-    NR44_REG = 0x80;
-
-    // enable volume
-    NR50_REG = 0x77;
-
-    // enable channel 4
-    NR51_REG |= 0x88;
-
-    // no delay
+void SoundStop(UBYTE channel) __banked {
+    switch (channel) {
+        case 1: NR12_REG = 0x00; break; 
+        case 2: NR22_REG = 0x00; break; 
+        case 3: NR32_REG = 0x00; break;         // set volume 0 
+        case 4: NR42_REG = 0x00; break;         // would that work?
+    }
 }

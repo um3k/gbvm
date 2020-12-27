@@ -3,6 +3,8 @@
 
 #include <gb/gb.h>
 
+extern UBYTE channel_mask;
+
 /**
  * Play music
  * 
@@ -16,37 +18,32 @@ void MusicPlay(UBYTE index, UBYTE loop) __nonbanked;
  */
 void MusicStop() __banked;
 
+/** 
+ * Mutes channels by mask
+ * 
+ * @param channels channel mask
+ */
+void MusicMute(UBYTE channels) __nonbanked;
+
 /**
  * Update music player
  */
 void MusicUpdate() __nonbanked;
 
 /**
- * Play tone sound effect
+ * Plays FX sound on given channel
  * 
- * @param tone tone of sound
- * @param frames number of frames to play for
+ * @param frames sound length in frames
+ * @param channel sound channel
+ * @param data data to be written to sound registers
  */
-void SoundPlayTone(UWORD tone, UBYTE frames) __banked;
+void SoundPlay(UBYTE frames, UBYTE channel, UBYTE * data) __banked;
 
 /**
- * Stop currently playing tone sound effect
- */
-inline void SoundStopTone() {
-    // stop tone on channel 1
-    NR12_REG = 0x00;
-}
-
-/**
- * Play beep sound effect
+ * Stops FX sound on given channel
  * 
- * @param pitch pitch of sound
+ * @param channel sound channel
  */
-void SoundPlayBeep(UBYTE pitch) __banked;
-
-/**
- * Play crash sound effect
- */
-void SoundPlayCrash() __banked;
+void SoundStop(UBYTE channel) __banked;
 
 #endif

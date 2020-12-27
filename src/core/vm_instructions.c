@@ -115,9 +115,9 @@ const SCRIPT_CMD script_cmds[] = {
     // music and sound instructions section
     {vm_music_play,             2}, // 0x60
     {vm_music_stop,             0}, // 0x61
-    {0, 0},
-    {0, 0},
-    {0, 0},
+    {vm_music_mute,             1}, // 0x62
+    {vm_sound_mastervol,        1}, // 0x63
+    {vm_sound_play,             7}, // 0x64
     {0, 0},
     {0, 0},
     {0, 0},

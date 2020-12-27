@@ -1,6 +1,4 @@
 #include <gb/gb.h>
-#include <gb/font.h>
-#include <gb/crash_handler.h>
 #include <rand.h>
 
 #include "BankData.h"
@@ -118,10 +116,6 @@ void main() {
     scroll_update();
 
     DISPLAY_ON;
-
-    // font_init();
-    // font_set(font_load(font_spect));
-    
 
     ScriptRunnerInit();
 
