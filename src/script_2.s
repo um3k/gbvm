@@ -79,9 +79,9 @@ _GRID_MOVE::
         VM_STOP
 
 _SCRIPT_2::
-        VM_SET_CONST            12, 4
-        VM_SET_CONST            13, 64
-        VM_SET_CONST            14, 64
+        VM_SET_CONST            12, 0
+        VM_SET_CONST            13, 96
+        VM_SET_CONST            14, 96
         VM_SET_CONST            15, ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
 
         ; instead ot this:

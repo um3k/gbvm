@@ -438,8 +438,8 @@ OP_VM_MUSIC_STOP        = 0x61
 ; --- CAMERA -------------------------------
 
 OP_VM_CAMERA_MOVE_TO     = 0x70
-.macro VM_CAMERA_MOVE_TO IDX
-        .db OP_VM_CAMERA_MOVE_TO, #>IDX, #<IDX
+.macro VM_CAMERA_MOVE_TO IDX, SPEED, AFTER_LOCK
+        .db OP_VM_CAMERA_MOVE_TO, #<AFTER_LOCK, #<SPEED, #>IDX, #<IDX
 .endm
 
 OP_VM_CAMERA_SET_POS     = 0x71

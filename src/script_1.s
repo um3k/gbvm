@@ -9,27 +9,40 @@ ___bank_SCRIPT_1 = 4
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
-        ; Camera Set Position
-        VM_PUSH                 128
-        VM_PUSH                 128
-        VM_CAMERA_SET_POS       .ARG1
-        VM_POP                  2
 
-        ; Camera Move To
-        VM_PUSH                 168
-        VM_PUSH                 168
-        VM_PUSH                 1
-        VM_CAMERA_MOVE_TO       .ARG2
-        VM_POP                  3
+        ; Actor Move To
+        VM_PUSH                 0       ; Actor 0
+        VM_PUSH                 128     ; X
+        VM_PUSH                 128     ; Y
+        VM_PUSH                 0       ; attributes
+        VM_PUSH                 0       ; collisions
+        VM_ACTOR_MOVE_TO        .ARG4
+        VM_POP                  5
 
         ; Camera Set Position
-        VM_PUSH                 32
-        VM_PUSH                 168
-        VM_CAMERA_SET_POS       .ARG1
+        VM_PUSH                 112     ; X
+        VM_PUSH                 128     ; Y
+        VM_CAMERA_MOVE_TO       .ARG1, 1, 0
         VM_POP                  2
 
-        VM_MUSIC_PLAY           1, 1
-        
+        ; Actor Move To
+        VM_PUSH                 0       ; Actor 0
+        VM_PUSH                 128     ; X
+        VM_PUSH                 96      ; Y
+        VM_PUSH                 0       ; attributes
+        VM_PUSH                 0       ; collisions
+        VM_ACTOR_MOVE_TO        .ARG4
+        VM_POP                  5
+
+        ; Camera Move To With Lock
+        VM_PUSH                 0
+        VM_PUSH                 0
+        VM_CAMERA_MOVE_TO       .ARG1, 0, 1
+        VM_POP                  2
+
+        ; VM_MUSIC_PLAY           1, 1
+        VM_STOP
+   
         VM_JUMP                 1$
 
         ; Text Dialogue

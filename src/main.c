@@ -66,6 +66,7 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
+                camera_update();
                 scroll_update();
                 update_actors();
                 ui_update();
@@ -124,6 +125,7 @@ void main() {
     // font_init();
     // font_set(font_load(font_spect));
     
+
     ScriptRunnerInit();
 
     ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);

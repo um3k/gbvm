@@ -6,6 +6,8 @@
 #include "Scroll.h"
 #include "Trigger.h"
 #include "Sprite.h"
+#include "Camera.h"
+#include "data/spritesheet_0.h" // @todo don't hard code this
 
 #define MAX_PLAYER_SPRITE_SIZE 24
 
@@ -96,6 +98,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     //   start_player_palette.bank);
 
     init_sprite_pool();
+    camera_init();
     //   ScriptCtxPoolReset();
     //   UIReset();
     //   RemoveInputScripts();
@@ -109,8 +112,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
         SWITCH_ROM_MBC1(far_scene_sprites.bank);
         scene_sprite_ptrs = far_scene_sprites.ptr;
         for (i = 0; i != sprites_len; i++) {
-            UBYTE sprite_len =
-                load_sprite(k, scene_sprite_ptrs->ptr, scene_sprite_ptrs->bank);
+            UBYTE sprite_len = load_sprite(k, scene_sprite_ptrs->ptr, scene_sprite_ptrs->bank);
             // sprites_info[i].sprite_offset = DIV_4(k);
             // sprites_info[i].frames_len = DIV_4(sprite_len);
             // if (sprites_info[i].frames_len == 6) {
@@ -127,15 +129,39 @@ void load_scene(const scene_t* scene, UBYTE bank) {
         }
     }
 
+    // Load player
+    actors[0].x = 45;
+    actors[0].y = 96;
+    actors[0].dir_x = 0;
+    actors[0].dir_y = 1;
+    actors[0].sprite = 6;
+    actors[0].sprite_type = 0;
+    actors[0].palette = 0;
+    actors[0].n_frames = 1;
+    actors[0].initial_frame = 0;
+    actors[0].animate = FALSE;
+    actors[0].move_speed = 1;
+    actors[0].anim_tick = 7;
+    actors[0].frame = 0;
+    actors[0].frame_start = 0;
+    actors[0].frame_end = 4;
+    actors[0].flip_x = FALSE;
+    actors[0].pinned = FALSE;    
+    load_sprite(0, &spritesheet_0, (UBYTE)&__bank_spritesheet_0);
+
     // Load actors
     actors_active_head = 0;
     actors_inactive_head = 0;
+    // Add player to inactive
+    actors[0].enabled = FALSE;
+    DL_PUSH_HEAD(actors_inactive_head, &actors[0]);
     if (actors_len != 0) {
         MemcpyBanked(&actors[1], far_scene_actors.ptr, sizeof(actor_t) * (actors_len - 1), far_scene_actors.bank);
         for (i = 1; i != actors_len; i++) {
             DL_PUSH_HEAD(actors_inactive_head, &actors[i]);
         }
     }
+    activate_actor(&actors[0]);
 
     // Load triggers
     if (triggers_len != 0) {
