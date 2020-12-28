@@ -17,4 +17,7 @@ __pycache__
 /test/*.noi
 /test/*.sna
 /test/*.bmp
+/test/*.o
+/test/*.asm
+/test/*.lst
 *.gb
