@@ -38,7 +38,6 @@ COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(O
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 all: directories $(TARGET) symbols
-test: pretest runtest
 
 .PHONY: clean release debug color profile test directories
 .SECONDARY: $(OBJS) 
@@ -122,13 +121,13 @@ rom: $(TARGET)
 symbols:
 	python ./utils/noi2sym.py $(patsubst %.gb,%.noi,$(TARGET)) >$(patsubst %.gb,%.sym,$(TARGET))
 
-pretest: $(COREOBJS)
-	$(CC) -c -o $(OBJDIR)/test_main.o $(TEST_FW)/main.c
-
-runtest: $(TEST_DIR)/*.json
+test: directories $(OBJS) $(OBJDIR)/test_main.o $(TEST_DIR)/*.json
 	@echo "Running tests..."
-	@for file in $(patsubst %.json,%,$^) ; do \
-		$(CC) $(CFLAGS) $(LFLAGS) -o $${file}.gb $(OBJDIR)/test_main.o $(COREOBJS) $${file}.c; \
+	$(eval CART_SIZE=$(shell $(GBSPACK) -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	@for file in $(patsubst %.json,%,$(filter %.json,$^))  ; do \
+		echo "$${file}"; \
+		$(CC) $(CFLAGS) -c -o $(OBJDIR)/$${file/test\//}.o $${file}.c; \
+		$(CC) $(LFLAGS) -o $${file}.gb $(filter-out $(REL_OBJDIR)/main.rel, $(REL_OBJS)) $(OBJDIR)/test_main.o $(OBJDIR)/$${file/test\//}.o; \
 		$(EMU) -set "DebugSrcBrk=1" -hf -stateonexit -screenonexit ./$${file}.bmp -rom $${file}.gb; \
 		$(TEST_CHK) $${file}.json $${file}.noi $${file}.sna $${file}.bmp ; \
 	done

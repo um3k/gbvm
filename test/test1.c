@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "framework/main.h"
+#include "framework/test_main.h"
 
 void test() {
     printf("hello, world!");
