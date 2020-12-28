@@ -37,7 +37,7 @@ COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(O
 #DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all: directories $(TARGET) symbols
+all: $(TARGET) symbols
 
 .PHONY: clean release debug color profile test directories
 .SECONDARY: $(OBJS) 
@@ -116,7 +116,7 @@ clean:
 	rm -f $(TEST_DIR)/*.sna
 	rm -f $(TEST_DIR)/*.bmp	
 
-rom: $(TARGET)
+rom: directories $(TARGET)
 
 symbols:
 	python ./utils/noi2sym.py $(patsubst %.gb,%.noi,$(TARGET)) >$(patsubst %.gb,%.sym,$(TARGET))
