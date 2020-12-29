@@ -147,7 +147,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     PLAYER.frame_end = 4;
     PLAYER.flip_x = FALSE;
     PLAYER.pinned = FALSE;    
-    load_sprite(0, &spritesheet_0, (UBYTE)&__bank_spritesheet_0);
+    load_sprite(0, &spritesheet_0, BANK(spritesheet_0));
 
     // Load actors
     actors_active_head = 0;

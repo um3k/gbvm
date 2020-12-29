@@ -78,8 +78,8 @@ void ui_init() __banked {
     text_drawn = TRUE;
     text_draw_speed = 1;
 
-    SetBankedBkgData(192, 9, frame_image, (UBYTE)&__bank_frame_image);
-    SetBankedBkgData(ui_cursor_tile, 1, cursor_image, (UBYTE)&__bank_cursor_image);
+    SetBankedBkgData(192, 9, frame_image, BANK(frame_image));
+    SetBankedBkgData(ui_cursor_tile, 1, cursor_image, BANK(cursor_image));
 
     set_bkg_data(ui_while_tile, 1, ui_white);
     set_bkg_data(ui_black_tile, 1, ui_black);
@@ -168,7 +168,7 @@ static void ui_draw_text_buffer_char() {
             current_text_speed = 0x1f;
             break;
         default:
-            SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), (UBYTE)&__bank_font_image);
+            SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), BANK(font_image));
             SetTile(ui_dest_ptr++, ui_tile_no);
             ui_tile_no++;
             break;

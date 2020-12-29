@@ -7,16 +7,16 @@
 
 void vm_music_play(SCRIPT_CTX * THIS, UBYTE track, UBYTE loop) __banked {
     THIS;
-    MusicPlay(track, loop);
+    music_play(track, loop);
 }
 
 void vm_music_stop() __banked {
-    MusicStop();
+    music_stop();
 }
 
 void vm_music_mute(SCRIPT_CTX * THIS, UBYTE channels) __banked {
     THIS;
-    MusicMute(channels);
+    music_mute(channels);
     channel_mask = channels;
 }
 
@@ -29,5 +29,5 @@ void vm_sound_play(SCRIPT_CTX * THIS, UBYTE frames, UBYTE channel, ...) __banked
     THIS;
     va_list va;
     va_start(va, channel);              // actually, always 5 parameters are passed as varargs
-    SoundPlay(frames, channel, va);
+    sound_play(frames, channel, va);
 }

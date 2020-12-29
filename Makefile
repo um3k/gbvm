@@ -20,6 +20,11 @@ LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
 LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
+#--- del ----
+CFLAGS += -DSGB
+LFLAGS += -Wm-ys
+#------------
+
 TARGET = $(ROM_BUILD_DIR)/rom.gb
 
 ASRC = $(foreach dir,src,$(notdir $(wildcard $(dir)/*.s))) 
@@ -38,9 +43,9 @@ COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(O
 #DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all: $(TARGET) symbols
+all: directories $(TARGET) symbols
 
-.PHONY: clean release debug color profile test directories
+.PHONY: clean release debug color super profile test directories
 .SECONDARY: $(OBJS) 
 
 release:
@@ -56,6 +61,11 @@ debug:
 color:
 	$(eval CFLAGS += -DCGB)
 	$(eval LFLAGS += -Wm-yC)
+	@echo "COLOR mode ON"
+
+super:
+	$(eval CFLAGS += -DSGB)
+	$(eval LFLAGS += -Wm-ys)
 	@echo "COLOR mode ON"
 
 profile:
@@ -102,7 +112,7 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 5 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
