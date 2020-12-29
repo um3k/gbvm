@@ -1,4 +1,6 @@
-CC = ../../gbdk/bin/lcc
+GBDK = ../../gbdk
+GBDKLIB = $(GBDK)/lib/small/asxxxx
+CC = $(GBDK)/bin/lcc
 TEST_DIR = ./test
 TEST_FW	= $(TEST_DIR)/framework
 EMU	= ../../bgb/bgb
@@ -14,7 +16,7 @@ REL_OBJDIR = obj/_rel
 #MUSIC_DRIVER = GBT_PLAYER
 MUSIC_DRIVER = HUGE_TRACKER
 
-CFLAGS = -Iinclude -Wa-Iinclude -Wl-a -Wf-D$(MUSIC_DRIVER)
+CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -Wf-D$(MUSIC_DRIVER)
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 

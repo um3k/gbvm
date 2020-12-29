@@ -1,11 +1,4 @@
-.LCDC = 0xFF40
-.STAT = 0xFF41
-
-.macro WAIT_STAT ?lbl
-lbl:	LDH	A, (.STAT)
-        AND	#0x02		; Check if in LCD modes 0 or 1
-        JR 	NZ, lbl
-.endm
+.include "global.s"
 
 .area _CODE
 

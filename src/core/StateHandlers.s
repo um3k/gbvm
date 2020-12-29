@@ -1,32 +1,24 @@
+.include "global.s"
+.include "macro.i"
+
 .area _CODE
 
 .globl _scene_type
 .globl __current_bank
 
-.globl  b_topdown_init, _topdown_init, b_topdown_update, _topdown_update
-.globl  b_platform_init, _platform_init, b_platform_update, _platform_update
-.globl  b_adventure_init, _adventure_init, b_adventure_update, _adventure_update
-.globl  b_shmup_init, _shmup_init, b_shmup_update, _shmup_update
-.globl  b_pointnclick_init, _pointnclick_init, b_pointnclick_update, _pointnclick_update
-
-.macro FAR_PTR SYM
-    .db b'SYM
-    .dw SYM
-.endm
-
 _state_start_fns:
-    FAR_PTR _topdown_init
-    FAR_PTR _platform_init
-    FAR_PTR _adventure_init 
-    FAR_PTR _shmup_init 
-    FAR_PTR _pointnclick_init
+    IMPORT_FAR_PTR _topdown_init
+    IMPORT_FAR_PTR _platform_init
+    IMPORT_FAR_PTR _adventure_init 
+    IMPORT_FAR_PTR _shmup_init 
+    IMPORT_FAR_PTR _pointnclick_init
 
 _state_update_fns:
-    FAR_PTR _topdown_update 
-    FAR_PTR _platform_update
-    FAR_PTR _adventure_update 
-    FAR_PTR _shmup_update 
-    FAR_PTR _pointnclick_update
+    IMPORT_FAR_PTR _topdown_update 
+    IMPORT_FAR_PTR _platform_update
+    IMPORT_FAR_PTR _adventure_update 
+    IMPORT_FAR_PTR _shmup_update 
+    IMPORT_FAR_PTR _pointnclick_update
 
 _state_init::
         ld hl, #_state_start_fns
