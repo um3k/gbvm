@@ -56,4 +56,14 @@ inline UBYTE fade_isfading() {
   return fade_running;
 }
 
+/**
+ * Fade in and wait until complete
+ */
+void fade_in_modal() __banked;
+
+/**
+ * Fade out and wait until complete
+ */
+void fade_out_modal() __banked;
+
 #endif

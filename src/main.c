@@ -134,13 +134,7 @@ void main() {
     }
     DISPLAY_ON;
 
-    // fade out
-    fade_out();
-    while (fade_isfading()) {
-        wait_vbl_done();
-        fade_update();
-    }
-    if (!fade_style) DISPLAY_OFF;
+    fade_out_modal();
 
     load_scene(&scene_1, BANK(scene_1));
     camera_update();
@@ -148,13 +142,7 @@ void main() {
 
     state_init(); // Start Scene Type
 
-    // fade in
-    DISPLAY_ON;
-    fade_in();
-    while (fade_isfading()) {
-        wait_vbl_done();
-        fade_update();
-    }
+    fade_in_modal();
 
     script_execute(BANK(SCRIPT_1), SCRIPT_1, 0, 0);
 
