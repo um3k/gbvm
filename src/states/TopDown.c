@@ -25,7 +25,7 @@ void Start_TopDown() __banked {
         PLAYER.y = 8 + MUL_16(DIV_16(PLAYER.y));
     } else {
         PLAYER.x = MUL_8(DIV_8(PLAYER.x));
-        PLAYER.y = 8 + MUL_8(DIV_8(PLAYER.y));
+        PLAYER.y = MUL_8(DIV_8(PLAYER.y));
     }
 
     td_moving = FALSE;
@@ -34,64 +34,27 @@ void Start_TopDown() __banked {
 }
 
 void Update_TopDown() __banked {
-
     UBYTE tile_x, tile_y, hit_actor;
-
-    // Is player on an 8x8px tile?
-    if (MOD_8(PLAYER.x) == 0 && MOD_8(PLAYER.y) == 0) {
-        // Player landed on an tile
-        // so stop movement for now
-        td_moving = FALSE;
-
-        PLAYER.dir_y = 0;
-        if (INPUT_RECENT_RIGHT) {
-            PLAYER.dir_x = 1;
-            td_moving = TRUE;
-        } else if (INPUT_RECENT_LEFT) {
-            PLAYER.dir_x = -1;
-            td_moving = TRUE;
-        }
-    }
-
-    // Move player
-    if (td_moving) {
-        // Move actor
-        if (PLAYER.move_speed == 0) {
-            // Half speed only move every other frame
-            if (IS_FRAME_2) {
-                PLAYER.x += (WORD)PLAYER.dir_x;
-                PLAYER.y += (WORD)PLAYER.dir_y;
-            }
-        } else {
-            PLAYER.x += (WORD)(PLAYER.dir_x * PLAYER.move_speed);
-            PLAYER.y += (WORD)(PLAYER.dir_y * PLAYER.move_speed);
-        }
-    }
-
-    return;
 
     tile_x = DIV_8(PLAYER.x);
     tile_y = DIV_8(PLAYER.y);
 
     // Is player on an 8x8px tile?
-    if ((topdown_grid == 16 &&
-         (MOD_16(PLAYER.x) == 0 && MOD_16(PLAYER.y) == 8)) ||
-        (topdown_grid == 8 && (MOD_8(PLAYER.x) == 0 && MOD_8(PLAYER.y) == 0))) {
+    if ((topdown_grid == 16 && ON_16PX_GRID(PLAYER)) ||
+        (topdown_grid == 8 && ON_8PX_GRID(PLAYER))) {
         // Player landed on an tile
         // so stop movement for now
         td_moving = FALSE;
 
         // Check for trigger collisions
-        if (ActivateTriggerAt(tile_x, tile_y, FALSE)) {
-            // If landed on a trigger don't update movement this frame
-            return;
-        }
+        // if (ActivateTriggerAt(tile_x, tile_y, FALSE)) {
+        //     // If landed on a trigger don't update movement this frame
+        //     return;
+        // }
 
         // Check input to set player movement
         if (INPUT_RECENT_LEFT) {
-            PLAYER.dir_x = -1;
-            PLAYER.dir_y = 0;
-            PLAYER.rerender = TRUE;
+            actor_set_dir(&PLAYER, -1, 0);
 
             // Check for collisions to left of player
             if (topdown_grid == 16) {
@@ -109,9 +72,7 @@ void Update_TopDown() __banked {
             }
 
         } else if (INPUT_RECENT_RIGHT) {
-            PLAYER.dir_x = 1;
-            PLAYER.dir_y = 0;
-            PLAYER.rerender = TRUE;
+            actor_set_dir(&PLAYER, 1, 0);
 
             // Check for collisions to right of player
             if (topdown_grid == 16) {
@@ -129,9 +90,7 @@ void Update_TopDown() __banked {
             }
 
         } else if (INPUT_RECENT_UP) {
-            PLAYER.dir_x = 0;
-            PLAYER.dir_y = -1;
-            PLAYER.rerender = TRUE;
+            actor_set_dir(&PLAYER, 0, -1);
 
             // Check for collisions above player
             if (topdown_grid == 16) {
@@ -149,9 +108,7 @@ void Update_TopDown() __banked {
             }
 
         } else if (INPUT_RECENT_DOWN) {
-            PLAYER.dir_x = 0;
-            PLAYER.dir_y = 1;
-            PLAYER.rerender = TRUE;
+            actor_set_dir(&PLAYER, 0, 1);
 
             // Check for collisions below player
             if (topdown_grid == 16) {
@@ -204,20 +161,12 @@ void Update_TopDown() __banked {
             }
           }
           */
+        actor_set_anim(&PLAYER, td_moving);
+
     }
-
-    //   PLAYER.x = 10;
-    //   PLAYER.y = 8;
-
-    //  if (INPUT_DOWN) {
-    //    td_moving = TRUE;
-    //    PLAYER.animate = TRUE;
-    //   PLAYER.y = 32;
-    //  }
 
     // Move player
     if (td_moving) {
-        // Move actor
         if (PLAYER.move_speed == 0) {
             // Half speed only move every other frame
             if (IS_FRAME_2) {

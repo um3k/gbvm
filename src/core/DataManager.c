@@ -161,7 +161,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
             DL_PUSH_HEAD(actors_inactive_head, &actors[i]);
         }
     }
-    // activate_actor(&PLAYER);
+    activate_actor(&PLAYER);
 
     // Load triggers
     if (triggers_len != 0) {

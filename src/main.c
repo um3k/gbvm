@@ -141,7 +141,7 @@ void main() {
         fade_update();
     }
 
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
+    ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
 
     // grid walking
     // ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);

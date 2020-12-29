@@ -11,6 +11,9 @@
 #define ACTOR_ATTR_CHECK_COLL 0x02
 
 #define PLAYER                actors[0]
+#define ON_8PX_GRID(A)        (MOD_8((A).x) == 0 && MOD_8((A).y) == 0)
+#define ON_16PX_GRID(A)       (MOD_16((A).x) == 0 && MOD_16((A).y) == 8)
+
 
 typedef struct actor_t
 {
