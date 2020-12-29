@@ -23,7 +23,7 @@ WORD pl_vel_y = 0;
 WORD pl_pos_x = 16512;
 WORD pl_pos_y = 1024;
 
-void Start_Platform() {
+void platform_init() __banked {
   /*
   UBYTE tile_x, tile_y;
 
@@ -58,7 +58,7 @@ void Start_Platform() {
   */
 }
 
-void Update_Platform() {
+void platform_update() __banked {
   /*
   UBYTE tile_x, tile_x_mid, tile_y, tile_y_ceil;
   UBYTE hit_actor = 0;
