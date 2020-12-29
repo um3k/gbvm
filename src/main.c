@@ -17,6 +17,11 @@
 #include "vm.h"
 #include "states/TopDown.h"
 
+#ifdef SGB
+    #include "SGBBorder.h"
+    #include "data/border.h"
+#endif
+
 #include "data/data_ptrs.h"
 #include "data/scene_1.h"
 
@@ -92,6 +97,12 @@ void process_VM() {
 }
 
 void main() {
+#ifdef SGB
+    set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
+                   SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 
+                   SGB_border_pal, SIZE(SGB_border_pal), BANK(SGB_border_pal));
+#endif
+
     display_off();
 
     LCDC_REG = 0x67;
@@ -102,6 +113,8 @@ void main() {
     WX_REG = MINWNDPOSX;
     WY_REG = MENU_CLOSED_Y;
 
+    sound_init();
+
     initrand(DIV_REG);
 
     ScriptRunnerInit();
@@ -110,17 +123,13 @@ void main() {
     ui_init();
     fade_init();
 
-    NR52_REG = 0x80;
-    NR51_REG = 0xFF;
-    NR50_REG = 0x77;
-
     __critical {
         add_LCD(LCD_isr);
         add_VBL(VBL_isr);
         STAT_REG |= 0x40u; 
         LYC_REG = 144;
 
-        add_TIM(MusicUpdate);
+        add_TIM(music_update);
         #ifdef CGB
             TMA_REG = _cpu == CGB_TYPE ? 120U : 0xBCU;
         #else

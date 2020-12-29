@@ -6,6 +6,10 @@
 #define __BANK_PREFIX(A) __bank_##A
 #define TO_FAR_PTR_T(A) {.bank = (char)&(__BANK_PREFIX(A)), .ptr = (void *)&(A)}
 #define TO_FAR_ARGS(T, A) (T)(A).ptr, (A).bank
+#define BANK(A) (UBYTE)&(__BANK_PREFIX(A))
+
+#define __SIZE_PREFIX(A) __size_##A
+#define SIZE(A) (UWORD)&(__SIZE_PREFIX(A))
 
 typedef struct far_ptr_t {
     UINT8 bank;
