@@ -15,6 +15,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
+#include "states/TopDown.h"
 
 #ifdef SGB
     #include "SGBBorder.h"
@@ -42,6 +43,15 @@ extern void __bank_SCRIPT_4;
 extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
+typedef void (*Void_Func_Void)();
+const Void_Func_Void state_start_fns[] = {
+    topdown_init
+};
+const Void_Func_Void state_update_fns[] = {
+    topdown_update
+};
+const UBYTE stateBanks[] = {2};
+
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
     if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
@@ -68,10 +78,15 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
+                // Update Current Scene Type
+                SWITCH_ROM_MBC1(stateBanks[scene_type]);
+                state_update_fns[scene_type]();
                 camera_update();
                 scroll_update();
                 update_actors();
+                // projectiles_update();
                 ui_update();
+                // actors_run_collision_scripts();
                 game_time++;
                 wait_vbl_done();
                 break;
@@ -137,6 +152,10 @@ void main() {
     load_scene(&scene_1, (UBYTE)&__bank_scene_1);
     camera_update();
     scroll_update();
+
+    // Start Scene Type
+    SWITCH_ROM_MBC1(stateBanks[scene_type]);
+    state_start_fns[scene_type]();
 
     // fade in
     DISPLAY_ON;

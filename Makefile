@@ -32,12 +32,13 @@ CSRC = $(foreach dir,src,$(notdir $(wildcard $(dir)/*.c)))
 
 ACORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.s))) 
 CCORE = $(foreach dir,src/core,$(notdir $(wildcard $(dir)/*.c))) 
+CSTATES = $(foreach dir,src/states,$(notdir $(wildcard $(dir)/*.c))) 
 ADATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.s)))
 CDATA = $(foreach dir,src/data,$(notdir $(wildcard $(dir)/*.c)))
 MDRVR = $(foreach dir,src/core/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.s)))
 MDATA = $(foreach dir,src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
 
-OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o) $(MDRVR:%.s=$(OBJDIR)/%.o)
+OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o) $(MDRVR:%.s=$(OBJDIR)/%.o) $(CSTATES:%.c=$(OBJDIR)/%.o)
 COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 #DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
@@ -92,6 +93,9 @@ $(OBJDIR)/%.o:	src/core/$(MUSIC_DRIVER)/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:	src/data/$(MUSIC_DRIVER)/%.c
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o:	src/states/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJDIR)/%.o:	src/data/%.c
