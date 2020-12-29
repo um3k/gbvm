@@ -19,7 +19,7 @@ void events_update() __nonbanked {
             script_event_t * event = &input_events[*slot - 1u];
             if (!event->script_addr) continue;
             if ((event->handle == 0) || ((event->handle & 0x8000) != 0))
-                ExecuteScript(event->script_bank, event->script_addr, &event->handle, 1, (int)key);
+                script_execute(event->script_bank, event->script_addr, &event->handle, 1, (int)key);
         }
     }
 }

@@ -107,25 +107,25 @@ void vm_unlock(SCRIPT_CTX * THIS) __banked;
 
 // return zero if script end
 // bank with VM code must be active
-UBYTE STEP_VM(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c);
+UBYTE VM_STEP(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c);
 
 // return TRUE if VM is in locked state
-inline UBYTE ISLOCKED_VM() {
+inline UBYTE VM_ISLOCKED() {
     return (vm_lock_state != 0);
 } 
 
 // initialize script runner contexts
-void ScriptRunnerInit() __banked;
+void script_runner_init() __banked;
 // execute a script in the new allocated context
-SCRIPT_CTX * ExecuteScript(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, ...) __banked;
+SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, ...) __banked;
 // terminate script by ID; returns non zero if no such thread is running
-UBYTE TerminateScript(UBYTE ID) __banked; 
+UBYTE script_terminate(UBYTE ID) __banked; 
 
 #define RUNNER_DONE 0
 #define RUNNER_IDLE 1
 #define RUNNER_BUSY 2
 
 // process all contexts
-UBYTE ScriptRunnerUpdate() __nonbanked;
+UBYTE script_runner_update() __nonbanked;
 
 #endif
