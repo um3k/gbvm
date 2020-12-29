@@ -83,9 +83,9 @@ void process_VM() {
 
 void main() {
 #ifdef SGB
-    set_sgb_border(SGB_border_chr, (size_t)&__size_SGB_border_chr, (UBYTE)&__bank_SGB_border_chr,
-                   SGB_border_map, (size_t)&__size_SGB_border_map, (UBYTE)&__bank_SGB_border_map, 
-                   SGB_border_pal, (size_t)&__size_SGB_border_pal, (UBYTE)&__bank_SGB_border_pal);
+    set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
+                   SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 
+                   SGB_border_pal, SIZE(SGB_border_pal), BANK(SGB_border_pal));
 #endif
 
     display_off();
