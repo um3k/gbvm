@@ -79,7 +79,9 @@ void process_VM() {
                 camera_update();
                 scroll_update();
                 update_actors();
+                // projectiles_update();
                 ui_update();
+                // actors_run_collision_scripts();
                 game_time++;
                 wait_vbl_done();
                 break;
