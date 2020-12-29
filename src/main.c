@@ -39,8 +39,12 @@ extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
 typedef void (*Void_Func_Void)();
-const Void_Func_Void state_start_fns[] = {Start_TopDown};
-const Void_Func_Void state_update_fns[] = {Update_TopDown};
+const Void_Func_Void state_start_fns[] = {
+    topdown_init
+};
+const Void_Func_Void state_update_fns[] = {
+    topdown_update
+};
 const UBYTE stateBanks[] = {2};
 
 void LCD_isr() __nonbanked {

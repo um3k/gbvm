@@ -13,7 +13,7 @@
 
 UBYTE td_moving = FALSE;
 
-void Start_TopDown() __banked {
+void topdown_init() __banked {
     camera_offset_x = 0;
     camera_offset_y = 0;
     camera_deadzone_x = 0;
@@ -33,7 +33,7 @@ void Start_TopDown() __banked {
     actor_set_frames(&PLAYER, 0, 16);
 }
 
-void Update_TopDown() __banked {
+void topdown_update() __banked {
     UBYTE tile_x, tile_y, hit_actor;
 
     tile_x = DIV_8(PLAYER.x);
