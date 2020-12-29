@@ -50,7 +50,7 @@ void init_actors() {
     }    
 
     actors[0].x = 0;
-    actors[0].y = 16;
+    actors[0].y = 8;
     activate_actor(&actors[0]);
 }
 
