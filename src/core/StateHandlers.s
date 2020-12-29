@@ -9,38 +9,24 @@
 .globl  b_shmup_init, _shmup_init, b_shmup_update, _shmup_update
 .globl  b_pointnclick_init, _pointnclick_init, b_pointnclick_update, _pointnclick_update
 
-_state_start_fns:
-    .db b_topdown_init
-    .dw _topdown_init 
+.macro FAR_PTR SYM
+    .db b'SYM
+    .dw SYM
+.endm
 
-    .db b_platform_init
-    .dw _platform_init
-    
-    .db b_adventure_init  
-    .dw _adventure_init 
-    
-    .db b_shmup_init
-    .dw _shmup_init 
-    
-    .db b_pointnclick_init
-    .dw _pointnclick_init
+_state_start_fns:
+    FAR_PTR _topdown_init
+    FAR_PTR _platform_init
+    FAR_PTR _adventure_init 
+    FAR_PTR _shmup_init 
+    FAR_PTR _pointnclick_init
 
 _state_update_fns:
-    .db b_topdown_update
-    .dw _topdown_update 
-
-    .db b_platform_update
-    .dw _platform_update
-    
-    .db b_adventure_update  
-    .dw _adventure_update 
-    
-    .db b_shmup_update
-    .dw _shmup_update 
-    
-    .db b_pointnclick_update
-    .dw _pointnclick_update
-
+    FAR_PTR _topdown_update 
+    FAR_PTR _platform_update
+    FAR_PTR _adventure_update 
+    FAR_PTR _shmup_update 
+    FAR_PTR _pointnclick_update
 
 _state_init::
         ld hl, #_state_start_fns
