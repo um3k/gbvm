@@ -10,7 +10,7 @@ UBYTE triggers_len = 0;
 UBYTE last_trigger_tx = 0;
 UBYTE last_trigger_ty = 0;
 
-void TriggerRunScript(UBYTE i) {
+void TriggerRunScript(UBYTE i) __banked {
     script_execute(triggers[i].script.bank, triggers[i].script.ptr, 0, 0);
 }
 
