@@ -69,7 +69,7 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
-                state_update(); // Update Current Scene Type
+                if (!ISLOCKED_VM()) state_update(); // Update Current Scene Type
                 camera_update();
                 scroll_update();
                 update_actors();

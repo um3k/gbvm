@@ -35,6 +35,7 @@ typedef struct SCRIPT_CTX {
     UBYTE terminated;
     // waitable state
     UBYTE waitable;
+    UWORD mask;
 } SCRIPT_CTX;
 
 #define INSTRUCTION_SIZE 1
@@ -60,6 +61,9 @@ typedef struct SCRIPT_CTX {
 
 // shared context memory
 extern UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)];  // maximum stack depth is 16 words
+
+// lock state 
+extern UWORD vm_lock_state;
 
 // script core functions
 void vm_push(SCRIPT_CTX * THIS, UWORD value) __banked;
@@ -98,10 +102,17 @@ void vm_set_const_int8(SCRIPT_CTX * THIS, UINT8 * addr, UINT8 v) __banked;
 void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) __banked;
 void vm_randomize() __banked;
 void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) __banked;
+void vm_lock(SCRIPT_CTX * THIS) __banked;
+void vm_unlock(SCRIPT_CTX * THIS) __banked;
 
 // return zero if script end
 // bank with VM code must be active
 UBYTE STEP_VM(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c);
+
+// return TRUE if VM is in locked state
+inline UBYTE ISLOCKED_VM() {
+    return (vm_lock_state != 0);
+} 
 
 // initialize script runner contexts
 void ScriptRunnerInit() __banked;
