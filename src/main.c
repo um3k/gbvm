@@ -16,7 +16,7 @@
 #include "Scroll.h"
 #include "vm.h"
 #include "states/TopDown.h"
-
+#include "states/Platform.h"
 #include "data/data_ptrs.h"
 #include "data/scene_1.h"
 
@@ -40,12 +40,17 @@ extern void __bank_SCRIPT_5;
 
 typedef void (*Void_Func_Void)();
 const Void_Func_Void state_start_fns[] = {
-    topdown_init
+    topdown_init,
+    platform_init,
 };
 const Void_Func_Void state_update_fns[] = {
-    topdown_update
+    topdown_update,
+    platform_update
 };
-const UBYTE stateBanks[] = {2};
+const UBYTE stateBanks[] = {
+    2,
+    2,
+};
 
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
@@ -156,7 +161,7 @@ void main() {
         fade_update();
     }
 
-    ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
+    // ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
 
     // grid walking
     // ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);

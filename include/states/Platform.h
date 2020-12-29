@@ -3,8 +3,8 @@
 
 #include <gb/gb.h>
 
-void Start_Platform();
-void Update_Platform();
+void platform_init();
+void platform_update();
 
 extern WORD pl_vel_x;
 extern WORD pl_vel_y;

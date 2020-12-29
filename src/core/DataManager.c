@@ -80,7 +80,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     far_scene_actors = scene->actors;
     far_scene_triggers = scene->triggers;
     far_scene_sprites = scene->sprites;
-    scene_type = 0;
+    scene_type = 1;
     actors_len = scene->n_actors + 1;
     triggers_len = scene->n_triggers;
     sprites_len = scene->n_sprites;
