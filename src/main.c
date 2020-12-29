@@ -87,6 +87,8 @@ void main() {
     WX_REG = MINWNDPOSX;
     WY_REG = MENU_CLOSED_Y;
 
+    sound_init();
+
     initrand(DIV_REG);
 
     ScriptRunnerInit();
@@ -95,17 +97,13 @@ void main() {
     ui_init();
     fade_init();
 
-    NR52_REG = 0x80;
-    NR51_REG = 0xFF;
-    NR50_REG = 0x77;
-
     __critical {
         add_LCD(LCD_isr);
         add_VBL(VBL_isr);
         STAT_REG |= 0x40u; 
         LYC_REG = 144;
 
-        add_TIM(MusicUpdate);
+        add_TIM(music_update);
         #ifdef CGB
             TMA_REG = _cpu == CGB_TYPE ? 120U : 0xBCU;
         #else

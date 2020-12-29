@@ -37,7 +37,7 @@ COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(O
 #DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all: $(TARGET) symbols
+all: directories $(TARGET) symbols
 
 .PHONY: clean release debug color profile test directories
 .SECONDARY: $(OBJS) 
@@ -98,7 +98,7 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 5 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
