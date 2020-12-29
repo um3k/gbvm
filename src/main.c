@@ -1,4 +1,5 @@
 #include <gb/gb.h>
+#include <string.h>
 #include <rand.h>
 
 #include "BankData.h"
@@ -93,6 +94,9 @@ void main() {
 #endif
 
     display_off();
+#ifdef SGB
+    memset((UBYTE *)0x8000, 0, 384 * 16);
+#endif
 
     LCDC_REG = 0x67;
 
@@ -171,17 +175,5 @@ void main() {
     // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 11);
     // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 12);
 
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  8,  4 * 8,  144, 0, 0);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  9,  6 * 8,  144, 0, 0);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  10, 8 * 8,  144, 0, 0);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  11, 10 * 8, 144, 0, 0);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  12, 12 * 8, 144, 0, 0);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  13, 14 * 8, 96,  0, 0);
-//    script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  14, 10 * 8, 96,  0, 0);
-//    script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  15, 12 * 8, 64,  0, 0);
-//    script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  16, 14 * 8, 64,  0, 0);
-
-    // printf(">> VM START\n");
     process_VM();
-    // printf("<< VM DONE\n");
 }
