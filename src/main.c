@@ -15,8 +15,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
-#include "states/TopDown.h"
-
+#include "StateHandlers.h"
 #ifdef SGB
     #include "SGBBorder.h"
     #include "data/border.h"
@@ -43,14 +42,6 @@ extern void __bank_SCRIPT_4;
 extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
-typedef void (*Void_Func_Void)();
-const Void_Func_Void state_start_fns[] = {
-    topdown_init
-};
-const Void_Func_Void state_update_fns[] = {
-    topdown_update
-};
-const UBYTE stateBanks[] = {2};
 
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
