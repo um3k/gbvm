@@ -15,7 +15,7 @@ UBYTE shooter_horizontal = 0;
 BYTE shooter_direction = 0;
 UBYTE shooter_reached_end = 0;
 
-void Start_Shmup() {
+void shmup_init() __banked {
   /*
   camera_offset_x = 0;
   camera_offset_y = 0;
@@ -53,7 +53,7 @@ void Start_Shmup() {
   */
 }
 
-void Update_Shmup() {
+void shmup_update() __banked {
   /*
   UBYTE tile_x, tile_y, hit_actor;
 

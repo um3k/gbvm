@@ -12,7 +12,7 @@
 
 UBYTE last_hit_trigger = MAX_TRIGGERS;
 
-void Start_PointNClick() {
+void pointnclick_init() __banked {
   // camera_offset_x = 0;
   // camera_offset_y = 0;
   // camera_deadzone_x = POINT_N_CLICK_CAMERA_DEADZONE;
@@ -24,7 +24,7 @@ void Start_PointNClick() {
   // player.rerender = TRUE;
 }
 
-void Update_PointNClick() {
+void pointnclick_update() __banked {
   /*
   UBYTE tile_x, tile_y, hit_actor, hit_trigger, is_hover_actor, is_hover_trigger;
 

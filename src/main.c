@@ -15,9 +15,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
-#include "states/TopDown.h"
-#include "states/Platform.h"
-
+#include "StateHandlers.h"
 #ifdef SGB
     #include "SGBBorder.h"
     #include "data/border.h"
@@ -44,19 +42,6 @@ extern void __bank_SCRIPT_4;
 extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
-typedef void (*Void_Func_Void)();
-const Void_Func_Void state_start_fns[] = {
-    topdown_init,
-    platform_init,
-};
-const Void_Func_Void state_update_fns[] = {
-    topdown_update,
-    platform_update
-};
-const UBYTE stateBanks[] = {
-    2,
-    2,
-};
 
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
@@ -84,9 +69,7 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
-                // Update Current Scene Type
-                SWITCH_ROM_MBC1(stateBanks[scene_type]);
-                state_update_fns[scene_type]();
+                state_update(); // Update Current Scene Type
                 camera_update();
                 scroll_update();
                 update_actors();
@@ -155,13 +138,11 @@ void main() {
     }
     if (!fade_style) DISPLAY_OFF;
 
-    load_scene(&scene_1, (UBYTE)&__bank_scene_1);
+    load_scene(&scene_1, BANK(scene_1));
     camera_update();
     scroll_update();
 
-    // Start Scene Type
-    SWITCH_ROM_MBC1(stateBanks[scene_type]);
-    state_start_fns[scene_type]();
+    state_init(); // Start Scene Type
 
     // fade in
     DISPLAY_ON;
@@ -171,36 +152,36 @@ void main() {
         fade_update();
     }
 
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
+    ExecuteScript(BANK(SCRIPT_1), SCRIPT_1, 0, 0);
 
     // grid walking
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_2), SCRIPT_2, 0, 0);
 
-    // ExecuteScript((UBYTE)&__bank_BYTECODE, BYTECODE, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_4, SCRIPT_4, 0, 0);
+    // ExecuteScript(BANK(BYTECODE), BYTECODE, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_4), SCRIPT_4, 0, 0);
 
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_5, SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
+    // ExecuteScript(BANK(SCRIPT_5), SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
 
     // load up engine with more actors
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1,  8);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1, 8 );
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1, 9 );
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1, 10);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1, 11);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 1, 12);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1,  8);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 8 );
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 9 );
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 10);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 11);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 12);
     // ExecuteSc
 
 
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  8,  4 * 8,  144, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  9,  6 * 8,  144, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  10, 8 * 8,  144, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  11, 10 * 8, 144, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  12, 12 * 8, 144, 0, 0);
-    // ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  13, 14 * 8, 96,  0, 0);
-//    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  14, 10 * 8, 96,  0, 0);
-//    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  15, 12 * 8, 64,  0, 0);
-//    ExecuteScript((UBYTE)&__bank_SCRIPT_3, SCRIPT_3, 0, 5,  16, 14 * 8, 64,  0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  8,  4 * 8,  144, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  9,  6 * 8,  144, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  10, 8 * 8,  144, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  11, 10 * 8, 144, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  12, 12 * 8, 144, 0, 0);
+    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  13, 14 * 8, 96,  0, 0);
+//    ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  14, 10 * 8, 96,  0, 0);
+//    ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  15, 12 * 8, 64,  0, 0);
+//    ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  16, 14 * 8, 64,  0, 0);
 
     // printf(">> VM START\n");
     process_VM();

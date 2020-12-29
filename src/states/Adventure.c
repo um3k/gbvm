@@ -12,7 +12,7 @@
 
 #define ADVENTURE_CAMERA_DEADZONE 8
 
-void Start_Adventure() {
+void adventure_init() __banked {
   // Set camera to follow player
   /*
   camera_offset_x = 0;
@@ -22,7 +22,7 @@ void Start_Adventure() {
   */
 }
 
-void Update_Adventure() {
+void adventure_update() __banked {
 
 /*
   WORD tile_x, tile_y;

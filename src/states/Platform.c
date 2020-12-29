@@ -23,7 +23,7 @@ WORD pl_vel_y = 0;
 WORD pl_pos_x = 16512;
 WORD pl_pos_y = 1024;
 
-void platform_init() {
+void platform_init() __banked {
   UBYTE tile_x, tile_y;
 
   pl_pos_x = (PLAYER.x + 4u) << 4;
@@ -56,8 +56,7 @@ void platform_init() {
   game_time = 0;
 }
 
-void platform_update() {
-
+void platform_update() __banked {
   UBYTE tile_x, tile_x_mid, tile_y, tile_y_ceil;
   UBYTE hit_actor = 0;
   UBYTE hit_trigger = 0;
