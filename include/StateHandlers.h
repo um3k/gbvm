@@ -3,10 +3,7 @@
 
 #include <gb/gb.h>
 
-typedef void (*Void_Func_Void)();
-
-extern const Void_Func_Void state_start_fns[];
-extern const Void_Func_Void state_update_fns[];
-extern const UBYTE stateBanks[];
+void state_init();
+void state_update();
 
 #endif

@@ -69,9 +69,7 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
-                // Update Current Scene Type
-                SWITCH_ROM_MBC1(stateBanks[scene_type]);
-                state_update_fns[scene_type]();
+                state_update(); // Update Current Scene Type
                 camera_update();
                 scroll_update();
                 update_actors();
@@ -144,9 +142,7 @@ void main() {
     camera_update();
     scroll_update();
 
-    // Start Scene Type
-    SWITCH_ROM_MBC1(stateBanks[scene_type]);
-    state_start_fns[scene_type]();
+    state_init(); // Start Scene Type
 
     // fade in
     DISPLAY_ON;
