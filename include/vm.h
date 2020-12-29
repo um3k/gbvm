@@ -4,7 +4,9 @@
 #include <gb/gb.h>
 #include <gb/far_ptr.h>
 
-#include <stdio.h>
+#ifdef VM_DEBUG_OUTPUT
+    #include <stdio.h>
+#endif
 
 typedef void * SCRIPT_CMD_FN;
 
