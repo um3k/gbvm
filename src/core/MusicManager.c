@@ -9,14 +9,16 @@
     #undef GBT_PLAYER
     #include "hUGEDriver.h"
 #endif
+#define SAME_TUNE_RESTARTS
 
 #include "data/data_ptrs.h"
 
 #define MAX_MUSIC 255
+#define MASK_ALL_CHANNELS 0x0f
 
 UBYTE current_index = MAX_MUSIC;
 UBYTE tone_frames   = 0;
-UBYTE channel_mask  = 0x0f;
+UBYTE channel_mask  = MASK_ALL_CHANNELS;
 UBYTE sound_channel = 0;
 #ifdef HUGE_TRACKER
     UBYTE current_track_bank = 0;
@@ -24,28 +26,38 @@ UBYTE sound_channel = 0;
 #endif
 
 void music_play(UBYTE index, UBYTE loop) __nonbanked {
-    if (index != current_index) {
+    if (index == MAX_MUSIC) {
+        music_stop();
+    } else if (index != current_index) {
+        channel_mask = MASK_ALL_CHANNELS;
 #ifdef GBT_PLAYER
         UBYTE _save = _current_bank;
-        gbt_play(music_tracks[index].ptr, music_tracks[index].bank, 7);
-        gbt_loop(loop);
-        SWITCH_ROM_MBC1(_save);
+        __critical {
+            gbt_play(music_tracks[index].ptr, music_tracks[index].bank, 7);
+            gbt_loop(loop);
+            SWITCH_ROM_MBC1(_save);
+            music_mute(channel_mask);
+        }
 #endif
 #ifdef HUGE_TRACKER
         loop;
         UBYTE _save = _current_bank;
         current_track_bank = music_tracks[index].bank;
-        SWITCH_ROM_MBC1(current_track_bank);
         __critical {
+            SWITCH_ROM_MBC1(current_track_bank);
             hUGE_init(music_tracks[index].ptr);
-            for (UBYTE i = HT_CH1; i <= HT_CH4; i++) 
-                hUGE_mute_channel(i, HT_CH_PLAY);
+            SWITCH_ROM_MBC1(_save);
+            music_mute(channel_mask);
+            music_stopped = FALSE;        
         }
-        SWITCH_ROM_MBC1(_save);
-        music_stopped = FALSE;
 #endif
-        channel_mask = 0x0f;
         current_index = index;
+    } else {
+#ifdef SAME_TUNE_RESTARTS
+        // restart current song from beginning
+        music_stop();
+        music_play(index, loop);
+#endif
     }
 }
 
@@ -54,13 +66,12 @@ void music_stop() __banked {
     UBYTE _save = _current_bank;
     gbt_stop();
     SWITCH_ROM_MBC1(_save);
-    current_index = MAX_MUSIC;
 #endif
 #ifdef HUGE_TRACKER
     music_stopped = TRUE;
-    for (UBYTE i = HT_CH1; i <= HT_CH4; i++) 
-        hUGE_mute_channel(i, HT_CH_MUTE);
+    music_mute(0);
 #endif
+    current_index = MAX_MUSIC;
 }
 
 void music_mute(UBYTE channels) __nonbanked {
@@ -91,7 +102,7 @@ void music_update() __nonbanked {
 #endif
 #ifdef HUGE_TRACKER
     if (music_stopped) return;
-    if (!current_track_bank) return;
+    if (current_track_bank == 0) return;
     UBYTE _save = _current_bank;
     SWITCH_ROM_MBC1(current_track_bank);
     hUGE_dosound();

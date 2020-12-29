@@ -20,6 +20,11 @@ LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
 LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
+#--- del ----
+CFLAGS += -DSGB
+LFLAGS += -Wm-ys
+#------------
+
 TARGET = $(ROM_BUILD_DIR)/rom.gb
 
 ASRC = $(foreach dir,src,$(notdir $(wildcard $(dir)/*.s))) 
@@ -39,7 +44,7 @@ REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 all: directories $(TARGET) symbols
 
-.PHONY: clean release debug color profile test directories
+.PHONY: clean release debug color super profile test directories
 .SECONDARY: $(OBJS) 
 
 release:
@@ -55,6 +60,11 @@ debug:
 color:
 	$(eval CFLAGS += -DCGB)
 	$(eval LFLAGS += -Wm-yC)
+	@echo "COLOR mode ON"
+
+super:
+	$(eval CFLAGS += -DSGB)
+	$(eval LFLAGS += -Wm-ys)
 	@echo "COLOR mode ON"
 
 profile:

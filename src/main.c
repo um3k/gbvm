@@ -16,6 +16,11 @@
 #include "Scroll.h"
 #include "vm.h"
 
+#ifdef SGB
+    #include "SGBBorder.h"
+    #include "data/border.h"
+#endif
+
 #include "data/data_ptrs.h"
 #include "data/scene_1.h"
 
@@ -77,6 +82,12 @@ void process_VM() {
 }
 
 void main() {
+#ifdef SGB
+    set_sgb_border(SGB_border_chr, (size_t)&__size_SGB_border_chr, (UBYTE)&__bank_SGB_border_chr,
+                   SGB_border_map, (size_t)&__size_SGB_border_map, (UBYTE)&__bank_SGB_border_map, 
+                   SGB_border_pal, (size_t)&__size_SGB_border_pal, (UBYTE)&__bank_SGB_border_pal);
+#endif
+
     display_off();
 
     LCDC_REG = 0x67;
