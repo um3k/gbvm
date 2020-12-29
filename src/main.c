@@ -38,6 +38,11 @@ extern void __bank_SCRIPT_4;
 extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
+typedef void (*Void_Func_Void)();
+const Void_Func_Void state_start_fns[] = {Start_TopDown};
+const Void_Func_Void state_update_fns[] = {Update_TopDown};
+const UBYTE stateBanks[] = {2};
+
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
     if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
@@ -64,7 +69,9 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
-                Update_TopDown();
+                // Update Current Scene Type
+                SWITCH_ROM_MBC1(stateBanks[scene_type]);
+                state_update_fns[scene_type]();
                 camera_update();
                 scroll_update();
                 update_actors();
@@ -131,7 +138,9 @@ void main() {
     camera_update();
     scroll_update();
 
-    Start_TopDown();
+    // Start Scene Type
+    SWITCH_ROM_MBC1(stateBanks[scene_type]);
+    state_start_fns[scene_type]();
 
     // fade in
     DISPLAY_ON;
