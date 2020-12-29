@@ -130,38 +130,38 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     }
 
     // Load player
-    actors[0].x = 45;
-    actors[0].y = 96;
-    actors[0].dir_x = 0;
-    actors[0].dir_y = 1;
-    actors[0].sprite = 6;
-    actors[0].sprite_type = 0;
-    actors[0].palette = 0;
-    actors[0].n_frames = 1;
-    actors[0].initial_frame = 0;
-    actors[0].animate = FALSE;
-    actors[0].move_speed = 1;
-    actors[0].anim_tick = 7;
-    actors[0].frame = 0;
-    actors[0].frame_start = 0;
-    actors[0].frame_end = 4;
-    actors[0].flip_x = FALSE;
-    actors[0].pinned = FALSE;    
+    PLAYER.x = 40;
+    PLAYER.y = 96;
+    PLAYER.dir_x = 0;
+    PLAYER.dir_y = 1;
+    PLAYER.sprite = 6;
+    PLAYER.sprite_type = 0;
+    PLAYER.palette = 0;
+    PLAYER.n_frames = 1;
+    PLAYER.initial_frame = 0;
+    PLAYER.animate = FALSE;
+    PLAYER.move_speed = 1;
+    PLAYER.anim_tick = 7;
+    PLAYER.frame = 0;
+    PLAYER.frame_start = 0;
+    PLAYER.frame_end = 4;
+    PLAYER.flip_x = FALSE;
+    PLAYER.pinned = FALSE;    
     load_sprite(0, &spritesheet_0, (UBYTE)&__bank_spritesheet_0);
 
     // Load actors
     actors_active_head = 0;
     actors_inactive_head = 0;
     // Add player to inactive
-    actors[0].enabled = FALSE;
-    DL_PUSH_HEAD(actors_inactive_head, &actors[0]);
+    PLAYER.enabled = FALSE;
+    DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
     if (actors_len != 0) {
         MemcpyBanked(&actors[1], far_scene_actors.ptr, sizeof(actor_t) * (actors_len - 1), far_scene_actors.bank);
         for (i = 1; i != actors_len; i++) {
             DL_PUSH_HEAD(actors_inactive_head, &actors[i]);
         }
     }
-    activate_actor(&actors[0]);
+    // activate_actor(&PLAYER);
 
     // Load triggers
     if (triggers_len != 0) {

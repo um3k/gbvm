@@ -15,6 +15,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
+#include "states/TopDown.h"
 
 #include "data/data_ptrs.h"
 #include "data/scene_1.h"
@@ -63,6 +64,7 @@ void process_VM() {
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
+                Update_TopDown();
                 camera_update();
                 scroll_update();
                 update_actors();
@@ -129,6 +131,8 @@ void main() {
     camera_update();
     scroll_update();
 
+    Start_TopDown();
+
     // fade in
     DISPLAY_ON;
     fade_in();
@@ -137,7 +141,7 @@ void main() {
         fade_update();
     }
 
-    ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
+    // ExecuteScript((UBYTE)&__bank_SCRIPT_1, SCRIPT_1, 0, 0);
 
     // grid walking
     // ExecuteScript((UBYTE)&__bank_SCRIPT_2, SCRIPT_2, 0, 0);

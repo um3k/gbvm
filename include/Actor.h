@@ -10,6 +10,8 @@
 #define ACTOR_ATTR_H_FIRST    0x01
 #define ACTOR_ATTR_CHECK_COLL 0x02
 
+#define PLAYER                actors[0]
+
 typedef struct actor_t
 {
   UINT8 enabled; 
