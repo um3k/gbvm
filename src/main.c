@@ -86,13 +86,9 @@ void process_VM() {
                 script_runner_init(FALSE);
                 switch (vm_exception_code) {
                     case CHANGE_SCENE_EXCEPTION: {
-//                        static scene
-                        if (vm_exception_params_length) {
-                            UBYTE _save = _current_bank;
-                            SWITCH_ROM_MBC1(vm_exception_params_bank);
-                            // payload for exception with code 1
-                            SWITCH_ROM_MBC1(_save);
-                        }
+                        far_ptr_t scene;
+                        MemcpyBanked(&scene, (void *)vm_exception_params_offset, sizeof(scene), vm_exception_params_bank);
+                        load_scene(scene.ptr, scene.bank);
                         continue;
                     }
                 }

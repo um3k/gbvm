@@ -11,7 +11,7 @@ ___bank_SCRIPT_1 = 255
 
 _SCRIPT_1::
         VM_RAISE                1, 3    ; 1, sizeof(far_ptr_t)
-            IMPORT_FAR_PTR_DATA _scene_1 
+            IMPORT_FAR_PTR_DATA _scene_2 
 
         VM_LOCK
         
