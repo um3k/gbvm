@@ -566,7 +566,6 @@ void script_runner_init() __banked {
         tmp->next = nxt;
         tmp->base_addr = base_addr;
         tmp->ID = i;
-        tmp->lock_count = 0;
         base_addr += CONTEXT_STACK_SIZE;
         nxt = tmp--;
     }
@@ -586,6 +585,8 @@ SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, 
         if (handle) *handle = tmp->ID;
         // clear termination flag
         tmp->terminated = 0;
+        // clear lock count
+        tmp->lock_count = 0;
         // add context to active list
         tmp->next = first_ctx, first_ctx = tmp;
         // push threadlocals
