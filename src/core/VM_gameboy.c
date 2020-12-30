@@ -45,10 +45,10 @@ void vm_input_get(SCRIPT_CTX * THIS, INT16 idx) __banked {
     *A = joy;
 }
 
-void vm_fade_in_modal() __banked { 
-    fade_in_modal();
+void vm_fade_in(SCRIPT_CTX * THIS, UBYTE is_modal) __banked { 
+    if (is_modal) fade_in_modal(); else fade_out();
 }
 
-void vm_fade_out_modal() __banked { 
-    fade_in_modal();
+void vm_fade_out(SCRIPT_CTX * THIS, UBYTE is_modal) __banked { 
+    if (is_modal) fade_in_modal(); else fade_in();
 }
