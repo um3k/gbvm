@@ -69,7 +69,7 @@ void test() {
 
     DISPLAY_ON;
     
-    update_actors();
+    actors_update();
 
     delay(100);
 }

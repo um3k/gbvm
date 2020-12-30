@@ -22,7 +22,7 @@ INT8 screen_x, screen_y;
 actor_t *invalid;
 UBYTE player_moving = FALSE;
 
-void update_actors() __banked
+void actors_update() __banked
 {
     actor = actors_active_head;
 

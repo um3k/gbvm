@@ -21,7 +21,7 @@ extern actor_t *actors_inactive_head;
 extern UBYTE actors_active_len;
 extern UBYTE player_moving;
 
-void update_actors() __banked;
+void actors_update() __banked;
 void deactivate_actor(actor_t *actor) __banked;
 void activate_actor(actor_t *actor) __banked;
 void actor_set_flip_x(actor_t *actor, UBYTE flip) __banked;

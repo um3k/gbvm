@@ -73,7 +73,7 @@ void process_VM() {
                 if (!VM_ISLOCKED()) state_update(); // Update Current Scene Type
                 camera_update();
                 scroll_update();
-                update_actors();
+                actors_update();
                 // projectiles_update();
                 ui_update();
                 // actors_run_collision_scripts();
