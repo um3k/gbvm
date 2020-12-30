@@ -1,4 +1,5 @@
 .include "vm.i"
+.include "vm_exceptions.i"
 .include "macro.i"
         
 .globl b_wait_frames, _wait_frames
@@ -10,7 +11,7 @@ ___bank_SCRIPT_1 = 255
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
-        VM_RAISE                1, 3    ; 1, sizeof(far_ptr_t)
+        VM_RAISE                CHANGE_SCENE_EXCEPTION, 3    ; 1, sizeof(far_ptr_t)
             IMPORT_FAR_PTR_DATA _scene_2 
 
         VM_LOCK
