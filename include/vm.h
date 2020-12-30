@@ -37,7 +37,7 @@ typedef struct SCRIPT_CTX {
     UBYTE terminated;
     // waitable state
     UBYTE waitable;
-    UWORD mask;
+    UBYTE lock_count;
 } SCRIPT_CTX;
 
 #define INSTRUCTION_SIZE 1
@@ -65,7 +65,7 @@ typedef struct SCRIPT_CTX {
 extern UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)];  // maximum stack depth is 16 words
 
 // lock state 
-extern UWORD vm_lock_state;
+extern UBYTE vm_lock_state;
 
 // script core functions
 void vm_push(SCRIPT_CTX * THIS, UWORD value) __banked;

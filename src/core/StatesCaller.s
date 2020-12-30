@@ -1,5 +1,4 @@
 .include "global.s"
-.include "macro.i"
 
 .area _CODE
 

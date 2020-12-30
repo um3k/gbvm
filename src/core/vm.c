@@ -17,7 +17,7 @@ SCRIPT_CTX CTXS[SCRIPT_MAX_CONTEXTS];
 SCRIPT_CTX * first_ctx, * free_ctxs;
 
 // lock state 
-UWORD vm_lock_state = 0;
+UBYTE vm_lock_state = 0;
 
 // we need __banked functions here to have two extra words before arguments
 // we will put VM stuff there
@@ -423,12 +423,15 @@ void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask
 
 // sets lock flag for current context
 void vm_lock(SCRIPT_CTX * THIS) __banked {
-    vm_lock_state |= THIS->mask;
+    THIS->lock_count++;
+    vm_lock_state++;
 }
 
 // resets lock flag for current context
 void vm_unlock(SCRIPT_CTX * THIS) __banked {
-    vm_lock_state &= ~THIS->mask;
+    if (THIS->lock_count == 0) return;
+    THIS->lock_count--;
+    vm_lock_state--;
 }
 
 // executes one step in the passed context
@@ -559,12 +562,11 @@ void script_runner_init() __banked {
 
     SCRIPT_CTX * nxt = 0;
     SCRIPT_CTX * tmp = CTXS + (SCRIPT_MAX_CONTEXTS - 1);
-    UWORD mask =  1;
-    for (UBYTE i = SCRIPT_MAX_CONTEXTS; i != 0; i--, mask <<= 1) {
+    for (UBYTE i = SCRIPT_MAX_CONTEXTS; i != 0; i--) {
         tmp->next = nxt;
         tmp->base_addr = base_addr;
         tmp->ID = i;
-        tmp->mask = mask;
+        tmp->lock_count = 0;
         base_addr += CONTEXT_STACK_SIZE;
         nxt = tmp--;
     }
@@ -626,7 +628,7 @@ UBYTE script_runner_update() __nonbanked {
         ctx->waitable = 0;
         if ((ctx->terminated) || (!VM_STEP(ctx))) {
             // update lock state
-            vm_lock_state &= ~ctx->mask;
+            vm_lock_state -= ctx->lock_count;
             // update handle if present
             if (ctx->hthread) *(ctx->hthread) |= 0x8000;
             // script is finished, remove from linked list
