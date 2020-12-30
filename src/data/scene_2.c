@@ -2,7 +2,7 @@
 
 // Scene: Scene 3
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/background_1.h"
 #include "data/scene_2_collisions.h"
 #include "data/scene_2_colors.h"
@@ -17,7 +17,7 @@ const void __at(255) __bank_scene_2;
 const struct scene_t scene_2 = {
   .width = 32,
   .height = 32,
-  .type = 0,
+  .type = SCENE_TYPE_TOPDOWN,
   .background = TO_FAR_PTR_T(background_1),
   .collisions = TO_FAR_PTR_T(scene_2_collisions),
   .colors = TO_FAR_PTR_T(scene_2_colors),

@@ -2,7 +2,7 @@
 
 // Tileset: 0
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 const void __at(255) __bank_tileset_0;
 

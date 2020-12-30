@@ -20,6 +20,7 @@ UBYTE actors_active_len = 0;
 actor_t *actor;
 INT8 screen_x, screen_y;
 actor_t *invalid;
+UBYTE player_moving = FALSE;
 
 void update_actors() __banked
 {
@@ -189,4 +190,18 @@ actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
     }
 
     return NULL;
+}
+
+void player_move(BYTE dir_x, BYTE dir_y) __banked {
+    // Move actor
+    if (PLAYER.move_speed == 0) {
+        // Half speed only move every other frame
+        if (IS_FRAME_2) {
+            PLAYER.x += (WORD)dir_x;
+            PLAYER.y += (WORD)dir_y;
+        }
+    } else {
+        PLAYER.x += (WORD)(dir_x * PLAYER.move_speed);
+        PLAYER.y += (WORD)(dir_y * PLAYER.move_speed);
+    }
 }

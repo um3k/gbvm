@@ -3,6 +3,11 @@
 
 #include <gb/gb.h>
 
+#define SCREEN_WIDTH 160
+#define SCREEN_HEIGHT 144
+#define SCREEN_WIDTH_HALF 80
+#define SCREEN_HEIGHT_HALF 72
+
 #define CAMERA_LOCK_FLAG 0x1
 
 extern INT16 camera_x;

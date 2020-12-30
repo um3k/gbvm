@@ -3,6 +3,7 @@
 
 #include <gb/gb.h>
 #include "BankData.h"
+#include "data/gbs_types.h"
 
 #define MAX_ACTORS            20
 #define MAX_ACTORS_ACTIVE     12
@@ -14,44 +15,11 @@
 #define ON_8PX_GRID(A)        (MOD_8((A).x) == 0 && MOD_8((A).y) == 0)
 #define ON_16PX_GRID(A)       (MOD_16((A).x) == 0 && MOD_16((A).y) == 8)
 
-
-typedef struct actor_t
-{
-  UINT8 enabled; 
-  UINT16 x;
-  UINT16 y;
-  BYTE dir_x;
-  BYTE dir_y;
-  UINT8 sprite_no;
-  UINT8 pinned;
-  UINT8 animate;
-  UINT8 frame;
-  UINT8 frame_start;
-  UINT8 frame_end;
-  UINT8 anim_tick;
-  UINT8 flip_x;
-  UINT8 rerender;
-  UINT8 move_speed;
-
-  UINT8 sprite, sprite_type, palette;
-  UINT8 n_frames, initial_frame;
-  UINT8 direction;
-  UINT8 anim_speed;
-  far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
-
-  // Collisions
-  UBYTE collision_group;
-  UBYTE collision_enabled;
-
-  // Linked list
-  struct actor_t *next;
-  struct actor_t *prev;
-} actor_t;
-
 extern actor_t actors[MAX_ACTORS];
 extern actor_t *actors_active_head;
 extern actor_t *actors_inactive_head;
 extern UBYTE actors_active_len;
+extern UBYTE player_moving;
 
 void update_actors() __banked;
 void deactivate_actor(actor_t *actor) __banked;
@@ -60,6 +28,7 @@ void actor_set_flip_x(actor_t *actor, UBYTE flip) __banked;
 void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked;
 void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked;
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked;
+void player_move(BYTE dir_x, BYTE dir_y) __banked;
 
 inline void actor_set_anim(actor_t *actor, UBYTE animate) {
     actor->animate = animate;

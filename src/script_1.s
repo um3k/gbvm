@@ -44,6 +44,9 @@ _SCRIPT_1::
         VM_POP                  2
 
         VM_MUSIC_PLAY           1, 1
+
+        VM_UNLOCK
+
         VM_STOP
    
         VM_JUMP                 1$

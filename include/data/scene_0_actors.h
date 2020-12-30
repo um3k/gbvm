@@ -4,7 +4,7 @@
 // Scene: Cave
 // Actors
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 extern const void __bank_scene_0_actors;
 extern const struct actor_t scene_0_actors[];

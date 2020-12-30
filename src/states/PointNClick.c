@@ -1,8 +1,9 @@
 #pragma bank 2
 
 #include "states/PointNClick.h"
+
 #include "Actor.h"
-// #include "Camera.h"
+#include "Camera.h"
 #include "DataManager.h"
 #include "GameTime.h"
 #include "Input.h"
@@ -13,88 +14,76 @@
 UBYTE last_hit_trigger = MAX_TRIGGERS;
 
 void pointnclick_init() __banked {
-  // camera_offset_x = 0;
-  // camera_offset_y = 0;
-  // camera_deadzone_x = POINT_N_CLICK_CAMERA_DEADZONE;
-  // camera_deadzone_y = POINT_N_CLICK_CAMERA_DEADZONE;
+    camera_offset_x = 0;
+    camera_offset_y = 0;
+    camera_deadzone_x = POINT_N_CLICK_CAMERA_DEADZONE;
+    camera_deadzone_y = POINT_N_CLICK_CAMERA_DEADZONE;
 
-  // player.sprite_type = SPRITE_STATIC;
-  // player.dir_x = 0;
-  // player.dir_y = 1;
-  // player.rerender = TRUE;
+    // PLAYER.sprite_type = SPRITE_STATIC;
+    PLAYER.dir_x = 0;
+    PLAYER.dir_y = 1;
+    PLAYER.rerender = TRUE;
 }
 
 void pointnclick_update() __banked {
-  /*
-  UBYTE tile_x, tile_y, hit_actor, hit_trigger, is_hover_actor, is_hover_trigger;
+    UBYTE tile_x, tile_y, hit_actor, hit_trigger, is_hover_actor,
+        is_hover_trigger;
 
-  tile_x = DIV_8(player.pos.x);
-  tile_y = DIV_8(player.pos.y);
+    tile_x = DIV_8(PLAYER.x);
+    tile_y = DIV_8(PLAYER.y);
 
-  player.moving = FALSE;
-  player.dir.x = 0;
-  player.dir.y = 0;
+    player_moving = FALSE;
+    PLAYER.dir_x = 0;
+    PLAYER.dir_y = 0;
 
-  // Move cursor horizontally
-  if (INPUT_LEFT && Gt16(player.pos.x, 0)) {
-    player.dir.x = -1;
-    player.moving = TRUE;
-  } else if (INPUT_RIGHT && Lt16(player.pos.x, image_width - 8)) {
-    player.dir.x = 1;
-    player.moving = TRUE;
-  }
-
-  // Move cursor vertically
-  if (INPUT_UP && Gt16(player.pos.y, 8)) {
-    player.dir.y = -1;
-    player.moving = TRUE;
-  } else if (INPUT_DOWN && Lt16(player.pos.y, image_height)) {
-    player.dir.y = 1;
-    player.moving = TRUE;
-  }
-
-  // Find trigger or actor under player cursor
-  hit_trigger = TriggerAtTile(tile_x, tile_y - 1);
-  hit_actor = ActorAtTile(tile_x, tile_y, TRUE);
-
-  is_hover_trigger = (hit_trigger != NO_TRIGGER_COLLISON) && (hit_trigger != last_hit_trigger) &&
-                     (triggers[hit_trigger].events_ptr.bank != 0);
-  is_hover_actor = (hit_actor != NO_ACTOR_COLLISON) && (hit_actor != 0) &&
-                   (actors[hit_actor].events_ptr.bank != 0);
-
-  // Set player cursor to second frame on hover
-  if ((is_hover_trigger || is_hover_actor) && player.frames_len != 1) {
-    player.frame = 1;
-    player.rerender = TRUE;
-  } else {
-    player.frame = 0;
-    player.rerender = TRUE;
-  }
-
-  if (INPUT_A_PRESSED) {
-    player.moving = FALSE;
-
-    if (is_hover_actor) {
-      // Run actor's interact script
-      ActorRunScript(hit_actor);
-    } else if (is_hover_trigger) {
-      // Run trigger script
-      TriggerRunScript(hit_trigger);
+    // Move cursor horizontally
+    if (INPUT_LEFT && (PLAYER.x > 0)) {
+        PLAYER.dir_x = -1;
+        player_moving = TRUE;
+    } else if (INPUT_RIGHT && (PLAYER.x < image_width - 8)) {
+        PLAYER.dir_x = 1;
+        player_moving = TRUE;
     }
-  }
 
-  // Move player
-  if (player.moving) {
-    if (player.move_speed == 0) {
-      // Half speed only move every other frame
-      if (IS_FRAME_2) {
-        player.pos.x += (WORD)player.dir.x;
-        player.pos.y += (WORD)player.dir.y;
-      }
-    } else {
-      player.pos.x += (WORD)(player.dir.x * player.move_speed);
-      player.pos.y += (WORD)(player.dir.y * player.move_speed);
+    // Move cursor vertically
+    if (INPUT_UP && (PLAYER.y > 8)) {
+        PLAYER.dir_y = -1;
+        player_moving = TRUE;
+    } else if (INPUT_DOWN && (PLAYER.y < image_height)) {
+        PLAYER.dir_y = 1;
+        player_moving = TRUE;
     }
-  }
-  */
+
+    // Find trigger or actor under player cursor
+    // hit_trigger = trigger_at_tile(tile_x, tile_y - 1);
+    // hit_actor = ActorAtTile(tile_x, tile_y, TRUE);
+
+    // is_hover_trigger = (hit_trigger != NO_TRIGGER_COLLISON) &&
+    //                    (hit_trigger != last_hit_trigger) &&
+    //                    (triggers[hit_trigger].events_ptr.bank != 0);
+    // is_hover_actor = (hit_actor != NO_ACTOR_COLLISON) && (hit_actor != 0) &&
+    //                  (actors[hit_actor].events_ptr.bank != 0);
+
+    // Set player cursor to second frame on hover
+    // if ((is_hover_trigger || is_hover_actor) && PLAYER.frames_len != 1) {
+    //     PLAYER.frame = 1;
+    //     PLAYER.rerender = TRUE;
+    // } else {
+    //     PLAYER.frame = 0;
+    //     PLAYER.rerender = TRUE;
+    // }
+
+    // if (INPUT_A_PRESSED) {
+    //   player_moving = FALSE;
+
+    //   if (is_hover_actor) {
+    //     // Run actor's interact script
+    //     ActorRunScript(hit_actor);
+    //   } else if (is_hover_trigger) {
+    //     // Run trigger script
+    //     trigger_interact(hit_trigger);
+    //   }
+    // }
+
+    if (player_moving) player_move(PLAYER.dir_x,  PLAYER.dir_y);
 }

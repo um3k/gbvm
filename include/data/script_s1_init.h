@@ -3,7 +3,7 @@
 
 // Script script_s1_init
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 extern const void __bank_script_s1_init;
 extern const unsigned char script_s1_init[];

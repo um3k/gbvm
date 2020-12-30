@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "LinkedList.h"
+#include "Actor.h"
 #include "Scroll.h"
 #include "Trigger.h"
 #include "Sprite.h"
@@ -80,7 +81,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     far_scene_actors = scene->actors;
     far_scene_triggers = scene->triggers;
     far_scene_sprites = scene->sprites;
-    scene_type = 0;
+    scene_type = scene->type;
     actors_len = scene->n_actors + 1;
     triggers_len = scene->n_triggers;
     sprites_len = scene->n_sprites;
@@ -148,6 +149,8 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     PLAYER.flip_x = FALSE;
     PLAYER.pinned = FALSE;    
     load_sprite(0, &spritesheet_0, BANK(spritesheet_0));
+
+    player_moving = FALSE;
 
     // Load actors
     actors_active_head = 0;

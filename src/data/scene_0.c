@@ -2,7 +2,7 @@
 
 // Scene: Cave
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/background_0.h"
 #include "data/scene_0_collisions.h"
 #include "data/scene_0_colors.h"
@@ -17,7 +17,7 @@ const void __at(255) __bank_scene_0;
 const struct scene_t scene_0 = {
   .width = 20,
   .height = 18,
-  .type = 0,
+  .type = SCENE_TYPE_PLATFORM,
   .background = TO_FAR_PTR_T(background_0),
   .collisions = TO_FAR_PTR_T(scene_0_collisions),
   .colors = TO_FAR_PTR_T(scene_0_colors),
