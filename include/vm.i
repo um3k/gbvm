@@ -287,6 +287,15 @@ OP_VM_RAND            = 0x24
         .db #>LIMIT, #<LIMIT, #>MIN, #<MIN, #>IDX, #<IDX
 .endm
 
+OP_VM_LOCK            = 0x25
+.macro VM_LOCK
+        .db OP_VM_LOCK
+.endm
+
+OP_VM_UNLOCK          = 0x26
+.macro VM_UNLOCK
+        .db OP_VM_UNLOCK
+.endm
 
 
 ; --- engine-specific instructions ------------------------------------------

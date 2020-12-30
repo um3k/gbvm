@@ -1,4 +1,5 @@
 #include <gb/gb.h>
+#include <string.h>
 #include <rand.h>
 
 #include "BankData.h"
@@ -15,7 +16,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
-#include "StateHandlers.h"
+#include "StatesCaller.h"
 #ifdef SGB
     #include "SGBBorder.h"
     #include "data/border.h"
@@ -64,12 +65,12 @@ void VBL_isr() __nonbanked {
 
 void process_VM() {
     while (1) {
-        switch (ScriptRunnerUpdate()) {
+        switch (script_runner_update()) {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
                 input_update();
                 if (joy != 0) events_update();
-                state_update(); // Update Current Scene Type
+                if (!VM_ISLOCKED()) state_update(); // Update Current Scene Type
                 camera_update();
                 scroll_update();
                 update_actors();
@@ -93,6 +94,9 @@ void main() {
 #endif
 
     display_off();
+#ifdef SGB
+    memset((UBYTE *)0x8000, 0, 384 * 16);
+#endif
 
     LCDC_REG = 0x67;
 
@@ -106,7 +110,7 @@ void main() {
 
     initrand(DIV_REG);
 
-    ScriptRunnerInit();
+    script_runner_init();
 
     events_init();
     ui_init();
@@ -130,13 +134,7 @@ void main() {
     }
     DISPLAY_ON;
 
-    // fade out
-    fade_out();
-    while (fade_isfading()) {
-        wait_vbl_done();
-        fade_update();
-    }
-    if (!fade_style) DISPLAY_OFF;
+    fade_out_modal();
 
     load_scene(&scene_1, BANK(scene_1));
     camera_update();
@@ -144,46 +142,26 @@ void main() {
 
     state_init(); // Start Scene Type
 
-    // fade in
-    DISPLAY_ON;
-    fade_in();
-    while (fade_isfading()) {
-        wait_vbl_done();
-        fade_update();
-    }
+    fade_in_modal();
 
-    ExecuteScript(BANK(SCRIPT_1), SCRIPT_1, 0, 0);
+    script_execute(BANK(SCRIPT_1), SCRIPT_1, 0, 0);
 
     // grid walking
-    // ExecuteScript(BANK(SCRIPT_2), SCRIPT_2, 0, 0);
+    // script_execute(BANK(SCRIPT_2), SCRIPT_2, 0, 0);
 
-    // ExecuteScript(BANK(BYTECODE), BYTECODE, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_4), SCRIPT_4, 0, 0);
+    // script_execute(BANK(BYTECODE), BYTECODE, 0, 0);
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
+    // script_execute(BANK(SCRIPT_4), SCRIPT_4, 0, 0);
 
-    // ExecuteScript(BANK(SCRIPT_5), SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
+    // script_execute(BANK(SCRIPT_5), SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
 
     // load up engine with more actors
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1,  8);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 8 );
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 9 );
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 10);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 11);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 12);
-    // ExecuteSc
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1,  8);
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 8 );
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 9 );
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 10);
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 11);
+    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 12);
 
-
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  8,  4 * 8,  144, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  9,  6 * 8,  144, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  10, 8 * 8,  144, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  11, 10 * 8, 144, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  12, 12 * 8, 144, 0, 0);
-    // ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  13, 14 * 8, 96,  0, 0);
-//    ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  14, 10 * 8, 96,  0, 0);
-//    ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  15, 12 * 8, 64,  0, 0);
-//    ExecuteScript(BANK(SCRIPT_3), SCRIPT_3, 0, 5,  16, 14 * 8, 64,  0, 0);
-
-    // printf(">> VM START\n");
     process_VM();
-    // printf("<< VM DONE\n");
 }

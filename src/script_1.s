@@ -9,6 +9,8 @@ ___bank_SCRIPT_1 = 255
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
+        VM_LOCK
+        
         VM_SOUND_PLAY           2, 1, 0x4c,0x81,0x43,0x73,0x86
 
         ; Actor Move To

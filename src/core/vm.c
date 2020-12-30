@@ -16,6 +16,9 @@ extern const SCRIPT_CMD script_cmds[];
 SCRIPT_CTX CTXS[SCRIPT_MAX_CONTEXTS];
 SCRIPT_CTX * first_ctx, * free_ctxs;
 
+// lock state 
+UBYTE vm_lock_state = 0;
+
 // we need __banked functions here to have two extra words before arguments
 // we will put VM stuff there
 // plus we get an ability to call them from wherever we want in native code
@@ -136,7 +139,7 @@ void vm_beginthread(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE bank, U
     dummy0; dummy1;
     UWORD * A;
     if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
-    SCRIPT_CTX * ctx = ExecuteScript(bank, pc, A, 0);
+    SCRIPT_CTX * ctx = script_execute(bank, pc, A, 0);
     // initialize thread locals if any
     if (!(nargs)) return;
     if (ctx) {
@@ -161,7 +164,7 @@ void vm_join(SCRIPT_CTX * THIS, INT16 idx) __banked {
 void vm_terminate(SCRIPT_CTX * THIS, INT16 idx) __banked {
     UWORD * A;
     if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
-    TerminateScript((UBYTE)(*A));
+    script_terminate((UBYTE)(*A));
 }
 
 // if condition; compares two arguments on VM stack
@@ -418,10 +421,23 @@ void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask
     *A = value + min;
 }
 
+// sets lock flag for current context
+void vm_lock(SCRIPT_CTX * THIS) __banked {
+    THIS->lock_count++;
+    vm_lock_state++;
+}
+
+// resets lock flag for current context
+void vm_unlock(SCRIPT_CTX * THIS) __banked {
+    if (THIS->lock_count == 0) return;
+    THIS->lock_count--;
+    vm_lock_state--;
+}
+
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active
-UBYTE STEP_VM(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c) {
+UBYTE VM_STEP(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c) {
     CTX;
 __asm
         lda hl, 2(sp)
@@ -538,7 +554,7 @@ UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)
 
 // initialize script runner contexts
 // resets whole VM engine
-void ScriptRunnerInit() __banked {
+void script_runner_init() __banked {
     UWORD * base_addr = &script_memory[MAX_GLOBAL_VARS];
     free_ctxs = CTXS, first_ctx = 0;
     memset(script_memory, 0, sizeof(script_memory));
@@ -550,6 +566,7 @@ void ScriptRunnerInit() __banked {
         tmp->next = nxt;
         tmp->base_addr = base_addr;
         tmp->ID = i;
+        tmp->lock_count = 0;
         base_addr += CONTEXT_STACK_SIZE;
         nxt = tmp--;
     }
@@ -557,7 +574,7 @@ void ScriptRunnerInit() __banked {
 
 // execute a script in the new allocated context
 // actually, it initializes free context with bytecode and moves it into the active context chain
-SCRIPT_CTX * ExecuteScript(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, ...) __banked {
+SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, ...) __banked {
     if (free_ctxs) {
         SCRIPT_CTX * tmp = free_ctxs;
         // remove context from free list
@@ -586,7 +603,7 @@ SCRIPT_CTX * ExecuteScript(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, .
 }
 
 // terminate script by ID
-UBYTE TerminateScript(UBYTE ID) __banked {
+UBYTE script_terminate(UBYTE ID) __banked {
     static SCRIPT_CTX * ctx;
     ctx = first_ctx; 
     while (ctx) {
@@ -600,7 +617,7 @@ UBYTE TerminateScript(UBYTE ID) __banked {
 
 // process all contexts
 // executes one command in each active context
-UBYTE ScriptRunnerUpdate() __nonbanked {
+UBYTE script_runner_update() __nonbanked {
     static SCRIPT_CTX * old_ctx, * ctx;
     static UBYTE waitable;
     static UBYTE counter;
@@ -609,7 +626,9 @@ UBYTE ScriptRunnerUpdate() __nonbanked {
     counter = INSTRUCTIONS_PER_QUANT;
     while (ctx) {
         ctx->waitable = 0;
-        if ((ctx->terminated) || (!STEP_VM(ctx))) {
+        if ((ctx->terminated) || (!VM_STEP(ctx))) {
+            // update lock state
+            vm_lock_state -= ctx->lock_count;
             // update handle if present
             if (ctx->hthread) *(ctx->hthread) |= 0x8000;
             // script is finished, remove from linked list

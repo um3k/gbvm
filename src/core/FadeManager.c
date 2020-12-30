@@ -146,3 +146,20 @@ void fade_setspeed(UBYTE speed) __banked {
     fade_frames_per_step = fade_speeds[speed];
 }
 
+void fade_in_modal() __banked {
+    DISPLAY_ON;
+    fade_in();
+    while (fade_isfading()) {
+        wait_vbl_done();
+        fade_update();
+    }
+}
+
+void fade_out_modal() __banked {
+    fade_out();
+    while (fade_isfading()) {
+        wait_vbl_done();
+        fade_update();
+    }
+    if (!fade_style) DISPLAY_OFF;
+}
