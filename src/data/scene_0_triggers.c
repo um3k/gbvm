@@ -3,7 +3,7 @@
 // Scene: Cave
 // Triggers
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 #include "data/script_s0t0_interact.h"
 
 const void __at(255) __bank_scene_0_triggers;

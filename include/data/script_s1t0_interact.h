@@ -3,7 +3,7 @@
 
 // Script script_s1t0_interact
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_script_s1t0_interact;
 extern const unsigned char script_s1t0_interact[];

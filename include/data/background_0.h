@@ -3,7 +3,7 @@
 
 // Background: 0
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_background_0;
 extern const struct background_t background_0;

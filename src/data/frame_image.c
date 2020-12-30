@@ -2,7 +2,7 @@
 
 // Frame
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 const void __at(255) __bank_frame_image;
 

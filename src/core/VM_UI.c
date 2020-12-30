@@ -7,7 +7,7 @@
 #include "UI.h"
 #include "Sprite.h"
 #include "Input.h"
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 #define VM_ARG_TEXT_IN_SPEED -1
 #define VM_ARG_TEXT_OUT_SPEED -2

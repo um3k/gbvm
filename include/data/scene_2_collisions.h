@@ -4,7 +4,7 @@
 // Scene: Scene 3
 // Collisions
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_scene_2_collisions;
 extern const unsigned char scene_2_collisions[];

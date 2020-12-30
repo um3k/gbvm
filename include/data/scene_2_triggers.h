@@ -4,7 +4,7 @@
 // Scene: Scene 3
 // Triggers
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_scene_2_triggers;
 extern const struct trigger_t scene_2_triggers[];

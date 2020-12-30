@@ -3,7 +3,7 @@
 
 // Palette: 2
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_palette_2;
 extern const unsigned char palette_2;

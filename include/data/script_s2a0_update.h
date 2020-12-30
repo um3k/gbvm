@@ -3,7 +3,7 @@
 
 // Script script_s2a0_update
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_script_s2a0_update;
 extern const unsigned char script_s2a0_update[];

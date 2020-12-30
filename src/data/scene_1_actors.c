@@ -3,7 +3,7 @@
 // Scene: Underground
 // Actors
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 #include "data/script_s1a0_interact.h"
 #include "data/script_s1a1_interact.h"
 #include "data/script_s1a2_interact.h"

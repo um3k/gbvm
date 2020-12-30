@@ -2,7 +2,7 @@
 #define DATA_PTRS_H
 
 #include "BankData.h"
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 #define NUM_VARIABLES 500
 #define TMP_VAR_1 -1

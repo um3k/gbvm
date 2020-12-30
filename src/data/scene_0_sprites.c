@@ -3,7 +3,7 @@
 // Scene: Cave
 // Sprites
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 #include "data/spritesheet_1.h"
 #include "data/spritesheet_2.h"
 #include "data/spritesheet_3.h"

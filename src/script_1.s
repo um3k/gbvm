@@ -1,4 +1,5 @@
 .include "vm.i"
+.include "macro.i"
         
 .globl b_wait_frames, _wait_frames
 .globl ___bank_spritesheet_1, _spritesheet_1
@@ -9,8 +10,8 @@ ___bank_SCRIPT_1 = 255
 .globl ___bank_SCRIPT_1
 
 _SCRIPT_1::
-        VM_RAISE                1, 14   ; 1, sizeof("Hello, world!")
-            .asciz "Hello, world!" 
+        VM_RAISE                1, 3    ; 1, sizeof(far_ptr_t)
+            IMPORT_FAR_PTR_DATA _scene_1 
 
         VM_LOCK
         

@@ -2,7 +2,7 @@
 
 // Scene: Scene 3
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 #include "data/background_1.h"
 #include "data/scene_2_collisions.h"
 #include "data/scene_2_colors.h"

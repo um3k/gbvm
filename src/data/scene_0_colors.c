@@ -3,7 +3,7 @@
 // Scene: Cave
 // Colors
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 const void __at(255) __bank_scene_0_colors;
 

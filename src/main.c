@@ -86,6 +86,7 @@ void process_VM() {
                 script_runner_init(FALSE);
                 switch (vm_exception_code) {
                     case CHANGE_SCENE_EXCEPTION: {
+//                        static scene
                         if (vm_exception_params_length) {
                             UBYTE _save = _current_bank;
                             SWITCH_ROM_MBC1(vm_exception_params_bank);

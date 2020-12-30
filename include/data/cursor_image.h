@@ -3,7 +3,7 @@
 
 // Cursor
 
-#include "data/gbs_types.h"
+#include "gbs_types.h"
 
 extern const void __bank_cursor_image;
 extern const unsigned char cursor_image[];
