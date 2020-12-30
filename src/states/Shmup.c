@@ -104,25 +104,9 @@ void shmup_update() __banked {
     // Move player - Horizontal Scenes
     if (shooter_reached_end) {
       // Reached end of scene only move vertically
-      if (PLAYER.move_speed == 0) {
-        // Half speed only move every other frame
-        if (IS_FRAME_2) {
-          PLAYER.y += (WORD)PLAYER.dir_y;
-        }
-      } else {
-        PLAYER.y += (WORD)(PLAYER.dir_y * PLAYER.move_speed);
-      }
+      player_move(0, PLAYER.dir_y);
     } else {
-      if (PLAYER.move_speed == 0) {
-        // Half speed only move every other frame
-        if (IS_FRAME_2) {
-          PLAYER.x += (WORD)shooter_direction;
-          PLAYER.y += (WORD)PLAYER.dir_y;
-        }
-      } else {
-        PLAYER.x += (WORD)(shooter_direction * PLAYER.move_speed);
-        PLAYER.y += (WORD)(PLAYER.dir_y * PLAYER.move_speed);
-      }
+      player_move(shooter_direction, PLAYER.dir_y);
     }
 
   } else {
@@ -158,26 +142,9 @@ void shmup_update() __banked {
 
     // Move player - Vertical Scenes
     if (shooter_reached_end) {
-      // Reached end of scene only move horizontally
-      if (PLAYER.move_speed == 0) {
-        // Half speed only move every other frame
-        if (IS_FRAME_2) {
-          PLAYER.x += (WORD)PLAYER.dir_x;
-        }
-      } else {
-        PLAYER.x += (WORD)(PLAYER.dir_x * PLAYER.move_speed);
-      }
+      player_move(PLAYER.dir_x, 0);
     } else {
-      if (PLAYER.move_speed == 0) {
-        // Half speed only move every other frame
-        if (IS_FRAME_2) {
-          PLAYER.x += (WORD)PLAYER.dir_x;
-          PLAYER.y += (WORD)shooter_direction;
-        }
-      } else {
-        PLAYER.x += (WORD)(PLAYER.dir_x * PLAYER.move_speed);
-        PLAYER.y += (WORD)(shooter_direction * PLAYER.move_speed);
-      }
+      player_move(PLAYER.dir_x, shooter_direction);
     }
   }
 

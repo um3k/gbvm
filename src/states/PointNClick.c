@@ -12,7 +12,6 @@
 #define POINT_N_CLICK_CAMERA_DEADZONE 24
 
 UBYTE last_hit_trigger = MAX_TRIGGERS;
-UBYTE pt_moving = FALSE;
 
 void pointnclick_init() __banked {
     camera_offset_x = 0;
@@ -24,7 +23,6 @@ void pointnclick_init() __banked {
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 1;
     PLAYER.rerender = TRUE;
-    pt_moving = FALSE;
 }
 
 void pointnclick_update() __banked {
@@ -34,26 +32,26 @@ void pointnclick_update() __banked {
     tile_x = DIV_8(PLAYER.x);
     tile_y = DIV_8(PLAYER.y);
 
-    pt_moving = FALSE;
+    player_moving = FALSE;
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 0;
 
     // Move cursor horizontally
     if (INPUT_LEFT && (PLAYER.x > 0)) {
         PLAYER.dir_x = -1;
-        pt_moving = TRUE;
+        player_moving = TRUE;
     } else if (INPUT_RIGHT && (PLAYER.x < image_width - 8)) {
         PLAYER.dir_x = 1;
-        pt_moving = TRUE;
+        player_moving = TRUE;
     }
 
     // Move cursor vertically
     if (INPUT_UP && (PLAYER.y > 8)) {
         PLAYER.dir_y = -1;
-        pt_moving = TRUE;
+        player_moving = TRUE;
     } else if (INPUT_DOWN && (PLAYER.y < image_height)) {
         PLAYER.dir_y = 1;
-        pt_moving = TRUE;
+        player_moving = TRUE;
     }
 
     // Find trigger or actor under player cursor
@@ -76,7 +74,7 @@ void pointnclick_update() __banked {
     // }
 
     // if (INPUT_A_PRESSED) {
-    //   pt_moving = FALSE;
+    //   player_moving = FALSE;
 
     //   if (is_hover_actor) {
     //     // Run actor's interact script
@@ -87,17 +85,5 @@ void pointnclick_update() __banked {
     //   }
     // }
 
-    // Move player
-    if (pt_moving) {
-        if (PLAYER.move_speed == 0) {
-            // Half speed only move every other frame
-            if (IS_FRAME_2) {
-                PLAYER.x += (WORD)PLAYER.dir_x;
-                PLAYER.y += (WORD)PLAYER.dir_y;
-            }
-        } else {
-            PLAYER.x += (WORD)(PLAYER.dir_x * PLAYER.move_speed);
-            PLAYER.y += (WORD)(PLAYER.dir_y * PLAYER.move_speed);
-        }
-    }
+    if (player_moving) player_move(PLAYER.dir_x,  PLAYER.dir_y);
 }
