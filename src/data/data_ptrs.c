@@ -32,5 +32,3 @@ WORD plat_max_fall_vel = 20000;
 UBYTE topdown_grid = 8;
 UBYTE fade_style = 0;
 UBYTE *engine_fields_addr = &plat_min_vel;
-
-unsigned char script_variables[500] = { 0 };

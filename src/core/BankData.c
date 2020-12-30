@@ -98,23 +98,33 @@ __asm
 __endasm;  
 }
 
-UWORD ReadBankedUWORD(UBYTE bank, unsigned char *ptr) __naked {
-  ptr; bank;
+void ReadBankedFarPtr(far_ptr_t * dest, unsigned char *ptr, UBYTE bank) __preserves_regs(b, c) __naked {
+  dest; ptr; bank;
 __asm
     ldh a, (__current_bank)
     ld  (#__save),a
 
-    ldhl  sp,	#2
-    ld  a, (hl+)
+    ldhl  sp, #6
+    ld  a, (hl)
     ldh	(__current_bank),a
     ld  (#0x2000), a
 
+    ldhl  sp, #2
+    ld  a, (hl+)
+    ld  e, a
+    ld  a, (hl+)
+    ld  d, a
     ld  a, (hl+)
     ld  h, (hl)
     ld  l, a
-    ld  a, (hl+)
-    ld  e, a
-    ld  d, (hl)
+
+    .rept 2
+      ld  a, (hl+)
+      ld  (de), a
+      inc de
+    .endm
+    ld  a, (hl)
+    ld  (de), a
 
     ld  a, (#__save)
     ldh (__current_bank),a

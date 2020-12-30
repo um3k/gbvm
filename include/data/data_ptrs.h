@@ -35,6 +35,4 @@ extern UBYTE topdown_grid;
 extern UBYTE fade_style;
 extern UBYTE *engine_fields_addr;
 
-extern unsigned char script_variables[500];
-
 #endif

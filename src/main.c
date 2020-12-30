@@ -24,7 +24,6 @@
 #endif
 
 #include "data/data_ptrs.h"
-#include "data/scene_1.h"
 
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
@@ -89,7 +88,7 @@ void process_VM() {
                         script_runner_init(FALSE);
                         // load scene
                         far_ptr_t scene;
-                        MemcpyBanked(&scene, (void *)vm_exception_params_offset, sizeof(scene), vm_exception_params_bank);
+                        ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);
                         load_scene(scene.ptr, scene.bank);
                         continue;
                     }
@@ -97,7 +96,8 @@ void process_VM() {
                         // clear all, including variables
                         script_runner_init(TRUE);
                         // load start scene
-                        load_scene(&scene_1, BANK(scene_1));
+                        load_scene(start_scene.ptr, start_scene.bank);
+                        // something else here...
                         continue;
                     }
                     default: {
@@ -160,7 +160,7 @@ void main() {
 
     fade_out_modal();
 
-    load_scene(&scene_1, BANK(scene_1));
+    load_scene(start_scene.ptr, start_scene.bank);
     camera_update();
     scroll_update();
 
