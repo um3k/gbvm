@@ -79,16 +79,29 @@ void process_VM() {
                 // actors_run_collision_scripts();
                 game_time++;
                 wait_vbl_done();
-                continue;
+                break;
             }
-            case RUNNER_BUSY: continue;
+            case RUNNER_BUSY: break;
             case RUNNER_EXCEPTION: {
-                script_runner_init(FALSE);
                 switch (vm_exception_code) {
                     case CHANGE_SCENE_EXCEPTION: {
+                        // kill all threads, but don't clear variables 
+                        script_runner_init(FALSE);
+                        // load scene
                         far_ptr_t scene;
                         MemcpyBanked(&scene, (void *)vm_exception_params_offset, sizeof(scene), vm_exception_params_bank);
                         load_scene(scene.ptr, scene.bank);
+                        continue;
+                    }
+                    case GAME_RESET_EXCEPTION: {
+                        // clear all, including variables
+                        script_runner_init(TRUE);
+                        // load start scene
+                        load_scene(&scene_1, BANK(scene_1));
+                        continue;
+                    }
+                    default: {
+                        // nothing: suppress any unknown exception
                         continue;
                     }
                 }
