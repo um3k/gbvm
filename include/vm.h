@@ -66,6 +66,11 @@ extern UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STAC
 
 // lock state 
 extern UBYTE vm_lock_state;
+// exception flag and parameters
+extern UBYTE vm_exception_code;
+extern UBYTE vm_exception_params_length;
+extern UBYTE vm_exception_params_bank;
+extern const void * vm_exception_params_offset;
 
 // script core functions
 void vm_push(SCRIPT_CTX * THIS, UWORD value) __banked;
@@ -106,6 +111,7 @@ void vm_randomize() __banked;
 void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) __banked;
 void vm_lock(SCRIPT_CTX * THIS) __banked;
 void vm_unlock(SCRIPT_CTX * THIS) __banked;
+void vm_raise(SCRIPT_CTX * THIS, UBYTE code, UBYTE size) __banked;
 
 // return zero if script end
 // bank with VM code must be active
@@ -117,7 +123,7 @@ inline UBYTE VM_ISLOCKED() {
 } 
 
 // initialize script runner contexts
-void script_runner_init() __banked;
+void script_runner_init(UBYTE reset) __banked;
 // execute a script in the new allocated context
 SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, ...) __banked;
 // terminate script by ID; returns non zero if no such thread is running
@@ -126,6 +132,9 @@ UBYTE script_terminate(UBYTE ID) __banked;
 #define RUNNER_DONE 0
 #define RUNNER_IDLE 1
 #define RUNNER_BUSY 2
+#define RUNNER_EXCEPTION 3
+
+#define EXCEPTION_CODE_NONE 0
 
 // process all contexts
 UBYTE script_runner_update() __nonbanked;

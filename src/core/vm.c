@@ -18,6 +18,11 @@ SCRIPT_CTX * first_ctx, * free_ctxs;
 
 // lock state 
 UBYTE vm_lock_state = 0;
+// exception flsg
+UBYTE vm_exception_code;
+UBYTE vm_exception_params_length;
+UBYTE vm_exception_params_bank;
+const void * vm_exception_params_offset;
 
 // we need __banked functions here to have two extra words before arguments
 // we will put VM stuff there
@@ -434,6 +439,15 @@ void vm_unlock(SCRIPT_CTX * THIS) __banked {
     vm_lock_state--;
 }
 
+// raises VM exception
+void vm_raise(SCRIPT_CTX * THIS, UBYTE code, UBYTE size) __banked {
+    vm_exception_code = code;
+    vm_exception_params_length = size;
+    vm_exception_params_bank = THIS->bank;
+    vm_exception_params_offset = THIS->PC;
+    THIS->PC += size;
+}
+
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active
@@ -554,12 +568,13 @@ UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)
 
 // initialize script runner contexts
 // resets whole VM engine
-void script_runner_init() __banked {
+void script_runner_init(UBYTE reset) __banked {
+    if (reset) {
+        memset(script_memory, 0, sizeof(script_memory));
+        memset(CTXS, 0, sizeof(CTXS));
+    }
     UWORD * base_addr = &script_memory[MAX_GLOBAL_VARS];
     free_ctxs = CTXS, first_ctx = 0;
-    memset(script_memory, 0, sizeof(script_memory));
-    memset(CTXS, 0, sizeof(CTXS));
-
     SCRIPT_CTX * nxt = 0;
     SCRIPT_CTX * tmp = CTXS + (SCRIPT_MAX_CONTEXTS - 1);
     for (UBYTE i = SCRIPT_MAX_CONTEXTS; i != 0; i--) {
@@ -626,6 +641,7 @@ UBYTE script_runner_update() __nonbanked {
     waitable = 1;
     counter = INSTRUCTIONS_PER_QUANT;
     while (ctx) {
+        vm_exception_code = EXCEPTION_CODE_NONE;
         ctx->waitable = 0;
         if ((ctx->terminated) || (!VM_STEP(ctx))) {
             // update lock state
@@ -639,14 +655,18 @@ UBYTE script_runner_update() __nonbanked {
             // next context
             if (old_ctx) ctx = old_ctx->next; else ctx = first_ctx;
         } else {
+            // check exception
+            if (vm_exception_code) return RUNNER_EXCEPTION;
+            // loop until waitable state or quant is expired 
             if (!(ctx->waitable) && (counter--)) continue;
+            // switch to the next context
             waitable &= ctx->waitable; 
             old_ctx = ctx, ctx = ctx->next;
             counter = INSTRUCTIONS_PER_QUANT;
         }
     }
     // return 0 if all threads are finished
-    if (first_ctx == 0) return 0;
+    if (first_ctx == 0) return RUNNER_DONE;
     // return 1 if all threads in waitable state else return 2
-    if (waitable) return 1; else return 2;
+    if (waitable) return RUNNER_IDLE; else return RUNNER_BUSY;
 }

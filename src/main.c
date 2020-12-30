@@ -81,7 +81,21 @@ void process_VM() {
                 wait_vbl_done();
                 break;
             }
-//            case RUNNER_BUSY: ;
+            case RUNNER_BUSY: break;
+            case RUNNER_EXCEPTION: {
+                script_runner_init(FALSE);
+                switch (vm_exception_code) {
+                    case 1: {
+                        if (vm_exception_params_length) {
+                            UBYTE _save = _current_bank;
+                            SWITCH_ROM_MBC1(vm_exception_params_bank);
+                            // payload for exception with code 1
+                            SWITCH_ROM_MBC1(_save);
+                        }
+                        break;
+                    }
+                }
+            }
         }
     }
 }
@@ -110,7 +124,7 @@ void main() {
 
     initrand(DIV_REG);
 
-    script_runner_init();
+    script_runner_init(TRUE);
 
     events_init();
     ui_init();

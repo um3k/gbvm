@@ -297,6 +297,11 @@ OP_VM_UNLOCK          = 0x26
         .db OP_VM_UNLOCK
 .endm
 
+OP_VM_RAISE           = 0x27
+.macro VM_RAISE CODE, SIZE
+        .db OP_VM_RAISE, #<SIZE, #<CODE
+.endm
+
 
 ; --- engine-specific instructions ------------------------------------------
 
