@@ -16,7 +16,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
-#include "StateHandlers.h"
+#include "StatesCaller.h"
 #ifdef SGB
     #include "SGBBorder.h"
     #include "data/border.h"
