@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "LinkedList.h"
+#include "Actor.h"
 #include "Scroll.h"
 #include "Trigger.h"
 #include "Sprite.h"
