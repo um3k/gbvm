@@ -18,7 +18,7 @@ const void __at(255) __bank_scene_1;
 const struct scene_t scene_1 = {
   .width = 32,
   .height = 32,
-  .type = 3,
+  .type = 2,
   .background = TO_FAR_PTR_T(background_2),
   .collisions = TO_FAR_PTR_T(scene_1_collisions),
   .colors = TO_FAR_PTR_T(scene_1_colors),
