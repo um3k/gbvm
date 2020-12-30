@@ -11,8 +11,6 @@
 #define NO_TRIGGER_COLLISON 0xFF
 
 extern trigger_t triggers[MAX_TRIGGERS];
-extern UBYTE triggers_active[MAX_ACTIVE_TRIGGERS];
-extern UBYTE triggers_active_size;
 extern UBYTE triggers_len;
 extern UBYTE last_trigger_tx;
 extern UBYTE last_trigger_ty;
