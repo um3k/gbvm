@@ -16,6 +16,7 @@
 #include "FadeManager.h"
 #include "Scroll.h"
 #include "vm.h"
+#include "VM_Exceptions.h"
 #include "StatesCaller.h"
 #ifdef SGB
     #include "SGBBorder.h"
@@ -43,7 +44,6 @@ extern void __bank_SCRIPT_4;
 extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
 extern void __bank_SCRIPT_5;
 
-
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
     if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
@@ -64,7 +64,7 @@ void VBL_isr() __nonbanked {
 }
 
 void process_VM() {
-    while (1) {
+    while (TRUE) {
         switch (script_runner_update()) {
             case RUNNER_DONE:
             case RUNNER_IDLE: {
@@ -81,18 +81,18 @@ void process_VM() {
                 wait_vbl_done();
                 break;
             }
-            case RUNNER_BUSY: break;
+            case RUNNER_BUSY: continue;
             case RUNNER_EXCEPTION: {
                 script_runner_init(FALSE);
                 switch (vm_exception_code) {
-                    case 1: {
+                    case CHANGE_SCENE_EXCEPTION: {
                         if (vm_exception_params_length) {
                             UBYTE _save = _current_bank;
                             SWITCH_ROM_MBC1(vm_exception_params_bank);
                             // payload for exception with code 1
                             SWITCH_ROM_MBC1(_save);
                         }
-                        break;
+                        continue;
                     }
                 }
             }
