@@ -127,7 +127,7 @@ void adventure_update() __banked {
     tile_y = (PLAYER.y) >> 3;
 
     // // Check for trigger collisions
-    // if (ActivateTriggerAt(tile_x, tile_y, FALSE)) {
+    // if (trigger_activate_at(tile_x, tile_y, FALSE)) {
     //   // Landed on a trigger
     //   return;
     // }

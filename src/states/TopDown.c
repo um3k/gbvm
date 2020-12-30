@@ -43,10 +43,10 @@ void topdown_update() __banked {
         player_moving = FALSE;
 
         // Check for trigger collisions
-        // if (ActivateTriggerAt(tile_x, tile_y, FALSE)) {
-        //     // If landed on a trigger don't update movement this frame
-        //     return;
-        // }
+        if (trigger_activate_at(tile_x, tile_y, FALSE)) {
+            // If landed on a trigger don't update movement this frame
+            return;
+        }
 
         // Check input to set player movement
         if (INPUT_RECENT_LEFT) {

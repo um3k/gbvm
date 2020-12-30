@@ -63,7 +63,7 @@ void shmup_update() __banked {
 
   // Check for trigger collisions
   /*
-  if (ActivateTriggerAt(tile_x, tile_y, FALSE)) {
+  if (trigger_activate_at(tile_x, tile_y, FALSE)) {
     return;
   };
   */

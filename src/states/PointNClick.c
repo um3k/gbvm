@@ -55,7 +55,7 @@ void pointnclick_update() __banked {
     }
 
     // Find trigger or actor under player cursor
-    // hit_trigger = TriggerAtTile(tile_x, tile_y - 1);
+    // hit_trigger = trigger_at_tile(tile_x, tile_y - 1);
     // hit_actor = ActorAtTile(tile_x, tile_y, TRUE);
 
     // is_hover_trigger = (hit_trigger != NO_TRIGGER_COLLISON) &&
@@ -81,7 +81,7 @@ void pointnclick_update() __banked {
     //     ActorRunScript(hit_actor);
     //   } else if (is_hover_trigger) {
     //     // Run trigger script
-    //     TriggerRunScript(hit_trigger);
+    //     trigger_interact(hit_trigger);
     //   }
     // }
 

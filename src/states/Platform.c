@@ -283,7 +283,7 @@ void platform_update() __banked {
 
   // Check for trigger collisions
   /*
-  if (ActivateTriggerAt(tile_x, tile_y, INPUT_UP_PRESSED)) {
+  if (trigger_activate_at(tile_x, tile_y, INPUT_UP_PRESSED)) {
     // Landed on a trigger
     return;
   }

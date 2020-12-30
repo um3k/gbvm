@@ -24,14 +24,14 @@ extern UBYTE last_trigger_ty;
  * @param ty Top tile
  * @return tile index or NO_TRIGGER_COLLISON if not found
  */
-UBYTE TriggerAtTile(UBYTE tx_a, UBYTE ty_a) __banked;
+UBYTE trigger_at_tile(UBYTE tx_a, UBYTE ty_a) __banked;
 
 /**
  * Run script for trigger specified trigger
  *
  * @param i Trigger index
  */
-void TriggerRunScript(UBYTE i) __banked;
+void trigger_interact(UBYTE i) __banked;
 
 /**
  * Run script for trigger at tile {tx,ty} if this tile was the
@@ -42,6 +42,6 @@ void TriggerRunScript(UBYTE i) __banked;
  * @param ty Top tile
  * @param force Force trigger to activate without changing tile
  */
-UBYTE ActivateTriggerAt(UBYTE tx, UBYTE ty, UBYTE force) __banked;
+UBYTE trigger_activate_at(UBYTE tx, UBYTE ty, UBYTE force) __banked;
 
 #endif

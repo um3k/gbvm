@@ -20,8 +20,8 @@ const struct trigger_t scene_1_triggers[] = {
   },
   {
     // Trigger 2,
-    .x = 11,
-    .y = 11,
+    .x = 15,
+    .y = 9,
     .width = 2,
     .height = 2,
     .script = TO_FAR_PTR_T(script_s1t1_interact)
