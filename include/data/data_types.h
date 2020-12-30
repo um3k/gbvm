@@ -4,6 +4,14 @@
 #include "BankData.h"
 #include "Actor.h"
 
+typedef enum {
+    SCENE_TYPE_TOPDOWN = 0,
+    SCENE_TYPE_PLATFORM,
+    SCENE_TYPE_ADVENTURE,
+    SCENE_TYPE_SHMUP,
+    SCENE_TYPE_POINTNCLICK
+} scene_type;
+
 // typedef struct actor_t {
 //     UINT8 x, y;
 //     UINT8 sprite, sprite_type, palette;
@@ -21,7 +29,8 @@ typedef struct trigger_t {
 
 typedef struct scene_t {
     UINT8 width, height;
-    UINT8 type, n_actors, n_triggers, n_sprites;
+    scene_type type;
+    UINT8 n_actors, n_triggers, n_sprites;
     far_ptr_t background, collisions, colors, palette, sprite_palette;
     far_ptr_t script_init, script_p_hit1, script_p_hit2, script_p_hit3;
     far_ptr_t sprites;
