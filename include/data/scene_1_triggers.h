@@ -4,7 +4,7 @@
 // Scene: Underground
 // Triggers
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 extern const void __bank_scene_1_triggers;
 extern const struct trigger_t scene_1_triggers[];

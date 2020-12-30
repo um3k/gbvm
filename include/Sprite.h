@@ -2,7 +2,7 @@
 #define SPRITE_H
 
 #include <gb/gb.h>
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 #define MAX_SPRITES 20
 

@@ -2,7 +2,7 @@
 
 // Background: cave
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/tileset_0.h"
 
 const void __at(255) __bank_background_0;

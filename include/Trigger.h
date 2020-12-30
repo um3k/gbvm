@@ -2,7 +2,7 @@
 #define TRIGGER_H
 
 #include <gb/gb.h>
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "Math.h"
 
 #define TRIGGER_BANK 1

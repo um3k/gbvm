@@ -2,7 +2,7 @@
 
 // Scene: Underground
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/background_2.h"
 #include "data/scene_1_collisions.h"
 #include "data/scene_1_colors.h"

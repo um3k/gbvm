@@ -2,7 +2,7 @@
 #define SCENE_H
 
 #include <gb/gb.h>
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 extern UBYTE image_bank;
 extern UBYTE image_attr_bank;

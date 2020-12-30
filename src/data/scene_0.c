@@ -2,7 +2,7 @@
 
 // Scene: Cave
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/background_0.h"
 #include "data/scene_0_collisions.h"
 #include "data/scene_0_colors.h"

@@ -3,7 +3,7 @@
 // Scene: Scene 3
 // Actors
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/script_s2a0_interact.h"
 #include "data/script_s2a0_update.h"
 

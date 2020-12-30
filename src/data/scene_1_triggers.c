@@ -3,7 +3,7 @@
 // Scene: Underground
 // Triggers
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/script_s1t0_interact.h"
 #include "data/script_s1t1_interact.h"
 

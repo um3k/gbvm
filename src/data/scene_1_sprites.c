@@ -3,7 +3,7 @@
 // Scene: Underground
 // Sprites
 
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 #include "data/spritesheet_4.h"
 #include "data/spritesheet_5.h"
 #include "data/spritesheet_6.h"

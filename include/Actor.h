@@ -3,7 +3,7 @@
 
 #include <gb/gb.h>
 #include "BankData.h"
-#include "data/data_types.h"
+#include "data/gbs_types.h"
 
 #define MAX_ACTORS            20
 #define MAX_ACTORS_ACTIVE     12
