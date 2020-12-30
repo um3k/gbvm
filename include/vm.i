@@ -437,6 +437,16 @@ OP_VM_CONTEXT_PREPARE   = 0x55
         .db OP_VM_CONTEXT_PREPARE, #>ADDR, #<ADDR, #<BANK, #<SLOT
 .endm
 
+OP_VM_FADE_IN_MODAL    = 0x56
+.macro VM_VM_FADE_IN_MODAL
+        .db OP_VM_FADE_IN_MODAL
+.endm
+
+OP_VM_FADE_OUT_MODAL   = 0x57
+.macro VM_VM_FADE_OUT_MODAL
+        .db OP_VM_FADE_OUT_MODAL
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60

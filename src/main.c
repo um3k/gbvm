@@ -79,7 +79,7 @@ void process_VM() {
                 // actors_run_collision_scripts();
                 game_time++;
                 wait_vbl_done();
-                break;
+                continue;
             }
             case RUNNER_BUSY: continue;
             case RUNNER_EXCEPTION: {
