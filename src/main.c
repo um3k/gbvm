@@ -114,6 +114,7 @@ void process_VM() {
                 camera_update();
                 scroll_update();
                 state_init();
+                actors_update();
                 fade_in_modal();    // should it fade in without condition or it is a user script thing?
             }
         }
@@ -167,6 +168,10 @@ void main() {
         IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
     DISPLAY_ON;
+
+    // Move to bootstrap script?
+    PLAYER.x = 96;
+    PLAYER.y = 80;
 
     fade_out_modal();
 
