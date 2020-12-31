@@ -93,6 +93,9 @@ void process_VM() {
                         events_init();  // is it a common stuff with change scene exception?
                         // clear all, including variables
                         script_runner_init(TRUE);
+                        // reset player
+                        PLAYER.x = start_scene_x;
+                        PLAYER.y = start_scene_y;
                         // load start scene
                         load_scene(start_scene.ptr, start_scene.bank);
                         break;
@@ -168,10 +171,6 @@ void main() {
         IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
     DISPLAY_ON;
-
-    // Move to bootstrap script?
-    PLAYER.x = 96;
-    PLAYER.y = 80;
 
     fade_out_modal();
 

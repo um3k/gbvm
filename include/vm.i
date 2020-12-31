@@ -343,6 +343,10 @@ OP_VM_ACTOR_SET_ANIM    = 0x34
         .db OP_VM_ACTOR_SET_ANIM, #>ANIM, #<ANIM, #>ACTOR, #<ACTOR
 .endm
 
+OP_VM_ACTOR_SET_POS     = 0x35
+.macro VM_ACTOR_SET_POS IDX
+        .db OP_VM_ACTOR_SET_POS, #>IDX, #<IDX
+.endm
 
 ; --- UI ------------------------------------------
 
