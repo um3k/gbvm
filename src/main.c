@@ -83,21 +83,21 @@ void process_VM() {
             case RUNNER_BUSY: break;
             case RUNNER_EXCEPTION: {
                 switch (vm_exception_code) {
-                    case CHANGE_SCENE_EXCEPTION: {
+                    case EXCEPTION_RESET: {
+                        // clear all, including variables
+                        script_runner_init(TRUE);
+                        // load start scene
+                        load_scene(start_scene.ptr, start_scene.bank);
+                        // something else here...
+                        continue;
+                    }
+                    case EXCEPTION_CHANGE_SCENE: {
                         // kill all threads, but don't clear variables 
                         script_runner_init(FALSE);
                         // load scene
                         far_ptr_t scene;
                         ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);
                         load_scene(scene.ptr, scene.bank);
-                        continue;
-                    }
-                    case GAME_RESET_EXCEPTION: {
-                        // clear all, including variables
-                        script_runner_init(TRUE);
-                        // load start scene
-                        load_scene(start_scene.ptr, start_scene.bank);
-                        // something else here...
                         continue;
                     }
                     default: {

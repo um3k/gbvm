@@ -3,6 +3,10 @@
 ;      args: big-endian
 ;      order: left-to-right (leftmost argument pushed first)
 
+; exception ID's
+EXCEPTION_RESET	        = 1
+EXCEPTION_CHANGE_SCENE	= 2
+
 ; aliases
 .ARG0 = -1
 .ARG1 = -2
