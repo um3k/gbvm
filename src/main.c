@@ -25,6 +25,9 @@
 
 #include "data/data_ptrs.h"
 
+extern void __bank_bootstrap_script;
+extern const UBYTE bootstrap_script[];
+
 extern const UBYTE BYTECODE[];                  // defined in bytecode.s
 extern void __bank_BYTECODE;
 
@@ -88,8 +91,7 @@ void process_VM() {
                         script_runner_init(TRUE);
                         // load start scene
                         load_scene(start_scene.ptr, start_scene.bank);
-                        // something else here...
-                        continue;
+                        break;
                     }
                     case EXCEPTION_CHANGE_SCENE: {
                         // kill all threads, but don't clear variables 
@@ -98,13 +100,17 @@ void process_VM() {
                         far_ptr_t scene;
                         ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);
                         load_scene(scene.ptr, scene.bank);
-                        continue;
+                        break;
                     }
                     default: {
                         // nothing: suppress any unknown exception
                         continue;
                     }
                 }
+                camera_update();
+                scroll_update();
+                state_init();
+                fade_in_modal();    // should it fade in without condition or it is a user script thing?
             }
         }
     }
@@ -160,15 +166,8 @@ void main() {
 
     fade_out_modal();
 
-    load_scene(start_scene.ptr, start_scene.bank);
-    camera_update();
-    scroll_update();
-
-    state_init(); // Start Scene Type
-
-    fade_in_modal();
-
-    script_execute(BANK(SCRIPT_1), SCRIPT_1, 0, 0);
+    // execute bootstrap script that just raises RESET exception
+    script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
 
     // grid walking
     // script_execute(BANK(SCRIPT_2), SCRIPT_2, 0, 0);
