@@ -152,6 +152,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     // Load actors
     actors_active_head = 0;
     actors_inactive_head = 0;
+    actors_active_len = 0;
     // Add player to inactive
     PLAYER.enabled = FALSE;
     DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
