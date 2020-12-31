@@ -27,7 +27,7 @@ UBYTE actors_len = 0;
 UBYTE scene_type;
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) {
-    UBYTE ntiles = ReadBankedUBYTE((void *)&(tiles->n_tiles), bank);
+    UBYTE ntiles = ReadBankedUBYTE(&(tiles->n_tiles), bank);
     SetBankedBkgData(0, ntiles, tiles->tiles, bank);    
 }
 
