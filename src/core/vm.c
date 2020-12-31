@@ -584,6 +584,7 @@ void script_runner_init(UBYTE reset) __banked {
         base_addr += CONTEXT_STACK_SIZE;
         nxt = tmp--;
     }
+    vm_lock_state = 0;
 }
 
 // execute a script in the new allocated context
