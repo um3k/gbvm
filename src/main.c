@@ -172,8 +172,6 @@ void main() {
     }
     DISPLAY_ON;
 
-    fade_out_modal();
-
     // execute bootstrap script that just raises RESET exception
     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
 
