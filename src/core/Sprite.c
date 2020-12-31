@@ -10,6 +10,8 @@ void init_sprite_pool() __banked
   for (i = 0; i != MAX_SPRITES; i++)
   {
     sprites_pool[i] = i << 1;
+    move_sprite(i << 1, 0, 0);
+    move_sprite((i << 1) + 1, 0, 0);    
   }
   sprites_pool_next = MAX_SPRITES - 1;
 }
