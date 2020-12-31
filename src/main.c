@@ -93,6 +93,9 @@ void process_VM() {
                         events_init();  // is it a common stuff with change scene exception?
                         // clear all, including variables
                         script_runner_init(TRUE);
+                        // reset player
+                        PLAYER.x = start_scene_x;
+                        PLAYER.y = start_scene_y;
                         // load start scene
                         load_scene(start_scene.ptr, start_scene.bank);
                         break;
@@ -114,6 +117,7 @@ void process_VM() {
                 camera_update();
                 scroll_update();
                 state_init();
+                actors_update();
                 fade_in_modal();    // should it fade in without condition or it is a user script thing?
             }
         }

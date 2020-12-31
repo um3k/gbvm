@@ -47,10 +47,10 @@ void vm_input_get(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
 void vm_fade_in(SCRIPT_CTX * THIS, UBYTE is_modal) __banked {
     THIS; 
-    if (is_modal) fade_in_modal(); else fade_out();
+    if (is_modal) fade_in_modal(); else fade_in();
 }
 
 void vm_fade_out(SCRIPT_CTX * THIS, UBYTE is_modal) __banked { 
     THIS;
-    if (is_modal) fade_in_modal(); else fade_in();
+    if (is_modal) fade_out_modal(); else fade_out();
 }

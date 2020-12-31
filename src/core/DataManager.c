@@ -131,8 +131,7 @@ void load_scene(const scene_t* scene, UBYTE bank) {
     }
 
     // Load player
-    PLAYER.x = 40;
-    PLAYER.y = 96;
+
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 1;
     PLAYER.sprite = 6;

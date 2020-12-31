@@ -12,6 +12,12 @@ typedef struct act_move_to_t {
     UBYTE ATTR; 
 } act_move_to_t;
 
+typedef struct act_set_pos_t {
+    UBYTE ID;
+    UBYTE _pad0;
+    INT16 X, Y;
+} act_set_pos_t;
+
 void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     actor_t *actor;
     BYTE new_dir_x = 0;
@@ -96,4 +102,14 @@ void vm_actor_set_anim(SCRIPT_CTX * THIS, INT16 idx, INT16 idx_anim) __banked {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
     UBYTE * n_anim = VM_REF_TO_PTR(idx_anim);
     actor_set_anim(actors + *n_actor, *n_anim);
+}
+
+void vm_actor_set_pos(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    actor_t *actor;
+    
+    act_set_pos_t * params = VM_REF_TO_PTR(idx);
+    actor = actors + params->ID;
+
+    actor->x = params->X;
+    actor->y = params->Y;
 }
