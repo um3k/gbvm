@@ -133,6 +133,31 @@ __asm
 __endasm;  
 }
 
+UWORD ReadBankedUWORD(unsigned char *ptr, UBYTE bank) __preserves_regs(b, c) __naked {
+  ptr; bank;
+__asm
+    ldh a, (__current_bank)
+    ld  (#__save),a
+
+    ldhl  sp,	#4
+    ld  a, (hl-)
+    ldh	(__current_bank),a
+    ld  (#0x2000), a
+
+    ld  a, (hl-)
+    ld  l, (hl)
+    ld  h, a
+    ld  a, (hl+)
+    ld  e, a
+    ld  d, (hl)
+
+    ld  a, (#__save)
+    ldh (__current_bank),a
+    ld  (#0x2000), a
+    ret
+__endasm;  
+}
+
 void MemcpyBanked(void* to, void* from, size_t n, UBYTE bank)  __naked {
   to; from; n; bank;
 __asm

@@ -71,6 +71,15 @@ void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles,
 void ReadBankedFarPtr(far_ptr_t * dest, unsigned char *ptr, UBYTE bank) __preserves_regs(b, c);
 
 /**
+ * Read UWORD from banked memory location (non-reentrant!)
+ * 
+ * @param ptr memory address of data within bank
+ * @param bank bank to read from
+ * @return value stored in banked location
+ */
+UWORD ReadBankedUWORD(unsigned char *ptr, UBYTE bank) __preserves_regs(b, c);
+
+/**
  * memcpy data from banked memory location (non-reentrant!)
  * 
  * @param to destination to write fetched data

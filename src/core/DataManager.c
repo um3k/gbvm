@@ -27,10 +27,8 @@ UBYTE actors_len = 0;
 UBYTE scene_type;
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) {
-    UBYTE _save = _current_bank;
-    SWITCH_ROM_MBC1(bank);
-    set_bkg_data(0, tiles->n_tiles, tiles->tiles);
-    SWITCH_ROM_MBC1(_save);
+    UBYTE ntiles = (UBYTE)ReadBankedUWORD(&(tiles->n_tiles), bank);
+    SetBankedBkgData(0, ntiles, tiles->tiles, bank);    
 }
 
 void load_image(const background_t* background, UBYTE bank) {
