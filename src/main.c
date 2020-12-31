@@ -87,6 +87,10 @@ void process_VM() {
             case RUNNER_EXCEPTION: {
                 switch (vm_exception_code) {
                     case EXCEPTION_RESET: {
+                        // stop music
+                        music_stop();
+                        // cleanup core stuff
+                        events_init();  // is it a common stuff with change scene exception?
                         // clear all, including variables
                         script_runner_init(TRUE);
                         // load start scene
