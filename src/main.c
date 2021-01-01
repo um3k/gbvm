@@ -114,9 +114,9 @@ void process_VM() {
                         continue;
                     }
                 }
+                state_init();
                 camera_update();
                 scroll_update();
-                state_init();
                 actors_update();
                 fade_in_modal();    // should it fade in without condition or it is a user script thing?
             }

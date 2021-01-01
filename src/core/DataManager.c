@@ -1,3 +1,5 @@
+#pragma bank 1
+
 #include "DataManager.h"
 
 #include <string.h>
@@ -26,48 +28,39 @@ UBYTE sprites_len;
 UBYTE actors_len = 0;
 UBYTE scene_type;
 
-void load_tiles(const tileset_t* tiles, UBYTE bank) {
+void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
     UBYTE ntiles = ReadBankedUBYTE(&(tiles->n_tiles), bank);
     SetBankedBkgData(0, ntiles, tiles->tiles, bank);    
 }
 
-void load_image(const background_t* background, UBYTE bank) {
-    UBYTE _save = _current_bank;
+void load_image(const background_t* background, UBYTE bank) __banked {
+    background_t bkg;
+    MemcpyBanked(&bkg, background, sizeof(bkg), bank);
 
-    SWITCH_ROM_MBC1(bank);
     image_bank = bank;
-    image_tile_width = background->width;
-    image_tile_height = background->height;
+    image_ptr = background->tiles;
+    image_tile_width = bkg.width;
+    image_tile_height = bkg.height;
     image_width = image_tile_width * 8;
     scroll_x_max = image_width - ((UINT16)SCREENWIDTH);
     image_height = image_tile_height * 8;
     scroll_y_max = image_height - ((UINT16)SCREENHEIGHT);
-    image_ptr = background->tiles;
 
-    load_tiles(background->tileset.ptr, background->tileset.bank);
-    SWITCH_ROM_MBC1(_save);
+    load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
 }
 
-UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) {
-    UBYTE _save = _current_bank;
-    UBYTE size;
+UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
 
-    SWITCH_ROM_MBC1(bank);
-
-    size = sprite->n_frames * 4;
-
-    if (sprite_offset == 0 && sprite->n_frames > 6) {
+    UBYTE n_frames = ReadBankedUBYTE(&(sprite->n_frames), bank);
+    UBYTE size = n_frames << 2;
+    if ((sprite_offset == 0) && (n_frames > 6)) {
         size = MAX_PLAYER_SPRITE_SIZE;
     }
-
-    set_sprite_data(sprite_offset, size, sprite->frames);
-
-    SWITCH_ROM_MBC1(_save);
-
+    SetBankedSpriteData(sprite_offset, size, sprite->frames, bank);
     return size;
 }
 
-void load_scene(const scene_t* scene, UBYTE bank) {
+void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
     UBYTE _save = _current_bank;
     UBYTE i, k;
     far_ptr_t far_scene_actors;
