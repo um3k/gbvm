@@ -11,6 +11,7 @@
 #include "data/scene_2_actors.h"
 #include "data/scene_2_triggers.h"
 #include "data/scene_2_sprites.h"
+#include "data/script_s2_init.h"
 
 const void __at(255) __bank_scene_2;
 
@@ -28,5 +29,6 @@ const struct scene_t scene_2 = {
   .n_sprites = 1,
   .actors = TO_FAR_PTR_T(scene_2_actors),
   .triggers = TO_FAR_PTR_T(scene_2_triggers),
-  .sprites = TO_FAR_PTR_T(scene_2_sprites)
+  .sprites = TO_FAR_PTR_T(scene_2_sprites),
+  .script_init = TO_FAR_PTR_T(script_s2_init)
 };
