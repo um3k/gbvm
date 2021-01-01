@@ -9,6 +9,7 @@
 #include "GameTime.h"
 #include "Input.h"
 #include "Trigger.h"
+#include "vm.h"
 #include "data/data_ptrs.h"
 
 void topdown_init() __banked {
@@ -30,7 +31,8 @@ void topdown_init() __banked {
 }
 
 void topdown_update() __banked {
-    UBYTE tile_x, tile_y, hit_actor;
+    actor_t *hit_actor;
+    UBYTE tile_x, tile_y;
 
     tile_x = DIV_8(PLAYER.x);
     tile_y = DIV_8(PLAYER.y);
@@ -123,40 +125,35 @@ void topdown_update() __banked {
         }
 
         /*
-          hit_actor = ActorOverlapsPlayer(FALSE);
-          if (hit_actor && hit_actor != NO_ACTOR_COLLISON) {
+        hit_actor = ActorOverlapsPlayer(FALSE);
+        if (hit_actor && hit_actor != NO_ACTOR_COLLISON) {
             if (actors[hit_actor].collision_group) {
               PLAYER.hit_actor = 0;
               PLAYER.hit_actor = hit_actor;
             }
-          }
+        }
+        */
 
-          // Check if walked in to actor
-          if (player_moving) {
-            hit_actor = ActorInFrontOfPlayer(topdown_grid, FALSE);
-            if (hit_actor != NO_ACTOR_COLLISON) {
-              PLAYER.hit_actor = hit_actor;
-              player_moving = FALSE;
+        // Check if walked in to actor
+        if (player_moving) {
+            hit_actor = actor_in_front_of_player(topdown_grid, FALSE);
+            if (hit_actor != NULL) {
+                // PLAYER.hit_actor = hit_actor;
+                player_moving = FALSE;
             }
-          }
+        }
 
-          if (INPUT_A_PRESSED) {
-            hit_actor = ActorInFrontOfPlayer(topdown_grid, TRUE);
-            if (hit_actor != NO_ACTOR_COLLISON &&
-          !actors[hit_actor].collision_group) {
-              // Turn actor to face player
-              actors[hit_actor].dir_x = -PLAYER.dir_x;
-              actors[hit_actor].dir_y = -PLAYER.dir_y;
-              actors[hit_actor].rerender = TRUE;
-
-              // Stop player from player_moving
-              player_moving = FALSE;
-
-              // Run actors interact script
-              ActorRunScript(hit_actor);
+        if (INPUT_A_PRESSED) {
+            hit_actor = actor_in_front_of_player(topdown_grid, TRUE);
+            if (hit_actor != NULL && !hit_actor->collision_group) {
+                actor_set_dir(hit_actor, -PLAYER.dir_x, -PLAYER.dir_y);
+                player_moving = FALSE;
+                if (hit_actor->script.bank) {
+                    script_execute(hit_actor->script.bank, hit_actor->script.ptr, 0, 0);
+                }
             }
-          }
-          */
+        }
+
         actor_set_anim(&PLAYER, player_moving);
 
     }
