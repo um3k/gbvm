@@ -18,7 +18,6 @@
 extern actor_t actors[MAX_ACTORS];
 extern actor_t *actors_active_head;
 extern actor_t *actors_inactive_head;
-extern UBYTE actors_active_len;
 extern UBYTE player_moving;
 
 void actors_update() __banked;

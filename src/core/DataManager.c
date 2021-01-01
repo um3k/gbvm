@@ -1,9 +1,6 @@
 #pragma bank 1
 
 #include "DataManager.h"
-
-#include <string.h>
-
 #include "LinkedList.h"
 #include "Actor.h"
 #include "Scroll.h"
@@ -141,14 +138,13 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     // Load actors
     actors_active_head = 0;
     actors_inactive_head = 0;
-    actors_active_len = 0;
     // Add player to inactive
     PLAYER.enabled = FALSE;
     DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
     activate_actor(&PLAYER);
     if (actors_len != 0) {
-        MemcpyBanked(actors + 1, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
         actor_t * actor = actors + 1;
+        MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
         for (i = actors_len - 1; i != 0; i--, actor++) {
             DL_PUSH_HEAD(actors_inactive_head, actor);
             // Enable all pinned actors by default

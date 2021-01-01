@@ -1,7 +1,5 @@
 #pragma bank 1
 
-#include <string.h>
-
 #include "Actor.h"
 #include "GameTime.h"
 #include "Scroll.h"
@@ -10,14 +8,13 @@
 #include "Sprite.h"
 #include <gb/gb.h>
 #ifdef STRICT
-#include <gb/bgb_emu.h>
-#include <gb/crash_handler.h>
+    #include <gb/bgb_emu.h>
+    #include <gb/crash_handler.h>
 #endif
 
 actor_t actors[MAX_ACTORS];
 actor_t *actors_active_head = 0;
 actor_t *actors_inactive_head = 0;
-UBYTE actors_active_len = 0;
 
 actor_t *actor;
 INT8 screen_x, screen_y;
@@ -95,10 +92,7 @@ void deactivate_actor(actor_t *actor) __banked
         return;
     }
 #endif
-    if (!actor->enabled) {
-        return;
-    }
-    actors_active_len--;
+    if (!actor->enabled) return;
     actor->enabled = FALSE;
     DL_REMOVE_ITEM(actors_active_head, actor);
     move_sprite(actor->sprite_no, 0, 0);
@@ -121,9 +115,7 @@ void activate_actor(actor_t *actor)
         return;
     }
 #endif
-    if (actors_active_len == MAX_ACTORS_ACTIVE) return;
     if (actor->enabled) return;
-    actors_active_len++;
     actor->enabled = TRUE;
     actor->rerender = TRUE;
     actor->sprite_no = get_free_sprite();
