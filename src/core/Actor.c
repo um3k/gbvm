@@ -94,10 +94,10 @@ void deactivate_actor(actor_t *actor) __banked
 #endif
     if (!actor->enabled) return;
     actor->enabled = FALSE;
-    DL_REMOVE_ITEM(actors_active_head, actor);
     move_sprite(actor->sprite_no, 0, 0);
     move_sprite(actor->sprite_no + 1, 0, 0);
     release_sprite(actor->sprite_no);
+    DL_REMOVE_ITEM(actors_active_head, actor);
     DL_PUSH_HEAD(actors_inactive_head, actor);
 }
 

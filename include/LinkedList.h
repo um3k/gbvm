@@ -17,13 +17,13 @@
     (item)->prev->next = (item)->next; \
     (item)->next->prev = (item)->prev; \
   } \
-  else if (actor->next) \
+  else if ((item)->next) \
   { \
     /* Start of list */ \
     (item)->next->prev = 0; \
-    (head) = actor->next; \
+    (head) = (item)->next; \
   } \
-  else if (actor->prev) \
+  else if ((item)->prev) \
   { \
     /* End of list */ \
     (item)->prev->next = 0; \

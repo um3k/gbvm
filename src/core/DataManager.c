@@ -146,6 +146,7 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
         actor_t * actor = actors + 1;
         MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
         for (i = actors_len - 1; i != 0; i--, actor++) {
+            actor->enabled = FALSE;
             DL_PUSH_HEAD(actors_inactive_head, actor);
             // Enable all pinned actors by default
             if (actor->pinned) activate_actor(actor);
