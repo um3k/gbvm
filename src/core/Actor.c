@@ -7,6 +7,7 @@
 #include "Math.h"
 #include "Sprite.h"
 #include <gb/gb.h>
+
 #ifdef STRICT
     #include <gb/bgb_emu.h>
     #include <gb/crash_handler.h>
@@ -16,13 +17,13 @@ actor_t actors[MAX_ACTORS];
 actor_t *actors_active_head = 0;
 actor_t *actors_inactive_head = 0;
 
-actor_t *actor;
 INT8 screen_x, screen_y;
 actor_t *invalid;
 UBYTE player_moving = FALSE;
 
 void actors_update() __banked
 {
+    static actor_t *actor;
     actor = actors_active_head;
 
     while (actor) {

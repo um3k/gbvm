@@ -10,39 +10,41 @@
     (head) = (item)
 
 #define DL_REMOVE_ITEM(head, item) \
-  /* Hook next to prev */ \
-  if ((item)->next && (item)->prev) \
-  { \
-    /* Middle of list */ \
-    (item)->prev->next = (item)->next; \
-    (item)->next->prev = (item)->prev; \
-  } \
-  else if ((item)->next) \
-  { \
-    /* Start of list */ \
-    (item)->next->prev = 0; \
-    (head) = (item)->next; \
-  } \
-  else if ((item)->prev) \
-  { \
-    /* End of list */ \
-    (item)->prev->next = 0; \
-  } \
-  else \
-  { \
-    (head) = 0; \
-  }
+    if (head) { \
+        /* Hook next to prev */ \
+        if ((item)->next && (item)->prev) \
+        { \
+            /* Middle of list */ \
+            (item)->prev->next = (item)->next; \
+            (item)->next->prev = (item)->prev; \
+        } \
+        else if ((item)->next) \
+        { \
+            /* Start of list */ \
+            (item)->next->prev = 0; \
+            (head) = (item)->next; \
+        } \
+        else if ((item)->prev) \
+        { \
+            /* End of list */ \
+            (item)->prev->next = 0; \
+        } \
+        else \
+        { \
+            (head) = 0; \
+        } \
+        (item)->next = (item)->prev = 0; \
+    }
 
 #define DL_CONTAINS(head_mut, item, found) \
-  (found) = 0; \
-  while (head_mut) \
-  { \
-    if ((head_mut) == (item)) \
-    { \
-      (found) = 1; \
-      break; \
-    } \
-    (head_mut) = (head_mut)->next; \
-  }
+    (found) = 0; \
+    while (head_mut) { \
+        if ((head_mut) == (item)) \
+        { \
+            (found) = 1; \
+            break; \
+        } \
+        (head_mut) = (head_mut)->next; \
+    }
 
 #endif

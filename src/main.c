@@ -48,6 +48,7 @@ extern void __bank_SCRIPT_5;
 
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
+    if ((LCDC_REG & 0x20) == 0) return;
     if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
@@ -69,7 +70,7 @@ void process_VM() {
     while (TRUE) {
         switch (script_runner_update()) {
             case RUNNER_DONE:
-            case RUNNER_IDLE: {
+            case RUNNER_IDLE: {                
                 input_update();
                 if (joy != 0) events_update();
                 if (!VM_ISLOCKED()) state_update(); // Update Current Scene Type

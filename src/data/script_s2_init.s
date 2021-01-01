@@ -23,7 +23,6 @@ _script_s2_init::
         VM_ACTOR_SET_DIR        .ARG0, .DIR_RIGHT, 0
         VM_POP                  1
 
-        ; Bug with flashing sprites while music playing after overlay??
         VM_MUSIC_PLAY           1, 1
 
         ; Stop Script

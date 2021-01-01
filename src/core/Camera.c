@@ -23,7 +23,7 @@ void camera_update() __banked
 {
     if (camera_settings & CAMERA_LOCK_FLAG) {
         // Camera locked to player
-        actor_t *actor = &actors[0];
+        actor_t * actor = &PLAYER;
 
         // Horizontal lock
         if (camera_x < actor->x - camera_deadzone_x - camera_offset_x) { 
