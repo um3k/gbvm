@@ -25,6 +25,6 @@ void load_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_sprite_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked;
-void load_scene(const scene_t *scene, UBYTE bank) __nonbanked;
+void load_scene(const scene_t *scene, UBYTE bank) __banked;
 
 #endif

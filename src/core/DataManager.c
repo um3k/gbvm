@@ -50,7 +50,6 @@ void load_image(const background_t* background, UBYTE bank) __banked {
 }
 
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
-
     UBYTE n_frames = ReadBankedUBYTE(&(sprite->n_frames), bank);
     UBYTE size = n_frames << 2;
     if ((sprite_offset == 0) && (n_frames > 6)) {
@@ -60,29 +59,26 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) 
     return size;
 }
 
-void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
-    UBYTE _save = _current_bank;
+void load_scene(const scene_t* scene, UBYTE bank) __banked {
     UBYTE i, k;
-    far_ptr_t far_scene_actors;
-    far_ptr_t far_scene_triggers;
-    far_ptr_t far_scene_sprites;
+
+    scene_t scn;
+    MemcpyBanked(&scn, scene, sizeof(scn), bank);
 
     // Load scene
-    SWITCH_ROM_MBC1(bank);
-    far_scene_actors = scene->actors;
-    far_scene_triggers = scene->triggers;
-    far_scene_sprites = scene->sprites;
-    scene_type = scene->type;
-    actors_len = scene->n_actors + 1;
-    triggers_len = scene->n_triggers;
-    sprites_len = scene->n_sprites;
-    collision_bank = scene->collisions.bank;
-    collision_ptr = scene->collisions.ptr;
-    image_attr_bank = scene->colors.bank;
-    image_attr_ptr = scene->colors.ptr;
+    scene_type = scn.type;
+    actors_len = scn.n_actors + 1;
+    triggers_len = scn.n_triggers;
+    sprites_len = scn.n_sprites;
+
+    collision_bank = scn.collisions.bank;
+    collision_ptr = scn.collisions.ptr;
+
+    image_attr_bank = scn.colors.bank;
+    image_attr_ptr = scn.colors.ptr;
 
     // Load background + tiles
-    load_image(scene->background.ptr, scene->background.bank);
+    load_image(scn.background.ptr, scn.background.bank);
     //   LoadPalette(scene->palette.ptr, scene->palette.bank);
     //   LoadSpritePalette(scene->sprite_palette.ptr,
     //   scene->sprite_palette.bank);
@@ -100,11 +96,11 @@ void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
     // Load sprites
     k = 24;
     if (sprites_len != 0) {
-        far_ptr_t* scene_sprite_ptrs;
-        SWITCH_ROM_MBC1(far_scene_sprites.bank);
-        scene_sprite_ptrs = far_scene_sprites.ptr;
+        far_ptr_t * scene_sprite_ptrs = scn.sprites.ptr;
         for (i = 0; i != sprites_len; i++) {
-            UBYTE sprite_len = load_sprite(k, scene_sprite_ptrs->ptr, scene_sprite_ptrs->bank);
+            far_ptr_t tmp_ptr;
+            ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
+            UBYTE sprite_len = load_sprite(k, tmp_ptr.ptr, tmp_ptr.bank);
             // sprites_info[i].sprite_offset = DIV_4(k);
             // sprites_info[i].frames_len = DIV_4(sprite_len);
             // if (sprites_info[i].frames_len == 6) {
@@ -122,7 +118,6 @@ void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
     }
 
     // Load player
-
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 1;
     PLAYER.sprite = 6;
@@ -150,7 +145,7 @@ void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
     PLAYER.enabled = FALSE;
     DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
     if (actors_len != 0) {
-        MemcpyBanked(&actors[1], far_scene_actors.ptr, sizeof(actor_t) * (actors_len - 1), far_scene_actors.bank);
+        MemcpyBanked(&actors[1], scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
         for (i = 1; i != actors_len; i++) {
             DL_PUSH_HEAD(actors_inactive_head, &actors[i]);
         }
@@ -159,7 +154,7 @@ void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
 
     // Load triggers
     if (triggers_len != 0) {
-        MemcpyBanked(&triggers, far_scene_triggers.ptr, sizeof(trigger_t) * triggers_len, far_scene_triggers.bank);
+        MemcpyBanked(&triggers, scn.triggers.ptr, sizeof(trigger_t) * triggers_len, scn.triggers.bank);
     }
 
     scroll_init();
@@ -174,6 +169,4 @@ void load_scene(const scene_t* scene, UBYTE bank) __nonbanked {
             activate_actor(&actors[i]);
         }
     }
-
-    SWITCH_ROM_MBC1(_save);
 }
