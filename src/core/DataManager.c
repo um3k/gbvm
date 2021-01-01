@@ -145,13 +145,16 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     // Add player to inactive
     PLAYER.enabled = FALSE;
     DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
+    activate_actor(&PLAYER);
     if (actors_len != 0) {
-        MemcpyBanked(&actors[1], scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
-        for (i = 1; i != actors_len; i++) {
-            DL_PUSH_HEAD(actors_inactive_head, &actors[i]);
+        MemcpyBanked(actors + 1, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
+        actor_t * actor = actors + 1;
+        for (i = actors_len - 1; i != 0; i--, actor++) {
+            DL_PUSH_HEAD(actors_inactive_head, actor);
+            // Enable all pinned actors by default
+            if (actor->pinned) activate_actor(actor);
         }
     }
-    activate_actor(&PLAYER);
 
     // Load triggers
     if (triggers_len != 0) {
@@ -164,14 +167,7 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     last_trigger_tx = 0xFF;
     last_trigger_ty = 0xFF;
 
-    // Enable all pinned actors by default
-    for (i = 1; i != actors_len; i++) {
-        if (actors[i].pinned) {
-            activate_actor(&actors[i]);
-        }
-    }
-
-    if (scn.script_init.bank) {
+    if (scn.script_init.ptr) {
         script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0);
     }
 }

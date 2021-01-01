@@ -1,5 +1,7 @@
 #pragma bank 1
 
+#include <string.h>
+
 #include "Actor.h"
 #include "GameTime.h"
 #include "Scroll.h"
@@ -13,8 +15,8 @@
 #endif
 
 actor_t actors[MAX_ACTORS];
-actor_t *actors_active_head;
-actor_t *actors_inactive_head;
+actor_t *actors_active_head = 0;
+actor_t *actors_inactive_head = 0;
 UBYTE actors_active_len = 0;
 
 actor_t *actor;
@@ -178,24 +180,13 @@ void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
 
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
 {
-    actor_t *actor = actors_active_head;
-
-    while (actor) {
-        UBYTE a_tx, a_ty;
-
-        if ((!inc_noclip && !actor->collision_enabled)) {
-            actor = actor->next;
+    for (actor_t *actor = actors_active_head; (actor); actor = actor->next) {
+        if ((!inc_noclip && !actor->collision_enabled))
             continue;
-        };
 
-        a_tx = DIV_8(actor->x);
-        a_ty = DIV_8(actor->y);
-
+        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
         if ((ty == a_ty || ty == a_ty + 1) && (tx == a_tx || tx == a_tx + 1 || tx == a_tx - 1)) return actor;
-
-        actor = actor->next;
     }
-
     return NULL;
 }
 
@@ -214,76 +205,40 @@ void player_move(BYTE dir_x, BYTE dir_y) __banked {
 }
 
 actor_t *actor_at_3x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
-    actor_t *actor = actors_active_head;
-
-    while (actor) {
-        UBYTE a_tx, a_ty;
-
-        if ((!inc_noclip && !actor->collision_enabled)) {
-            actor = actor->next;
+    for (actor_t *actor = actors_active_head; (actor); actor = actor->next) {
+        if ((!inc_noclip && !actor->collision_enabled))
             continue;
-        };
 
-        a_tx = DIV_8(actor->x);
-        a_ty = DIV_8(actor->y);
-
+        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
         if ((ty == a_ty || ty == a_ty - 1 || ty == a_ty - 2) && (tx == a_tx || tx == a_tx - 1 || tx == a_tx - 2)) return actor;
-
-        actor = actor->next;
     }
-
     return NULL;
 }
 
 actor_t *actor_at_3x1_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
-    actor_t *actor = actors_active_head;
-
-    while (actor) {
-        UBYTE a_tx, a_ty;
-
-        if ((!inc_noclip && !actor->collision_enabled)) {
-            actor = actor->next;
+    for (actor_t *actor = actors_active_head; (actor); actor = actor->next) {
+        if ((!inc_noclip && !actor->collision_enabled)) 
             continue;
-        };
 
-        a_tx = DIV_8(actor->x);
-        a_ty = DIV_8(actor->y);
-
+        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
         if ((ty == a_ty) && (tx == a_tx || tx == a_tx - 1 || tx == a_tx - 2)) return actor;
-
-        actor = actor->next;
     }
-
     return NULL;
 }
 
 actor_t *actor_at_1x2_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
-    actor_t *actor = actors_active_head;
-
-    while (actor) {
-        UBYTE a_tx, a_ty;
-
-        if ((!inc_noclip && !actor->collision_enabled)) {
-            actor = actor->next;
+    for (actor_t *actor = actors_active_head; (actor); actor = actor->next) {
+        if ((!inc_noclip && !actor->collision_enabled))
             continue;
-        };
 
-        a_tx = DIV_8(actor->x);
-        a_ty = DIV_8(actor->y);
-
+        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
         if ((ty == a_ty || ty == a_ty - 1) && (tx == a_tx)) return actor;
-
-        actor = actor->next;
     }
-
     return NULL;
 }
 
 actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked {
-    UBYTE tile_x, tile_y;
-
-    tile_x = PLAYER.x >> 3;
-    tile_y = PLAYER.y >> 3;
+    UBYTE tile_x = DIV_8(PLAYER.x), tile_y = DIV_8(PLAYER.y);
 
     if (grid_size == 16) {
         if (PLAYER.dir_y == -1) {
