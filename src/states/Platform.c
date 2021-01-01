@@ -42,7 +42,7 @@ void platform_init() __banked {
 
   grounded = FALSE;
   // If starting tile was a ladder start scene attached to it
-  if (TileAt(tile_x, tile_y) & TILE_PROP_LADDER) {
+  if (tile_at(tile_x, tile_y) & TILE_PROP_LADDER) {
     on_ladder = TRUE;
     PLAYER.dir_x = 0;
     PLAYER.dir_y = -1;
@@ -94,7 +94,7 @@ void platform_update() __banked {
     }
   } else {
     PLAYER.dir_y = 0;
-    if ((INPUT_UP || INPUT_DOWN) && ((TileAt(tile_x_mid, tile_y) & TILE_PROP_LADDER))) {
+    if ((INPUT_UP || INPUT_DOWN) && ((tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER))) {
       on_ladder = TRUE;
       pl_vel_x = 0;
       PLAYER.dir_x = 0;
@@ -161,9 +161,9 @@ void platform_update() __banked {
   // Jump
   if (INPUT_B_PRESSED && grounded) {
     if (!( (((pl_pos_x >> 4) & 0x7) != 7 &&
-          TileAt(tile_x, tile_y - 1) & COLLISION_BOTTOM) ||  // Left Edge
+          tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM) ||  // Left Edge
           (((pl_pos_x >> 4) & 0x7) != 0 &&
-           TileAt(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM))) {  // Right edge
+           tile_at(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM))) {  // Right edge
       pl_vel_y = -plat_jump_vel;
       grounded = FALSE;
     }
@@ -185,8 +185,8 @@ void platform_update() __banked {
 
   // Left Collision
   if (pl_vel_x < 0) {
-    if (TileAt(tile_x, tile_y) & COLLISION_RIGHT || 
-        TileAt(tile_x, tile_y_ceil) & COLLISION_RIGHT) {
+    if (tile_at(tile_x, tile_y) & COLLISION_RIGHT || 
+        tile_at(tile_x, tile_y_ceil) & COLLISION_RIGHT) {
       pl_vel_x = 0;
       pl_pos_x = ((tile_x + 1) * 8) << 4;
       tile_x = pl_pos_x >> 7;
@@ -195,8 +195,8 @@ void platform_update() __banked {
 
   // Right Collision
   if (pl_vel_x > 0) {
-    if (TileAt(tile_x + 1, tile_y) & COLLISION_LEFT ||
-        TileAt(tile_x + 1, tile_y_ceil) & COLLISION_LEFT) {
+    if (tile_at(tile_x + 1, tile_y) & COLLISION_LEFT ||
+        tile_at(tile_x + 1, tile_y_ceil) & COLLISION_LEFT) {
       pl_vel_x = 0;
       pl_pos_x = (tile_x * 8) << 4;
       tile_x = pl_pos_x >> 7;
@@ -206,7 +206,7 @@ void platform_update() __banked {
   if (on_ladder) {
     // Ladder vertical collision
     UBYTE tile_below;
-    if (!(TileAt(tile_x_mid, tile_y) & TILE_PROP_LADDER)) {
+    if (!(tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER)) {
       if (INPUT_DOWN) {
         on_ladder = FALSE;
         PLAYER.dir_x = 1;
@@ -219,7 +219,7 @@ void platform_update() __banked {
     }
 
     // Check if can pass through ground collision (ground also contains ladder)
-    tile_below = TileAt(tile_x_mid, tile_y + 1);
+    tile_below = tile_at(tile_x_mid, tile_y + 1);
     if (pl_vel_y >= 0) {
       if ((tile_below & COLLISION_TOP) && !(tile_below & TILE_PROP_LADDER)) {
         grounded = TRUE;
@@ -230,9 +230,9 @@ void platform_update() __banked {
 
   } else {
     // Ground Collision
-    if (pl_vel_y >= 0 && (TileAt(tile_x, tile_y + 1) & COLLISION_TOP ||  // Left Edge
+    if (pl_vel_y >= 0 && (tile_at(tile_x, tile_y + 1) & COLLISION_TOP ||  // Left Edge
                           (((pl_pos_x >> 4) & 0x7) != 0 &&
-                           TileAt(tile_x + 1, tile_y + 1) & COLLISION_TOP))  // Right edge
+                           tile_at(tile_x + 1, tile_y + 1) & COLLISION_TOP))  // Right edge
     ) {
       grounded = TRUE;
       pl_vel_y = 0;
@@ -242,9 +242,9 @@ void platform_update() __banked {
 
       // Ceiling Collision
       if (pl_vel_y < 0) {
-        if (TileAt(tile_x, tile_y - 1) & COLLISION_BOTTOM ||  // Left Edge
+        if (tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM ||  // Left Edge
             (((pl_pos_x >> 4) & 0x7) != 0 &&
-             TileAt(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM)  // Right edge
+             tile_at(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM)  // Right edge
         ) {
           pl_vel_y = 0;
           pl_pos_y = (((tile_y + 1) * 8) << 4);

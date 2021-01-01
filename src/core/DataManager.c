@@ -11,6 +11,7 @@
 #include "Sprite.h"
 #include "Camera.h"
 #include "data/spritesheet_0.h" // @todo don't hard code this
+#include "vm.h"
 
 #define MAX_PLAYER_SPRITE_SIZE 24
 
@@ -120,10 +121,10 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     // Load player
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 1;
-    PLAYER.sprite = 6;
-    PLAYER.sprite_type = 0;
+    PLAYER.sprite = 0;
+    PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
     PLAYER.palette = 0;
-    PLAYER.n_frames = 1;
+    PLAYER.n_frames = 2;
     PLAYER.initial_frame = 0;
     PLAYER.animate = FALSE;
     PLAYER.move_speed = 1;
@@ -168,5 +169,9 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
         if (actors[i].pinned) {
             activate_actor(&actors[i]);
         }
+    }
+
+    if (scn.script_init.bank) {
+        script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0);
     }
 }

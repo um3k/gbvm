@@ -4,7 +4,7 @@
 
 #define MAX_UINT8 0xFF
 
-UBYTE TileAt(UBYTE tx, UBYTE ty) {
+UBYTE tile_at(UBYTE tx, UBYTE ty) {
     UBYTE _save = _current_bank;
     UWORD y_offset;
     UBYTE tile;
@@ -24,7 +24,7 @@ UBYTE TileAt(UBYTE tx, UBYTE ty) {
     return tile;
 }
 
-UBYTE TileAt2x1(UBYTE tx, UBYTE ty) {
+UBYTE tile_at_2x1(UBYTE tx, UBYTE ty) {
     UBYTE _save = _current_bank;
     UBYTE* collision_ptr_tmp;
     UBYTE tile;
@@ -45,7 +45,7 @@ UBYTE TileAt2x1(UBYTE tx, UBYTE ty) {
     return tile;
 }
 
-UBYTE TileAt2x2(UBYTE tx, UBYTE ty) {
+UBYTE tile_at_2x2(UBYTE tx, UBYTE ty) {
     UBYTE _save = _current_bank;
     UBYTE* collision_ptr_tmp;
     UBYTE tile;

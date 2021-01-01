@@ -72,20 +72,20 @@ void adventure_update() __banked {
 
     // Left Collision
     if (PLAYER.dir_x < 0) {
-        if (TileAt(tile_x, tile_y)) {
+        if (tile_at(tile_x, tile_y)) {
             PLAYER.x = (tile_x << 3) + 4;
             PLAYER.dir_x = 0;
-        } else if (TileAt(tile_x, (PLAYER.y) >> 3)) {
+        } else if (tile_at(tile_x, (PLAYER.y) >> 3)) {
             PLAYER.dir_y = 1;
         }
     }
 
     // Right Collision
     if (PLAYER.dir_x > 0) {
-        if (TileAt(tile_x + 1, tile_y)) {
+        if (tile_at(tile_x + 1, tile_y)) {
             PLAYER.x = (tile_x << 3) - 5;
             PLAYER.dir_x = 0;
-        } else if (TileAt(tile_x + 1, (PLAYER.y) >> 3)) {
+        } else if (tile_at(tile_x + 1, (PLAYER.y) >> 3)) {
             PLAYER.dir_y = 1;
         }
     }
@@ -96,8 +96,8 @@ void adventure_update() __banked {
 
     // Up Collision
     if (PLAYER.dir_y < 0) {
-        if (TileAt(tile_x, tile_y) ||     // Left Edge
-            (TileAt(tile_x + 1, tile_y))  // Right edge
+        if (tile_at(tile_x, tile_y) ||     // Left Edge
+            (tile_at(tile_x + 1, tile_y))  // Right edge
         ) {
             PLAYER.y = (tile_y + 1 << 3);
             PLAYER.dir_y = 0;
@@ -106,8 +106,8 @@ void adventure_update() __banked {
 
     // Down Collision
     if (PLAYER.dir_y > 0) {
-        if (TileAt(tile_x, tile_y + 1) ||     // Left Edge
-            (TileAt(tile_x + 1, tile_y + 1))  // Right edge
+        if (tile_at(tile_x, tile_y + 1) ||     // Left Edge
+            (tile_at(tile_x + 1, tile_y + 1))  // Right edge
         ) {
             PLAYER.y = (tile_y << 3);
             PLAYER.dir_y = 0;

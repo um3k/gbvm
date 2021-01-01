@@ -18,7 +18,7 @@ const struct actor_t scene_2_actors[] = {
     .dir_y = 1,
     .sprite_no = 0,
     .sprite = 6,
-    .sprite_type = 2,
+    .sprite_type = SPRITE_TYPE_ACTOR,
     .palette = 0,
     .n_frames = 2,
     .initial_frame = 0,
@@ -30,6 +30,7 @@ const struct actor_t scene_2_actors[] = {
     .frame_end = 32,
     .pinned = FALSE,
     .collision_group = 0,
+    .collision_enabled = TRUE,
     .script = TO_FAR_PTR_T(script_s2a0_interact),
     .script_update = TO_FAR_PTR_T(script_s2a0_update)
   }

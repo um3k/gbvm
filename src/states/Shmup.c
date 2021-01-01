@@ -71,11 +71,11 @@ void shmup_update() __banked {
   if (shooter_horizontal) {
     // Check input to set player movement
     if (INPUT_RECENT_UP && (PLAYER.y > 8) &&
-        !(TileAt(tile_x, tile_y - 1) & COLLISION_BOTTOM)) {
+        !(tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM)) {
       PLAYER.dir_y = -1;
       PLAYER.dir_x = 0;
     } else if (INPUT_RECENT_DOWN && (PLAYER.y < (image_height - 8)) &&
-               !(TileAt(tile_x, tile_y + 1) & COLLISION_TOP)) {
+               !(tile_at(tile_x, tile_y + 1) & COLLISION_TOP)) {
       PLAYER.dir_y = 1;
       PLAYER.dir_x = 0;
     } else {
@@ -111,11 +111,11 @@ void shmup_update() __banked {
 
   } else {
     // Check input to set player movement
-    if (INPUT_RECENT_LEFT && (PLAYER.x > 0) && !(TileAt(tile_x, tile_y) & COLLISION_RIGHT)) {
+    if (INPUT_RECENT_LEFT && (PLAYER.x > 0) && !(tile_at(tile_x, tile_y) & COLLISION_RIGHT)) {
       PLAYER.dir_x = -1;
       PLAYER.dir_y = 0;
     } else if (INPUT_RECENT_RIGHT && (PLAYER.x < image_width - 16) &&
-               !(TileAt(tile_x + 2, tile_y) & COLLISION_LEFT)) {
+               !(tile_at(tile_x + 2, tile_y) & COLLISION_LEFT)) {
       PLAYER.dir_x = 1;
       PLAYER.dir_y = 0;
     } else {

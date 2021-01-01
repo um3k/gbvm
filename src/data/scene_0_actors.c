@@ -28,6 +28,7 @@ const struct actor_t scene_0_actors[] = {
     .frame_start = 24,
     .frame_end = 28,
     .pinned = FALSE,
+    .collision_enabled = TRUE,    
     .collision_group = 0
   },
   {
@@ -49,6 +50,7 @@ const struct actor_t scene_0_actors[] = {
     .frame_start = 28,
     .frame_end = 44,
     .pinned = FALSE,
+    .collision_enabled = TRUE,    
     .collision_group = 0
   },
   {
@@ -71,6 +73,7 @@ const struct actor_t scene_0_actors[] = {
     .frame_end = 48,
     .pinned = FALSE,
     .collision_group = 0,
+    .collision_enabled = TRUE,    
     .script = TO_FAR_PTR_T(script_s0a2_interact)
   },
   {
@@ -92,7 +95,8 @@ const struct actor_t scene_0_actors[] = {
     .frame_start = 24,
     .frame_end = 28,
     .pinned = FALSE,
-    .collision_group = 0
+    .collision_group = 0,
+    .collision_enabled = TRUE   
   },
   {
     // Fire,
@@ -113,6 +117,7 @@ const struct actor_t scene_0_actors[] = {
     .frame_start = 28,
     .frame_end = 44,
     .pinned = FALSE,
-    .collision_group = 0
+    .collision_group = 0,
+    .collision_enabled = TRUE    
   }
 };

@@ -29,6 +29,7 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
 void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked;
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked;
 void player_move(BYTE dir_x, BYTE dir_y) __banked;
+actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked;
 
 inline void actor_set_anim(actor_t *actor, UBYTE animate) {
     actor->animate = animate;
