@@ -17,7 +17,7 @@
  * @param ty Top tile
  * @return Tile value, 0 if no collisions, COLLISION_ALL if out of bounds
  */
-UBYTE TileAt(UBYTE tx, UBYTE ty);
+UBYTE tile_at(UBYTE tx, UBYTE ty);
 
 /**
  * Return collision tile value at given tile x,y coordinate. (check 2 tiles wide, 1 tile high)
@@ -26,7 +26,7 @@ UBYTE TileAt(UBYTE tx, UBYTE ty);
  * @param ty Top tile
  * @return Tile value, 0 if no collisions, COLLISION_ALL if out of bounds
  */
-UBYTE TileAt2x1(UBYTE tx, UBYTE ty);
+UBYTE tile_at_2x1(UBYTE tx, UBYTE ty);
 
 /**
  * Return collision tile value at given tile x,y coordinate. (check 2 tiles wide, 2 tiles high)
@@ -35,6 +35,6 @@ UBYTE TileAt2x1(UBYTE tx, UBYTE ty);
  * @param ty Top tile
  * @return Tile value, 0 if no collisions, COLLISION_ALL if out of bounds
  */
-UBYTE TileAt2x2(UBYTE tx, UBYTE ty);
+UBYTE tile_at_2x2(UBYTE tx, UBYTE ty);
 
 #endif

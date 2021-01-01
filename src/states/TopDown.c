@@ -56,13 +56,13 @@ void topdown_update() __banked {
             if (topdown_grid == 16) {
                 UBYTE tile_left = tile_x - 2;
                 if (tile_x != 0 &&
-                    !(TileAt2x2(tile_left, tile_y - 1) & COLLISION_RIGHT)) {
+                    !(tile_at_2x2(tile_left, tile_y - 1) & COLLISION_RIGHT)) {
                     player_moving = TRUE;
                 }
             } else {
                 UBYTE tile_left = tile_x - 1;
                 if (tile_x != 0 &&
-                    !(TileAt2x1(tile_left, tile_y) & COLLISION_RIGHT)) {
+                    !(tile_at_2x1(tile_left, tile_y) & COLLISION_RIGHT)) {
                     player_moving = TRUE;
                 }
             }
@@ -74,13 +74,13 @@ void topdown_update() __banked {
             if (topdown_grid == 16) {
                 UBYTE tile_right = tile_x + 2;
                 if (tile_x != image_tile_width - 2 &&
-                    !(TileAt2x2(tile_right, tile_y - 1) & COLLISION_LEFT)) {
+                    !(tile_at_2x2(tile_right, tile_y - 1) & COLLISION_LEFT)) {
                     player_moving = TRUE;
                 }
             } else {
                 UBYTE tile_right = tile_x + 1;
                 if (tile_x != image_tile_width - 2 &&
-                    !(TileAt2x1(tile_right, tile_y) & COLLISION_LEFT)) {
+                    !(tile_at_2x1(tile_right, tile_y) & COLLISION_LEFT)) {
                     player_moving = TRUE;
                 }
             }
@@ -92,13 +92,13 @@ void topdown_update() __banked {
             if (topdown_grid == 16) {
                 UBYTE tile_up = tile_y - 3;
                 if (tile_y != 0 &&
-                    !(TileAt2x2(tile_x, tile_up) & COLLISION_BOTTOM)) {
+                    !(tile_at_2x2(tile_x, tile_up) & COLLISION_BOTTOM)) {
                     player_moving = TRUE;
                 }
             } else {
                 UBYTE tile_up = tile_y - 1;
                 if (tile_y != 0 &&
-                    !(TileAt2x1(tile_x, tile_up) & COLLISION_BOTTOM)) {
+                    !(tile_at_2x1(tile_x, tile_up) & COLLISION_BOTTOM)) {
                     player_moving = TRUE;
                 }
             }
@@ -110,13 +110,13 @@ void topdown_update() __banked {
             if (topdown_grid == 16) {
                 UBYTE tile_down = tile_y + 1;
                 if (tile_y != image_tile_height - 1 &&
-                    !(TileAt2x2(tile_x, tile_down) & COLLISION_TOP)) {
+                    !(tile_at_2x2(tile_x, tile_down) & COLLISION_TOP)) {
                     player_moving = TRUE;
                 }
             } else {
                 UBYTE tile_down = tile_y + 1;
                 if (tile_y != image_tile_height - 1 &&
-                    !(TileAt2x1(tile_x, tile_down) & COLLISION_TOP)) {
+                    !(tile_at_2x1(tile_x, tile_down) & COLLISION_TOP)) {
                     player_moving = TRUE;
                 }
             }
