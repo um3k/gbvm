@@ -11,6 +11,12 @@ typedef enum {
     SCENE_TYPE_POINTNCLICK
 } scene_type_e;
 
+typedef enum {
+    SPRITE_TYPE_STATIC = 0,
+    SPRITE_TYPE_ACTOR,
+    SPRITE_TYPE_ACTOR_ANIMATED
+} sprite_type_e;
+
 typedef struct actor_t
 {
   UINT8 enabled; 
@@ -28,8 +34,9 @@ typedef struct actor_t
   UINT8 flip_x;
   UINT8 rerender;
   UINT8 move_speed;
-
-  UINT8 sprite, sprite_type, palette;
+  UINT8 sprite;
+  sprite_type_e sprite_type;
+  UINT8 palette;
   UINT8 n_frames, initial_frame;
   UINT8 direction;
   UINT8 anim_speed;

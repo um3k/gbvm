@@ -156,19 +156,23 @@ void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
 {
     actor->dir_x = dir_x;
     actor->dir_y = dir_y;
-    if (dir_x == -1) {
-        actor_set_frames(actor, 16, 24);
-        actor_set_flip_x(actor, TRUE);
-    } else if (dir_x == 1) {
-        actor_set_frames(actor, 16, 24);
-        actor_set_flip_x(actor, FALSE);
-    } else if (dir_y == -1) {
-        actor_set_frames(actor, 8, 16);
-        actor_set_flip_x(actor, FALSE);
-    } else if (dir_y == 1) {
-        actor_set_frames(actor, 0, 8);
-        actor_set_flip_x(actor, FALSE);
+    
+    if (actor->sprite_type != SPRITE_TYPE_STATIC) {
+        if (dir_x == -1) {
+            actor_set_frames(actor, MUL_4(actor->sprite + (2 * actor->n_frames)), MUL_4(actor->sprite + (3 * actor->n_frames)));
+            actor_set_flip_x(actor, TRUE);
+        } else if (dir_x == 1) {
+            actor_set_frames(actor, MUL_4(actor->sprite + (2 * actor->n_frames)), MUL_4(actor->sprite + (3 * actor->n_frames)));
+            actor_set_flip_x(actor, FALSE);
+        } else if (dir_y == -1) {
+            actor_set_frames(actor, MUL_4(actor->sprite + actor->n_frames), MUL_4(actor->sprite + (2 * actor->n_frames)));
+            actor_set_flip_x(actor, FALSE);
+        } else if (dir_y == 1) {
+            actor_set_frames(actor, MUL_4(actor->sprite), MUL_4(actor->sprite + actor->n_frames));
+            actor_set_flip_x(actor, FALSE);
+        }
     }
+
     actor->rerender = TRUE;
 }
 
