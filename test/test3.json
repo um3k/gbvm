@@ -1,0 +1,6 @@
+{
+  "description": "activate/deactivate actors when moving camera right",
+  "rules": [
+    "DATA('WRAM', ADDR('_actors_active_len', 'WRAM')) == 7"
+  ]
+}
