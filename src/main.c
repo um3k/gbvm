@@ -114,9 +114,9 @@ void process_VM() {
                         continue;
                     }
                 }
+                state_init();
                 camera_update();
                 scroll_update();
-                state_init();
                 actors_update();
                 fade_in_modal();    // should it fade in without condition or it is a user script thing?
             }
@@ -171,8 +171,6 @@ void main() {
         IE_REG |= (LCD_IFLAG | TIM_IFLAG);
     }
     DISPLAY_ON;
-
-    fade_out_modal();
 
     // execute bootstrap script that just raises RESET exception
     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);

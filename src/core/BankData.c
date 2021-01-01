@@ -6,7 +6,7 @@
 
 static UBYTE _save;
 
-void SetBankedBkgData(UBYTE i, UBYTE l, unsigned char* ptr, UBYTE bank) __naked {
+void SetBankedBkgData(UBYTE i, UBYTE l, const unsigned char* ptr, UBYTE bank) __naked {
   i; l; ptr; bank;
 __asm
     ldh a, (__current_bank)
@@ -29,7 +29,7 @@ __asm
 __endasm;  
 }
 
-void SetBankedSpriteData(UBYTE i, UBYTE l, unsigned char* ptr, UBYTE bank) __naked {
+void SetBankedSpriteData(UBYTE i, UBYTE l, const unsigned char* ptr, UBYTE bank) __naked {
   i; l; ptr; bank;
 __asm
     ldh a, (__current_bank)
@@ -52,7 +52,7 @@ __asm
 __endasm;  
 }
 
-void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank) {
+void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const unsigned char *tiles, UBYTE bank) {
   x; y; w; h; tiles; bank;
 __asm
     ldh a, (__current_bank)
@@ -75,7 +75,7 @@ __asm
 __endasm;  
 }
 
-void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank) {
+void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const unsigned char *tiles, UBYTE bank) {
   x; y; w; h; tiles; bank;
 __asm
     ldh a, (__current_bank)
@@ -98,7 +98,7 @@ __asm
 __endasm;  
 }
 
-void ReadBankedFarPtr(far_ptr_t * dest, unsigned char *ptr, UBYTE bank) __preserves_regs(b, c) __naked {
+void ReadBankedFarPtr(far_ptr_t * dest, const unsigned char *ptr, UBYTE bank) __preserves_regs(b, c) __naked {
   dest; ptr; bank;
 __asm
     ldh a, (__current_bank)
@@ -133,7 +133,32 @@ __asm
 __endasm;  
 }
 
-void MemcpyBanked(void* to, void* from, size_t n, UBYTE bank)  __naked {
+UWORD ReadBankedUWORD(const unsigned char *ptr, UBYTE bank) __preserves_regs(b, c) __naked {
+  ptr; bank;
+__asm
+    ldh a, (__current_bank)
+    ld  (#__save),a
+
+    ldhl  sp,	#4
+    ld  a, (hl-)
+    ldh	(__current_bank),a
+    ld  (#0x2000), a
+
+    ld  a, (hl-)
+    ld  l, (hl)
+    ld  h, a
+    ld  a, (hl+)
+    ld  e, a
+    ld  d, (hl)
+
+    ld  a, (#__save)
+    ldh (__current_bank),a
+    ld  (#0x2000), a
+    ret
+__endasm;  
+}
+
+void MemcpyBanked(void* to, const void* from, size_t n, UBYTE bank)  __naked {
   to; from; n; bank;
 __asm
     ldh a, (__current_bank)

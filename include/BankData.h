@@ -24,7 +24,7 @@ typedef struct far_ptr_t {
  * @param ptr memory address of tile data within bank
  * @param bank bank to read from
  */
-void SetBankedBkgData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
+void SetBankedBkgData(UBYTE i, UBYTE l, const unsigned char *ptr, UBYTE bank);
 
 /**
  * Call set_sprite_data with data stored in banked memory (non-reentrant!)
@@ -34,7 +34,7 @@ void SetBankedBkgData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
  * @param ptr memory address of tile data within bank
  * @param bank bank to read from
  */
-void SetBankedSpriteData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
+void SetBankedSpriteData(UBYTE i, UBYTE l, const unsigned char *ptr, UBYTE bank);
 
 /** 
  * Sets a rectangular region of Tile Map entries for the Background layer (non-reentrant!)
@@ -46,7 +46,7 @@ void SetBankedSpriteData(UBYTE i, UBYTE l, unsigned char *ptr, UBYTE bank);
  * @param tiles  Pointer to source Tile Map data
  * @param bank   bank to read from
  */
-void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank);
+void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const unsigned char *tiles, UBYTE bank);
 
 /** 
  * Sets a rectangular region of Tile Map entries for the Window layer (non-reentrant!)
@@ -58,7 +58,7 @@ void SetBankedBkgTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles,
  * @param tiles  Pointer to source Tile Map data
  * @param bank   bank to read from
  */
-void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles, UBYTE bank);
+void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const unsigned char *tiles, UBYTE bank);
 
 
 /**
@@ -68,7 +68,27 @@ void SetBankedWinTiles(UINT8 x, UINT8 y, UINT8 w, UINT8 h, unsigned char *tiles,
  * @param ptr memory address of data within bank
  * @param bank bank to read from
  */
-void ReadBankedFarPtr(far_ptr_t * dest, unsigned char *ptr, UBYTE bank) __preserves_regs(b, c);
+void ReadBankedFarPtr(far_ptr_t * dest, const unsigned char *ptr, UBYTE bank) __preserves_regs(b, c);
+
+/**
+ * Read UWORD from banked memory location (non-reentrant!)
+ * 
+ * @param ptr memory address of data within bank
+ * @param bank bank to read from
+ * @return value stored in banked location
+ */
+UWORD ReadBankedUWORD(const unsigned char *ptr, UBYTE bank) __preserves_regs(b, c);
+
+/**
+ * Read UBYTE from banked memory location (non-reentrant!)
+ * 
+ * @param ptr memory address of data within bank
+ * @param bank bank to read from
+ * @return value stored in banked location
+ */
+inline UBYTE ReadBankedUBYTE(const unsigned char *ptr, UBYTE bank) {
+    return (UBYTE)ReadBankedUWORD(ptr, bank);
+} 
 
 /**
  * memcpy data from banked memory location (non-reentrant!)
@@ -78,6 +98,6 @@ void ReadBankedFarPtr(far_ptr_t * dest, unsigned char *ptr, UBYTE bank) __preser
  * @param n number of bytes to fetch from bank
  * @param bank bank to read from
  */
-void MemcpyBanked(void* to, void* from, size_t n, UBYTE bank);
+void MemcpyBanked(void* to, const void* from, size_t n, UBYTE bank);
 
 #endif
