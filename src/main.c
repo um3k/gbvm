@@ -77,6 +77,10 @@ void process_VM() {
             case RUNNER_DONE:
             case RUNNER_IDLE: {                
                 input_update();
+                if (INPUT_SOFT_RESTART) {              
+                    script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
+                    break;
+                }
                 if (joy != 0) events_update();
                 if (!VM_ISLOCKED()) state_update(); // Update Current Scene Type
                 camera_update();
