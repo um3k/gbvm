@@ -48,8 +48,7 @@ extern void __bank_SCRIPT_5;
 
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
-    if ((LCDC_REG & 0x20) == 0) return;
-    if ((LYC_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
+    if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
 void VBL_isr() __nonbanked {
@@ -63,7 +62,13 @@ void VBL_isr() __nonbanked {
         LYC_REG = WY_REG = win_pos_y;
         WX_REG = win_pos_x + 7u;
         SHOW_WIN;
-    } else HIDE_WIN;
+        // enable LCD interrupt only when window is visible
+        IE_REG |= LCD_IFLAG;
+    } else {
+        HIDE_WIN;
+        // disable LCD interrupt
+        IE_REG &= ~LCD_IFLAG;
+    }
 }
 
 void process_VM() {
@@ -169,7 +174,7 @@ void main() {
         #endif
         TAC_REG = 0x04U;
 
-        IE_REG |= (LCD_IFLAG | TIM_IFLAG);
+        IE_REG |= TIM_IFLAG;
     }
     DISPLAY_ON;
 
