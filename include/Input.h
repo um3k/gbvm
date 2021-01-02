@@ -75,6 +75,8 @@
 /* TRUE on first frame that Select button is pressed */
 #define INPUT_SELECT_PRESSED ((joy & J_SELECT) && !(last_joy & J_SELECT))
 
+#define INPUT_SOFT_RESTART (joy == (J_A | J_B | J_START | J_SELECT))
+
 /* resets the input */
 #define INPUT_RESET (last_joy = joy)
 
