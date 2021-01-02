@@ -9,7 +9,6 @@
     #undef GBT_PLAYER
     #include "hUGEDriver.h"
 #endif
-#define SAME_TUNE_RESTARTS
 
 #include "data/data_ptrs.h"
 
