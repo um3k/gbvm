@@ -6,6 +6,7 @@
 #include "LinkedList.h"
 #include "Math.h"
 #include "Sprite.h"
+#include "vm.h"
 #include <gb/gb.h>
 
 #ifdef STRICT
@@ -20,6 +21,9 @@ actor_t *actors_inactive_head = 0;
 INT8 screen_x, screen_y;
 actor_t *invalid;
 UBYTE player_moving = FALSE;
+UBYTE player_iframes = 0;
+actor_t *player_collision_actor = 0;
+far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 
 void actors_update() __banked
 {
@@ -260,4 +264,64 @@ actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked {
     }
 
     return NULL;
+}
+
+actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked {
+    actor_t *actor = actors_active_head;
+
+    while (actor) {
+        if ((actor == &PLAYER) || (!inc_noclip && !actor->collision_enabled)) {
+            actor = actor->next;
+            continue;
+        };
+
+        if ((PLAYER.x + 15 >= actor->x) && (PLAYER.x <= actor->x + 15) &&
+            (PLAYER.y + 7 >= actor->y) && (PLAYER.y <= actor->y + 7)) {
+            return actor;
+        }
+
+        actor = actor->next;
+    }
+
+    return NULL;
+}
+
+void actors_handle_player_collision() __banked {
+    if (player_iframes == 0 && player_collision_actor != NULL) {
+        if (player_collision_actor->collision_group) {
+            // Execute scene player hit scripts based on actor's collision group
+            switch (player_collision_actor->collision_group) {
+                case COLLISION_GROUP_1: {
+                    if (PLAYER.script_hit1.bank) {
+                        script_execute(PLAYER.script_hit1.bank, PLAYER.script_hit1.ptr, 0, 0);
+                    }
+                    break;
+                }
+                case COLLISION_GROUP_2: {
+                    if (PLAYER.script_hit2.bank) {
+                        script_execute(PLAYER.script_hit2.bank, PLAYER.script_hit2.ptr, 0, 0);
+                    }
+                    break;
+                }                
+                case COLLISION_GROUP_3: {
+                    if (PLAYER.script_hit3.bank) {
+                        script_execute(PLAYER.script_hit3.bank, PLAYER.script_hit3.ptr, 0, 0);
+                    }
+                    break;
+                } 
+            }
+  
+            // Execute actor's onHit player script
+            if (player_collision_actor->script.bank) {
+                script_execute(player_collision_actor->script.bank,
+                               player_collision_actor->script.ptr, 0, 0);
+            }
+
+            // Set player to be invicible for N frames
+            player_iframes = PLAYER_HURT_IFRAMES;
+        }
+    } else if (player_iframes != 0) {
+        player_iframes--;
+    }
+    player_collision_actor = NULL; 
 }

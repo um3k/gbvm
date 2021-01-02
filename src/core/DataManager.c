@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "data/spritesheet_0.h" // @todo don't hard code this
 #include "vm.h"
+#include <string.h>
 
 #define MAX_PLAYER_SPRITE_SIZE 24
 
@@ -131,6 +132,14 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     PLAYER.frame_end = 4;
     PLAYER.flip_x = FALSE;
     PLAYER.pinned = FALSE;    
+    PLAYER.collision_group = 0;
+    PLAYER.collision_enabled = TRUE;    
+
+    // Copy scene player hit scripts to player actor
+    memcpy(&PLAYER.script_hit1, &scn.script_p_hit1, sizeof(far_ptr_t));
+    memcpy(&PLAYER.script_hit2, &scn.script_p_hit2, sizeof(far_ptr_t));
+    memcpy(&PLAYER.script_hit3, &scn.script_p_hit3, sizeof(far_ptr_t));
+
     load_sprite(0, &spritesheet_0, BANK(spritesheet_0));
 
     player_moving = FALSE;
