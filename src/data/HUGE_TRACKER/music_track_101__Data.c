@@ -1404,10 +1404,7 @@ static const unsigned char waves[] = {
 
 const void __at(255) __bank_music_track_101__Data;
 const hUGESong_t music_track_101__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(255) __bank_music_track_102__Data;
-const hUGESong_t music_track_102__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
-const void __at(255) __bank_music_track_103__Data;
-const hUGESong_t music_track_103__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
+
 const void __at(255) __bank_music_track_104__Data;
 const hUGESong_t music_track_104__Data = {7, &order_cnt, order1, order2, order3, order4, duty_instruments, wave_instruments, noise_instruments, NULL, waves};
 const void __at(255) __bank_music_track_105__Data;

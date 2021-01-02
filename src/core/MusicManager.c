@@ -45,6 +45,7 @@ void music_play(UBYTE index, UBYTE loop) __nonbanked {
         UBYTE _save = _current_bank;
         current_track_bank = music_tracks[index].bank;
         __critical {
+            music_stop();
             SWITCH_ROM_MBC1(current_track_bank);
             hUGE_init(music_tracks[index].ptr);
             SWITCH_ROM_MBC1(_save);
