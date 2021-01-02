@@ -9,7 +9,7 @@
     #undef GBT_PLAYER
     #include "hUGEDriver.h"
 #endif
-#define SAME_TUNE_RESTARTS
+//#define SAME_TUNE_RESTARTS
 
 #include "data/data_ptrs.h"
 
@@ -82,8 +82,8 @@ void music_mute(UBYTE channels) __nonbanked {
 #endif
 #ifdef HUGE_TRACKER
     if (music_stopped) return;
-    for (UBYTE i = HT_CH1, ch = channels; i <= HT_CH4; i++, ch >>= 1) 
-        hUGE_mute_channel(i, !(ch & 1));
+    for (UBYTE i = HT_CH1, ch = ~channels; i <= HT_CH4; i++, ch >>= 1) 
+        hUGE_mute_channel(i, ch & 1);
 #endif
 }
 
