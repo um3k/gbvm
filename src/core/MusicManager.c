@@ -68,8 +68,10 @@ void music_stop() __banked {
     SWITCH_ROM_MBC1(_save);
 #endif
 #ifdef HUGE_TRACKER
-    music_stopped = TRUE;
-    music_mute(0);
+    __critical {
+        music_mute(0);
+        music_stopped = TRUE;
+    }
 #endif
     current_index = MAX_MUSIC;
 }
