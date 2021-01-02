@@ -17,6 +17,13 @@ typedef enum {
     SPRITE_TYPE_ACTOR_ANIMATED
 } sprite_type_e;
 
+typedef enum {
+    COLLISION_GROUP_NONE = 0,
+    COLLISION_GROUP_1 = 2,
+    COLLISION_GROUP_2 = 4,
+    COLLISION_GROUP_3 = 8,
+} collision_group_e;
+
 typedef struct actor_t
 {
   UINT8 enabled; 
@@ -43,7 +50,7 @@ typedef struct actor_t
   far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
 
   // Collisions
-  UBYTE collision_group;
+  collision_group_e collision_group;
   UBYTE collision_enabled;
 
   // Linked list

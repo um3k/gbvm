@@ -124,21 +124,16 @@ void topdown_update() __banked {
             }
         }
 
-        /*
-        hit_actor = ActorOverlapsPlayer(FALSE);
-        if (hit_actor && hit_actor != NO_ACTOR_COLLISON) {
-            if (actors[hit_actor].collision_group) {
-              PLAYER.hit_actor = 0;
-              PLAYER.hit_actor = hit_actor;
-            }
+        hit_actor = actor_overlapping_player(FALSE);
+        if (hit_actor != NULL && hit_actor->collision_group) {
+            player_register_collision_with(hit_actor);
         }
-        */
 
         // Check if walked in to actor
         if (player_moving) {
             hit_actor = actor_in_front_of_player(topdown_grid, FALSE);
             if (hit_actor != NULL) {
-                // PLAYER.hit_actor = hit_actor;
+                player_register_collision_with(hit_actor);
                 player_moving = FALSE;
             }
         }

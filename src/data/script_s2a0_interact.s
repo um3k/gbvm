@@ -10,13 +10,15 @@ ___bank_script_s2a0_interact = 255
 
 _script_s2a0_interact::
 
+        VM_SOUND_PLAY           2, 1, 0x4c,0x81,0x43,0x73,0x86
+
         ; Text Dialogue
-        VM_LOAD_TEXT            0
-        .asciz "Hello!\n"
-        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
-        VM_DISPLAY_TEXT         0, 0, 0
-        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
-        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
-        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        ; VM_LOAD_TEXT            0
+        ; .asciz "Hello!\n"
+        ; VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        ; VM_DISPLAY_TEXT         0, 0, 0
+        ; VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        ; VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        ; VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         ; Stop Script
         VM_STOP

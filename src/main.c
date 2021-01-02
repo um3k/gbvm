@@ -79,7 +79,7 @@ void process_VM() {
                 actors_update();
                 // projectiles_update();
                 ui_update();
-                // actors_run_collision_scripts();
+                actors_handle_player_collision();                
                 game_time++;
                 wait_vbl_done();
                 break;
