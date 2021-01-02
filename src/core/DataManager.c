@@ -131,6 +131,8 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     PLAYER.frame_end = 4;
     PLAYER.flip_x = FALSE;
     PLAYER.pinned = FALSE;    
+    PLAYER.collision_group = 0;
+    PLAYER.collision_enabled = TRUE;    
     load_sprite(0, &spritesheet_0, BANK(spritesheet_0));
 
     player_moving = FALSE;
