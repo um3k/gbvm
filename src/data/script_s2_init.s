@@ -11,8 +11,8 @@ _script_s2_init::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "Hello\nWorld."
-        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        .asciz "Hello\nWorld.\nCheck\nwindow\noverlaying\nactors."
+        VM_OVERLAY_MOVE_TO      0, 10, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
