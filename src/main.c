@@ -101,11 +101,10 @@ void process_VM() {
                         events_init();  // is it a common stuff with change scene exception?
                         // clear all, including variables
                         script_runner_init(TRUE);
-                        // reset player
-                        PLAYER.x = start_scene_x;
-                        PLAYER.y = start_scene_y;
                         // load start scene
                         load_scene(start_scene.ptr, start_scene.bank);
+                        // load initial player
+                        load_player();
                         break;
                     }
                     case EXCEPTION_CHANGE_SCENE: {
@@ -123,6 +122,7 @@ void process_VM() {
                     }
                 }
                 state_init();
+                actor_reset_dir(&PLAYER);
                 camera_update();
                 scroll_update();
                 actors_update();
