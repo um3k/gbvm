@@ -23,6 +23,7 @@ UBYTE sound_channel = 0;
 #ifdef HUGE_TRACKER
     UBYTE current_track_bank = 0;
     UBYTE music_stopped      = TRUE;
+    UBYTE huge_initialized   = FALSE;
 #endif
 
 void music_play(UBYTE index, UBYTE loop) __nonbanked {
@@ -44,9 +45,11 @@ void music_play(UBYTE index, UBYTE loop) __nonbanked {
         UBYTE _save = _current_bank;
         current_track_bank = music_tracks[index].bank;
         __critical {
+            music_stop();
             SWITCH_ROM_MBC1(current_track_bank);
             hUGE_init(music_tracks[index].ptr);
             SWITCH_ROM_MBC1(_save);
+            huge_initialized = TRUE;
             music_mute(channel_mask);
             music_stopped = FALSE;        
         }
@@ -68,10 +71,8 @@ void music_stop() __banked {
     SWITCH_ROM_MBC1(_save);
 #endif
 #ifdef HUGE_TRACKER
-    __critical {
-        music_mute(0);
-        music_stopped = TRUE;
-    }
+    music_stopped = TRUE;
+    music_mute(0);
 #endif
     current_index = MAX_MUSIC;
 }
@@ -83,9 +84,9 @@ void music_mute(UBYTE channels) __nonbanked {
     SWITCH_ROM_MBC1(_save);
 #endif
 #ifdef HUGE_TRACKER
-    if (music_stopped) return;
-    for (UBYTE i = HT_CH1, ch = ~channels; i <= HT_CH4; i++, ch >>= 1) 
-        hUGE_mute_channel(i, ch & 1);
+    if (huge_initialized) 
+        for (UBYTE i = HT_CH1, ch = ~channels; i <= HT_CH4; i++, ch >>= 1) 
+            hUGE_mute_channel(i, ch & 1);
 #endif
 }
 

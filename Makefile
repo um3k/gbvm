@@ -13,8 +13,8 @@ ROM_BUILD_DIR = build
 OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
-#MUSIC_DRIVER = GBT_PLAYER
-MUSIC_DRIVER = HUGE_TRACKER
+MUSIC_DRIVER = GBT_PLAYER
+#MUSIC_DRIVER = HUGE_TRACKER
 
 CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -Wf-D$(MUSIC_DRIVER)
 
@@ -118,7 +118,7 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -b 5 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) -b 4 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^

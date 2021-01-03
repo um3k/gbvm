@@ -9,6 +9,7 @@ ___bank_script_s1_init = 255
 .globl ___bank_script_s1_init
 
 _script_s1_init::
+        VM_MUSIC_PLAY           0, 1
         VM_PUSH                 0
         VM_PUSH                 0
         VM_PUSH                 0

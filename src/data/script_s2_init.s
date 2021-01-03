@@ -23,7 +23,7 @@ _script_s2_init::
         VM_ACTOR_SET_DIR        .ARG0, .DIR_RIGHT, 0
         VM_POP                  1
 
-        VM_MUSIC_PLAY           1, 1
+        VM_MUSIC_PLAY           2, 1
 
         ; Stop Script
         VM_STOP
