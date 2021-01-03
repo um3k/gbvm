@@ -7,9 +7,11 @@
 #include "Trigger.h"
 #include "Sprite.h"
 #include "Camera.h"
+#include "Palette.h"
 #include "data/spritesheet_0.h" // @todo don't hard code this
 #include "vm.h"
 #include <string.h>
+#include "data/data_ptrs.h"
 
 #define MAX_PLAYER_SPRITE_SIZE 24
 
@@ -116,33 +118,13 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
         }
     }
 
-    // Load player
-    PLAYER.dir_x = 0;
-    PLAYER.dir_y = 1;
-    PLAYER.sprite = 0;
-    PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
-    PLAYER.palette = 0;
-    PLAYER.n_frames = 2;
-    PLAYER.initial_frame = 0;
-    PLAYER.animate = FALSE;
-    PLAYER.move_speed = 1;
-    PLAYER.anim_tick = 7;
-    PLAYER.frame = 0;
-    PLAYER.frame_start = 0;
-    PLAYER.frame_end = 4;
-    PLAYER.flip_x = FALSE;
-    PLAYER.pinned = FALSE;    
-    PLAYER.collision_group = 0;
-    PLAYER.collision_enabled = TRUE;    
-
     // Copy scene player hit scripts to player actor
     memcpy(&PLAYER.script_hit1, &scn.script_p_hit1, sizeof(far_ptr_t));
     memcpy(&PLAYER.script_hit2, &scn.script_p_hit2, sizeof(far_ptr_t));
     memcpy(&PLAYER.script_hit3, &scn.script_p_hit3, sizeof(far_ptr_t));
 
-    load_sprite(0, &spritesheet_0, BANK(spritesheet_0));
-
     player_moving = FALSE;
+    PLAYER.animate = FALSE;
 
     // Load actors
     actors_active_head = 0;
@@ -176,4 +158,39 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     if (scn.script_init.ptr) {
         script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0);
     }
+}
+
+void load_player() __banked {
+    UBYTE sprite_frames = DIV_4(load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank));
+    if (sprite_frames > 6) {
+        // Limit player to 6 frames to prevent overflow into scene actor vram
+        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
+        PLAYER.n_frames = 6;
+    } else if (sprite_frames == 6) {
+        PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
+        PLAYER.n_frames = 2;
+    } else if (sprite_frames == 3) {
+        PLAYER.sprite_type = SPRITE_TYPE_ACTOR;
+        PLAYER.n_frames = 1;    
+    } else {
+        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
+        PLAYER.n_frames = sprite_frames;    
+    }
+    PLAYER.x = start_scene_x;
+    PLAYER.y = start_scene_y;
+    PLAYER.dir_x = start_scene_dir_x;
+    PLAYER.dir_y = start_scene_dir_y;    
+    PLAYER.sprite = 0;
+    PLAYER.palette = PLAYER_PALETTE;
+    PLAYER.initial_frame = 0;
+    PLAYER.animate = FALSE;
+    PLAYER.move_speed = 1;
+    PLAYER.anim_tick = 7;
+    PLAYER.frame = 0;
+    PLAYER.frame_start = 0;
+    PLAYER.frame_end = 4;
+    PLAYER.flip_x = FALSE;
+    PLAYER.pinned = FALSE;    
+    PLAYER.collision_group = 0;
+    PLAYER.collision_enabled = TRUE;
 }

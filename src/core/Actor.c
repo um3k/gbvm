@@ -170,9 +170,17 @@ void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
             actor_set_frames(actor, MUL_4(actor->sprite), MUL_4(actor->sprite + actor->n_frames));
             actor_set_flip_x(actor, FALSE);
         }
+    } else {
+        actor_set_frames(actor, MUL_4(actor->sprite), MUL_4(actor->sprite + actor->n_frames));
+        actor_set_flip_x(actor, FALSE);        
     }
 
     actor->rerender = TRUE;
+}
+
+void actor_reset_dir(actor_t *actor) __banked
+{
+    actor_set_dir(actor, actor->dir_x, actor->dir_y);
 }
 
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked

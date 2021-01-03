@@ -33,6 +33,7 @@ actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked;
 void player_move(BYTE dir_x, BYTE dir_y) __banked;
 actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked;
 actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked;
+void actor_reset_dir(actor_t *actor) __banked;
 
 inline void actor_set_anim(actor_t *actor, UBYTE animate) {
     actor->animate = animate;
