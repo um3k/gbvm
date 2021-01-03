@@ -95,6 +95,7 @@ void process_VM() {
             }
             case RUNNER_BUSY: break;
             case RUNNER_EXCEPTION: {
+                UBYTE fade_in = TRUE;
                 switch (vm_exception_code) {
                     case EXCEPTION_RESET: {
                         // cleanup core stuff
@@ -102,7 +103,7 @@ void process_VM() {
                         // clear all, including variables
                         script_runner_init(TRUE);
                         // load start scene
-                        load_scene(start_scene.ptr, start_scene.bank);
+                        fade_in = !(load_scene(start_scene.ptr, start_scene.bank));
                         // load initial player
                         load_player();
                         break;
@@ -113,7 +114,7 @@ void process_VM() {
                         // load scene
                         far_ptr_t scene;
                         ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);
-                        load_scene(scene.ptr, scene.bank);
+                        fade_in = !(load_scene(scene.ptr, scene.bank));
                         break;
                     }
                     default: {
@@ -126,7 +127,7 @@ void process_VM() {
                 camera_update();
                 scroll_update();
                 actors_update();
-                fade_in_modal();    // should it fade in without condition or it is a user script thing?
+                if (fade_in) fade_in_modal();
             }
         }
     }

@@ -60,7 +60,7 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) 
     return size;
 }
 
-void load_scene(const scene_t* scene, UBYTE bank) __banked {
+UBYTE load_scene(const scene_t* scene, UBYTE bank) __banked {
     UBYTE i, k;
 
     scene_t scn;
@@ -156,8 +156,9 @@ void load_scene(const scene_t* scene, UBYTE bank) __banked {
     last_trigger_ty = 0xFF;
 
     if (scn.script_init.ptr) {
-        script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0);
+        return (script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0) != 0);
     }
+    return FALSE;
 }
 
 void load_player() __banked {

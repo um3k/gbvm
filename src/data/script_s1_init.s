@@ -24,5 +24,7 @@ _script_s1_init::
         ; Actor Set Position
         ; NOT IMPLEMENTED
 2$:
+        ; Fade IN
+        VM_FADE_IN              .UI_MODAL
         ; Stop Script
         VM_STOP
