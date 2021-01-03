@@ -81,14 +81,10 @@ void platform_update() __banked {
     } else {
       if (INPUT_LEFT) {
         on_ladder = FALSE;
-        PLAYER.dir_x = -1;
-        PLAYER.dir_y = 0;
-        PLAYER.rerender = TRUE;
+        actor_set_dir(&PLAYER, DIR_LEFT, DIR_NONE);
       } else if (INPUT_RIGHT) {
         on_ladder = FALSE;
-        PLAYER.dir_x = 1;
-        PLAYER.dir_y = 0;
-        PLAYER.rerender = TRUE;
+        actor_set_dir(&PLAYER, DIR_RIGHT, DIR_NONE);
       }
       pl_vel_y = 0;
     }
@@ -97,9 +93,7 @@ void platform_update() __banked {
     if ((INPUT_UP || INPUT_DOWN) && ((tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER))) {
       on_ladder = TRUE;
       pl_vel_x = 0;
-      PLAYER.dir_x = 0;
-      PLAYER.dir_y = -1;
-      PLAYER.rerender = TRUE;
+      actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);
     }
  
     if (INPUT_LEFT) {
@@ -112,7 +106,7 @@ void platform_update() __banked {
         pl_vel_x = CLAMP(pl_vel_x, -plat_walk_vel, -plat_min_vel);
       } 
       if (INPUT_LEFT_PRESSED) { // update player facing direction if button pressed this frame
-        PLAYER.rerender = TRUE;
+        actor_set_dir(&PLAYER, DIR_LEFT, DIR_NONE);
       }
     } else if (INPUT_RIGHT) {
       PLAYER.dir_x = 1;
@@ -124,7 +118,7 @@ void platform_update() __banked {
         pl_vel_x = CLAMP(pl_vel_x, plat_min_vel, plat_walk_vel);
       }
       if (INPUT_RIGHT_PRESSED) { // update player facing direction if button pressed this frame
-        PLAYER.rerender = TRUE;
+        actor_set_dir(&PLAYER, DIR_RIGHT, DIR_NONE);
       }
     } else if (grounded) {
       if (pl_vel_x < 0) {
@@ -279,7 +273,7 @@ void platform_update() __banked {
     grounded = TRUE;
   }
 
-  PLAYER.animate = (grounded && pl_vel_x != 0) || (on_ladder && pl_vel_y != 0);
+  actor_set_anim(&PLAYER, (grounded && pl_vel_x != 0) || (on_ladder && pl_vel_y != 0));
 
   // Check for trigger collisions
   /*

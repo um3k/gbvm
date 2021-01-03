@@ -15,6 +15,12 @@
 #define ON_8PX_GRID(A)        (MOD_8((A).x) == 0 && MOD_8((A).y) == 0)
 #define ON_16PX_GRID(A)       (MOD_16((A).x) == 0 && MOD_16((A).y) == 8)
 
+#define DIR_LEFT              -1
+#define DIR_RIGHT             1
+#define DIR_UP                -1
+#define DIR_DOWN              1
+#define DIR_NONE              0
+
 #define PLAYER_HURT_IFRAMES   20
 
 extern actor_t actors[MAX_ACTORS];
