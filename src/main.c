@@ -126,8 +126,10 @@ void process_VM() {
                     case EXCEPTION_CHANGE_SCENE: {
                         // kill all threads, but don't clear variables 
                         script_runner_init(FALSE);
-                        // reset timers
+                        // reset timers on scene change
                         timers_init();
+                        // reset input events on scene change
+                        events_init();
                         // load scene
                         far_ptr_t scene;
                         ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);

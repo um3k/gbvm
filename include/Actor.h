@@ -47,5 +47,6 @@ inline void actor_set_anim(actor_t *actor, UBYTE animate) {
 inline void player_register_collision_with(actor_t *actor) {
     player_collision_actor = actor;
 }
+void actors_handle_player_collision() __banked;
 
 #endif
