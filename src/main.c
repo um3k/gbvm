@@ -71,13 +71,26 @@ void VBL_isr() __nonbanked {
     }
 }
 
+void engine_reset() {
+    // cleanup core stuff
+    sound_init();
+    fade_init();
+    ui_init();
+    events_init();
+    // kill all threads, clear VM memory
+    script_runner_init(TRUE);
+}
+
 void process_VM() {
     while (TRUE) {
         switch (script_runner_update()) {
             case RUNNER_DONE:
             case RUNNER_IDLE: {                
                 input_update();
-                if (INPUT_SOFT_RESTART) {              
+                if (INPUT_SOFT_RESTART) {
+                    // kill all threads (in case something is wrong and all contexts occupied) 
+                    script_runner_init(FALSE);
+                    // execute bootstrap script              
                     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
                     break;
                 }
@@ -98,10 +111,8 @@ void process_VM() {
                 UBYTE fade_in = TRUE;
                 switch (vm_exception_code) {
                     case EXCEPTION_RESET: {
-                        // cleanup core stuff
-                        events_init();  // is it a common stuff with change scene exception?
-                        // clear all, including variables
-                        script_runner_init(TRUE);
+                        // reset everything
+                        engine_reset();
                         // load start scene
                         fade_in = !(load_scene(start_scene.ptr, start_scene.bank));
                         // load initial player
@@ -153,15 +164,10 @@ void main() {
     WX_REG = MINWNDPOSX;
     WY_REG = MENU_CLOSED_Y;
 
-    sound_init();
-
     initrand(DIV_REG);
 
-    script_runner_init(TRUE);
-
-    events_init();
-    ui_init();
-    fade_init();
+    // reset everything
+    engine_reset();
 
     __critical {
         add_LCD(LCD_isr);
