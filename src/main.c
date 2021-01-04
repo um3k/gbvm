@@ -77,6 +77,7 @@ void engine_reset() {
     fade_init();
     ui_init();
     events_init();
+    timers_init();
     // kill all threads, clear VM memory
     script_runner_init(TRUE);
 }
@@ -95,7 +96,10 @@ void process_VM() {
                     break;
                 }
                 if (joy != 0) events_update();
-                if (!VM_ISLOCKED()) state_update(); // Update Current Scene Type
+                if (!VM_ISLOCKED()) {
+                    state_update();                                     // Update Current Scene Type
+                    if ((game_time & 0x0F) == 0x00) timers_update();    // update timers
+                }
                 camera_update();
                 scroll_update();
                 actors_update();

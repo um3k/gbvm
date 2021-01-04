@@ -455,6 +455,16 @@ OP_VM_FADE_OUT          = 0x57
         .db OP_VM_FADE_OUT, #<IS_MODAL
 .endm
 
+OP_VM_TIMER_PREPARE     = 0x58
+.macro VM_TIMER_PREPARE TIMER, BANK, ADDR
+        .db OP_VM_TIMER_PREPARE, #>ADDR, #<ADDR, #<BANK, #<TIMER
+.endm
+
+OP_VM_TIMER_SET         = 0x59
+.macro VM_TIMER_SET TIMER, INTERVAL
+        .db OP_VM_TIMER_SET, #<INTERVAL, #<TIMER 
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60

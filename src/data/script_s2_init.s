@@ -5,6 +5,7 @@
 
 ___bank_script_s2_init = 255
 .globl ___bank_script_s2_init
+.globl ___bank_script_s2_timer1, _script_s2_timer1 
 
 _script_s2_init::
         VM_LOCK
@@ -28,6 +29,9 @@ _script_s2_init::
 
 
         VM_MUSIC_PLAY           2, 1
+
+        VM_TIMER_PREPARE        1, ___bank_script_s2_timer1, _script_s2_timer1
+        VM_TIMER_SET            1, 5
 
         ; Stop Script
         VM_STOP

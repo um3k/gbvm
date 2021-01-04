@@ -100,11 +100,11 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_input_wait,             1}, // 0x52
     {vm_input_attach,           2}, // 0x53
     {vm_input_get,              2}, // 0x54
-    {vm_context_prepate,        4}, // 0x55
+    {vm_context_prepare,        4}, // 0x55
     {vm_fade_in,                1}, // 0x56
     {vm_fade_out,               1}, // 0x57
-    {0, 0},
-    {0, 0},
+    {vm_timer_prepare,          4}, // 0x58
+    {vm_timer_set,              2}, // 0x59
     {0, 0},
     {0, 0},
     {0, 0},
