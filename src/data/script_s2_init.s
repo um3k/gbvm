@@ -27,7 +27,7 @@ _script_s2_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
 
-        VM_MUSIC_PLAY           2, 1
+        VM_MUSIC_PLAY           4, 1
 
         ; Stop Script
         VM_STOP
