@@ -28,7 +28,7 @@ inline void sound_init() {
  * Initializes music events subsystem
  * 
  */
-void music_init() __banked;
+void music_init(UBYTE preserve) __banked;
 
 /**
  * Play music

@@ -19,10 +19,10 @@ typedef struct timer_time_t {
 extern script_event_t timer_events[4];
 extern timer_time_t timer_values[4];
 
-void events_init() __banked;
+void events_init(UBYTE preserve) __banked;
 void events_update() __nonbanked;
 
-void timers_init() __banked;
+void timers_init(UBYTE preserve) __banked;
 void timers_update() __nonbanked;
 
 #endif

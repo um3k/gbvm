@@ -21,8 +21,13 @@ UBYTE sound_channel = 0;
 
 script_event_t music_events[4];
 
-void music_init() __banked {
-    memset(music_events, 0, sizeof(music_events));
+void music_init(UBYTE preserve) __banked {
+    if (preserve) {
+        for (UBYTE i = 0; i < 4; i++) 
+            music_events[i].handle = 0;
+    } else {
+        memset(music_events, 0, sizeof(music_events));
+    }
 }
 
 #ifdef HUGE_TRACKER

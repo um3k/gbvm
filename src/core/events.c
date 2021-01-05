@@ -9,9 +9,14 @@ UBYTE input_slots[8];
 script_event_t timer_events[4];
 timer_time_t timer_values[4];
 
-void events_init() __banked {
-    memset(input_slots, 0, sizeof(input_slots));
-    memset(input_events, 0, sizeof(input_events));
+void events_init(UBYTE preserve) __banked {
+    if (preserve) {
+        for (UBYTE i = 0; i < 8; i++) 
+            input_events[i].handle = 0;
+    } else {
+        memset(input_slots, 0, sizeof(input_slots));
+        memset(input_events, 0, sizeof(input_events));
+    }
 }
 
 void events_update() __nonbanked {
@@ -27,9 +32,14 @@ void events_update() __nonbanked {
     }
 }
 
-void timers_init() __banked {
-    memset(timer_values, 0, sizeof(timer_values));
-    memset(timer_events, 0, sizeof(timer_events));
+void timers_init(UBYTE preserve) __banked {
+    if (preserve) {
+        for (UBYTE i = 0; i < 4; i++) 
+            timer_events[i].handle = 0;
+    } else {
+        memset(timer_values, 0, sizeof(timer_values));
+        memset(timer_events, 0, sizeof(timer_events));
+    }
 }
 
 void timers_update() __nonbanked {
