@@ -78,6 +78,7 @@ void engine_reset() {
     ui_init();
     events_init();
     timers_init();
+    music_init();
     // kill all threads, clear VM memory
     script_runner_init(TRUE);
 }
@@ -130,6 +131,8 @@ void process_VM() {
                         timers_init();
                         // reset input events on scene change
                         events_init();
+                        // reset music events
+                        music_init();
                         // load scene
                         far_ptr_t scene;
                         ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);

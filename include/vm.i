@@ -492,6 +492,11 @@ OP_VM_SOUND_PLAY        = 0x64
         .db OP_VM_SOUND_PLAY, #<E, #<D, #<C, #<B, #<A, #<CH, #<FRAMES
 .endm
 
+OP_VM_MUSIC_ROUTINE     = 0x65
+.macro VM_MUSIC_ROUTINE ROUTINE, BANK, ADDR
+        .db OP_VM_MUSIC_ROUTINE, #>ADDR, #<ADDR, #<BANK, #<ROUTINE
+.endm
+
 ; --- CAMERA -------------------------------
 
 OP_VM_CAMERA_MOVE_TO     = 0x70

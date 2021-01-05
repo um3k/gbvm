@@ -3,13 +3,32 @@
 
 #include <gb/gb.h>
 
+#include "events.h"
+
+#ifdef GBT_PLAYER
+    #undef HUGE_TRACKER 
+    #include "gbt_player.h"
+#endif
+#ifdef HUGE_TRACKER
+    #undef GBT_PLAYER
+    #include "hUGEDriver.h"
+#endif
+//#define SAME_TUNE_RESTARTS
+
 extern UBYTE channel_mask;
+extern script_event_t music_events[4];
 
 inline void sound_init() {
     NR52_REG = 0x80; 
     NR51_REG = 0xFF;
     NR50_REG = 0x77;
 }
+
+/**
+ * Initializes music events subsystem
+ * 
+ */
+void music_init() __banked;
 
 /**
  * Play music

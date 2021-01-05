@@ -1,15 +1,8 @@
+#include <string.h>
+
 #include "MusicManager.h"
 #include "BankData.h"
-
-#ifdef GBT_PLAYER
-    #undef HUGE_TRACKER 
-    #include "gbt_player.h"
-#endif
-#ifdef HUGE_TRACKER
-    #undef GBT_PLAYER
-    #include "hUGEDriver.h"
-#endif
-//#define SAME_TUNE_RESTARTS
+#include "vm.h"
 
 #include "data/data_ptrs.h"
 
@@ -24,6 +17,22 @@ UBYTE sound_channel = 0;
     UBYTE current_track_bank = 0;
     UBYTE music_stopped      = TRUE;
     UBYTE huge_initialized   = FALSE;
+#endif
+
+script_event_t music_events[4];
+
+void music_init() __banked {
+    memset(music_events, 0, sizeof(music_events));
+}
+
+#ifdef HUGE_TRACKER
+void hUGETrackerRoutine(unsigned char ch, unsigned char param, unsigned char tick) __nonbanked {
+    if (tick) return; // return if not zero tick    
+    script_event_t * event = &music_events[param & 0x03];
+    if (!event->script_addr) return;
+    if ((event->handle == 0) || ((event->handle & 0x8000) != 0))
+        script_execute(event->script_bank, event->script_addr, &event->handle, 2, (INT16)ch, (INT16)(param >> 4));
+}
 #endif
 
 void music_play(UBYTE index, UBYTE loop) __nonbanked {

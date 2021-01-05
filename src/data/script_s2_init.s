@@ -27,11 +27,14 @@ _script_s2_init::
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
-
+        VM_MUSIC_ROUTINE        0, ___bank_script_s2_timer1, _script_s2_timer1
+        VM_MUSIC_ROUTINE        1, ___bank_script_s2_timer1, _script_s2_timer1
+        VM_MUSIC_ROUTINE        2, ___bank_script_s2_timer1, _script_s2_timer1
+        VM_MUSIC_ROUTINE        3, ___bank_script_s2_timer1, _script_s2_timer1
         VM_MUSIC_PLAY           4, 1
 
-        VM_TIMER_PREPARE        1, ___bank_script_s2_timer1, _script_s2_timer1
-        VM_TIMER_SET            1, 5
+;        VM_TIMER_PREPARE        1, ___bank_script_s2_timer1, _script_s2_timer1
+;        VM_TIMER_SET            1, 5
 
         ; Stop Script
         VM_STOP
