@@ -28,7 +28,7 @@ _script_s2_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
 
-        VM_MUSIC_PLAY           2, 1
+        VM_MUSIC_PLAY           4, 1
 
         VM_TIMER_PREPARE        1, ___bank_script_s2_timer1, _script_s2_timer1
         VM_TIMER_SET            1, 5
