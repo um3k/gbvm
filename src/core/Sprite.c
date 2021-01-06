@@ -9,8 +9,8 @@ void init_sprite_pool() __banked
   UINT8 i;
   for (i = 0; i != MAX_SPRITES; i++)
   {
-    UBYTE j = 38 - (i << 1);
-    sprites_pool[i] = j;
+    UBYTE j = (i << 1);
+    sprites_pool[MAX_SPRITES - i] = j;
     move_sprite(j, 0, 0);
     move_sprite(j + 1, 0, 0);    
   }

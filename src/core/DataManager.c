@@ -13,7 +13,9 @@
 #include <string.h>
 #include "data/data_ptrs.h"
 
-#define MAX_PLAYER_SPRITE_SIZE 24
+#define MAX_PLAYER_SPRITE_SIZE  24
+#define EMOTE_SPRITE            124
+#define EMOTE_SPRITE_SIZE       4
 
 UBYTE image_bank;
 UBYTE image_attr_bank;
@@ -194,4 +196,12 @@ void load_player() __banked {
     PLAYER.pinned = FALSE;    
     PLAYER.collision_group = 0;
     PLAYER.collision_enabled = TRUE;
+}
+
+void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked {
+    SetBankedSpriteData(EMOTE_SPRITE, EMOTE_SPRITE_SIZE, sprite->frames, bank);
+    set_sprite_prop(0, 0);
+    set_sprite_prop(1, 0);
+    set_sprite_tile(0, EMOTE_SPRITE);
+    set_sprite_tile(1, EMOTE_SPRITE + 2);
 }
