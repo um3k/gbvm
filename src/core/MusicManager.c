@@ -106,31 +106,60 @@ void music_mute(UBYTE channels) __nonbanked {
 }
 
 UINT8 ISR_counter = 0;
-void music_update() __nonbanked {    
-    sample_play_isr();
-    ISR_counter++; ISR_counter &= 3;
-    if (ISR_counter) return;
-
-    if (tone_frames) {
-        if (--tone_frames == 0) {
-            sound_stop(sound_channel);
-            music_mute(channel_mask);
-            sound_channel = 0;
-        }
-    }
-#ifdef GBT_PLAYER 
-    UBYTE _save = _current_bank;
-    gbt_update();
-    SWITCH_ROM_MBC1(_save);
+void music_update() __nonbanked __naked {
+__asm
+        call _sample_play_isr
+        ld hl, #_ISR_counter
+        ld a, (hl)
+        inc a
+        and #0x03
+        ld (hl), a
+        ret nz
+        
+        ld hl, #_tone_frames
+        ld a, (hl)
+        or a
+        jr z, 1$
+        dec a
+        ld (hl), a
+        jr nz, 1$
+        ld a, (_sound_channel)
+        push af
+        inc sp
+        call _sound_stop
+        ld a, (_channel_mask)
+        push af
+        inc sp
+        call _music_mute
+        pop hl
+1$:
+#ifdef GBT_PLAYER
+        ldh a, (__current_bank)
+        push af
+        call _gbt_update
+        pop af
+        ld (0x2000), a
 #endif
 #ifdef HUGE_TRACKER
-    if (music_stopped) return;
-    if (current_track_bank == 0) return;
-    UBYTE _save = _current_bank;
-    SWITCH_ROM_MBC1(current_track_bank);
-    hUGE_dosound();
-    SWITCH_ROM_MBC1(_save);
+        ld a, (_music_stopped)
+        or a
+        ret nz
+        ld a, (_current_track_bank)
+        ld e, a
+        or a
+        ret z
+        ldh a, (__current_bank)
+        push af
+        ld a, e
+        ldh (__current_bank), a
+        ld (0x2000), a
+        call _hUGE_dosound
+        pop af
+        ldh (__current_bank), a
+        ld (0x2000), a
 #endif
+        ret
+__endasm;
 }
 
 const UINT8 FX_REG_SIZES[]  = {5, 4, 5, 4};
@@ -149,10 +178,11 @@ void sound_play(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
     if (tone_frames) return;                        // exit if sound is already playing.
     if (frames == 0) return;                        // exit if length in frames is zero
     if ((channel == 0) || (channel > 4)) return;    // exit if channel is out of bounds
-    sound_channel = channel - 1;
-    music_mute(channel_mask & channel_masks[sound_channel]);
-    UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[sound_channel];
-    for (UBYTE i = FX_REG_SIZES[sound_channel], *p = data; i != 0; i--) *reg++ = *p++;
+    UBYTE ch = channel - 1;
+    music_mute(channel_mask & channel_masks[ch]);
+    UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[ch];
+    for (UBYTE i = FX_REG_SIZES[ch], *p = data; i != 0; i--) *reg++ = *p++;
+    sound_channel = channel;
     tone_frames = frames;
 }
 
