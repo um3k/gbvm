@@ -164,7 +164,9 @@ void main() {
 
     display_off();
 #ifdef SGB
+    #ifdef DEVBUILD
     memset((UBYTE *)0x8000, 0, 384 * 16);
+    #endif
 #endif
 
     LCDC_REG = 0x67;

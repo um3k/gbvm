@@ -23,7 +23,7 @@ LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 LFLAGS = -Wl-yt0x1A $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
 #--- del ----
-CFLAGS += -DSGB
+CFLAGS += -DSGB -DDEVBUILD
 LFLAGS += -Wm-ys
 #------------
 
