@@ -25,27 +25,6 @@
 
 #include "data/data_ptrs.h"
 
-extern void __bank_bootstrap_script;
-extern const UBYTE bootstrap_script[];
-
-extern const UBYTE BYTECODE[];                  // defined in bytecode.s
-extern void __bank_BYTECODE;
-
-extern const UBYTE SCRIPT_1[];                  // defined in SCRIPT_1.s
-extern void __bank_SCRIPT_1;
-
-extern const UBYTE SCRIPT_2[];                  // defined in SCRIPT_2.s
-extern void __bank_SCRIPT_2;
-
-extern const UBYTE SCRIPT_3[];                  // defined in SCRIPT_3.s
-extern void __bank_SCRIPT_3;
-
-extern const UBYTE SCRIPT_4[];                  // defined in SCRIPT_4.s
-extern void __bank_SCRIPT_4;
-
-extern const UBYTE SCRIPT_5[];                  // defined in SCRIPT_5.s
-extern void __bank_SCRIPT_5;
-
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
     if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
@@ -203,22 +182,6 @@ void main() {
     // execute bootstrap script that just raises RESET exception
     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
 
-    // grid walking
-    // script_execute(BANK(SCRIPT_2), SCRIPT_2, 0, 0);
-
-    // script_execute(BANK(BYTECODE), BYTECODE, 0, 0);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 5, 5, 32, 64, 0, 0);
-    // script_execute(BANK(SCRIPT_4), SCRIPT_4, 0, 0);
-
-    // script_execute(BANK(SCRIPT_5), SCRIPT_5, 0, 0); // let actor walk, so we test nonmodal UI
-
-    // load up engine with more actors
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1,  8);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 8 );
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 9 );
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 10);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 11);
-    // script_execute(BANK(SCRIPT_3), SCRIPT_3, 0, 1, 12);
-
+    // execute VM
     process_VM();
 }
