@@ -169,3 +169,20 @@ void vm_choice(SCRIPT_CTX * THIS, INT16 idx, UBYTE options) __banked {
     menu_cancel_on_b = (options & MENU_CANCEL_B);    
     *v = ui_run_menu();
 }
+
+void vm_load_frame(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked {
+    THIS;
+    frame_image_ptr.bank = bank; frame_image_ptr.ptr = offset;
+    ui_load_frame_tiles();
+}
+
+void vm_load_cursor(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked {
+    THIS;
+    cursor_image_ptr.bank = bank; cursor_image_ptr.ptr = offset;
+    ui_load_cursor_tile();
+}
+
+void vm_set_font(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked {
+    THIS;
+    font_image_ptr.bank = bank; font_image_ptr.ptr = offset;
+}

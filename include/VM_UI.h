@@ -14,4 +14,8 @@ void vm_overlay_show(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE color) _
 void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE color) __banked;
 void vm_choice(SCRIPT_CTX * THIS, INT16 idx, UBYTE options) __banked;
 
+void vm_load_frame(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked;
+void vm_load_cursor(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked;
+void vm_set_font(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked;
+
 #endif

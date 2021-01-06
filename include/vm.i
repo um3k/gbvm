@@ -412,6 +412,20 @@ OP_VM_CHOICE            = 0x48
         .db OP_VM_CHOICE, #<OPTIONS, #>IDX, #<IDX
 .endm
 
+OP_VM_LOAD_FRAME        = 0x49
+.macro VM_LOAD_FRAME BANK, ADDR
+        .db OP_VM_LOAD_FRAME, #>ADDR, #<ADDR, #<BANK
+.endm
+
+OP_VM_LOAD_CURSOR       = 0x4A
+.macro VM_LOAD_CURSOR BANK, ADDR
+        .db OP_VM_LOAD_CURSOR, #>ADDR, #<ADDR, #<BANK
+.endm
+
+OP_VM_SET_FONT          = 0x4B
+.macro VM_SET_FONT BANK, ADDR
+        .db OP_VM_SET_FONT, #>ADDR, #<ADDR, #<BANK
+.endm
 
 ; --- GAMEBOY ------------------------------------------
 

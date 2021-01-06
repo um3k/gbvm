@@ -66,8 +66,9 @@ static UBYTE ui_width_left  = 0;
 static UBYTE ui_tile_no     = 0;
 static UBYTE ui_line_no     = 0;
 
-// const far_ptr_t far_font_image = TO_FAR_PTR(font_image);
-// const far_ptr_t far_frame_image = TO_FAR_PTR(frame_image);
+far_ptr_t font_image_ptr = TO_FAR_PTR_T(font_image);
+far_ptr_t frame_image_ptr = TO_FAR_PTR_T(frame_image);
+far_ptr_t cursor_image_ptr = TO_FAR_PTR_T(cursor_image);
 
 void ui_init() __banked {
     ui_set_pos(0, MENU_CLOSED_Y);
@@ -78,8 +79,8 @@ void ui_init() __banked {
     text_drawn = TRUE;
     text_draw_speed = 1;
 
-    SetBankedBkgData(192, 9, frame_image, BANK(frame_image));
-    SetBankedBkgData(ui_cursor_tile, 1, cursor_image, BANK(cursor_image));
+    ui_load_frame_tiles();
+    ui_load_cursor_tile();
 
     set_bkg_data(ui_while_tile, 1, ui_white);
     set_bkg_data(ui_black_tile, 1, ui_black);
@@ -168,7 +169,7 @@ static void ui_draw_text_buffer_char() {
             current_text_speed = 0x1f;
             break;
         default:
-            SetBankedBkgData(ui_tile_no, 1, font_image + ((UWORD)(*ui_text_ptr - 32) << 4), BANK(font_image));
+            SetBankedBkgData(ui_tile_no, 1, (UBYTE *)font_image_ptr.ptr + ((UWORD)(*ui_text_ptr - 32) << 4), font_image_ptr.bank);
             SetTile(ui_dest_ptr++, ui_tile_no);
             ui_tile_no++;
             break;
