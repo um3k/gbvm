@@ -20,6 +20,12 @@ UBYTE sound_channel = 0;
     UBYTE huge_initialized   = FALSE;
 #endif
 
+// queue length must be power of 2 
+#define MAX_ROUTINE_QUEUE_LEN 4 
+// music events queue 
+UBYTE routine_queue[MAX_ROUTINE_QUEUE_LEN];
+UBYTE routine_queue_head = 0, routine_queue_tail = 0;
+// music events struct
 script_event_t music_events[4];
 
 void music_init(UBYTE preserve) __banked {
@@ -29,17 +35,34 @@ void music_init(UBYTE preserve) __banked {
     } else {
         memset(music_events, 0, sizeof(music_events));
     }
+    __critical {
+        routine_queue_head = routine_queue_tail = 0;
+    }
 }
 
 #ifdef HUGE_TRACKER
 void hUGETrackerRoutine(unsigned char ch, unsigned char param, unsigned char tick) __nonbanked {
-    if (tick) return; // return if not zero tick    
-    script_event_t * event = &music_events[param & 0x03];
-    if (!event->script_addr) return;
-    if ((event->handle == 0) || ((event->handle & 0x8000) != 0))
-        script_execute(event->script_bank, event->script_addr, &event->handle, 2, (INT16)ch, (INT16)(param >> 4));
+    ch;
+    if (tick) return; // return if not zero tick
+    routine_queue_head++, routine_queue_head &= (MAX_ROUTINE_QUEUE_LEN - 1);
+    if (routine_queue_head == routine_queue_tail) routine_queue_tail++, routine_queue_tail &= (MAX_ROUTINE_QUEUE_LEN - 1);  
+    routine_queue[routine_queue_head] = param;    
 }
 #endif
+
+void music_events_update() __nonbanked {
+    while (routine_queue_head != routine_queue_tail) {
+        UBYTE data;
+        __critical {
+            routine_queue_tail++, routine_queue_tail &= (MAX_ROUTINE_QUEUE_LEN - 1);
+            data = routine_queue[routine_queue_tail];
+        }
+        script_event_t * event = &music_events[data & 0x03];
+        if (!event->script_addr) return;
+        if ((event->handle == 0) || ((event->handle & 0x8000) != 0))
+            script_execute(event->script_bank, event->script_addr, &event->handle, 1, (UWORD)(data >> 4));
+    }
+}
 
 void music_play(UBYTE index, UBYTE loop) __nonbanked {
     if (index == MAX_MUSIC) {

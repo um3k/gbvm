@@ -82,6 +82,7 @@ void process_VM() {
                 if (!VM_ISLOCKED()) {
                     state_update();                                     // Update Current Scene Type
                     if ((game_time & 0x0F) == 0x00) timers_update();    // update timers
+                    music_events_update();                              // update music events
                 }
                 camera_update();
                 scroll_update();
