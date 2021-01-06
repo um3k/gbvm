@@ -55,8 +55,6 @@ extern UBYTE text_ff;
 extern unsigned char ui_text_data[80];
 
 extern far_ptr_t font_image_ptr;
-extern far_ptr_t frame_image_ptr;
-extern far_ptr_t cursor_image_ptr;
 
 void ui_init() __banked;
 void ui_update() __nonbanked;  // critical path, __nonbanked for speed
@@ -82,12 +80,12 @@ inline void ui_move_to(UBYTE x, UBYTE y, UBYTE speed) {
 
 UBYTE ui_run_menu() __banked;
 
-inline void ui_load_frame_tiles() {
-    SetBankedBkgData(192, 9, frame_image_ptr.ptr, frame_image_ptr.bank);
+inline void ui_load_frame_tiles(const UBYTE * offset, UBYTE bank) {
+    SetBankedBkgData(192, 9, offset, bank);
 }
 
-inline void ui_load_cursor_tile() {
-    SetBankedBkgData(ui_cursor_tile, 1, cursor_image_ptr.ptr, cursor_image_ptr.bank);
+inline void ui_load_cursor_tile(const UBYTE * offset, UBYTE bank) {
+    SetBankedBkgData(ui_cursor_tile, 1, offset, bank);
 }
 
 #endif
