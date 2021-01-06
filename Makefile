@@ -16,7 +16,7 @@ REL_OBJDIR = obj/_rel
 #MUSIC_DRIVER = GBT_PLAYER
 MUSIC_DRIVER = HUGE_TRACKER
 
-CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -Wf-D$(MUSIC_DRIVER)
+CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -D$(MUSIC_DRIVER)
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
@@ -56,7 +56,7 @@ release:
 	@echo "RELEASE mode ON"
 	
 debug:
-	$(eval CFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y -Wf-DVM_DEBUG_OUTPUT)
+	$(eval CFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y -DVM_DEBUG_OUTPUT -DDEVBUILD)
 	$(eval CFLAGS += -Wf--nolospre -Wf--nogcse)
 	$(eval LFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y)
 	@echo "DEBUG mode ON"
