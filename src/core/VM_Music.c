@@ -38,3 +38,8 @@ void vm_sound_play(SCRIPT_CTX * THIS, UBYTE frames, UBYTE channel, ...) __banked
     va_start(va, channel);              // actually, always 5 parameters are passed as varargs
     sound_play(frames, channel, va);
 }
+
+void vm_wave_play(SCRIPT_CTX * THIS, UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
+    THIS;
+    wave_play(frames, bank, sample, size);
+}

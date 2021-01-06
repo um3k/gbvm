@@ -65,6 +65,16 @@ void music_update() __nonbanked;
 void sound_play(UBYTE frames, UBYTE channel, UBYTE * data) __banked;
 
 /**
+ * Plays waveform on channel 3
+ * 
+ * @param frames sound length in frames
+ * @param bank bank of wave data
+ * @param sample offset of wave data
+ * @param size waveform size
+ */
+void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked;
+
+/**
  * Stops FX sound on given channel
  * 
  * @param channel sound channel

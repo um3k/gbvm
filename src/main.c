@@ -25,6 +25,9 @@
 
 #include "data/data_ptrs.h"
 
+extern void __bank_bootstrap_script;
+extern const UBYTE bootstrap_script[];
+
 void LCD_isr() __nonbanked {
     if (hide_sprites) return;
     if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
@@ -169,11 +172,11 @@ void main() {
 
         add_TIM(music_update);
         #ifdef CGB
-            TMA_REG = _cpu == CGB_TYPE ? 120U : 0xBCU;
+            TMA_REG = _cpu == CGB_TYPE ? 0xE0u : 0xC0u;
         #else
-            TMA_REG = 0xBCU;
+            TMA_REG = 0xC0u;
         #endif
-        TAC_REG = 0x04U;
+        TAC_REG = 0x07u;
 
         IE_REG |= TIM_IFLAG;
     }

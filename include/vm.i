@@ -511,6 +511,11 @@ OP_VM_MUSIC_ROUTINE     = 0x65
         .db OP_VM_MUSIC_ROUTINE, #>ADDR, #<ADDR, #<BANK, #<ROUTINE
 .endm
 
+OP_VM_WAVE_PLAY         = 0x66
+.macro VM_WAVE_PLAY FRAMES, BANK, ADDR, SIZE
+        .db OP_VM_WAVE_PLAY, #>SIZE, #<SIZE, #>ADDR, #<ADDR, #<BANK, #<FRAMES
+.endm
+
 ; --- CAMERA -------------------------------
 
 OP_VM_CAMERA_MOVE_TO     = 0x70

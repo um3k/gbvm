@@ -119,7 +119,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_sound_mastervol,        1}, // 0x63
     {vm_sound_play,             7}, // 0x64
     {vm_music_routine,          4}, // 0x65
-    {0, 0},
+    {vm_wave_play,              6}, // 0x66
     {0, 0},
     {0, 0},
     {0, 0},

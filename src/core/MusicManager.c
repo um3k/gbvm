@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "MusicManager.h"
+#include "sample_player.h"
 #include "BankData.h"
 #include "vm.h"
 
@@ -104,7 +105,12 @@ void music_mute(UBYTE channels) __nonbanked {
 #endif
 }
 
-void music_update() __nonbanked {
+UINT8 ISR_counter = 0;
+void music_update() __nonbanked {    
+    sample_play_isr();
+    ISR_counter++; ISR_counter &= 3;
+    if (ISR_counter) return;
+
     if (tone_frames) {
         if (--tone_frames == 0) {
             sound_stop(sound_channel);
@@ -130,6 +136,14 @@ void music_update() __nonbanked {
 const UINT8 FX_REG_SIZES[]  = {5, 4, 5, 4};
 const UINT8 FX_ADDR_LO[]    = {0x10, 0x16, 0x1a, 0x20};
 const UINT8 channel_masks[] = {0x0e, 0x0d, 0x0b, 0x07};
+
+void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
+    if (tone_frames) return;                        // exit if sound is already playing.
+    if (frames == 0) return;                        // exit if length in frames is zero
+    music_mute(channel_mask & channel_masks[2]);
+    set_sample(bank, sample, size);
+    tone_frames = frames;
+}
 
 void sound_play(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
     if (tone_frames) return;                        // exit if sound is already playing.
