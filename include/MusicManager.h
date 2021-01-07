@@ -84,6 +84,6 @@ void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked;
  * 
  * @param channel sound channel
  */
-void sound_stop(UBYTE channel) __banked;
+void sound_stop(UBYTE channel) __nonbanked;
 
 #endif

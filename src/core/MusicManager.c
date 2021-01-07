@@ -194,6 +194,7 @@ void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
     if (frames == 0) return;                        // exit if length in frames is zero
     music_mute(channel_mask & channel_masks[2]);
     set_sample(bank, sample, size);
+    sound_channel = 3;
     tone_frames = frames;
 }
 
@@ -209,11 +210,17 @@ void sound_play(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
     tone_frames = frames;
 }
 
-void sound_stop(UBYTE channel) __banked {
+void sound_stop(UBYTE channel) __nonbanked {
     switch (channel) {
         case 1: NR12_REG = 0x00; break; 
         case 2: NR22_REG = 0x00; break; 
-        case 3: NR32_REG = 0x00; break;         // set volume 0 
+        case 3: {
+            NR32_REG = 0x00;                    // set volume 0
+#ifdef GBT_PLAYER      
+            gbt_reset_ch3_instrument();
+#endif             
+            break;
+        } 
         case 4: NR42_REG = 0x00; break;         // would that work?
     }
 }
