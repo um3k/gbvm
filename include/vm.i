@@ -348,6 +348,11 @@ OP_VM_ACTOR_SET_POS     = 0x35
         .db OP_VM_ACTOR_SET_POS, #>IDX, #<IDX
 .endm
 
+OP_VM_ACTOR_EMOTE       = 0x36
+.macro VM_ACTOR_EMOTE ACTOR, AVATAR_BANK, AVATAR
+        .db OP_VM_ACTOR_EMOTE, #>AVATAR, #<AVATAR, #<AVATAR_BANK, #>ACTOR, #<ACTOR
+.endm
+
 ; --- UI ------------------------------------------
 
 OP_VM_LOAD_TEXT         = 0x40
