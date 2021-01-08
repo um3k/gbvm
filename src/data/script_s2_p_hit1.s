@@ -23,9 +23,8 @@ _script_s2_p_hit1::
 
         ; Emote
         VM_PUSH                 1
-        VM_PUSH                 ___bank_spritesheet_1
-        VM_PUSH                 _spritesheet_1
-        VM_INVOKE               b_vm_actor_emote, _vm_actor_emote, 3, .ARG2
+        VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
+        VM_POP                  1
 
         ; Stop Script
         VM_STOP
