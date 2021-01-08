@@ -130,8 +130,7 @@ void process_VM() {
                     case EXCEPTION_LOAD: {
                         fade_out_modal();
                         data_load();
-                        load_scene(current_scene.ptr, current_scene.bank, FALSE);
-                        fade_in = TRUE;
+                        fade_in = !(load_scene(current_scene.ptr, current_scene.bank, FALSE));
                         break;
                     }
                     default: {
