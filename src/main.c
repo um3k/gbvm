@@ -18,6 +18,7 @@
 #include "vm.h"
 #include "VM_Exceptions.h"
 #include "StatesCaller.h"
+#include "LoadSave.h"
 #ifdef SGB
     #include "SGBBorder.h"
     #include "data/border.h"
@@ -122,6 +123,15 @@ void process_VM() {
                         fade_in = !(load_scene(scene.ptr, scene.bank));
                         break;
                     }
+                    case EXCEPTION_SAVE: {
+                        data_save();
+                        continue;
+                    }
+                    case EXCEPTION_LOAD: {
+                        data_load();
+                        // that should be similar to EXCEPTION_CHANGE_SCENE
+                        continue;
+                    }
                     default: {
                         // nothing: suppress any unknown exception
                         continue;
@@ -151,6 +161,8 @@ void main() {
     memset((UBYTE *)0x8000, 0, 384 * 16);
     #endif
 #endif
+    // keep RAM always enabled
+    ENABLE_RAM_MBC5;
 
     LCDC_REG = 0x67;
 

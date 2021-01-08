@@ -6,6 +6,8 @@
 ; exception ID's
 EXCEPTION_RESET	        = 1
 EXCEPTION_CHANGE_SCENE	= 2
+EXCEPTION_SAVE          = 3
+EXCEPTION_LOAD          = 4;
 
 ; aliases
 .ARG0 = -1

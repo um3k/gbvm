@@ -3,5 +3,7 @@
 
 #define EXCEPTION_RESET 1
 #define EXCEPTION_CHANGE_SCENE 2
+#define EXCEPTION_SAVE 3
+#define EXCEPTION_LOAD 4
 
 #endif
