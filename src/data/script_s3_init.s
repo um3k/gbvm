@@ -34,7 +34,7 @@ _script_s3_init::
         VM_FADE_OUT             1
         VM_PUSH                 0
         VM_PUSH                 192
-        VM_PUSH                 72
+        VM_PUSH                 80
         VM_ACTOR_SET_POS        .ARG2
         VM_POP                  3
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3    ; sizeof(far_ptr_t) == 3

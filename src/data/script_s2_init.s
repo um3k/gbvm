@@ -10,13 +10,20 @@ ___bank_script_s2_init = 255
 .globl ___bank_script_s2_init
 .globl ___bank_script_s2_timer1, _script_s2_timer1 
 
+ACTOR = -4
+
 _script_s2_init::
         VM_LOCK
 
+        ; Local Actor
+        VM_PUSH                 0
+        VM_PUSH                 256
+        VM_PUSH                 256
+        VM_PUSH                 ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
+
         ; Actor 1 Face Right
-        VM_PUSH                 1
-        VM_ACTOR_SET_DIR        .ARG0, .DIR_LEFT, 0
-        VM_POP                  1
+        VM_SET_CONST            ACTOR, 1
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
 
         ; Wait 1 frame to allow actors to rerender before fade in starts
         VM_PUSH                 1
@@ -26,9 +33,10 @@ _script_s2_init::
         VM_FADE_IN              .UI_MODAL
 
         ; Emote
-        VM_PUSH                 0
-        VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
-        VM_POP                  1
+        VM_SET_CONST            ACTOR, 0
+        VM_ACTOR_EMOTE          ACTOR, ___bank_spritesheet_1, _spritesheet_1
+
+        VM_ACTOR_MOVE_TO        ACTOR
         
         ; Text Dialogue
         VM_LOAD_TEXT            0

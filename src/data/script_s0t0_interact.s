@@ -17,7 +17,7 @@ _script_s0t0_interact::
 
         VM_PUSH                 0
         VM_PUSH                 192
-        VM_PUSH                 72
+        VM_PUSH                 80
         VM_ACTOR_SET_POS        .ARG2
         VM_POP                  3
 

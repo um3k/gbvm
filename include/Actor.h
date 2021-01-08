@@ -23,6 +23,13 @@
 
 #define PLAYER_HURT_IFRAMES   20
 
+typedef enum {
+  CHECK_DIR_LEFT = 1,
+  CHECK_DIR_RIGHT,
+  CHECK_DIR_UP,
+  CHECK_DIR_DOWN,
+} col_check_dir_e;
+
 extern actor_t actors[MAX_ACTORS];
 extern actor_t *actors_active_head;
 extern actor_t *actors_inactive_head;
@@ -48,5 +55,6 @@ inline void player_register_collision_with(actor_t *actor) {
     player_collision_actor = actor;
 }
 void actors_handle_player_collision() __banked;
+UBYTE check_collision_in_direction(UBYTE start_x, UBYTE start_y, UBYTE end_tile, col_check_dir_e check_dir) __banked;
 
 #endif

@@ -6,6 +6,7 @@
 #include "GameTime.h"
 #include "DataManager.h"
 #include "Scroll.h"
+#include "Math.h"
 
 #define EMOTE_BOUNCE_FRAMES        15
 #define EMOTE_TOTAL_FRAMES         60
@@ -36,21 +37,46 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     act_move_to_t * params = VM_REF_TO_PTR(idx);
     actor = actors + params->ID;
 
-    // if (start && stack_frame[4]) {
-        // Check for collisions and modify
-        // stack_frame[1] (x) and stack_frame[2] (y)
-        // if obstacle is in the way
-    // }
+    if (THIS->flags == 0) {
+        THIS->flags = 1;
+        // Check for collisions in path
+        if (params->ATTR & ACTOR_ATTR_CHECK_COLL) {
+            if (params->ATTR & ACTOR_ATTR_H_FIRST) {
+                // Check for horizontal collision
+                if (actor->x != params->X) {
+                    UBYTE check_dir = (actor->x > params->X) ? CHECK_DIR_LEFT : CHECK_DIR_RIGHT;
+                    params->X = check_collision_in_direction(DIV_8(actor->x), DIV_8(actor->y), DIV_8(params->X), check_dir) * 8;
+                }
+                // Check for vertical collision
+                if (actor->y != params->Y) {
+                    UBYTE check_dir = (actor->y > params->Y) ? CHECK_DIR_UP : CHECK_DIR_DOWN;
+                    params->Y = check_collision_in_direction(DIV_8(params->X), DIV_8(actor->y), DIV_8(params->Y), check_dir) * 8;
+                }
+            } else {
+                // Check for vertical collision
+                if (actor->y != params->Y) {
+                    UBYTE check_dir = (actor->y > params->Y) ? CHECK_DIR_UP : CHECK_DIR_DOWN;
+                    params->Y = check_collision_in_direction(DIV_8(actor->x), DIV_8(actor->y), DIV_8(params->Y), check_dir) * 8;
+                }
+                // Check for horizontal collision
+                if (actor->x != params->X) {
+                    UBYTE check_dir = (actor->x > params->X) ? CHECK_DIR_LEFT : CHECK_DIR_RIGHT;
+                    params->X = check_collision_in_direction(DIV_8(actor->x), DIV_8(params->Y), DIV_8(params->X), check_dir) * 8;
+                }
+            }
+        }
+    }
 
     // Actor reached destination
     if ((actor->x == params->X) && (actor->y == params->Y)) {
+        THIS->flags = 0;
         actor_set_anim(actor, FALSE);
         return;
     }
 
     // Actor not at horizontal destination
     if ((actor->x != params->X) &&
-        (!(params->ATTR & ACTOR_ATTR_H_FIRST) || (actor->y == params->Y))) {
+        ((params->ATTR & ACTOR_ATTR_H_FIRST) || (actor->y == params->Y))) {
         if (actor->x < params->X) {
             new_dir_x = 1;
         } else if (actor->x > params->X) {
@@ -58,7 +84,6 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
         }
     } else {
         // Actor not at vertical destination
-        // actor->dir.x = 0;
         if (actor->y < params->Y) {
             new_dir_y = 1;
         } else if (actor->y > params->Y) {
