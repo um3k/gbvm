@@ -64,6 +64,11 @@ typedef struct SCRIPT_CTX {
 // shared context memory
 extern UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)];  // maximum stack depth is 16 words
 
+// contexts for executing scripts 
+// ScriptRunnerInit(), ExecuteScript(), ScriptRunnerUpdate() manipulate these contexts
+extern SCRIPT_CTX CTXS[SCRIPT_MAX_CONTEXTS];
+extern SCRIPT_CTX * first_ctx, * free_ctxs;
+
 // lock state 
 extern UBYTE vm_lock_state;
 // exception flag and parameters

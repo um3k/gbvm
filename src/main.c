@@ -128,9 +128,11 @@ void process_VM() {
                         continue;
                     }
                     case EXCEPTION_LOAD: {
+                        fade_out_modal();
                         data_load();
                         // that should be similar to EXCEPTION_CHANGE_SCENE
-                        continue;
+                        fade_in = TRUE;
+                        break;
                     }
                     default: {
                         // nothing: suppress any unknown exception
@@ -161,6 +163,8 @@ void main() {
     memset((UBYTE *)0x8000, 0, 384 * 16);
     #endif
 #endif
+    memset(actors, 0, sizeof(actors));
+
     // keep RAM always enabled
     ENABLE_RAM_MBC5;
 
