@@ -103,7 +103,7 @@ void process_VM() {
                         // reset everything
                         engine_reset();
                         // load start scene
-                        fade_in = !(load_scene(start_scene.ptr, start_scene.bank));
+                        fade_in = !(load_scene(start_scene.ptr, start_scene.bank, TRUE));
                         // load initial player
                         load_player();
                         break;
@@ -120,7 +120,7 @@ void process_VM() {
                         // load scene
                         far_ptr_t scene;
                         ReadBankedFarPtr(&scene, vm_exception_params_offset, vm_exception_params_bank);
-                        fade_in = !(load_scene(scene.ptr, scene.bank));
+                        fade_in = !(load_scene(scene.ptr, scene.bank, TRUE));
                         break;
                     }
                     case EXCEPTION_SAVE: {
@@ -130,7 +130,7 @@ void process_VM() {
                     case EXCEPTION_LOAD: {
                         fade_out_modal();
                         data_load();
-                        // that should be similar to EXCEPTION_CHANGE_SCENE
+                        load_scene(current_scene.ptr, current_scene.bank, FALSE);
                         fade_in = TRUE;
                         break;
                     }

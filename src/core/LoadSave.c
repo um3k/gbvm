@@ -7,6 +7,7 @@
 #include "actor.h"
 #include "vm.h"
 #include "events.h"
+#include "DataManager.h"
 
 #define SAVE(A) memcpy(save_data, &(A), sizeof(A)), save_data+=sizeof(A) 
 #define LOAD(A) memcpy(&(A), save_data, sizeof(A)), save_data+=sizeof(A) 
@@ -24,6 +25,8 @@ void data_save() __banked {
     UBYTE * save_data = (UBYTE *)0xA000;
     *((UINT32 *)save_data) = signature; save_data += sizeof(signature);
 
+    // scene
+    SAVE(current_scene);
     // actors
     SAVE(actors);
     SAVE(actors_active_head); SAVE(actors_inactive_head); SAVE(player_moving); SAVE(player_collision_actor);
@@ -37,6 +40,8 @@ UBYTE data_load() __banked {
     SWITCH_RAM_MBC5(0);
     UBYTE * save_data = (UBYTE *)0xA000 + sizeof(signature);
 
+    // scene
+    LOAD(current_scene);
     // actors
     LOAD(actors); 
     LOAD(actors_active_head); LOAD(actors_inactive_head); LOAD(player_moving); LOAD(player_collision_actor);
