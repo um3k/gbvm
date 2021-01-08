@@ -7,6 +7,7 @@
 #include "actor.h"
 #include "vm.h"
 #include "events.h"
+#include "MusicManager.h"
 
 #define SAVE(A) memcpy(save_data, &(A), sizeof(A)), save_data+=sizeof(A) 
 #define LOAD(A) memcpy(&(A), save_data, sizeof(A)), save_data+=sizeof(A) 
@@ -30,6 +31,12 @@ void data_save() __banked {
     // VM contexts
     SAVE(CTXS);
     SAVE(first_ctx); SAVE(free_ctxs); SAVE(vm_lock_state);
+    // intupt events
+    SAVE(input_events); SAVE(input_slots); 
+    // timers
+    SAVE(timer_events); SAVE(timer_values);
+    // music events
+    SAVE(music_events);
 }
 
 UBYTE data_load() __banked {
@@ -43,6 +50,12 @@ UBYTE data_load() __banked {
     // VM contexts
     LOAD(CTXS);
     LOAD(first_ctx); LOAD(free_ctxs); LOAD(vm_lock_state);
+    // intupt events
+    LOAD(input_events); LOAD(input_slots); 
+    // timers
+    LOAD(timer_events); LOAD(timer_values);
+    // music events
+    LOAD(music_events);
 
     return TRUE;
 }
