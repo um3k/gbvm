@@ -1,5 +1,5 @@
 #include "data/data_ptrs.h"
-#include "data/scene_2.h"
+#include "data/scene_3.h"
 #include "data/spritesheet_0.h"
 #include "data/palette_0.h"
 #include "data/music_data.h"
@@ -14,7 +14,7 @@ int start_scene_x = 192;
 int start_scene_y = 72;
 char start_scene_dir_x = 1;
 char start_scene_dir_y = 0;
-far_ptr_t start_scene = TO_FAR_PTR_T(scene_2);
+far_ptr_t start_scene = TO_FAR_PTR_T(scene_3);
 far_ptr_t start_player_sprite = TO_FAR_PTR_T(spritesheet_0);
 far_ptr_t start_player_palette = TO_FAR_PTR_T(palette_0);
 unsigned char start_player_move_speed = 1;
