@@ -4,6 +4,7 @@
 #include <gb/gb.h>
 #include "gbs_types.h"
 
+extern far_ptr_t current_scene;
 extern UBYTE image_bank;
 extern UBYTE image_attr_bank;
 extern UBYTE collision_bank;
@@ -25,7 +26,7 @@ void load_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_sprite_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked;
-UBYTE load_scene(const scene_t *scene, UBYTE bank) __banked;
+UBYTE load_scene(const scene_t *scene, UBYTE bank, UBYTE init_data) __banked;
 void load_player() __banked;
 void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked;
 

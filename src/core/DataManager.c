@@ -17,6 +17,7 @@
 #define EMOTE_SPRITE            124
 #define EMOTE_SPRITE_SIZE       4
 
+far_ptr_t current_scene;
 UBYTE image_bank;
 UBYTE image_attr_bank;
 UBYTE collision_bank;
@@ -62,11 +63,14 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) 
     return size;
 }
 
-UBYTE load_scene(const scene_t* scene, UBYTE bank) __banked {
+UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     UBYTE i, k;
 
     scene_t scn;
     MemcpyBanked(&scn, scene, sizeof(scn), bank);
+
+    current_scene.bank = bank;
+    current_scene.ptr = scene;
 
     // Load scene
     scene_type = scn.type;
@@ -89,7 +93,6 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank) __banked {
     //   start_player_palette.bank);
 
     init_sprite_pool();
-    camera_init();
     //   ScriptCtxPoolReset();
     //   UIReset();
     //   RemoveInputScripts();
@@ -120,29 +123,39 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank) __banked {
         }
     }
 
-    // Copy scene player hit scripts to player actor
-    memcpy(&PLAYER.script_hit1, &scn.script_p_hit1, sizeof(far_ptr_t));
-    memcpy(&PLAYER.script_hit2, &scn.script_p_hit2, sizeof(far_ptr_t));
-    memcpy(&PLAYER.script_hit3, &scn.script_p_hit3, sizeof(far_ptr_t));
+    if (init_data) {
+        camera_init();
 
-    player_moving = FALSE;
-    PLAYER.animate = FALSE;
+        // Copy scene player hit scripts to player actor
+        memcpy(&PLAYER.script_hit1, &scn.script_p_hit1, sizeof(far_ptr_t));
+        memcpy(&PLAYER.script_hit2, &scn.script_p_hit2, sizeof(far_ptr_t));
+        memcpy(&PLAYER.script_hit3, &scn.script_p_hit3, sizeof(far_ptr_t));
 
-    // Load actors
-    actors_active_head = 0;
-    actors_inactive_head = 0;
-    // Add player to inactive
-    PLAYER.enabled = FALSE;
-    DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
-    activate_actor(&PLAYER);
-    if (actors_len != 0) {
-        actor_t * actor = actors + 1;
-        MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
-        for (i = actors_len - 1; i != 0; i--, actor++) {
-            actor->enabled = FALSE;
-            DL_PUSH_HEAD(actors_inactive_head, actor);
-            // Enable all pinned actors by default
-            if (actor->pinned) activate_actor(actor);
+        player_moving = FALSE;
+        PLAYER.animate = FALSE;
+
+        // Load actors
+        actors_active_head = 0;
+        actors_inactive_head = 0;
+        // Add player to inactive
+        PLAYER.enabled = FALSE;
+        DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
+        activate_actor(&PLAYER);
+        if (actors_len != 0) {
+            actor_t * actor = actors + 1;
+            MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
+            for (i = actors_len - 1; i != 0; i--, actor++) {
+                actor->enabled = FALSE;
+                DL_PUSH_HEAD(actors_inactive_head, actor);
+                // Enable all pinned actors by default
+                if (actor->pinned) activate_actor(actor);
+            }
+        }
+    } else {
+        actor_t *actor = actors_active_head;
+        while (actor) {
+            actor_reset_dir(actor);
+            actor = actor->next;
         }
     }
 
@@ -157,7 +170,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank) __banked {
     last_trigger_tx = 0xFF;
     last_trigger_ty = 0xFF;
 
-    if (scn.script_init.ptr) {
+    if (init_data && scn.script_init.ptr) {
         return (script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0) != 0);
     }
     return FALSE;

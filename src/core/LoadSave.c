@@ -8,6 +8,7 @@
 #include "vm.h"
 #include "events.h"
 #include "MusicManager.h"
+#include "DataManager.h"
 
 const UINT32 signature = 0x45564153;
 
@@ -20,6 +21,8 @@ typedef struct save_point_t {
 #define SAVEPOINTS_END {0, 0}
 
 const save_point_t save_points[] = {
+    // scene
+    SAVEPOINT(current_scene),
     // actors
     SAVEPOINT(actors),
     SAVEPOINT(actors_active_head), SAVEPOINT(actors_inactive_head), SAVEPOINT(player_moving), SAVEPOINT(player_collision_actor),

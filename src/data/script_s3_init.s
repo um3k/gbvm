@@ -27,6 +27,7 @@ _script_s3_init::
         ; If Variable True
         VM_IF_CONST .EQ         VAR_S3_TITLESCREEN_NEWGAME, 1, 1$, 0
         ; Load Game
+        VM_FADE_OUT             1
         VM_RAISE                EXCEPTION_LOAD, 0
 1$:
         ; New Game
