@@ -9,10 +9,32 @@
 #include "events.h"
 #include "MusicManager.h"
 
-#define SAVE(A) memcpy(save_data, &(A), sizeof(A)), save_data+=sizeof(A) 
-#define LOAD(A) memcpy(&(A), save_data, sizeof(A)), save_data+=sizeof(A) 
-
 const UINT32 signature = 0x45564153;
+
+typedef struct save_point_t {
+    void * target;
+    size_t size;
+} save_point_t;
+
+#define SAVEPOINT(A) {&(A), sizeof(A)}
+#define SAVEPOINTS_END {0, 0}
+
+const save_point_t save_points[] = {
+    // actors
+    SAVEPOINT(actors),
+    SAVEPOINT(actors_active_head), SAVEPOINT(actors_inactive_head), SAVEPOINT(player_moving), SAVEPOINT(player_collision_actor),
+    // VM contexts
+    SAVEPOINT(CTXS),
+    SAVEPOINT(first_ctx), SAVEPOINT(free_ctxs), SAVEPOINT(vm_lock_state),
+    // intupt events
+    SAVEPOINT(input_events), SAVEPOINT(input_slots), 
+    // timers
+    SAVEPOINT(timer_events), SAVEPOINT(timer_values),
+    // music events
+    SAVEPOINT(music_events),
+    // terminator
+    SAVEPOINTS_END
+};
 
 UBYTE data_is_saved() __banked {
     SWITCH_RAM_MBC5(0);
@@ -24,19 +46,11 @@ void data_save() __banked {
     SWITCH_RAM_MBC5(0);
     UBYTE * save_data = (UBYTE *)0xA000;
     *((UINT32 *)save_data) = signature; save_data += sizeof(signature);
-
-    // actors
-    SAVE(actors);
-    SAVE(actors_active_head); SAVE(actors_inactive_head); SAVE(player_moving); SAVE(player_collision_actor);
-    // VM contexts
-    SAVE(CTXS);
-    SAVE(first_ctx); SAVE(free_ctxs); SAVE(vm_lock_state);
-    // intupt events
-    SAVE(input_events); SAVE(input_slots); 
-    // timers
-    SAVE(timer_events); SAVE(timer_values);
-    // music events
-    SAVE(music_events);
+    
+    for(const save_point_t * point = save_points; (point->target); point++) {
+        memcpy(save_data, point->target, point->size);
+        save_data += point->size;  
+    }   
 }
 
 UBYTE data_load() __banked {
@@ -44,18 +58,10 @@ UBYTE data_load() __banked {
     SWITCH_RAM_MBC5(0);
     UBYTE * save_data = (UBYTE *)0xA000 + sizeof(signature);
 
-    // actors
-    LOAD(actors); 
-    LOAD(actors_active_head); LOAD(actors_inactive_head); LOAD(player_moving); LOAD(player_collision_actor);
-    // VM contexts
-    LOAD(CTXS);
-    LOAD(first_ctx); LOAD(free_ctxs); LOAD(vm_lock_state);
-    // intupt events
-    LOAD(input_events); LOAD(input_slots); 
-    // timers
-    LOAD(timer_events); LOAD(timer_values);
-    // music events
-    LOAD(music_events);
+    for(const save_point_t * point = save_points; (point->target); point++) {
+        memcpy(point->target, save_data, point->size);    
+        save_data += point->size;  
+    }   
 
     return TRUE;
 }
