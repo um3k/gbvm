@@ -18,7 +18,7 @@ extern far_ptr_t start_scene;
 extern far_ptr_t start_player_sprite;
 extern far_ptr_t start_player_palette;
 extern unsigned char start_player_move_speed;
-extern unsigned char start_player_anim_speed;
+extern unsigned char start_player_anim_tick;
 
 // Engine fields
 extern WORD plat_min_vel;
@@ -33,6 +33,5 @@ extern WORD plat_hold_grav;
 extern WORD plat_max_fall_vel;
 extern UBYTE topdown_grid;
 extern UBYTE fade_style;
-extern UBYTE *engine_fields_addr;
 
 #endif

@@ -21,7 +21,6 @@ const struct actor_t scene_2_actors[] = {
     .sprite_type = SPRITE_TYPE_ACTOR,
     .palette = 0,
     .n_frames = 2,
-    .initial_frame = 0,
     .animate = FALSE,
     .move_speed = 1,
     .anim_tick = 7,

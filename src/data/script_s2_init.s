@@ -2,6 +2,7 @@
 .include "data/game_globals.i"
 
 .globl ___bank_spritesheet_1, _spritesheet_1
+.globl b_wait_frames, _wait_frames
 
 .area _CODE_255
 
@@ -14,8 +15,12 @@ _script_s2_init::
 
         ; Actor 1 Face Right
         VM_PUSH                 1
-        VM_ACTOR_SET_DIR        .ARG0, .DIR_RIGHT, 0
+        VM_ACTOR_SET_DIR        .ARG0, .DIR_LEFT, 0
         VM_POP                  1
+
+        ; Wait 1 frame to allow actors to rerender before fade in starts
+        VM_PUSH                 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         ; Fade IN
         VM_FADE_IN              .UI_MODAL
