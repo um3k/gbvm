@@ -185,10 +185,9 @@ void load_player() __banked {
     PLAYER.dir_y = start_scene_dir_y;    
     PLAYER.sprite = 0;
     PLAYER.palette = PLAYER_PALETTE;
-    PLAYER.initial_frame = 0;
     PLAYER.animate = FALSE;
-    PLAYER.move_speed = 1;
-    PLAYER.anim_tick = 7;
+    PLAYER.move_speed = start_player_move_speed;
+    PLAYER.anim_tick = start_player_anim_tick;
     PLAYER.frame = 0;
     PLAYER.frame_start = 0;
     PLAYER.frame_end = 4;

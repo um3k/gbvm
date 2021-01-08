@@ -44,9 +44,7 @@ typedef struct actor_t
   UINT8 sprite;
   sprite_type_e sprite_type;
   UINT8 palette;
-  UINT8 n_frames, initial_frame;
-  UINT8 direction;
-  UINT8 anim_speed;
+  UINT8 n_frames;
   far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
 
   // Collisions
