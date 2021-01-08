@@ -12,7 +12,9 @@ void init_sprite_pool() __banked
     UBYTE j = (i << 1);
     sprites_pool[MAX_SPRITES - i] = j;
     move_sprite(j, 0, 0);
-    move_sprite(j + 1, 0, 0);    
+    move_sprite(j + 1, 0, 0);
+    set_sprite_prop(j, 0);
+    set_sprite_prop(j + 1, 0);    
   }
   sprites_pool_next = MAX_SPRITES - 1;
 }
