@@ -27,9 +27,8 @@ _script_s2_init::
 
         ; Emote
         VM_PUSH                 0
-        VM_PUSH                 ___bank_spritesheet_1
-        VM_PUSH                 _spritesheet_1
-        VM_INVOKE               b_vm_actor_emote, _vm_actor_emote, 3, .ARG2
+        VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
+        VM_POP                  1
         
         ; Text Dialogue
         VM_LOAD_TEXT            0

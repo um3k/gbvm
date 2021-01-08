@@ -38,6 +38,7 @@ typedef struct SCRIPT_CTX {
     // waitable state
     UBYTE waitable;
     UBYTE lock_count;
+    UBYTE flags;
 } SCRIPT_CTX;
 
 #define INSTRUCTION_SIZE 1
