@@ -5,6 +5,7 @@
 
 #include "gbs_types.h"
 #include "data/script_s0a2_interact.h"
+#include "data/script_s0a5_interact.h"
 
 const void __at(255) __bank_scene_0_actors;
 
@@ -119,5 +120,28 @@ const struct actor_t scene_0_actors[] = {
     .pinned = FALSE,
     .collision_group = 0,
     .collision_enabled = TRUE    
+  },
+  {
+    // Savepoint,
+    .x = 104,
+    .y = 88,
+    .dir_x = 0,
+    .dir_y = 1,
+    .sprite_no = 0,
+    .sprite = 12,
+    .sprite_type = 0,
+    .palette = 0,
+    .n_frames = 2,
+    .initial_frame = 0,
+    .animate = TRUE,
+    .move_speed = 1,
+    .anim_tick = 31,
+    .frame = 48,
+    .frame_start = 48,
+    .frame_end = 56,
+    .pinned = FALSE,
+    .collision_group = 0,
+    .collision_enabled = TRUE,
+    .script = TO_FAR_PTR_T(script_s0a5_interact)
   }
 };
