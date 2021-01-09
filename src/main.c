@@ -23,6 +23,9 @@
     #include "SGBBorder.h"
     #include "data/border.h"
 #endif
+#ifdef BATTERYLESS
+    #include "flasher.h"
+#endif
 
 #include "data/data_ptrs.h"
 
@@ -150,6 +153,9 @@ void process_VM() {
 }
 
 void main() {
+#ifdef BATTERYLESS
+    restore_sram_bank(0);
+#endif
 #ifdef SGB
     set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
                    SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 

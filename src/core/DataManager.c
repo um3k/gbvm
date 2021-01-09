@@ -70,7 +70,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     MemcpyBanked(&scn, scene, sizeof(scn), bank);
 
     current_scene.bank = bank;
-    current_scene.ptr = scene;
+    current_scene.ptr = (void *)scene;
 
     // Load scene
     scene_type = scn.type;

@@ -9,6 +9,9 @@
 #include "events.h"
 #include "MusicManager.h"
 #include "DataManager.h"
+#ifdef BATTERYLESS
+    #include "flasher.h"
+#endif
 
 const UINT32 signature = 0x45564153;
 
@@ -53,7 +56,10 @@ void data_save() __banked {
     for(const save_point_t * point = save_points; (point->target); point++) {
         memcpy(save_data, point->target, point->size);
         save_data += point->size;  
-    }   
+    }
+#ifdef BATTERYLESS
+    save_sram(1);
+#endif
 }
 
 UBYTE data_load() __banked {

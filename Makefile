@@ -22,9 +22,15 @@ LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
 LFLAGS = -Wl-yt0x1B $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
+PACKFLAGS = -b 4 -f 255 -e rel -c
+
 #--- del ----
 CFLAGS += -DSGB -DDEVBUILD
 LFLAGS += -Wm-ys
+
+PACKFLAGS += -a 4
+BATTERYLESS = 1
+CFLAGS += -DBATTERYLESS
 #------------
 
 TARGET = $(ROM_BUILD_DIR)/rom.gb
@@ -75,6 +81,12 @@ profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
 
+batteryless:
+	$(eval PACKFLAGS += -a 4)
+	$(eval BATTERYLESS = 1)
+	$(eval CFLAGS += -DBATTERYLESS)
+	@echo "BETTERYLESS SAVE ON"
+
 directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
 
 $(ROM_BUILD_DIR):
@@ -118,7 +130,8 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -b 4 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
+	$(if $(BATTERYLESS),$(eval LFLAGS += -Wl-g__start_save=$(shell expr $(CART_SIZE) - 4 )),)
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
@@ -143,7 +156,7 @@ symbols:
 
 test: directories $(OBJS) $(OBJDIR)/test_main.o $(TEST_DIR)/*.json
 	@echo "Running tests..."
-	$(eval CART_SIZE=$(shell $(GBSPACK) -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
 	@for file in $(patsubst %.json,%,$(filter %.json,$^))  ; do \
 		echo "$${file}"; \
 		$(CC) $(CFLAGS) -c -o $(OBJDIR)/$${file/test\//}.o $${file}.c; \
