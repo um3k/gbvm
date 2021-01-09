@@ -1,6 +1,6 @@
 #pragma bank 255
 
-// Scene: Scene 3
+// Scene: Title Screen
 
 #include "gbs_types.h"
 #include "data/background_3.h"
@@ -25,5 +25,4 @@ const struct scene_t scene_3 = {
   .n_triggers = 0,
   .n_sprites = 0,
   .script_init = TO_FAR_PTR_T(script_s3_init)
-
 };

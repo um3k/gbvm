@@ -93,11 +93,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     //   start_player_palette.bank);
 
     init_sprite_pool();
-    //   ScriptCtxPoolReset();
-    //   UIReset();
-    //   RemoveInputScripts();
     //   ProjectilesInit();
-    //   InitPlayer();
 
     // Load sprites
     k = 24;
