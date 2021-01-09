@@ -9,10 +9,14 @@ ___bank_script_s1a1_interact = 255
 .globl ___bank_script_s1a1_interact
 
 _script_s1a1_interact::
+        VM_LOCK
+
+        ; Local Actor
         VM_PUSH                 0
         VM_PUSH                 0
         VM_PUSH                 0
         VM_PUSH                 0
+
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
         VM_ACTOR_ACTIVATE       ACTOR

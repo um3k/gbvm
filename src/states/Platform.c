@@ -251,6 +251,7 @@ void platform_update() __banked {
   PLAYER.x = (pl_pos_x >> 4) - 4u;
   PLAYER.y = pl_pos_y >> 4;
 
+/*
   // Clamp to screen
   if (PLAYER.x < 0) {
     PLAYER.x = 0;
@@ -272,16 +273,15 @@ void platform_update() __banked {
     pl_vel_y = 0;
     grounded = TRUE;
   }
+*/
 
   actor_set_anim(&PLAYER, (grounded && pl_vel_x != 0) || (on_ladder && pl_vel_y != 0));
 
   // Check for trigger collisions
-  /*
   if (trigger_activate_at(tile_x, tile_y, INPUT_UP_PRESSED)) {
     // Landed on a trigger
     return;
   }
-  */
 
   // Actor Collisions
   /*

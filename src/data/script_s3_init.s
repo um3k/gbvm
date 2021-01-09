@@ -4,7 +4,7 @@
 
 .area _CODE_255
 
-
+.globl ___bank_scene_4, _scene_4
 
 ___bank_script_s3_init = 255
 .globl ___bank_script_s3_init
@@ -33,12 +33,12 @@ _script_s3_init::
         ; New Game
         VM_FADE_OUT             1
         VM_PUSH                 0
-        VM_PUSH                 192
-        VM_PUSH                 80
+        VM_PUSH                 64
+        VM_PUSH                 104
         VM_ACTOR_SET_POS        .ARG2
         VM_POP                  3
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3    ; sizeof(far_ptr_t) == 3
-            IMPORT_FAR_PTR_DATA _scene_2
+            IMPORT_FAR_PTR_DATA _scene_4
 2$:
         ; Stop Script
         VM_STOP

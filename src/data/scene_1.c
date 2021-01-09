@@ -3,7 +3,7 @@
 // Scene: Underground
 
 #include "gbs_types.h"
-#include "data/background_2.h"
+#include "data/background_4.h"
 #include "data/scene_1_collisions.h"
 #include "data/scene_1_colors.h"
 #include "data/palette_2.h"
@@ -19,7 +19,7 @@ const struct scene_t scene_1 = {
   .width = 32,
   .height = 32,
   .type = SCENE_TYPE_TOPDOWN,
-  .background = TO_FAR_PTR_T(background_2),
+  .background = TO_FAR_PTR_T(background_4),
   .collisions = TO_FAR_PTR_T(scene_1_collisions),
   .colors = TO_FAR_PTR_T(scene_1_colors),
   .palette = TO_FAR_PTR_T(palette_2),

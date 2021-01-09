@@ -19,6 +19,7 @@ typedef enum {
 
 typedef enum {
     COLLISION_GROUP_NONE = 0,
+    COLLISION_GROUP_PLAYER = 1,
     COLLISION_GROUP_1 = 2,
     COLLISION_GROUP_2 = 4,
     COLLISION_GROUP_3 = 8,

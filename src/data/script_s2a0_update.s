@@ -11,10 +11,12 @@ ___bank_script_s2a0_update = 255
 .globl ___bank_script_s2a0_update
 
 _script_s2a0_update::
+        ; Local Actor
         VM_PUSH                 0
         VM_PUSH                 0
         VM_PUSH                 0
         VM_PUSH                 0
+
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1

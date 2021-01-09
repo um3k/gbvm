@@ -2,16 +2,16 @@
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl ___bank_scene_1, _scene_1
+.globl ___bank_scene_2, _scene_2
 
 .area _CODE_255
 
 ACTOR = -4
 
-___bank_script_s2t0_interact = 255
-.globl ___bank_script_s2t0_interact
+___bank_script_s4t0_interact = 255
+.globl ___bank_script_s4t0_interact
 
-_script_s2t0_interact::
+_script_s4t0_interact::
         VM_LOCK
 
         ; Local Actor
@@ -23,11 +23,11 @@ _script_s2t0_interact::
         ; Load Scene
         VM_FADE_OUT             2
         VM_SET_CONST            ACTOR, 0
-        VM_SET_CONST            ^/(ACTOR + 1)/, 168
-        VM_SET_CONST            ^/(ACTOR + 2)/, 232
+        VM_SET_CONST            ^/(ACTOR + 1)/, 216
+        VM_SET_CONST            ^/(ACTOR + 2)/, 208
         VM_ACTOR_SET_POS        ACTOR
-        VM_ACTOR_SET_DIR        ACTOR, 0, .DIR_UP
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
-            IMPORT_FAR_PTR_DATA _scene_1
+            IMPORT_FAR_PTR_DATA _scene_2
         ; Stop Script
         VM_STOP
