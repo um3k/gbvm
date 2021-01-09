@@ -153,6 +153,9 @@ void process_VM() {
 }
 
 void main() {
+    // keep RAM always enabled
+    ENABLE_RAM_MBC5;
+
 #ifdef BATTERYLESS
     restore_sram_bank(0);
 #endif
@@ -169,9 +172,6 @@ void main() {
     #endif
 #endif
     memset(actors, 0, sizeof(actors));
-
-    // keep RAM always enabled
-    ENABLE_RAM_MBC5;
 
     LCDC_REG = 0x67;
 

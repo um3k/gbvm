@@ -22,15 +22,11 @@ LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
 LFLAGS = -Wl-yt0x1B $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
-PACKFLAGS = -b 4 -f 255 -e rel -c
+PACKFLAGS = -b 3 -f 255 -e rel -c
 
 #--- del ----
 CFLAGS += -DSGB -DDEVBUILD
 LFLAGS += -Wm-ys
-
-#PACKFLAGS += -a 4
-#BATTERYLESS = 1
-#CFLAGS += -DBATTERYLESS
 #------------
 
 TARGET = $(ROM_BUILD_DIR)/rom.gb
