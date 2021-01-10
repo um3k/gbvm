@@ -3,6 +3,9 @@
 
 #include <gb/gb.h>
 
+// initializes saving capabilities
+void data_init() __banked;
+
 // check SRAM contains valid save blob
 UBYTE data_is_saved() __banked;
 

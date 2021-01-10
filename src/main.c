@@ -23,9 +23,6 @@
     #include "SGBBorder.h"
     #include "data/border.h"
 #endif
-#ifdef BATTERYLESS
-    #include "flasher.h"
-#endif
 
 #include "data/data_ptrs.h"
 
@@ -153,12 +150,7 @@ void process_VM() {
 }
 
 void main() {
-    // keep RAM always enabled
-    ENABLE_RAM_MBC5;
-
-#ifdef BATTERYLESS
-    restore_sram_bank(0);
-#endif
+    data_init();
 #ifdef SGB
     set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
                    SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 
