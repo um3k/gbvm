@@ -211,12 +211,13 @@ void main() {
     __critical {
 #ifdef PARALLAX
         add_LCD(parallax_LCD_isr);
+        LYC_REG = 0u;
 #else
         add_LCD(LCD_isr);
+        LYC_REG = 144u;
 #endif
         add_VBL(VBL_isr);
         STAT_REG |= 0x40u; 
-        LYC_REG = 144;
 
         #ifdef CGB
             TMA_REG = _cpu == CGB_TYPE ? 0xE0u : 0xC0u;
