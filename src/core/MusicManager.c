@@ -131,13 +131,18 @@ void music_mute(UBYTE channels) __nonbanked {
 UINT8 ISR_counter = 0;
 void music_update() __nonbanked __naked {
 __asm
+        push af
+        push hl
+        push bc
+        push de
+
         call _sample_play_isr
         ld hl, #_ISR_counter
         ld a, (hl)
         inc a
         and #0x03
         ld (hl), a
-        ret nz
+        jr nz, 2$
         
         ld hl, #_tone_frames
         ld a, (hl)
@@ -166,11 +171,11 @@ __asm
 #ifdef HUGE_TRACKER
         ld a, (_music_stopped)
         or a
-        ret nz
+        jr nz, 2$
         ld a, (_current_track_bank)
         ld e, a
         or a
-        ret z
+        jr z, 2$
         ldh a, (__current_bank)
         push af
         ld a, e
@@ -181,7 +186,18 @@ __asm
         ldh (__current_bank), a
         ld (0x2000), a
 #endif
-        ret
+2$:
+        pop de
+        pop bc
+        pop hl
+
+.STAT = 0x41
+3$:     ldh a, (.STAT)
+        and #0x02
+        jr nz, 3$
+
+        pop af
+        reti
 __endasm;
 }
 

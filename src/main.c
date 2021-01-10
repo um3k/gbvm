@@ -26,6 +26,8 @@
 
 #include "data/data_ptrs.h"
 
+#define PARALLAX
+
 extern void __bank_bootstrap_script;
 extern const UBYTE bootstrap_script[];
 
@@ -34,23 +36,51 @@ void LCD_isr() __nonbanked {
     if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
+void parallax_LCD_isr() __nonbanked {
+    switch (LYC_REG) {
+        case 0x00:
+            SCX_REG = draw_scroll_x >> 4; 
+            SCY_REG = 0;
+            LYC_REG = 15;
+            break;
+        case 15:
+            SCX_REG = draw_scroll_x >> 2; 
+            SCY_REG = 0;
+            LYC_REG = 31;
+            break;
+        case 31:
+            SCX_REG = draw_scroll_x; 
+            SCY_REG = draw_scroll_y;
+            LYC_REG = 0x00;
+            break;
+        default:             
+            LYC_REG = 0x00;
+            break;
+    }
+}
+
 void VBL_isr() __nonbanked {
     // Update background scroll in vbl
     // interupt to prevent tearing
+#ifndef PARALLAX
     SCX_REG = draw_scroll_x;
     SCY_REG = draw_scroll_y;
-
+#endif
     if (!hide_sprites) SHOW_SPRITES;
     if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
         LYC_REG = WY_REG = win_pos_y;
         WX_REG = win_pos_x + 7u;
         SHOW_WIN;
+#ifndef PARALLAX
         // enable LCD interrupt only when window is visible
         IE_REG |= LCD_IFLAG;
+#endif
     } else {
         HIDE_WIN;
+#ifndef PARALLAX
         // disable LCD interrupt
         IE_REG &= ~LCD_IFLAG;
+#endif
     }
 }
 
@@ -179,12 +209,15 @@ void main() {
     engine_reset();
 
     __critical {
+#ifdef PARALLAX
+        add_LCD(parallax_LCD_isr);
+#else
         add_LCD(LCD_isr);
+#endif
         add_VBL(VBL_isr);
         STAT_REG |= 0x40u; 
         LYC_REG = 144;
 
-        add_TIM(music_update);
         #ifdef CGB
             TMA_REG = _cpu == CGB_TYPE ? 0xE0u : 0xC0u;
         #else
@@ -192,7 +225,11 @@ void main() {
         #endif
         TAC_REG = 0x07u;
 
+#ifdef PARALLAX
+        IE_REG |= (TIM_IFLAG | LCD_IFLAG);
+#else
         IE_REG |= TIM_IFLAG;
+#endif
     }
     DISPLAY_ON;
 
