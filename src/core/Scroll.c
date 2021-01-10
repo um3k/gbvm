@@ -7,6 +7,8 @@
 #include "DataManager.h"
 #include "GameTime.h"
 #include "Math.h"
+#include "FadeManager.h"
+#include "data/data_ptrs.h"
 
 void scroll_queue_row(INT16 x, INT16 y);
 void scroll_queue_col(INT16 x, INT16 y);
@@ -117,24 +119,23 @@ void scroll_render_screen() {
     draw_scroll_x = scroll_x;
     draw_scroll_y = scroll_y;
 
-    // if (!fade_style)
-    // {
-    DISPLAY_OFF
-    // } else if (!fade_timer == 0)
-    // {
-    //   // Immediately set all palettes black while screen renders.
-    //   #ifdef CGB
-    //   if (_cpu == CGB_TYPE) {
-    //     for (UBYTE c = 0; c != 32; ++c) {
-    //       BkgPaletteBuffer[c] = RGB_BLACK;
-    //     }
-    //     set_bkg_palette(0, 8, BkgPaletteBuffer);
-    //     set_sprite_palette(0, 8, BkgPaletteBuffer);
-    //   } else
-    //   #endif
-    //     OBP0_REG = 0xFF;
-    //     BGP_REG = 0xFF;
-    // }
+    if (!fade_style)
+    {
+        DISPLAY_OFF
+    } else if (!fade_timer == 0)
+    {
+// Immediately set all palettes black while screen renders.
+#ifdef CGB
+        if (_cpu == CGB_TYPE) {
+            for (UBYTE c = 0; c != 32; ++c) {
+                BkgPaletteBuffer[c] = RGB_BLACK;
+            }
+            set_bkg_palette(0, 8, BkgPaletteBuffer);
+            set_sprite_palette(0, 8, BkgPaletteBuffer);
+        } else
+#endif
+        OBP0_REG = 0xFF, BGP_REG = 0xFF;
+    }
 
     // Clear pending rows/ columns
     pending_w_i = 0;
@@ -148,10 +149,10 @@ void scroll_render_screen() {
     game_time = 0;
 
     DISPLAY_ON;
-    // if (!fade_timer == 0) {
-    //   // Screen palate to nornmal if not fading
-    //   ApplyPaletteChange();
-    // }
+    if (!fade_timer == 0) {
+        // Screen palate to nornmal if not fading
+        fade_applypalettechange();
+    }
 
 }
 

@@ -30,4 +30,4 @@ WORD plat_grav = 1792;
 WORD plat_hold_grav = 512;
 WORD plat_max_fall_vel = 20000;
 UBYTE topdown_grid = 8;
-UBYTE fade_style = 0;
+UBYTE fade_style = 1;
