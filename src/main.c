@@ -205,7 +205,7 @@ void main() {
 
     initrand(DIV_REG);
 
-    // reset everything
+    // reset everything (before init interrupts below!)
     engine_reset();
 
     __critical {

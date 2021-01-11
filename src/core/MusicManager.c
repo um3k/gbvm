@@ -10,23 +10,39 @@
 #define MAX_MUSIC 255
 #define MASK_ALL_CHANNELS 0x0f
 
-UBYTE current_index = MAX_MUSIC;
-UBYTE tone_frames   = 0;
-UBYTE channel_mask  = MASK_ALL_CHANNELS;
-UBYTE sound_channel = 0;
+UBYTE current_index;
+UBYTE tone_frames;
+UBYTE channel_mask;
+UBYTE sound_channel;
 #ifdef HUGE_TRACKER
-    UBYTE current_track_bank = 0;
-    UBYTE music_stopped      = TRUE;
-    UBYTE huge_initialized   = FALSE;
+    UBYTE current_track_bank;
+    UBYTE music_stopped;
+    UBYTE huge_initialized;
 #endif
 
 // queue length must be power of 2 
 #define MAX_ROUTINE_QUEUE_LEN 4 
 // music events queue 
 UBYTE routine_queue[MAX_ROUTINE_QUEUE_LEN];
-UBYTE routine_queue_head = 0, routine_queue_tail = 0;
+UBYTE routine_queue_head, routine_queue_tail;
 // music events struct
 script_event_t music_events[4];
+
+void sound_init() __banked {
+    NR52_REG = 0x80; 
+    NR51_REG = 0xFF;
+    NR50_REG = 0x77;
+
+    current_index       = MAX_MUSIC;
+    tone_frames         = 0;
+    channel_mask        = MASK_ALL_CHANNELS;
+    sound_channel       = 0;
+#ifdef HUGE_TRACKER
+    current_track_bank  = 0;
+    music_stopped       = TRUE;
+    huge_initialized    = FALSE;
+#endif
+}
 
 void music_init(UBYTE preserve) __banked {
     if (preserve) {

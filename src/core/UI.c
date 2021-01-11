@@ -69,7 +69,6 @@ static UBYTE ui_line_no;
 far_ptr_t font_image_ptr = TO_FAR_PTR_T(font_image);
 
 void ui_init() __banked {
-
     text_in_speed               = 1;
     text_out_speed              = 1;
     text_draw_speed             = 1;
@@ -88,18 +87,17 @@ void ui_init() __banked {
 
     ui_set_pos(0, MENU_CLOSED_Y);
 
-    avatar_enabled = 0;
-    menu_enabled = 0;
-    win_speed = 1;
-    text_drawn = TRUE;
-    text_draw_speed = 1;
+    avatar_enabled              = 0;
+    menu_enabled                = 0;
+    win_speed                   = 1;
+    text_drawn                  = TRUE;
+    text_draw_speed             = 1;
 
     ui_load_frame_tiles(frame_image, BANK(frame_image));
     ui_load_cursor_tile(cursor_image, BANK(cursor_image));
 
     set_bkg_data(ui_while_tile, 1, ui_white);
     set_bkg_data(ui_black_tile, 1, ui_black);
-
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
