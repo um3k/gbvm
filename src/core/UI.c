@@ -46,29 +46,46 @@ UBYTE menu_enabled;
 UBYTE menu_index;
 UBYTE menu_item_count;
 
-UBYTE text_in_speed = 1;
-UBYTE text_out_speed = 1;
-UBYTE text_draw_speed = 1;
-UBYTE text_ff_joypad = 1;
+UBYTE text_in_speed;
+UBYTE text_out_speed;
+UBYTE text_draw_speed;
+UBYTE text_ff_joypad;
 UBYTE text_ff; 
-UBYTE menu_layout = MENU_LAYOUT_1_COLUMN;
-UBYTE menu_cancel_on_last_option = 0;
-UBYTE menu_cancel_on_b = 0;
+UBYTE menu_layout;
+UBYTE menu_cancel_on_last_option;
+UBYTE menu_cancel_on_b;
 
 unsigned char ui_text_data[80];
 
 // char printer internals
-static UBYTE * ui_text_ptr  = 0;
-static UBYTE * ui_dest_ptr  = 0;
-static UBYTE * ui_dest_base = 0;
-static UBYTE ui_text_width  = 0;
-static UBYTE ui_width_left  = 0;
-static UBYTE ui_tile_no     = 0;
-static UBYTE ui_line_no     = 0;
+static UBYTE * ui_text_ptr;
+static UBYTE * ui_dest_ptr;
+static UBYTE * ui_dest_base;
+static UBYTE ui_text_width;
+static UBYTE ui_width_left;
+static UBYTE ui_tile_no;
+static UBYTE ui_line_no;
 
 far_ptr_t font_image_ptr = TO_FAR_PTR_T(font_image);
 
 void ui_init() __banked {
+
+    text_in_speed               = 1;
+    text_out_speed              = 1;
+    text_draw_speed             = 1;
+    text_ff_joypad              = 1;
+    menu_layout                 = MENU_LAYOUT_1_COLUMN;
+    menu_cancel_on_last_option  = 0;
+    menu_cancel_on_b            = 0;
+
+    ui_text_ptr                 = 0;
+    ui_dest_ptr                 = 0;
+    ui_dest_base                = 0;
+    ui_text_width               = 0;
+    ui_width_left               = 0;
+    ui_tile_no                  = 0;
+    ui_line_no                  = 0;
+
     ui_set_pos(0, MENU_CLOSED_Y);
 
     avatar_enabled = 0;

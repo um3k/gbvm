@@ -41,14 +41,14 @@ void parallax_LCD_isr() __nonbanked {
         case 0x00:
             SCX_REG = draw_scroll_x >> 4; 
             SCY_REG = 0;
-            LYC_REG = 15;
+            LYC_REG = 23;
             break;
-        case 15:
+        case 23:
             SCX_REG = draw_scroll_x >> 2; 
             SCY_REG = 0;
-            LYC_REG = 31;
+            LYC_REG = 47;
             break;
-        case 31:
+        case 47:
             SCX_REG = draw_scroll_x; 
             SCY_REG = draw_scroll_y;
             LYC_REG = 0x00;
