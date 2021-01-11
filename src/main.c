@@ -36,26 +36,35 @@ void LCD_isr() __nonbanked {
     if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
+#define PARALLAX_STEP(start, end, shift)  {start, end, shift}
+
+typedef struct parallax_row_t {
+    UBYTE y;
+    UBYTE next_y;
+    UBYTE shift;
+} parallax_row_t;
+
+parallax_row_t parallax_rows[3] = { PARALLAX_STEP(0, 23, 4), PARALLAX_STEP(23, 47, 2), PARALLAX_STEP(47, 0, 0)};
+parallax_row_t *parallax_row;
+
 void parallax_LCD_isr() __nonbanked {
-    switch (LYC_REG) {
-        case 0x00:
-            SCX_REG = draw_scroll_x >> 4; 
-            SCY_REG = 0;
-            LYC_REG = 23;
-            break;
-        case 23:
-            SCX_REG = draw_scroll_x >> 2; 
-            SCY_REG = 0;
-            LYC_REG = 47;
-            break;
-        case 47:
+    if (LYC_REG == parallax_row->y) {
+        if (parallax_row->shift) {
+            SCX_REG = draw_scroll_x >> parallax_row->shift; 
+            SCY_REG = 0;    
+        } else {
             SCX_REG = draw_scroll_x; 
             SCY_REG = draw_scroll_y;
-            LYC_REG = 0x00;
-            break;
-        default:             
-            LYC_REG = 0x00;
-            break;
+        }
+        if (parallax_row->next_y) {
+            LYC_REG = parallax_row->next_y;
+            parallax_row++;
+        } else {
+            LYC_REG = 0;
+            parallax_row = parallax_rows;
+        }
+    } else {
+            LYC_REG = parallax_row->y;
     }
 }
 
@@ -210,6 +219,7 @@ void main() {
 
     __critical {
 #ifdef PARALLAX
+        parallax_row = parallax_rows;
         add_LCD(parallax_LCD_isr);
         LYC_REG = 0u;
 #else
