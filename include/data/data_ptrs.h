@@ -10,15 +10,15 @@
 
 extern const far_ptr_t music_tracks[];
 
-extern int start_scene_x;
-extern int start_scene_y;
-extern char start_scene_dir_x;
-extern char start_scene_dir_y;
-extern far_ptr_t start_scene;
-extern far_ptr_t start_player_sprite;
-extern far_ptr_t start_player_palette;
-extern unsigned char start_player_move_speed;
-extern unsigned char start_player_anim_tick;
+extern const INT16 start_scene_x;
+extern const INT16 start_scene_y;
+extern const INT8 start_scene_dir_x;
+extern const INT8 start_scene_dir_y;
+extern const far_ptr_t start_scene;
+extern const far_ptr_t start_player_sprite;
+extern const far_ptr_t start_player_palette;
+extern const UBYTE start_player_move_speed;
+extern const UBYTE start_player_anim_tick;
 
 // Engine fields
 extern WORD plat_min_vel;
