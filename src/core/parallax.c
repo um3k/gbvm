@@ -65,7 +65,16 @@ __asm
         ldh (#_SCX_REG), a
         xor a
         ldh (#_SCY_REG), a
-        jr 5$
+5$:
+        pop bc
+        pop hl
+7$:
+        ldh a, (#_STAT_REG)
+        and #0x02
+        jr nz, 7$
+        
+        pop af
+        reti
 4$:
         ld a, (#_draw_scroll_x)
         ldh (#_SCX_REG), a
@@ -75,15 +84,6 @@ __asm
 1$:
         ld a, (hl)
         ldh (#_LYC_REG), a
-5$:
-        pop bc
-        pop hl
-7$:
-        ldh a, (#_STAT_REG)
-        and #0x02
-        jr nz, 7$
-
-        pop af
-        reti
+        jr 5$
 __endasm;
 }
