@@ -9,6 +9,10 @@
 #include "events.h"
 #include "MusicManager.h"
 #include "DataManager.h"
+#ifdef BATTERYLESS
+    #include "BankData.h"
+    #include "flasher.h"
+#endif
 
 const UINT32 signature = 0x45564153;
 
@@ -39,6 +43,19 @@ const save_point_t save_points[] = {
     SAVEPOINTS_END
 };
 
+#ifdef BATTERYLESS
+    extern void _start_save; 
+#endif
+
+void data_init() __banked {
+    ENABLE_RAM_MBC5;
+#ifdef BATTERYLESS
+    UINT32 rom_signarture;
+    MemcpyBanked(&rom_signarture, (void *)0x4000, sizeof(rom_signarture), (UBYTE)&_start_save);
+    if (rom_signarture == signature) restore_sram_bank(0);
+#endif
+}
+
 UBYTE data_is_saved() __banked {
     SWITCH_RAM_MBC5(0);
     UBYTE * save_data = (UBYTE *)0xA000;
@@ -53,7 +70,10 @@ void data_save() __banked {
     for(const save_point_t * point = save_points; (point->target); point++) {
         memcpy(save_data, point->target, point->size);
         save_data += point->size;  
-    }   
+    }
+#ifdef BATTERYLESS
+    save_sram(1);
+#endif
 }
 
 UBYTE data_load() __banked {

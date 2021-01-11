@@ -22,6 +22,8 @@ LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
 LFLAGS = -Wl-yt0x1B $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib
 
+PACKFLAGS = -b 3 -f 255 -e rel -c
+
 #--- del ----
 CFLAGS += -DSGB -DDEVBUILD
 LFLAGS += -Wm-ys
@@ -42,8 +44,6 @@ MDRVR = $(foreach dir,src/core/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.s)))
 MDATA = $(foreach dir,src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
 
 OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) $(ASRC:%.s=$(OBJDIR)/%.o) $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o) $(MDRVR:%.s=$(OBJDIR)/%.o) $(CSTATES:%.c=$(OBJDIR)/%.o) $(ASTATES:%.s=$(OBJDIR)/%.o)
-COREOBJS = $(ACORE:%.s=$(OBJDIR)/%.o) $(CCORE:%.c=$(OBJDIR)/%.o) $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
-#DATAOBJS = $(ADATA:%.s=$(OBJDIR)/%.o) $(CDATA:%.c=$(OBJDIR)/%.o) $(MDATA:%.c=$(OBJDIR)/%.o)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 all: directories $(TARGET) symbols
@@ -74,6 +74,12 @@ super:
 profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
+
+batteryless:
+	$(eval PACKFLAGS += -a 4)
+	$(eval BATTERYLESS = 1)
+	$(eval CFLAGS += -DBATTERYLESS)
+	@echo "BETTERYLESS SAVE ON"
 
 directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
 
@@ -118,7 +124,8 @@ $(OBJDIR)/%.o:	src/%.s
 
 $(REL_OBJS):	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) -b 4 -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
+	$(eval LFLAGS += -Wl-g__start_save=$(shell expr $(CART_SIZE) - 4 ))
 
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 	$(CC) $(LFLAGS) -o $@ $^
@@ -143,7 +150,7 @@ symbols:
 
 test: directories $(OBJS) $(OBJDIR)/test_main.o $(TEST_DIR)/*.json
 	@echo "Running tests..."
-	$(eval CART_SIZE=$(shell $(GBSPACK) -f 255 -e rel -c -o $(REL_OBJDIR) $(OBJS)))
+	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
 	@for file in $(patsubst %.json,%,$(filter %.json,$^))  ; do \
 		echo "$${file}"; \
 		$(CC) $(CFLAGS) -c -o $(OBJDIR)/$${file/test\//}.o $${file}.c; \

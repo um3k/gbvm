@@ -10,15 +10,15 @@ const far_ptr_t music_tracks[] = {
     TO_FAR_PTR_T(music_track_109__Data), {0, 0}
 };
 
-int start_scene_x = 192;
-int start_scene_y = 72;
-char start_scene_dir_x = 1;
-char start_scene_dir_y = 0;
-far_ptr_t start_scene = TO_FAR_PTR_T(scene_3);
-far_ptr_t start_player_sprite = TO_FAR_PTR_T(spritesheet_0);
-far_ptr_t start_player_palette = TO_FAR_PTR_T(palette_0);
-unsigned char start_player_move_speed = 1;
-unsigned char start_player_anim_tick = 7;
+const INT16 start_scene_x = 192;
+const INT16 start_scene_y = 72;
+const INT8 start_scene_dir_x = 1;
+const INT8 start_scene_dir_y = 0;
+const far_ptr_t start_scene = TO_FAR_PTR_T(scene_3);
+const far_ptr_t start_player_sprite = TO_FAR_PTR_T(spritesheet_0);
+const far_ptr_t start_player_palette = TO_FAR_PTR_T(palette_0);
+const UBYTE start_player_move_speed = 1;
+const UBYTE start_player_anim_tick = 7;
 WORD plat_min_vel = 304;
 WORD plat_walk_vel = 6400;
 WORD plat_run_vel = 10496;
