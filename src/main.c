@@ -53,13 +53,13 @@ __asm
         ld a, (hl+)
         ld h, (hl)
         ld l, a
-        ldh a, (_LYC_REG)
+        ldh a, (#_LYC_REG)
         cp (hl)
         jr nz, 1$
         inc hl
 
         ld a, (hl+)
-        ldh (_LYC_REG), a
+        ldh (#_LYC_REG), a
         or a
         ld a, (hl+)
         ld c, a             ; c == shift
@@ -84,6 +84,7 @@ __asm
         srl a
         dec c
         jr nz, 5$
+        
         ldh (#_SCX_REG), a
         xor a
         ldh (#_SCY_REG), a
@@ -95,7 +96,7 @@ __asm
         ret
 1$:
         ld a, (hl)
-        ldh (_LYC_REG), a
+        ldh (#_LYC_REG), a
         ret
 __endasm;
 }
