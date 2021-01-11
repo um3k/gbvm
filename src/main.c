@@ -36,7 +36,7 @@ void LCD_isr() __nonbanked {
     if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
 
-#define PARALLAX_STEP(start, end, shift)  {start, end, shift}
+#define PARALLAX_STEP(start, end, shift)  {(start)?(((start) << 3) - 1):0, (end)?(((end) << 3) - 1):0, (shift)}
 
 typedef struct parallax_row_t {
     UBYTE y;
@@ -44,28 +44,60 @@ typedef struct parallax_row_t {
     UBYTE shift;
 } parallax_row_t;
 
-parallax_row_t parallax_rows[3] = { PARALLAX_STEP(0, 23, 4), PARALLAX_STEP(23, 47, 2), PARALLAX_STEP(47, 0, 0)};
-parallax_row_t *parallax_row;
+parallax_row_t parallax_rows[3] = { PARALLAX_STEP(0, 3, 4), PARALLAX_STEP(3, 6, 2), PARALLAX_STEP(6, 0, 0)};
+parallax_row_t * parallax_row;
 
-void parallax_LCD_isr() __nonbanked {
-    if (LYC_REG == parallax_row->y) {
-        if (parallax_row->shift) {
-            SCX_REG = draw_scroll_x >> parallax_row->shift; 
-            SCY_REG = 0;    
-        } else {
-            SCX_REG = draw_scroll_x; 
-            SCY_REG = draw_scroll_y;
-        }
-        if (parallax_row->next_y) {
-            LYC_REG = parallax_row->next_y;
-            parallax_row++;
-        } else {
-            LYC_REG = 0;
-            parallax_row = parallax_rows;
-        }
-    } else {
-            LYC_REG = parallax_row->y;
-    }
+void parallax_LCD_isr() __naked __nonbanked {
+__asm
+        ld hl, #_parallax_row
+        ld a, (hl+)
+        ld h, (hl)
+        ld l, a
+        ldh a, (_LYC_REG)
+        cp (hl)
+        jr nz, 1$
+        inc hl
+
+        ld a, (hl+)
+        ldh (_LYC_REG), a
+        or a
+        ld a, (hl+)
+        ld c, a             ; c == shift
+        jr nz, 2$
+
+        ld a, #<_parallax_rows
+        ld (#_parallax_row), a
+        ld a, #>_parallax_rows
+        ld (#_parallax_row + 1), a
+        jr 3$
+2$:
+        ld a, l   
+        ld (#_parallax_row), a
+        ld a, h
+        ld (#_parallax_row + 1), a
+3$:     
+        ld a, (#_draw_scroll_x)
+        inc c
+        dec c
+        jr z, 4$
+5$:
+        srl a
+        dec c
+        jr nz, 5$
+        ldh (#_SCX_REG), a
+        xor a
+        ldh (#_SCY_REG), a
+        ret
+4$:
+        ldh (#_SCX_REG), a
+        ld a, (#_draw_scroll_y)
+        ldh (#_SCY_REG), a
+        ret
+1$:
+        ld a, (hl)
+        ldh (_LYC_REG), a
+        ret
+__endasm;
 }
 
 void VBL_isr() __nonbanked {
@@ -77,12 +109,15 @@ void VBL_isr() __nonbanked {
 #endif
     if (!hide_sprites) SHOW_SPRITES;
     if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
-        LYC_REG = WY_REG = win_pos_y;
         WX_REG = win_pos_x + 7u;
-        SHOW_WIN;
 #ifndef PARALLAX
+        LYC_REG = WY_REG = win_pos_y;
+        SHOW_WIN;
         // enable LCD interrupt only when window is visible
         IE_REG |= LCD_IFLAG;
+#else
+        WY_REG = win_pos_y;
+        SHOW_WIN;
 #endif
     } else {
         HIDE_WIN;
