@@ -206,9 +206,8 @@ __asm
         pop de
         pop bc
         pop hl
-
-.STAT = 0x41
-3$:     ldh a, (.STAT)
+3$:
+        ldh a, (#_STAT_REG)
         and #0x02
         jr nz, 3$
 

@@ -16,7 +16,7 @@ REL_OBJDIR = obj/_rel
 #MUSIC_DRIVER = GBT_PLAYER
 MUSIC_DRIVER = HUGE_TRACKER
 
-CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -D$(MUSIC_DRIVER)
+CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -D$(MUSIC_DRIVER) -DPARALLAX
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
 
