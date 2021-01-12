@@ -33,7 +33,7 @@
 extern void __bank_bootstrap_script;
 extern const UBYTE bootstrap_script[];
 
-void LCD_isr() __nonbanked {
+void window_LCD_isr() __nonbanked {
     if (hide_sprites) return;
     if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
 }
@@ -193,9 +193,10 @@ void main() {
     __critical {
 #ifdef PARALLAX
         parallax_row = parallax_rows;
+        add_LCD(parallax_LCD_isr);
         LYC_REG = 0u;
 #else
-        add_LCD(LCD_isr);
+        add_LCD(window_LCD_isr);
         LYC_REG = 144u;
 #endif
         add_VBL(VBL_isr);

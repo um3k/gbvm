@@ -3,7 +3,7 @@
 
 #include <gb/gb.h>
 
-#define PARALLAX_STEP(start, end, shift)  {0, (end)?(((end) << 3) - 1):0, (shift)}
+#define PARALLAX_STEP(next, shift)  {0, (next)?(((next) << 3) - 1):0, (shift)}
 
 typedef struct parallax_row_t {
     UBYTE scx;      // x scroll position for current slice
