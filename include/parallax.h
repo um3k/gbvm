@@ -3,12 +3,12 @@
 
 #include <gb/gb.h>
 
-#define PARALLAX_STEP(start, end, shift)  {(start)?(((start) << 3) - 1):0, (end)?(((end) << 3) - 1):0, (shift)}
+#define PARALLAX_STEP(start, end, shift)  {0, (end)?(((end) << 3) - 1):0, (shift)}
 
 typedef struct parallax_row_t {
-    UBYTE y;
-    UBYTE next_y;
-    UBYTE shift;
+    UBYTE scx;      // x scroll position for current slice
+    UBYTE next_y;   // y position of next LYC
+    UBYTE shift;    // shift of scroll position within the world
 } parallax_row_t;
 
 extern parallax_row_t parallax_rows[3];

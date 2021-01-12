@@ -8,6 +8,10 @@
 #include "GameTime.h"
 #include "Math.h"
 #include "FadeManager.h"
+#ifdef PARALLAX
+    #include "parallax.h"
+#endif
+
 #include "data/data_ptrs.h"
 
 void scroll_queue_row(INT16 x, INT16 y);
@@ -97,6 +101,12 @@ void scroll_update() __banked {
   scroll_y = y;
   draw_scroll_x = x + scroll_offset_x;
   draw_scroll_y = y + scroll_offset_y;
+
+#ifdef PARALLAX
+    parallax_rows[0].scx = draw_scroll_x >> parallax_rows[0].shift;
+    parallax_rows[1].scx = draw_scroll_x >> parallax_rows[1].shift;
+    parallax_rows[2].scx = draw_scroll_x >> parallax_rows[2].shift;
+#endif
 
   if (render) {
     scroll_render_screen();
