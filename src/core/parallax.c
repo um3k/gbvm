@@ -5,14 +5,10 @@ parallax_row_t * parallax_row;
 
 void parallax_LCD_isr() __naked __nonbanked {
 __asm
-        push af
-        push hl
-
         ld hl, #_parallax_row
         ld a, (hl+)
         ld h, (hl)
         ld l, a
-
 1$:
         ldh a, (#_STAT_REG)
         and #0x02
@@ -23,6 +19,7 @@ __asm
         ld a, (hl)              ; next y
         or a
         jr nz, 2$
+
         ld a, (#_draw_scroll_y)
         ldh (#_SCY_REG), a
         jr 3$
@@ -42,20 +39,12 @@ __asm
         ld (#_parallax_row), a
         ld a, h
         ld (#_parallax_row + 1), a
-        jr 5$
+        ret
 4$:
         ld a, #<_parallax_rows
         ld (#_parallax_row), a
         ld a, #>_parallax_rows
         ld (#_parallax_row + 1), a
-5$:
-        pop hl
-7$:
-        ldh a, (#_STAT_REG)
-        and #0x02
-        jr nz, 7$
-
-        pop af
-        reti
+        ret
 __endasm;
 }
