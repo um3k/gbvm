@@ -44,6 +44,13 @@ UINT8 pending_w_i;
 INT16 current_row, new_row;
 INT16 current_col, new_col;
 
+inline UBYTE * WRAP_Y_9800(UBYTE * ptr) {
+    return (UBYTE *)(((UWORD)ptr & 0x03ff) | 0x9800);
+}
+inline UBYTE * WRAP_X(UBYTE * ptr, UBYTE inc) {
+    return (UBYTE *)(((UWORD)ptr & 0xFFE0) | (((UWORD)ptr + inc) & 0x1F));
+}
+
 void scroll_init() __banked {
     pending_w_i = 0;
     pending_h_i = 0;
@@ -290,7 +297,6 @@ void scroll_load_row(INT16 x, INT16 y) __nonbanked {
     actor_t *actor;
     UINT8 i = 0u;
     UBYTE* id;
-    UBYTE screen_x, screen_y;
     unsigned char* map = image_ptr + image_tile_width * y + x;
 #ifdef CGB
     unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
@@ -298,12 +304,8 @@ void scroll_load_row(INT16 x, INT16 y) __nonbanked {
 
     SWITCH_ROM_MBC1(image_bank);
 
-    screen_x = x;
-    screen_y = MOD_32(y);
-
-    for (i = 0; i != 23; i++) {
-        id = (UBYTE*)(0x9800 + MOD_32(screen_x++) + ((UINT16)screen_y << 5));
-
+    id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
+    for (i = 23; i != 0; i--, id = WRAP_X(id, 1)) {
 #ifdef CGB
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
@@ -337,7 +339,6 @@ void scroll_load_col(INT16 x, INT16 y, UBYTE height) __nonbanked {
     UINT8 _save = _current_bank;
     UINT8 i = 0u;
     UBYTE* id;
-    UBYTE screen_x, screen_y;
     unsigned char* map = image_ptr + image_tile_width * y + x;
 #ifdef CGB
     unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
@@ -345,11 +346,8 @@ void scroll_load_col(INT16 x, INT16 y, UBYTE height) __nonbanked {
 
     SWITCH_ROM_MBC1(image_bank);
 
-    screen_x = MOD_32(x);
-    screen_y = y;
-
-    for (i = 0; i != height; i++) {
-        id = (UBYTE*)(0x9800 + screen_x + ((UINT16)(screen_y++) << 5));
+    id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
+    for (i = height; i != 0; i--, id = WRAP_Y_9800(id + 32u)) {
 #ifdef CGB
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
