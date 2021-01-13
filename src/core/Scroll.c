@@ -109,7 +109,7 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             scroll_load_col(shift_col - SCREEN_PAD_LEFT, port->start_tile, port->tile_height);
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire viewport
-            scroll_render_screen(shift_scroll_x, draw_scroll_y);
+            scroll_render_screen(shift_scroll_x, 0);
         }     
     } else {
         // No Parallax
