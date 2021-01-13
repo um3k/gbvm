@@ -33,7 +33,7 @@ _script_s3_init::
         ; New Game
         VM_FADE_OUT             1
         VM_PUSH                 0
-        VM_PUSH                 64
+        VM_PUSH                 1028
         VM_PUSH                 104
         VM_ACTOR_SET_POS        .ARG2
         VM_POP                  3
