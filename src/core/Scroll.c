@@ -20,7 +20,7 @@ void scroll_load_pending_row();
 void scroll_load_pending_col();
 void scroll_load_row(INT16 x, INT16 y);
 void scroll_load_col(INT16 x, INT16 y, UBYTE height);
-void scroll_render_screen(INT16 x, INT16 y);
+void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_rows);
 UBYTE scroll_viewport(parallax_row_t * port);
 
 INT16 scroll_x = 0;
@@ -109,7 +109,7 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             scroll_load_col(shift_col - SCREEN_PAD_LEFT, port->start_tile, port->tile_height);
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire viewport
-            scroll_render_screen(shift_scroll_x, 0);
+            scroll_render_rows(shift_scroll_x, 0, port->start_tile, port->tile_height);
         }     
     } else {
         // No Parallax
@@ -124,7 +124,7 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             scroll_queue_col(new_col - SCREEN_PAD_LEFT, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire screen
-            scroll_render_screen(draw_scroll_x, draw_scroll_y);
+            scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
             return !(port->next_y);
         }
 
@@ -138,16 +138,22 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             scroll_queue_row(new_col - SCREEN_PAD_LEFT, new_row - SCREEN_PAD_TOP);
         } else if (current_row != new_row) {
             // If row differs by more than 1 render entire screen
-            scroll_render_screen(draw_scroll_x, draw_scroll_y);
-        }       
+            scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
+            return !(port->next_y);
+        }
+
+        if (IS_FRAME_2) {
+            if (pending_h_i) scroll_load_pending_col();
+            if (pending_w_i) scroll_load_pending_row();
+        }
     }
 
     return !(port->next_y);
 }
 
-void scroll_render_screen(INT16 scroll_x, INT16 scroll_y) {
+void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_rows) {
     INT16 y;
-    UBYTE i;
+    BYTE i;
 
     if (!fade_style)
     {
@@ -171,9 +177,10 @@ void scroll_render_screen(INT16 scroll_x, INT16 scroll_y) {
     pending_w_i = 0;
     pending_h_i = 0;
 
+    BYTE end_row = row_offset + n_rows;
     y = scroll_y >> 3;
-    for (i = 0u; i != (SCREEN_TILE_REFRES_H) && y != image_height; ++i, y++) {
-        scroll_load_row((scroll_x >> 3) - SCREEN_PAD_LEFT, y - SCREEN_PAD_TOP);
+    for (i = row_offset; i != end_row && y != image_height; ++i, y++) {
+        scroll_load_row((scroll_x >> 3) - SCREEN_PAD_LEFT, y + row_offset);
     }
 
     game_time = 0;
