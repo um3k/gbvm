@@ -303,14 +303,16 @@ void scroll_load_row(INT16 x, INT16 y) __nonbanked {
     UINT8 _save = _current_bank;
     UBYTE * id;
 #ifdef CGB
-    unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
-    VBK_REG = 1;
-    SWITCH_ROM_MBC1(image_attr_bank);
-    id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
-    for (UBYTE i = 23; i != 0; i--, id = WRAP_X(id, 1)) {
-        SetTile(id, *(cmap++));
+    if (_cpu == CGB_TYPE) {  // Color Column Load
+        unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
+        VBK_REG = 1;
+        SWITCH_ROM_MBC1(image_attr_bank);
+        id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
+        for (UBYTE i = 23; i != 0; i--, id = WRAP_X(id, 1)) {
+            SetTile(id, *(cmap++));
+        }
+        VBK_REG = 0;
     }
-    VBK_REG = 0;
 #endif
     SWITCH_ROM_MBC1(image_bank);
     unsigned char* map = image_ptr + image_tile_width * y + x;
@@ -342,15 +344,17 @@ void scroll_load_col(INT16 x, INT16 y, UBYTE height) __nonbanked {
     UBYTE * id;
     UINT8 _save = _current_bank;
 #ifdef CGB
-    unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
-    SWITCH_ROM_MBC1(image_attr_bank);
-    VBK_REG = 1;
-    id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
-    for (UBYTE i = height; i != 0; i--, id = WRAP_Y_9800(id + 32u)) {
-        SetTile(id, *cmap);
-        cmap += image_tile_width;
+    if (_cpu == CGB_TYPE) {  // Color Column Load
+        unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
+        SWITCH_ROM_MBC1(image_attr_bank);
+        VBK_REG = 1;
+        id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
+        for (UBYTE i = height; i != 0; i--, id = WRAP_Y_9800(id + 32u)) {
+            SetTile(id, *cmap);
+            cmap += image_tile_width;
+        }
+        VBK_REG = 0;
     }
-    VBK_REG = 0;
 #endif
     unsigned char* map = image_ptr + image_tile_width * y + x;
     SWITCH_ROM_MBC1(image_bank);
@@ -364,18 +368,13 @@ void scroll_load_col(INT16 x, INT16 y, UBYTE height) __nonbanked {
 
 void scroll_load_pending_col() __nonbanked {
     UINT8 _save = _current_bank;
-    UINT8 i = 0u;
-    UBYTE a = 0;
-    UBYTE* id = 0;
-    UBYTE x_offset;
+    UBYTE i;
+    UBYTE * id = 0;
 
     SWITCH_ROM_MBC1(image_bank);
-
-    x_offset = MOD_32(pending_h_x);
-
 #ifdef CGB
     if (_cpu == CGB_TYPE) {  // Color Column Load
-        for (i = 0u; i != 5 && pending_h_i != 0; ++i, pending_h_i--) {
+        for (UBYTE i = 0u; i != 5 && pending_h_i != 0; ++i, pending_h_i--) {
             id = 0x9800 + (0x1F & (x_offset)) +
                  ((0x1F & (MOD_32(pending_h_y))) << 5);
             SWITCH_ROM_MBC1(image_attr_bank);
@@ -391,13 +390,13 @@ void scroll_load_pending_col() __nonbanked {
     } else
 #endif
     {  // DMG Column Load
-        for (i = 0u; i != 5 && pending_h_i != 0; ++i, pending_h_i--) {
-            id = (UBYTE*)(0x9800 + (0x1F & (x_offset)) +
-                          ((0x1F & (MOD_32(pending_h_y++))) << 5));
+        SWITCH_ROM_MBC1(image_bank);
+        id = (UBYTE*)(0x9800 + (MOD_32(pending_h_y) << 5) + MOD_32(pending_h_x));
+        for (i = 0u; i != 5 && pending_h_i != 0; i++, pending_h_i--, id = WRAP_Y_9800(id + 32u)) {
             SetTile(id, *pending_h_map);
             pending_h_map += image_tile_width;
         }
+        pending_h_y += i;
     }
-
     SWITCH_ROM_MBC1(_save);
 }
