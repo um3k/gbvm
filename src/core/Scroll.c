@@ -139,7 +139,13 @@ UBYTE scroll_viewport(parallax_row_t * port) {
         } else if (current_row != new_row) {
             // If row differs by more than 1 render entire screen
             scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
-        }       
+            return !(port->next_y);
+        }
+
+        if (IS_FRAME_2) {
+            if (pending_h_i) scroll_load_pending_col();
+            if (pending_w_i) scroll_load_pending_row();
+        }
     }
 
     return !(port->next_y);
