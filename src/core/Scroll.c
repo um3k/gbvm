@@ -8,10 +8,11 @@
 #include "GameTime.h"
 #include "Math.h"
 #include "FadeManager.h"
+#include <string.h>
+#include "map2buf.h"
 #ifdef PARALLAX
     #include "parallax.h"
 #endif
-
 #include "data/data_ptrs.h"
 
 void scroll_queue_row(INT16 x, INT16 y);
@@ -307,24 +308,22 @@ void scroll_load_pending_row() __nonbanked {
 void scroll_load_row(INT16 x, INT16 y) __nonbanked {
     UINT8 _save = _current_bank;
     UBYTE * id;
+    UBYTE buf[SCREEN_TILE_REFRES_W];
+    UBYTE a = MAX(0, x), b = MAX(0, y);
+
 #ifdef CGB
     if (_cpu == CGB_TYPE) {  // Color Column Load
-        unsigned char* cmap = image_attr_ptr + image_tile_width * y + x;
         VBK_REG = 1;
         SWITCH_ROM_MBC1(image_attr_bank);
-        id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
-        for (UBYTE i = 23; i != 0; i--, id = WRAP_X(id, 1)) {
-            SetTile(id, *(cmap++));
-        }
+        get_map_from_buf(a, b, SCREEN_TILE_REFRES_W, 1, buf, image_attr_ptr, image_tile_width, image_tile_height);
+        set_bkg_tiles(MOD_32(a), MOD_32(b), SCREEN_TILE_REFRES_W, 1, buf);
         VBK_REG = 0;
     }
 #endif
     SWITCH_ROM_MBC1(image_bank);
-    unsigned char* map = image_ptr + image_tile_width * y + x;
-    id = (UBYTE*)(0x9800 + (MOD_32(y) << 5) + MOD_32(x));
-    for (UBYTE i = 23; i != 0; i--, id = WRAP_X(id, 1)) {
-        SetTile(id, *(map++));
-    }
+
+    get_map_from_buf(a, b, SCREEN_TILE_REFRES_W, 1, buf, image_ptr, image_tile_width, image_tile_height);
+    set_bkg_tiles(MOD_32(a), MOD_32(b), SCREEN_TILE_REFRES_W, 1, buf);
 
     // Activate Actors in Row
     actor_t * actor = actors_inactive_head;
