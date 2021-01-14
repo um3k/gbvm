@@ -150,17 +150,13 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
     INT16 y;
     BYTE i;
 
-    if (!fade_style)
-    {
-        DISPLAY_OFF
-    } else if (!fade_timer == 0)
-    {
-// Immediately set all palettes black while screen renders.
+    if (!fade_style) {
+        DISPLAY_OFF;
+    } else if (!fade_timer == 0) {
+        // Immediately set all palettes black while screen renders.
 #ifdef CGB
         if (_cpu == CGB_TYPE) {
-            for (UBYTE c = 0; c != 32; ++c) {
-                BkgPaletteBuffer[c] = RGB_BLACK;
-            }
+            memset(BkgPaletteBuffer, RGB_BLACK, sizeof(BkgPaletteBuffer));
             set_bkg_palette(0, 8, BkgPaletteBuffer);
             set_sprite_palette(0, 8, BkgPaletteBuffer);
         } else
@@ -181,6 +177,7 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
     game_time = 0;
 
     DISPLAY_ON;
+
     if (!fade_timer == 0) {
         // Screen palate to nornmal if not fading
         fade_applypalettechange();
