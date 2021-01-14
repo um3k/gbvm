@@ -179,7 +179,7 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
 
     BYTE end_row = row_offset + n_rows;
     y = scroll_y >> 3;
-    for (i = row_offset; i != end_row && y != image_height; ++i, y++) {
+    for (i = row_offset; i != end_row && y != image_tile_height + 1; ++i, y++) {
         scroll_load_row((scroll_x >> 3) - SCREEN_PAD_LEFT, y + row_offset);
     }
 
@@ -197,6 +197,11 @@ void scroll_queue_row(INT16 x, INT16 y) {
 
     while (pending_w_i) {
         scroll_load_pending_row();
+    }
+
+    // Don't queue rows past image height
+    if (y >= image_tile_height) {
+        return;
     }
 
     pending_w_x = x;
@@ -253,7 +258,7 @@ void scroll_queue_col(INT16 x, INT16 y) {
 
     pending_h_x = x;
     pending_h_y = y;
-    pending_h_i = SCREEN_TILE_REFRES_H;
+    pending_h_i = MIN(SCREEN_TILE_REFRES_H, image_tile_height - y);
     pending_h_map = image_ptr + image_tile_width * y + x;
 
 #ifdef CGB
