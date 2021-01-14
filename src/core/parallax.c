@@ -9,28 +9,31 @@ __asm
         ld a, (hl+)
         ld h, (hl)
         ld l, a
-1$:
-        ldh a, (#_STAT_REG)
-        and #0x02
-        jr nz, 1$
 
         ld a, (hl+)             ; scx
-        ld (#_SCX_REG), a
-        ld a, (hl)              ; next y
-        or a
-        jr nz, 2$
-
-        ld a, (#_draw_scroll_y)
-        ldh (#_SCY_REG), a
-        jr 3$
-2$:
-        xor a
-        ldh (#_SCY_REG), a
-3$:
-        ld a, (hl+)             ; next y
+        ld e, a
+        ld a, (hl+)             ; next_y
         ldh (#_LYC_REG), a
         or a
-        jr z, 4$
+        jr z, 1$
+        ld d, #0
+        jr 2$
+1$:
+        ld a, (#_draw_scroll_y)
+        ld d, a
+2$:
+        ldh a, (#_STAT_REG)
+        and #0x02
+        jr nz, 2$
+
+        ld a, e
+        ld (#_SCX_REG), a
+        ld a, d
+        ldh (#_SCY_REG), a
+
+        ldh a, (#_LYC_REG)
+        or a
+        jr z, 3$
         inc hl                  ; skip shift
         inc hl                  ; skip tile_start
         inc hl                  ; skip tile_height
@@ -40,7 +43,7 @@ __asm
         ld a, h
         ld (#_parallax_row + 1), a
         ret
-4$:
+3$:
         ld a, #<_parallax_rows
         ld (#_parallax_row), a
         ld a, #>_parallax_rows
