@@ -15,7 +15,7 @@
 #include "data/data_ptrs.h"
 
 void scroll_queue_row(INT16 x, INT16 y);
-void scroll_queue_col(INT16 x, INT16 y, UBYTE row_offset);
+void scroll_queue_col(INT16 x, INT16 y);
 void scroll_load_pending_row();
 void scroll_load_pending_col();
 void scroll_load_row(INT16 x, INT16 y);
@@ -118,10 +118,10 @@ UBYTE scroll_viewport(parallax_row_t * port) {
         // If column is +/- 1 just render next column
         if (current_col == new_col - 1) {
             // Queue right column
-            scroll_queue_col(new_col - SCREEN_PAD_LEFT + SCREEN_TILE_REFRES_W - 1, MAX((new_row - SCREEN_PAD_TOP + port->start_tile), port->start_tile), port->start_tile);
+            scroll_queue_col(new_col - SCREEN_PAD_LEFT + SCREEN_TILE_REFRES_W - 1, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
         } else if (current_col == new_col + 1) {
             // Queue left column
-            scroll_queue_col(new_col - SCREEN_PAD_LEFT, MAX((new_row - SCREEN_PAD_TOP + port->start_tile), port->start_tile), port->start_tile);
+            scroll_queue_col(new_col - SCREEN_PAD_LEFT, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire screen
             scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
@@ -231,7 +231,7 @@ void scroll_queue_row(INT16 x, INT16 y) {
 #endif
 }
 
-void scroll_queue_col(INT16 x, INT16 y, UBYTE row_offset) {
+void scroll_queue_col(INT16 x, INT16 y) {
     actor_t *actor;
     
     while (pending_h_i) {
@@ -258,7 +258,7 @@ void scroll_queue_col(INT16 x, INT16 y, UBYTE row_offset) {
 
     pending_h_x = x;
     pending_h_y = y;
-    pending_h_i = MIN(SCREEN_TILE_REFRES_H - row_offset, image_tile_height - y);
+    pending_h_i = MIN(SCREEN_TILE_REFRES_H, image_tile_height - y);
     pending_h_map = image_ptr + image_tile_width * y + x;
 
 #ifdef CGB
