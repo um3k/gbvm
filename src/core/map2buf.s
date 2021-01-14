@@ -34,9 +34,9 @@ _get_map_from_buf::
         pop     HL
         ld      H, A
         jr      1$
-8$:         
+8$:
         pop     HL
-1$:         
+1$:
         ld      A, L        ; check y bound
         add     E
         push    HL
@@ -51,9 +51,9 @@ _get_map_from_buf::
         pop     HL
         ld      L, A
         jr      7$
-10$:        
-        pop     HL          
-7$:         
+10$:
+        pop     HL
+7$:
         push    HL          ; Store WH
         
         ldhl    SP, #12     ; HL = origin
@@ -73,17 +73,15 @@ _get_map_from_buf::
         ld      C, (HL)     ; buf_w
 
         pop     HL
-11$:                            ; MUL BC by E and add reault to HL
+11$:                        ; MUL BC by E and add reault to HL
         srl     E
         jr      NC, 12$
         add     HL, BC
 12$:
-        jr      Z, 13$      ; early exit
+        jr      Z, 3$       ; early exit
         sla     C
         rl      B
         jr      11$
-13$:                            ; ---
-                    
 3$:
         ld      B, A
         ld      C, D        ; BC = X coordinate
@@ -95,16 +93,16 @@ _get_map_from_buf::
         push    HL          ; Store origin
         push    DE          ; Store WH
         push    BC
-
+16$:
         srl     D
         jr      NC, 14$
 
         ld      A, (HL+)    ; copy one byte
         ld      (BC), A
         inc     BC
-14$:        
+14$:
         jr      Z, 15$
-5$:         
+5$:
         ld      A, (HL+)    ; copy two bytes
         ld      (BC), A
         inc     BC
@@ -114,7 +112,7 @@ _get_map_from_buf::
         
         dec     D
         jr      NZ,5$
-15$:            
+15$:
         pop     BC
         
         pop     HL          ; HL = WH
@@ -147,11 +145,9 @@ _get_map_from_buf::
         push    DE          ; Store WH
         push    BC
         
-        jr      5$
-        
+        jr      16$
 9$:
-        pop     HL            
-        
+        pop     HL                 
 6$:
         pop     BC
         ret
