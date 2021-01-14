@@ -15,7 +15,7 @@
 #include "data/data_ptrs.h"
 
 void scroll_queue_row(INT16 x, INT16 y);
-void scroll_queue_col(INT16 x, INT16 y);
+void scroll_queue_col(INT16 x, INT16 y, UBYTE row_offset);
 void scroll_load_pending_row();
 void scroll_load_pending_col();
 void scroll_load_row(INT16 x, INT16 y);
@@ -118,10 +118,10 @@ UBYTE scroll_viewport(parallax_row_t * port) {
         // If column is +/- 1 just render next column
         if (current_col == new_col - 1) {
             // Queue right column
-            scroll_queue_col(new_col - SCREEN_PAD_LEFT + SCREEN_TILE_REFRES_W - 1, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
+            scroll_queue_col(new_col - SCREEN_PAD_LEFT + SCREEN_TILE_REFRES_W - 1, MAX((new_row - SCREEN_PAD_TOP + port->start_tile), port->start_tile), port->start_tile);
         } else if (current_col == new_col + 1) {
             // Queue left column
-            scroll_queue_col(new_col - SCREEN_PAD_LEFT, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
+            scroll_queue_col(new_col - SCREEN_PAD_LEFT, MAX((new_row - SCREEN_PAD_TOP + port->start_tile), port->start_tile), port->start_tile);
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire screen
             scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
@@ -231,7 +231,7 @@ void scroll_queue_row(INT16 x, INT16 y) {
 #endif
 }
 
-void scroll_queue_col(INT16 x, INT16 y) {
+void scroll_queue_col(INT16 x, INT16 y, UBYTE row_offset) {
     actor_t *actor;
     
     while (pending_h_i) {
@@ -258,7 +258,7 @@ void scroll_queue_col(INT16 x, INT16 y) {
 
     pending_h_x = x;
     pending_h_y = y;
-    pending_h_i = MIN(SCREEN_TILE_REFRES_H, image_tile_height - y);
+    pending_h_i = MIN(SCREEN_TILE_REFRES_H - row_offset, image_tile_height - y);
     pending_h_map = image_ptr + image_tile_width * y + x;
 
 #ifdef CGB
@@ -279,7 +279,7 @@ void scroll_load_pending_row() __nonbanked {
 
 #ifdef CGB
     if (_cpu == CGB_TYPE) {  // Color Row Load
-        for (i = 0u; i != 5 && pending_w_i != 0; ++i, --pending_w_i) {
+        for (i = 0u; i != PENDING_BATCH_SIZE && pending_w_i != 0; ++i, --pending_w_i) {
             id = 0x9800 + MOD_32(pending_w_x++) + ((UINT16)y_offset << 5);
             SWITCH_ROM_MBC1(image_attr_bank);
             VBK_REG = 1;
@@ -293,7 +293,7 @@ void scroll_load_pending_row() __nonbanked {
     } else
 #endif
     {  // DMG Row Load
-        for (i = 0u; i != 5 && pending_w_i != 0; ++i, --pending_w_i) {
+        for (i = 0u; i != PENDING_BATCH_SIZE && pending_w_i != 0; ++i, --pending_w_i) {
             id = (UBYTE*)(0x9800 + MOD_32(pending_w_x++) +
                           ((UINT16)y_offset << 5));
             SetTile(id, *pending_w_map);
@@ -379,7 +379,7 @@ void scroll_load_pending_col() __nonbanked {
     SWITCH_ROM_MBC1(image_bank);
 #ifdef CGB
     if (_cpu == CGB_TYPE) {  // Color Column Load
-        for (UBYTE i = 0u; i != 5 && pending_h_i != 0; ++i, pending_h_i--) {
+        for (UBYTE i = 0u; i != PENDING_BATCH_SIZE && pending_h_i != 0; ++i, pending_h_i--) {
             id = 0x9800 + (0x1F & (x_offset)) +
                  ((0x1F & (MOD_32(pending_h_y))) << 5);
             SWITCH_ROM_MBC1(image_attr_bank);
@@ -397,7 +397,7 @@ void scroll_load_pending_col() __nonbanked {
     {  // DMG Column Load
         SWITCH_ROM_MBC1(image_bank);
         id = (UBYTE*)(0x9800 + (MOD_32(pending_h_y) << 5) + MOD_32(pending_h_x));
-        for (i = 0u; i != 5 && pending_h_i != 0; i++, pending_h_i--, id = WRAP_Y_9800(id + 32u)) {
+        for (i = 0u; i != PENDING_BATCH_SIZE && pending_h_i != 0; i++, pending_h_i--, id = WRAP_Y_9800(id + 32u)) {
             SetTile(id, *pending_h_map);
             pending_h_map += image_tile_width;
         }
