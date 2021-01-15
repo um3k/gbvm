@@ -5,10 +5,35 @@
 .globl _image_tile_width
 .globl _image_tile_height
 
-; void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * buf)
+.globl _set_bkg_tiles
+
+; void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image)
+
+.map_save_w:    .ds 1
+.map_save_h:    .ds 1
+
+_map_to_screen::
+        ldhl    sp, #4
+        ld      a, (hl+)
+        ld      (#.map_save_w), a
+        ld      a, (hl)
+        ld      (#.map_save_h), a
+        call    _get_map_from_buf
+        ldhl    sp, #2
+        ld      a, (hl)
+        and     #31
+        ld      (hl+), a
+        ld      a, (hl)
+        and     #31
+        ld      (hl+), a
+        ld      a, (#.map_save_w)
+        ld      (hl+), a
+        ld      a, (#.map_save_h)
+        ld      (hl), a
+        jp      _set_bkg_tiles
 
 _get_map_from_buf::
-        push    bc          ; bc, ret, x, y, w, h, dest, buf
+        push    bc          ; bc, ret, x, y, w, h, dest, image
                             ; 0   2    4  5  6  7  8     10 
         ldhl    sp, #4    
         ld      d, (hl)     ; d = x
@@ -65,7 +90,7 @@ _get_map_from_buf::
 7$:
         push    hl          ; store wh
         
-        ldhl    sp, #12     ; hl = origin
+        ldhl    sp, #12     ; hl = image
         ld      a, (hl+)
         ld      h, (hl)
         ld      l, a

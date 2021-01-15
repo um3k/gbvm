@@ -3,7 +3,8 @@
 
 #include <gb/gb.h>
 
-// extract tile map from buffer, containing another tilemap with buf_w / buf_h dimentions
-void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * buf) __preserves_regs(b, c);
+// extract tile map from buffer, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
+void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image) __preserves_regs(b, c);
+void map_to_screen(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image) __preserves_regs(b, c);
 
 #endif
