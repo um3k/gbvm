@@ -92,6 +92,11 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     //   LoadPlayerSpritePalette(start_player_palette.ptr,
     //   start_player_palette.bank);
 
+    // Copy parallax settings
+    memcpy(&parallax_rows, &scn.parallax_rows, sizeof(parallax_rows));
+    if (scn.parallax_rows[0].tile_height == 0)
+        scn.parallax_rows[0].tile_height = PARALLAX_MAX_HEIGHT;
+
     init_sprite_pool();
     //   ProjectilesInit();
 

@@ -2,6 +2,7 @@
 #define GBS_TYPES_H
 
 #include "BankData.h"
+#include "parallax.h"
 
 typedef enum {
     SCENE_TYPE_TOPDOWN = 0,
@@ -71,6 +72,7 @@ typedef struct scene_t {
     far_ptr_t sprites;
     far_ptr_t actors;
     far_ptr_t triggers;
+    parallax_row_t parallax_rows[3];
 } scene_t;
 
 typedef struct background_t {

@@ -21,6 +21,11 @@ const struct scene_t scene_4 = {
   .colors = TO_FAR_PTR_T(scene_4_colors),
   .palette = TO_FAR_PTR_T(palette_2),
   .sprite_palette = TO_FAR_PTR_T(palette_4),
+  .parallax_rows = {
+    PARALLAX_STEP(0, 2, 2),
+    PARALLAX_STEP(2, 4, 1),
+    PARALLAX_STEP(4, 0, 0)
+  },
   .n_actors = 0,
   .n_triggers = 2,
   .n_sprites = 0,
