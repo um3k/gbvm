@@ -39,13 +39,6 @@ UBYTE pending_w_i;
 INT16 current_row, new_row;
 INT16 current_col, new_col;
 
-inline UBYTE * WRAP_Y_9800(UBYTE * ptr) {
-    return (UBYTE *)(((UWORD)ptr & 0x03ff) | 0x9800);
-}
-inline UBYTE * WRAP_X(UBYTE * ptr, UBYTE inc) {
-    return (UBYTE *)(((UWORD)ptr & 0xffe0) | (((UWORD)ptr + inc) & 0x001f));
-}
-
 void scroll_init() __banked {
     pending_w_i = 0;
     pending_h_i = 0;
@@ -260,22 +253,21 @@ void scroll_queue_col(UBYTE x, UBYTE y) {
 void scroll_load_pending_row() __nonbanked {
     UINT8 _save = _current_bank;
     UBYTE buf[PENDING_BATCH_SIZE];
-    UBYTE x = pending_w_x, y = pending_w_y;
     UBYTE width = MIN(pending_w_i, PENDING_BATCH_SIZE);
 
 #ifdef CGB
     if (_cpu == CGB_TYPE) {  // Color Row Load
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
-        get_map_from_buf(x, y, width, 1, buf, image_attr_ptr, image_tile_width, image_tile_height);
-        set_bkg_tiles(MOD_32(x), MOD_32(y), width, 1, buf);
+        get_map_from_buf(pending_w_x, pending_w_y, width, 1, buf, image_attr_ptr);
+        set_bkg_tiles(MOD_32(pending_w_x), MOD_32(pending_w_y), width, 1, buf);
         VBK_REG = 0;
     }
 #endif
     // DMG Row Load
     SWITCH_ROM_MBC1(image_bank);
-    get_map_from_buf(x, y, width, 1, buf, image_ptr, image_tile_width, image_tile_height);
-    set_bkg_tiles(MOD_32(x), MOD_32(y), width, 1, buf);
+    get_map_from_buf(pending_w_x, pending_w_y, width, 1, buf, image_ptr);
+    set_bkg_tiles(MOD_32(pending_w_x), MOD_32(pending_w_y), width, 1, buf);
 
     pending_w_x += width;
     pending_w_i -= width;
@@ -292,14 +284,14 @@ void scroll_load_row(UBYTE x, UBYTE y) __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Column Load
         VBK_REG = 1;
         SWITCH_ROM_MBC1(image_attr_bank);
-        get_map_from_buf(x, y, SCREEN_TILE_REFRES_W, 1, buf, image_attr_ptr, image_tile_width, image_tile_height);
+        get_map_from_buf(x, y, SCREEN_TILE_REFRES_W, 1, buf, image_attr_ptr);
         set_bkg_tiles(MOD_32(x), MOD_32(y), SCREEN_TILE_REFRES_W, 1, buf);
         VBK_REG = 0;
     }
 #endif
     // DMG Row Load
     SWITCH_ROM_MBC1(image_bank);
-    get_map_from_buf(x, y, SCREEN_TILE_REFRES_W, 1, buf, image_ptr, image_tile_width, image_tile_height);
+    get_map_from_buf(x, y, SCREEN_TILE_REFRES_W, 1, buf, image_ptr);
     set_bkg_tiles(MOD_32(x), MOD_32(y), SCREEN_TILE_REFRES_W, 1, buf);
 
     // Activate Actors in Row
@@ -329,7 +321,7 @@ void scroll_load_col(UBYTE x, UBYTE y, UBYTE height) __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Column Load
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
-        get_map_from_buf(x, y, 1, height, buf, image_attr_ptr, image_tile_width, image_tile_height);
+        get_map_from_buf(x, y, 1, height, buf, image_attr_ptr);
         set_bkg_tiles(MOD_32(x), MOD_32(y), 1, height, buf);
         VBK_REG = 0;
     }
@@ -337,7 +329,7 @@ void scroll_load_col(UBYTE x, UBYTE y, UBYTE height) __nonbanked {
     // DMG Column Load
     unsigned char* map = image_ptr + image_tile_width * y + x;
     SWITCH_ROM_MBC1(image_bank);
-    get_map_from_buf(x, y, 1, height, buf, image_ptr, image_tile_width, image_tile_height);
+    get_map_from_buf(x, y, 1, height, buf, image_ptr);
     set_bkg_tiles(MOD_32(x), MOD_32(y), 1, height, buf);
     SWITCH_ROM_MBC1(_save);
 }
@@ -345,7 +337,6 @@ void scroll_load_col(UBYTE x, UBYTE y, UBYTE height) __nonbanked {
 void scroll_load_pending_col() __nonbanked {
     UINT8 _save = _current_bank;
     UBYTE buf[PENDING_BATCH_SIZE];
-    UBYTE x = pending_h_x, y = pending_h_y;
     UBYTE height = MIN(pending_h_i, PENDING_BATCH_SIZE);
 
     SWITCH_ROM_MBC1(image_bank);
@@ -353,15 +344,15 @@ void scroll_load_pending_col() __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Column Load
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
-        get_map_from_buf(x, y, 1, height, buf, image_attr_ptr, image_tile_width, image_tile_height);
-        set_bkg_tiles(MOD_32(x), MOD_32(y), 1, height, buf);
+        get_map_from_buf(pending_h_x, pending_h_y, 1, height, buf, image_attr_ptr);
+        set_bkg_tiles(MOD_32(pending_h_x), MOD_32(pending_h_y), 1, height, buf);
         VBK_REG = 0;
     }
 #endif
     // DMG Column Load
     SWITCH_ROM_MBC1(image_bank);
-    get_map_from_buf(x, y, 1, height, buf, image_ptr, image_tile_width, image_tile_height);
-    set_bkg_tiles(MOD_32(x), MOD_32(y), 1, height, buf);
+    get_map_from_buf(pending_h_x, pending_h_y, 1, height, buf, image_ptr);
+    set_bkg_tiles(MOD_32(pending_h_x), MOD_32(pending_h_y), 1, height, buf);
 
     pending_h_y += height;
     pending_h_i -= height;

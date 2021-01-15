@@ -2,11 +2,14 @@
 
 .area _CODE
 
-; void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * buf, UBYTE buf_w, UBYTE buf_h)
+.globl _image_tile_width
+.globl _image_tile_height
+
+; void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * buf)
 
 _get_map_from_buf::
-        push    bc          ; bc, ret, x, y, w, h, dest, buf, buf_w, buf_h
-                            ; 0   2    4  5  6  7  8     10   12     13 
+        push    bc          ; bc, ret, x, y, w, h, dest, buf
+                            ; 0   2    4  5  6  7  8     10 
         ldhl    sp, #4    
         ld      d, (hl)     ; d = x
         inc     hl
@@ -26,13 +29,13 @@ _get_map_from_buf::
         ld      a, #0xff
 18$:
         push    hl
-        ldhl    sp, #14     ; &buf_w
-        cp      (hl)        ; buf_w
+        ld      hl, #_image_tile_width
+        cp      (hl)        ; _image_tile_width
         jr      c, 8$
         ld      a, d
-        cp      (hl)        ; buf_w
+        cp      (hl)        ; _image_tile_width
         jp      nc, 9$
-        ld      a, (hl)     ; buf_w
+        ld      a, (hl)     ; _image_tile_width
         sub     d
         pop     hl
         ld      h, a
@@ -46,13 +49,13 @@ _get_map_from_buf::
         ld      a, #0xff
 17$:
         push    hl
-        ldhl    sp, #15     ; &buf_h
-        cp      (hl)        ; buf_h
+        ld      hl, #_image_tile_height
+        cp      (hl)        ; _image_tile_height
         jr      c, 10$
         ld      a, e
-        cp      (hl)        ; buf_h
+        cp      (hl)        ; _image_tile_height
         jp      nc, 9$
-        ld      a, (hl)     ; buf_h
+        ld      a, (hl)     ; _image_tile_height
         sub     e
         pop     hl
         ld      l, a
@@ -72,13 +75,10 @@ _get_map_from_buf::
         or      e
         jr      z, 3$
 
-        push    hl
-        ldhl    sp, #18     ; &buf_w
+        ld      a, (#_image_tile_width)
+        ld      c, a
         xor     a
         ld      b, a
-        ld      c, (hl)     ; buf_w
-
-        pop     hl
 11$:                        ; mul bc by e and add reault to hl
         srl     e
         jr      nc, 12$
@@ -127,10 +127,7 @@ _get_map_from_buf::
         dec     e
         jr      z,6$
 
-        push    hl          ; next line
-        ldhl    sp, #14   
-        ld      a, (hl)     ; buf_w
-        pop     hl
+        ld      a, (#_image_tile_width)
         add     l
         ld      l, a
         ld      a, h
