@@ -220,10 +220,6 @@ _set_bkg_tile_xy::
         pop     bc
         ret
 
-_WaitForMode0Or1::
-        WAIT_STAT
-        ret
-
 _GetWinAddr::
         ldh     a,(.LCDC)
         bit     6,a

@@ -14,6 +14,11 @@
 #endif
 #include "data/data_ptrs.h"
 
+// extract tile map from buffer, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
+void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image) __preserves_regs(b, c);
+// put tile map from buffer onto screen, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
+void map_to_screen(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image);
+
 void scroll_queue_row(UBYTE x, UBYTE y);
 void scroll_queue_col(UBYTE x, UBYTE y);
 void scroll_load_pending_row();
@@ -189,8 +194,6 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
 }
 
 void scroll_queue_row(UBYTE x, UBYTE y) {
-    actor_t *actor;
-
     while (pending_w_i) {
         // If previous row wasn't fully rendered
         // render it now before starting next row        
@@ -210,8 +213,6 @@ void scroll_queue_row(UBYTE x, UBYTE y) {
 }
 
 void scroll_queue_col(UBYTE x, UBYTE y) {
-    actor_t *actor;
-    
     while (pending_h_i) {
         // If previous column wasn't fully rendered
         // render it now before starting next column

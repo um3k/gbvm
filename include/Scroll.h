@@ -44,24 +44,29 @@ void scroll_update() __banked;
 void SetTile(UBYTE * r, UINT8 t) __preserves_regs(b, c);
 
 /**
- * Wait for LCD controller mode 1 or 0 (Can access OAM)
+ * Get base address of window map
  */
-void WaitForMode0Or1() __preserves_regs(b, c, d, e, h, l);
-
 UINT8 * GetWinAddr() __preserves_regs(b, c, h, l);
+
+/**
+ * Get base address of background map
+ */
 UINT8 * GetBkgAddr() __preserves_regs(b, c, h, l);
 
+/**
+ * Set single tile t on window layer at x,y
+ * @param x X-coordinate
+ * @param y Y-coordinate
+ * @param t tile index
+ */ 
 void set_win_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
+
+/**
+ * Set single tile t on background layer at x,y
+ * @param x X-coordinate
+ * @param y Y-coordinate
+ * @param t tile index
+ */ 
 void set_bkg_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
-
-/**
- * extract tile map from buffer, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
- */
-void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image) __preserves_regs(b, c);
-
-/**
- * put tile map from buffer onto screen, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
- */
-void map_to_screen(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image);
 
 #endif
