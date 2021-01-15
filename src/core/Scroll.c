@@ -9,7 +9,6 @@
 #include "Math.h"
 #include "FadeManager.h"
 #include <string.h>
-#include "map2buf.h"
 #ifdef PARALLAX
     #include "parallax.h"
 #endif
