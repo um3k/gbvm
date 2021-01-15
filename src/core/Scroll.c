@@ -28,14 +28,14 @@ void scroll_load_col(UBYTE x, UBYTE y, UBYTE height);
 void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_rows);
 UBYTE scroll_viewport(parallax_row_t * port);
 
-INT16 scroll_x = 0;
-INT16 scroll_y = 0;
-INT16 draw_scroll_x = 0;
-INT16 draw_scroll_y = 0;
-UINT16 scroll_x_max = 0;
-UINT16 scroll_y_max = 0;
-BYTE scroll_offset_x = 0;
-BYTE scroll_offset_y = 0;
+INT16 scroll_x;
+INT16 scroll_y;
+INT16 draw_scroll_x;
+INT16 draw_scroll_y;
+UINT16 scroll_x_max;
+UINT16 scroll_y_max;
+BYTE scroll_offset_x;
+BYTE scroll_offset_y;
 UBYTE pending_h_x, pending_h_y;
 UBYTE pending_h_i;
 UBYTE pending_w_x, pending_w_y;
@@ -45,11 +45,21 @@ INT16 current_col, new_col;
 
 UBYTE tilemap_buffer[MAX(MAX(PENDING_BATCH_SIZE, SCREEN_TILE_REFRES_W), SCREEN_TILE_REFRES_H)];
 
+void scroll_reset() __banked {
+    draw_scroll_x   = 0;
+    draw_scroll_y   = 0;
+    scroll_x_max    = 0;
+    scroll_y_max    = 0;
+    scroll_offset_x = 0;
+    scroll_offset_y = 0;
+    scroll_init();
+}
+
 void scroll_init() __banked {
-    pending_w_i = 0;
-    pending_h_i = 0;
-    scroll_x = 0x7FFF;
-    scroll_y = 0x7FFF;
+    pending_w_i     = 0;
+    pending_h_i     = 0;
+    scroll_x        = 0x7FFF;
+    scroll_y        = 0x7FFF;
     memset(tilemap_buffer, 0, sizeof(tilemap_buffer));
 }
 

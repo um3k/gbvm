@@ -26,6 +26,11 @@ extern UINT8 pending_w_i;
 extern UINT8 pending_h_i;
 
 /**
+ * Resets scroll settings on engine start
+ */
+void scroll_reset() __banked;
+
+/**
  * Initialise scroll variables, call on scene load
  */
 void scroll_init() __banked;
