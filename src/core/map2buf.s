@@ -15,17 +15,15 @@
 _map_to_screen::
         pop     bc
         call    _get_map_from_buf
-        ldhl    sp, #0
+        push    bc
+        ldhl    sp, #2
         ld      a, (hl)
         and     #31
         ld      (hl+), a
         ld      a, (hl)
         and     #31
         ld      (hl), a
-        call     _set_bkg_tiles
-        ld      h, b
-        ld      l, c
-        jp      (hl)
+        jp      _set_bkg_tiles
 
 _get_map_from_buf::
         push    bc          ; bc, ret, x, y, w, h, dest, image
