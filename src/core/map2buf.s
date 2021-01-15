@@ -13,24 +13,19 @@
 .map_save_h:    .ds 1
 
 _map_to_screen::
-        ldhl    sp, #4
-        ld      a, (hl+)
-        ld      (#.map_save_w), a
-        ld      a, (hl)
-        ld      (#.map_save_h), a
+        pop     bc
         call    _get_map_from_buf
-        ldhl    sp, #2
+        ldhl    sp, #0
         ld      a, (hl)
         and     #31
         ld      (hl+), a
         ld      a, (hl)
         and     #31
-        ld      (hl+), a
-        ld      a, (#.map_save_w)
-        ld      (hl+), a
-        ld      a, (#.map_save_h)
         ld      (hl), a
-        jp      _set_bkg_tiles
+        call     _set_bkg_tiles
+        ld      h, b
+        ld      l, c
+        jp      (hl)
 
 _get_map_from_buf::
         push    bc          ; bc, ret, x, y, w, h, dest, image
