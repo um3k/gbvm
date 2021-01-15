@@ -175,7 +175,7 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
     UBYTE x = MAX(0, (scroll_x >> 3) - SCREEN_PAD_LEFT);
     UBYTE y = MAX(0, (scroll_y >> 3) + row_offset);
 
-    for (i = 0; i != n_rows; ++i, y++) {
+    for (i = 0; i != n_rows, y != image_tile_height; ++i, y++) {
         scroll_load_row(x, y);
     }
 
