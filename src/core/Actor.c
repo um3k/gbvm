@@ -129,6 +129,44 @@ void activate_actor(actor_t *actor)
     DL_PUSH_HEAD(actors_active_head, actor);
 }
 
+void activate_actors_in_row(UBYTE x, UBYTE y) __banked {
+    static actor_t *actor;
+    actor = actors_inactive_head;
+
+    while (actor) {
+        UBYTE ty = actor->y >> 3;
+        if (ty == y) {
+            UBYTE tx = actor->x >> 3;
+            if ((tx + 1 > x) && (tx < x + SCREEN_TILE_REFRES_W)) {
+                actor_t * next = actor->next;
+                activate_actor(actor);
+                actor = next;
+                continue;
+            }
+        }
+        actor = actor->next;
+    }    
+}
+
+void activate_actors_in_col(UBYTE x, UBYTE y) __banked {
+    static actor_t *actor;
+    actor = actors_inactive_head;
+
+    while (actor) {
+        UBYTE tx = actor->x >> 3;
+        if (tx == x) {
+            UBYTE ty = actor->y >> 3;
+            if ((ty > y) && (ty < y + SCREEN_TILE_REFRES_H)) {
+                actor_t * next = actor->next;
+                activate_actor(actor);
+                actor=next;
+                continue;
+            }
+        }
+        actor = actor->next;
+    }
+}
+
 void actor_set_flip_x(actor_t *actor, UBYTE flip) __banked
 {
     if (flip) {
