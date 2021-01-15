@@ -174,7 +174,7 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
     UBYTE x = MAX(0, (scroll_x >> 3) - SCREEN_PAD_LEFT);
     UBYTE y = MAX(0, (scroll_y >> 3) + row_offset);
 
-    for (i = 0; i != n_rows; ++i, y++) {
+    for (i = 0; i != n_rows, y != image_tile_height; ++i, y++) {
         scroll_load_row(x, y);
     }
 
@@ -192,6 +192,8 @@ void scroll_queue_row(UBYTE x, UBYTE y) {
     actor_t *actor;
 
     while (pending_w_i) {
+        // If previous row wasn't fully rendered
+        // render it now before starting next row        
         scroll_load_pending_row();
     }
 
@@ -204,21 +206,7 @@ void scroll_queue_row(UBYTE x, UBYTE y) {
     pending_w_y = y;
     pending_w_i = SCREEN_TILE_REFRES_W;
 
-    // Activate Actors in Row
-    actor = actors_inactive_head;
-    while (actor) {
-        INT16 ty = actor->y >> 3;
-        if (ty == y) {
-            INT16 tx = actor->x >> 3;
-            if ((tx + 1 > x) && (tx < x + SCREEN_TILE_REFRES_W)) {
-                actor_t * next = actor->next;
-                activate_actor(actor);
-                actor=next;
-                continue;
-            }
-        }
-        actor = actor->next;
-    }
+    activate_actors_in_row(x, y);
 }
 
 void scroll_queue_col(UBYTE x, UBYTE y) {
@@ -230,25 +218,11 @@ void scroll_queue_col(UBYTE x, UBYTE y) {
         scroll_load_pending_col();
     }
 
-    // Activate Actors in Column
-    actor = actors_inactive_head;
-    while (actor) {
-        INT16 tx = actor->x >> 3;
-        if (tx == x) {
-            INT16 ty = actor->y >> 3;
-            if ((ty > y) && (ty < y + SCREEN_TILE_REFRES_H)) {
-                actor_t * next = actor->next;
-                activate_actor(actor);
-                actor=next;
-                continue;
-            }
-        }
-        actor = actor->next;
-    }
-
     pending_h_x = x;
     pending_h_y = y;
     pending_h_i = MIN(SCREEN_TILE_REFRES_H, image_tile_height - y);
+
+    activate_actors_in_col(x, y);
 }
 
 /* Update pending (up to 5) rows */
@@ -290,21 +264,7 @@ void scroll_load_row(UBYTE x, UBYTE y) __nonbanked {
     SWITCH_ROM_MBC1(image_bank);
     map_to_screen(x, y, SCREEN_TILE_REFRES_W, 1, tilemap_buffer, image_ptr);
 
-    // Activate Actors in Row
-    actor_t * actor = actors_inactive_head;
-    while (actor) {
-        INT16 ty = actor->y >> 3;
-        if (ty == y) {
-            INT16 tx = actor->x >> 3;
-            if ((tx + 1 > x) && (tx < x + SCREEN_TILE_REFRES_W)) {
-                actor_t * next = actor->next;
-                activate_actor(actor);
-                actor = next;
-                continue;
-            }
-        }
-        actor = actor->next;
-    }
+    activate_actors_in_row(x, y);
 
     SWITCH_ROM_MBC1(_save);
 }
