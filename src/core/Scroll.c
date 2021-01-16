@@ -9,11 +9,15 @@
 #include "Math.h"
 #include "FadeManager.h"
 #include <string.h>
-#include "map2buf.h"
 #ifdef PARALLAX
     #include "parallax.h"
 #endif
 #include "data/data_ptrs.h"
+
+// extract tile map from buffer, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
+void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image) __preserves_regs(b, c);
+// put tile map from buffer onto screen, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
+void map_to_screen(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image);
 
 void scroll_queue_row(UBYTE x, UBYTE y);
 void scroll_queue_col(UBYTE x, UBYTE y);
@@ -24,14 +28,14 @@ void scroll_load_col(UBYTE x, UBYTE y, UBYTE height);
 void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_rows);
 UBYTE scroll_viewport(parallax_row_t * port);
 
-INT16 scroll_x = 0;
-INT16 scroll_y = 0;
-INT16 draw_scroll_x = 0;
-INT16 draw_scroll_y = 0;
-UINT16 scroll_x_max = 0;
-UINT16 scroll_y_max = 0;
-BYTE scroll_offset_x = 0;
-BYTE scroll_offset_y = 0;
+INT16 scroll_x;
+INT16 scroll_y;
+INT16 draw_scroll_x;
+INT16 draw_scroll_y;
+UINT16 scroll_x_max;
+UINT16 scroll_y_max;
+BYTE scroll_offset_x;
+BYTE scroll_offset_y;
 UBYTE pending_h_x, pending_h_y;
 UBYTE pending_h_i;
 UBYTE pending_w_x, pending_w_y;
@@ -41,11 +45,21 @@ INT16 current_col, new_col;
 
 UBYTE tilemap_buffer[MAX(MAX(PENDING_BATCH_SIZE, SCREEN_TILE_REFRES_W), SCREEN_TILE_REFRES_H)];
 
+void scroll_reset() __banked {
+    draw_scroll_x   = 0;
+    draw_scroll_y   = 0;
+    scroll_x_max    = 0;
+    scroll_y_max    = 0;
+    scroll_offset_x = 0;
+    scroll_offset_y = 0;
+    scroll_init();
+}
+
 void scroll_init() __banked {
-    pending_w_i = 0;
-    pending_h_i = 0;
-    scroll_x = 0x7FFF;
-    scroll_y = 0x7FFF;
+    pending_w_i     = 0;
+    pending_h_i     = 0;
+    scroll_x        = 0x7FFF;
+    scroll_y        = 0x7FFF;
     memset(tilemap_buffer, 0, sizeof(tilemap_buffer));
 }
 
@@ -190,8 +204,6 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
 }
 
 void scroll_queue_row(UBYTE x, UBYTE y) {
-    actor_t *actor;
-
     while (pending_w_i) {
         // If previous row wasn't fully rendered
         // render it now before starting next row        
@@ -211,8 +223,6 @@ void scroll_queue_row(UBYTE x, UBYTE y) {
 }
 
 void scroll_queue_col(UBYTE x, UBYTE y) {
-    actor_t *actor;
-    
     while (pending_h_i) {
         // If previous column wasn't fully rendered
         // render it now before starting next column

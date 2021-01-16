@@ -26,6 +26,11 @@ extern UINT8 pending_w_i;
 extern UINT8 pending_h_i;
 
 /**
+ * Resets scroll settings on engine start
+ */
+void scroll_reset() __banked;
+
+/**
  * Initialise scroll variables, call on scene load
  */
 void scroll_init() __banked;
@@ -44,14 +49,29 @@ void scroll_update() __banked;
 void SetTile(UBYTE * r, UINT8 t) __preserves_regs(b, c);
 
 /**
- * Wait for LCD controller mode 1 or 0 (Can access OAM)
+ * Get base address of window map
  */
-void WaitForMode0Or1() __preserves_regs(b, c, d, e, h, l);
-
 UINT8 * GetWinAddr() __preserves_regs(b, c, h, l);
+
+/**
+ * Get base address of background map
+ */
 UINT8 * GetBkgAddr() __preserves_regs(b, c, h, l);
 
+/**
+ * Set single tile t on window layer at x,y
+ * @param x X-coordinate
+ * @param y Y-coordinate
+ * @param t tile index
+ */ 
 void set_win_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
+
+/**
+ * Set single tile t on background layer at x,y
+ * @param x X-coordinate
+ * @param y Y-coordinate
+ * @param t tile index
+ */ 
 void set_bkg_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
 
 #endif
