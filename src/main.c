@@ -23,10 +23,7 @@
     #include "SGBBorder.h"
     #include "data/border.h"
 #endif
-#ifdef PARALLAX
-    #include "parallax.h"
-#endif
-
+#include "parallax.h"
 #include "data/data_ptrs.h"
 
 
@@ -34,35 +31,25 @@ extern void __bank_bootstrap_script;
 extern const UBYTE bootstrap_script[];
 
 void window_LCD_isr() __nonbanked {
-    if (hide_sprites) return;
-    if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
+    if (LYC_REG == 0) {
+        SCX_REG = draw_scroll_x;
+        SCY_REG = draw_scroll_y;
+        if (!hide_sprites) SHOW_SPRITES;
+        LYC_REG = win_pos_y;
+    } else {
+        LYC_REG = 0;
+        if (hide_sprites) return;
+        if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
+    }
 }
 
 void VBL_isr() __nonbanked {
-    // Update background scroll in vbl
-    // interupt to prevent tearing
-#ifndef PARALLAX
-    SCX_REG = draw_scroll_x;
-    SCY_REG = draw_scroll_y;
-#endif
-    if (!hide_sprites) SHOW_SPRITES;
     if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
         WX_REG = win_pos_x + 7u;
-#ifndef PARALLAX
-        LYC_REG = WY_REG = win_pos_y;
-        SHOW_WIN;
-        // enable LCD interrupt only when window is visible
-        IE_REG |= LCD_IFLAG;
-#else
         WY_REG = win_pos_y;
         SHOW_WIN;
-#endif
     } else {
         HIDE_WIN;
-#ifndef PARALLAX
-        // disable LCD interrupt
-        IE_REG &= ~LCD_IFLAG;
-#endif
     }
 }
 
@@ -160,6 +147,7 @@ void process_VM() {
                     } else {
                         add_LCD(window_LCD_isr);
                     }
+                    LYC_REG = 0u;
                 }
 
                 state_init();
@@ -203,14 +191,9 @@ void main() {
     engine_reset();
 
     __critical {
-#ifdef PARALLAX
         parallax_row = parallax_rows;
-        add_LCD(parallax_LCD_isr);
         LYC_REG = 0u;
-#else
-        add_LCD(window_LCD_isr);
-        LYC_REG = 144u;
-#endif
+
         add_VBL(VBL_isr);
         STAT_REG |= 0x40u; 
 
@@ -220,12 +203,7 @@ void main() {
             TMA_REG = 0xC0u;
         #endif
         TAC_REG = 0x07u;
-
-#ifdef PARALLAX
         IE_REG |= (TIM_IFLAG | LCD_IFLAG);
-#else
-        IE_REG |= TIM_IFLAG;
-#endif
     }
     DISPLAY_ON;
 

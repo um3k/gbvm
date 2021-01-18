@@ -2,16 +2,15 @@
 
 #include "Scroll.h"
 
+#include <string.h>
+
 #include "Actor.h"
 #include "Camera.h"
 #include "DataManager.h"
 #include "GameTime.h"
 #include "Math.h"
 #include "FadeManager.h"
-#include <string.h>
-#ifdef PARALLAX
-    #include "parallax.h"
-#endif
+#include "parallax.h"
 #include "data/data_ptrs.h"
 
 // extract tile map from buffer, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
