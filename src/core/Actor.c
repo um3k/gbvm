@@ -105,6 +105,10 @@ void deactivate_actor(actor_t *actor) __banked
     release_sprite(actor->sprite_no);
     DL_REMOVE_ITEM(actors_active_head, actor);
     DL_PUSH_HEAD(actors_inactive_head, actor);
+    if (actor->ctx_id) {
+        script_terminate(actor->ctx_id);
+        actor->ctx_id = 0;
+    }
 }
 
 void activate_actor(actor_t *actor)
@@ -127,6 +131,10 @@ void activate_actor(actor_t *actor)
     actor->sprite_no = get_free_sprite();
     DL_REMOVE_ITEM(actors_inactive_head, actor);
     DL_PUSH_HEAD(actors_active_head, actor);
+    if (actor->script_update.bank) {
+        SCRIPT_CTX *ctx = script_execute(actor->script_update.bank, actor->script_update.ptr, 0, 0);
+        actor->ctx_id = ctx->ID;
+    }
 }
 
 void activate_actors_in_row(UBYTE x, UBYTE y) __banked {

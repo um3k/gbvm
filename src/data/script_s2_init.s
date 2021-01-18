@@ -9,6 +9,7 @@
 ___bank_script_s2_init = 255
 .globl ___bank_script_s2_init
 .globl ___bank_script_s2_timer1, _script_s2_timer1 
+.globl ___bank_script_s2_input1, _script_s2_input1
 
 ACTOR = -4
 
@@ -31,6 +32,9 @@ _script_s2_init::
 
         ; Fade IN
         VM_FADE_IN              .UI_MODAL
+
+       VM_CONTEXT_PREPARE       1, ___bank_script_s2_input1, _script_s2_input1
+       VM_INPUT_ATTACH          0x40, 1
 
         ; Emote
         ; VM_SET_CONST            ACTOR, 0
