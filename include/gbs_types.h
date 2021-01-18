@@ -48,6 +48,7 @@ typedef struct actor_t
   UINT8 palette;
   UINT8 n_frames;
   far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
+  UBYTE ctx_id;
 
   // Collisions
   collision_group_e collision_group;
