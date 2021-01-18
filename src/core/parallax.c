@@ -2,6 +2,7 @@
 
 parallax_row_t parallax_rows[3] = { PARALLAX_STEP(0, 2, 2), PARALLAX_STEP(2, 4, 1), PARALLAX_STEP(4, 0, 0)};
 parallax_row_t * parallax_row;
+UBYTE parallax_enabled;
 
 void parallax_LCD_isr() __naked __nonbanked {
 __asm
