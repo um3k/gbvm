@@ -6,13 +6,13 @@
 
 .area _CODE_255
 
-___bank_script_s2_init = 255
-.globl ___bank_script_s2_init
-.globl ___bank_script_s2_timer1, _script_s2_timer1 
+___bank_script_s5_init = 255
+.globl ___bank_script_s5_init
+.globl ___bank_script_s5_timer1, _script_s5_timer1 
 
 ACTOR = -4
 
-_script_s2_init::
+_script_s5_init::
         VM_LOCK
 
         ; Local Actor
@@ -21,9 +21,13 @@ _script_s2_init::
         VM_PUSH                 256
         VM_PUSH                 ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
 
-        ; Actor 1 Face Right
+        ; ; Actor 1 Face Left
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
+
+        ; ; Actor 1 Face Left
+        VM_SET_CONST            ACTOR, 2
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT, 0
 
         ; Wait 1 frame to allow actors to rerender before fade in starts
         VM_PUSH                 1
@@ -47,14 +51,14 @@ _script_s2_init::
         ; VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         ; VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
-        ; VM_MUSIC_ROUTINE        0, ___bank_script_s2_timer1, _script_s2_timer1
-        ; VM_MUSIC_ROUTINE        1, ___bank_script_s2_timer1, _script_s2_timer1
-        ; VM_MUSIC_ROUTINE        2, ___bank_script_s2_timer1, _script_s2_timer1
-        ; VM_MUSIC_ROUTINE        3, ___bank_script_s2_timer1, _script_s2_timer1
-        ; VM_MUSIC_PLAY           4, 1
-
-;        VM_TIMER_PREPARE        1, ___bank_script_s2_timer1, _script_s2_timer1
-;        VM_TIMER_SET            1, 5
+        VM_MUSIC_ROUTINE        0, ___bank_script_s5_timer1, _script_s5_timer1
+        VM_MUSIC_ROUTINE        1, ___bank_script_s5_timer1, _script_s5_timer1
+        VM_MUSIC_ROUTINE        2, ___bank_script_s5_timer1, _script_s5_timer1
+        VM_MUSIC_ROUTINE        3, ___bank_script_s5_timer1, _script_s5_timer1
+        VM_MUSIC_PLAY           4, 1
 
         ; Stop Script
         VM_STOP
+
+___bank_TESTFN01 = 1
+.globl ___bank_TESTFN01
