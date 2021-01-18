@@ -46,7 +46,7 @@
 #define INPUT_SELECT (joy & J_SELECT)
 
 /* TRUE on first frame that any button is pressed */
-#define INPUT_ANY_PRESSED (joy & !last_joy)
+#define INPUT_ANY_PRESSED (joy && !last_joy)
 
 /* TRUE on first frame that left is pressed on dpad  */
 #define INPUT_LEFT_PRESSED ((joy & J_LEFT) && !(last_joy & J_LEFT))
