@@ -151,6 +151,17 @@ void process_VM() {
                         continue;
                     }
                 }
+
+                __critical {
+                    remove_LCD(parallax_LCD_isr);
+                    remove_LCD(window_LCD_isr);
+                    if (parallax_enabled) {
+                        add_LCD(parallax_LCD_isr);
+                    } else {
+                        add_LCD(window_LCD_isr);
+                    }
+                }
+
                 state_init();
                 actor_reset_dir(&PLAYER);
                 camera_update();

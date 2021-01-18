@@ -8,10 +8,10 @@
 
 ACTOR = -4
 
-___bank_script_s5t0_interact = 255
-.globl ___bank_script_s5t0_interact
+___bank_script_s6t1_interact = 255
+.globl ___bank_script_s6t1_interact
 
-_script_s5t0_interact::
+_script_s6t1_interact::
         VM_LOCK
 
         ; Local Actor
@@ -23,11 +23,11 @@ _script_s5t0_interact::
         ; Load Scene
         VM_FADE_OUT             2
         VM_SET_CONST            ACTOR, 0
-        VM_SET_CONST            ^/(ACTOR + 1)/, 72
-        VM_SET_CONST            ^/(ACTOR + 2)/, 104
+        VM_SET_CONST            ^/(ACTOR + 1)/, 216
+        VM_SET_CONST            ^/(ACTOR + 2)/, 200
         VM_ACTOR_SET_POS        ACTOR
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
-            IMPORT_FAR_PTR_DATA _scene_6
+            IMPORT_FAR_PTR_DATA _scene_2
         ; Stop Script
         VM_STOP
