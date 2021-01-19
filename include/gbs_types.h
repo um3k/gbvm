@@ -34,6 +34,7 @@ typedef struct actor_t
   BYTE dir_x;
   BYTE dir_y;
   UINT8 sprite_no;
+  UINT8 sprite_tile;
   UINT8 pinned;
   UINT8 animate;
   UINT8 frame;

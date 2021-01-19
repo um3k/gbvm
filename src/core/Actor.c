@@ -7,6 +7,7 @@
 #include "Math.h"
 #include "Sprite.h"
 #include "Collision.h"
+#include "metasprite.h"
 #include "vm.h"
 #include <gb/gb.h>
 
@@ -26,12 +27,42 @@ UBYTE player_iframes = 0;
 actor_t *player_collision_actor = 0;
 far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 
+typedef struct metasprite_item_t {
+    INT8  did;
+    INT8  dy, dx;
+    UINT8 dtile;
+    UINT8 props;
+} metasprite_item_t;
+
+#define metasprite_end 0 
+const metasprite_item_t actor_animated_down_frame_1[]  = {{0, 0, 0, 0,  0},    {1, 0, 8, 2,  0},     {metasprite_end}};
+const metasprite_item_t actor_animated_down_frame_2[]  = {{0, 0, 0, 4,  0},    {1, 0, 8, 6,  0},    {metasprite_end}};
+const metasprite_item_t actor_animated_up_frame_1[]    = {{0, 0, 0, 8,  0},    {1, 0, 8, 10, 0},     {metasprite_end}};
+const metasprite_item_t actor_animated_up_frame_2[]    = {{0, 0, 0, 12, 0},    {1, 0, 8, 14, 0},     {metasprite_end}};
+const metasprite_item_t actor_animated_right_frame_1[] = {{0, 0, 0, 16, 0},    {1, 0, 8, 18, 0},     {metasprite_end}};
+const metasprite_item_t actor_animated_right_frame_2[] = {{0, 0, 0, 20, 0},    {1, 0, 8, 22, 0},     {metasprite_end}};
+const metasprite_item_t actor_animated_left_frame_1[]  = {{0, 0, 0, 18, 0x20}, {1, 0, 8, 16, 0x20U}, {metasprite_end}};
+const metasprite_item_t actor_animated_left_frame_2[]  = {{0, 0, 0, 22, 0x20}, {1, 0, 8, 20, 0x20U}, {metasprite_end}};
+
+const metasprite_item_t (*actor_animated_metasprites[])[] = {
+    &actor_animated_down_frame_1,
+    &actor_animated_down_frame_2,
+    &actor_animated_up_frame_1,
+    &actor_animated_up_frame_2,
+    &actor_animated_right_frame_1,
+    &actor_animated_right_frame_2,
+    &actor_animated_left_frame_1,
+    &actor_animated_left_frame_2
+};
+
 void actors_update() __banked
 {
     static actor_t *actor;
     actor = actors_active_head;
-
+    
     while (actor) {
+        actor->sprite_tile = 0; // This should come from scene_actors
+
         if (actor->pinned) 
             screen_x = actor->x + 8, screen_y = actor->y + 8;
         else 
@@ -45,39 +76,21 @@ void actors_update() __banked
             continue;
         } else if ((WX_REG != 7) && (WX_REG < (UINT8)screen_x + 8) && (WY_REG < (UINT8)(screen_y)-8)) {
             // Hide if under window (don't deactivate)
-            move_sprite(actor->sprite_no,     0, 0);
-            move_sprite(actor->sprite_no + 1, 0, 0);
+            hide_metasprite(actor_animated_metasprites[actor->frame], actor->sprite_no);
             actor = actor->next;
             continue;
         }
 
-        move_sprite(actor->sprite_no,     screen_x,     screen_y);
-        move_sprite(actor->sprite_no + 1, screen_x + 8, screen_y);
-
-        // Check if should animate
-        if ((actor->animate) && ((game_time & 0x3) == 0)) {
-          // Check reached animation tick frame
-            if ((game_time & actor->anim_tick) == 0) {
-                actor->frame += 4;
-
-                // Check reached end of animation
-                if (actor->frame == actor->frame_end) actor->frame = actor->frame_start;
-
-                actor->rerender = TRUE;
+        // Check reached animation tick frame
+        if ((actor->animate) && ((game_time & actor->anim_tick) == 0)) {
+            actor->frame++;
+            // Check reached end of animation
+            if (actor->frame == actor->frame_end) {
+                actor->frame = actor->frame_start;
             }
         }
 
-        // Check for forced rerender
-        if (actor->rerender) {
-              if (actor->flip_x) {
-                  set_sprite_tile(actor->sprite_no + 1, actor->frame);
-                  set_sprite_tile(actor->sprite_no, actor->frame + 2);
-              } else  {
-                  set_sprite_tile(actor->sprite_no, actor->frame);
-                  set_sprite_tile(actor->sprite_no + 1, actor->frame + 2);
-              }      
-              actor->rerender = FALSE;
-        }
+        move_metasprite(actor_animated_metasprites[actor->frame], actor->sprite_tile, actor->sprite_no, screen_x, screen_y);
 
         actor = actor->next;
     }
@@ -205,21 +218,16 @@ void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
     
     if (actor->sprite_type != SPRITE_TYPE_STATIC) {
         if (dir_x == DIR_LEFT) {
-            actor_set_frames(actor, MUL_4(actor->sprite + (2 * actor->n_frames)), MUL_4(actor->sprite + (3 * actor->n_frames)));
-            actor_set_flip_x(actor, TRUE);
+            actor_set_frames(actor, 3 * actor->n_frames, 4 * actor->n_frames);
         } else if (dir_x == DIR_RIGHT) {
-            actor_set_frames(actor, MUL_4(actor->sprite + (2 * actor->n_frames)), MUL_4(actor->sprite + (3 * actor->n_frames)));
-            actor_set_flip_x(actor, FALSE);
+            actor_set_frames(actor, 2 * actor->n_frames, 3 * actor->n_frames);
         } else if (dir_y == DIR_UP) {
-            actor_set_frames(actor, MUL_4(actor->sprite + actor->n_frames), MUL_4(actor->sprite + (2 * actor->n_frames)));
-            actor_set_flip_x(actor, FALSE);
+            actor_set_frames(actor, actor->n_frames, 2 * actor->n_frames);
         } else if (dir_y == DIR_DOWN) {
-            actor_set_frames(actor, MUL_4(actor->sprite), MUL_4(actor->sprite + actor->n_frames));
-            actor_set_flip_x(actor, FALSE);
+            actor_set_frames(actor, 0, actor->n_frames);
         }
     } else {
-        actor_set_frames(actor, MUL_4(actor->sprite), MUL_4(actor->sprite + actor->n_frames));
-        actor_set_flip_x(actor, FALSE);        
+        actor_set_frames(actor, 0, actor->n_frames);
     }
 
     actor->rerender = TRUE;

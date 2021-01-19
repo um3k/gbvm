@@ -208,7 +208,7 @@ void load_player() __banked {
     PLAYER.anim_tick = start_player_anim_tick;
     PLAYER.frame = 0;
     PLAYER.frame_start = 0;
-    PLAYER.frame_end = 4;
+    PLAYER.frame_end = 2;
     PLAYER.flip_x = FALSE;
     PLAYER.pinned = FALSE;    
     PLAYER.collision_group = 0;
