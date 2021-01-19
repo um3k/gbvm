@@ -27,14 +27,6 @@ UBYTE player_iframes = 0;
 actor_t *player_collision_actor = 0;
 far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 
-typedef struct metasprite_item_t {
-    INT8  did;
-    INT8  dy, dx;
-    UINT8 dtile;
-    UINT8 props;
-} metasprite_item_t;
-
-#define metasprite_end 0 
 const metasprite_item_t actor_animated_down_frame_1[]  = {{0, 0, 0, 0,  0},    {1, 0, 8, 2,  0},     {metasprite_end}};
 const metasprite_item_t actor_animated_down_frame_2[]  = {{0, 0, 0, 4,  0},    {1, 0, 8, 6,  0},    {metasprite_end}};
 const metasprite_item_t actor_animated_up_frame_1[]    = {{0, 0, 0, 8,  0},    {1, 0, 8, 10, 0},     {metasprite_end}};

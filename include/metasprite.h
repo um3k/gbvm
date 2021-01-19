@@ -3,6 +3,15 @@
 
 #include <gb/gb.h>
 
+typedef struct metasprite_item_t {
+    INT8  did;
+    INT8  dy, dx;
+    UINT8 dtile;
+    UINT8 props;
+} metasprite_item_t;
+
+#define metasprite_end 0 
+
 extern const void * __current_metasprite;
 extern UBYTE __current_base_tile;
 
