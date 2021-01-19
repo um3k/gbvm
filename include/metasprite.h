@@ -17,7 +17,7 @@ inline void move_metasprite(const void * metasprite, UINT8 base_tile, UINT8 base
 
 inline void hide_metasprite(const void * metasprite, UINT8 base_sprite) {
     __current_metasprite = metasprite; 
-    __hide_metasprite(base_sprite); 
+    __hide_metasprite(base_sprite);
 }
 
 #endif

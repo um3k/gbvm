@@ -75,6 +75,8 @@ __asm
         ld      h, (hl)
         ld      l, a 
 
+        ld      bc, #4
+
         ld      d, #>_shadow_OAM
 
         ld      a, (hl+)
@@ -86,20 +88,14 @@ __asm
         add     e
         ld      e, a
 
-        ld      a, #0    ; dy
-        ld      (de), a
-        inc     e
-
-        ld      a, #0    ; dx
+        xor     a
         ld      (de), a
 
         inc     e
         inc     e
         inc     e
-        inc     hl
-        inc     hl
-        inc     hl
-        inc     hl
+        inc     e
+        add     hl, bc
        
         ld      a, (hl+)
         or      a
