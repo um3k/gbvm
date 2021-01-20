@@ -10,10 +10,10 @@ typedef struct metasprite_item_t {
     UINT8 props;
 } metasprite_item_t;
 
-typedef struct metasptite_t {
+typedef struct metasprite_t {
     UINT8 count;
     metasprite_item_t items[];
-} metasptite_t;
+} metasprite_t;
 
 #define metasprite_end 0 
 
