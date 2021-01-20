@@ -55,6 +55,8 @@ void actors_update()
     // PLAYER is always last in the active list and always present
     actor = &PLAYER;
 
+    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) __render_shadow_OAM = (UWORD)&shadow_OAM2 >> 8; else __render_shadow_OAM = (UWORD)&shadow_OAM >> 8;
+
     while (actor) {
         if (actor->pinned) 
             screen_x = actor->x + 8, screen_y = actor->y + 8;
@@ -94,6 +96,8 @@ void actors_update()
     }
 
     hide_hardware_sprites(next_sprite, 40);
+
+    _shadow_OAM_base = __render_shadow_OAM;
 
     SWITCH_ROM_MBC1(_save);
 }
