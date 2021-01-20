@@ -83,10 +83,10 @@ void shmup_update() __banked {
       PLAYER.dir_x = 1;
     }
 
-    if (INPUT_UP_PRESSED || INPUT_DOWN_PRESSED) {
-      // Rerender on first frame direction changed
-      PLAYER.rerender = TRUE;
-    }
+    // if (INPUT_UP_PRESSED || INPUT_DOWN_PRESSED) {
+    //   // Rerender on first frame direction changed
+    //   PLAYER.rerender = TRUE;
+    // }
 
     // Check if player has reached end of scene
     if (shooter_direction == 1) {
@@ -123,10 +123,10 @@ void shmup_update() __banked {
       PLAYER.dir_y = shooter_direction;
     }
 
-    if (INPUT_LEFT_PRESSED || INPUT_RIGHT_PRESSED) {
-      // Rerender on first frame direction changed
-      PLAYER.rerender = TRUE;
-    }
+    // if (INPUT_LEFT_PRESSED || INPUT_RIGHT_PRESSED) {
+    //   // Rerender on first frame direction changed
+    //   PLAYER.rerender = TRUE;
+    // }
 
     if (shooter_direction == 1) {
       // Top to bottom

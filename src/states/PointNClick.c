@@ -22,7 +22,6 @@ void pointnclick_init() __banked {
     // PLAYER.sprite_type = SPRITE_STATIC;
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 1;
-    PLAYER.rerender = TRUE;
 }
 
 void pointnclick_update() __banked {
