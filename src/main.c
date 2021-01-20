@@ -33,6 +33,8 @@
 extern void __bank_bootstrap_script;
 extern const UBYTE bootstrap_script[];
 
+extern volatile struct OAM_item_t shadow_OAM2[40];
+
 void window_LCD_isr() __nonbanked {
     if (LYC_REG == 0) {
         SCX_REG = draw_scroll_x;
@@ -170,6 +172,8 @@ void main() {
         cpu_fast();
     }
 #endif
+
+    memset(shadow_OAM2, 0, sizeof(shadow_OAM2));
 
     data_init();
 #ifdef SGB
