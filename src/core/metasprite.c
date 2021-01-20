@@ -104,5 +104,3 @@ __asm
         ret
 __endasm;
 }
-
-
