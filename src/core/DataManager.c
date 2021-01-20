@@ -7,7 +7,9 @@
 #include "Trigger.h"
 #include "Sprite.h"
 #include "Camera.h"
-#include "Palette.h"
+#ifdef CGB
+    #include "Palette.h"
+#endif
 #include "data/spritesheet_0.h" // @todo don't hard code this
 #include "vm.h"
 #include <string.h>
@@ -63,6 +65,45 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) 
     return size;
 }
 
+#ifdef CGB
+void load_palette(const UBYTE *palette, UBYTE bank) __banked {
+  if (palette_update_mask == 0x3F) {
+    MemcpyBanked(BkgPalette, palette, 48, bank);
+  } else {
+    if (palette_update_mask & 0x1) {
+      MemcpyBanked(BkgPalette, palette, 8, bank);
+    }
+    if (palette_update_mask & 0x2) {
+      MemcpyBanked(BkgPalette + 4, palette + 8, 8, bank);
+    }
+    if (palette_update_mask & 0x4) {
+      MemcpyBanked(BkgPalette + 8, palette + 16, 8, bank);
+    }
+    if (palette_update_mask & 0x8) {
+      MemcpyBanked(BkgPalette + 12, palette + 24, 8, bank);
+    }    
+    if (palette_update_mask & 0x10) {
+      MemcpyBanked(BkgPalette + 16, palette + 32, 8, bank);
+    }    
+    if (palette_update_mask & 0x20) {
+      MemcpyBanked(BkgPalette + 20, palette + 40, 8, bank);
+    }            
+  }
+}
+
+void load_ui_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
+  MemcpyBanked(BkgPalette + UI_PALETTE_OFFSET, data_ptr, 8, bank);
+}
+
+void load_sprite_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
+  MemcpyBanked(SprPalette, data_ptr, 56, bank);
+}
+
+void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
+  MemcpyBanked(SprPalette + PLAYER_PALETTE_OFFSET, data_ptr, 8, bank);
+}
+#endif
+
 UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     UBYTE i, k;
 
@@ -86,11 +127,11 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 
     // Load background + tiles
     load_image(scn.background.ptr, scn.background.bank);
-    //   LoadPalette(scene->palette.ptr, scene->palette.bank);
-    //   LoadSpritePalette(scene->sprite_palette.ptr,
-    //   scene->sprite_palette.bank);
-    //   LoadPlayerSpritePalette(start_player_palette.ptr,
-    //   start_player_palette.bank);
+#ifdef CGB
+    load_palette(scn.palette.ptr, scn.palette.bank);
+    load_sprite_palette(scn.sprite_palette.ptr, scn.sprite_palette.bank);
+    load_player_palette(start_player_palette.ptr, start_player_palette.bank);
+#endif
 
     // Copy parallax settings
     memcpy(&parallax_rows, &scn.parallax_rows, sizeof(parallax_rows));
@@ -202,7 +243,9 @@ void load_player() __banked {
     PLAYER.dir_x = start_scene_dir_x;
     PLAYER.dir_y = start_scene_dir_y;    
     PLAYER.sprite = 0;
+#ifdef CGB
     PLAYER.palette = PLAYER_PALETTE;
+#endif
     PLAYER.animate = FALSE;
     PLAYER.move_speed = start_player_move_speed;
     PLAYER.anim_tick = start_player_anim_tick;

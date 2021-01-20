@@ -7,8 +7,9 @@
 #endif
 
 #include "FadeManager.h"
-#include "Palette.h"
-
+#ifdef CGB
+    #include "Palette.h"
+#endif
 #include "data/data_ptrs.h"
 
 UBYTE fade_running;
@@ -38,9 +39,8 @@ void ApplyPaletteChangeColor(UBYTE index) {
     UWORD* col = BkgPalette;
 
     if (index == 5) {
-        memcpy(BkgPaletteBuffer, BkgPalette, 64);
-        memcpy(SprPaletteBuffer, SprPalette, 64);
-        palette_dirty = TRUE;
+        set_bkg_palette(0, 8, BkgPalette);
+        set_sprite_palette(0, 8, SprPalette);
         return;
     }
 
@@ -63,7 +63,8 @@ void ApplyPaletteChangeColor(UBYTE index) {
         }
     }
 
-    palette_dirty = TRUE;
+    set_bkg_palette(0, 8, BkgPaletteBuffer);
+    set_sprite_palette(0, 8, SprPaletteBuffer);
 }
 #endif
 
