@@ -52,8 +52,9 @@ void actors_update()
     UBYTE next_sprite = 0;
     static actor_t *actor;
 
-    actor = actors_active_head;
-    
+    // PLAYER is always last in the active list and always present
+    actor = &PLAYER;
+
     while (actor) {
         if (actor->pinned) 
             screen_x = actor->x + 8, screen_y = actor->y + 8;
@@ -89,7 +90,7 @@ void actors_update()
             screen_y
         );
 
-        actor = actor->next;
+        actor = actor->prev;
     }
 
     hide_hardware_sprites(next_sprite, 40);
