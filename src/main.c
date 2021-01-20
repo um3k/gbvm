@@ -23,6 +23,9 @@
     #include "SGBBorder.h"
     #include "data/border.h"
 #endif
+#ifdef CGB
+    #include "Palette.h"
+#endif
 #include "parallax.h"
 #include "data/data_ptrs.h"
 
@@ -162,6 +165,12 @@ void process_VM() {
 }
 
 void main() {
+#ifdef CGB
+    if (_cpu == CGB_TYPE) {
+        cpu_fast();
+    }
+#endif
+
     data_init();
 #ifdef SGB
     set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
@@ -176,6 +185,9 @@ void main() {
     #endif
 #endif
     memset(actors, 0, sizeof(actors));
+#ifdef CGB
+    palette_init();
+#endif
 
     LCDC_REG = 0x67;
 
@@ -198,7 +210,8 @@ void main() {
         STAT_REG |= 0x40u; 
 
         #ifdef CGB
-            TMA_REG = _cpu == CGB_TYPE ? 0xE0u : 0xC0u;
+            // CGB_VAL = 256 - ((256 - DMG_VAL) * 2)
+            TMA_REG = _cpu == CGB_TYPE ? 0x80u : 0xC0u;
         #else
             TMA_REG = 0xC0u;
         #endif
