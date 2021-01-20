@@ -66,7 +66,7 @@ void actors_update() __nonbanked
         spritesheet_t *sprite = actor->sprite.ptr;
         
         next_sprite += move_metasprite(
-            sprite->metasprites[0][actor->frame]->items,
+            sprite->metasprites[0][actor->frame],
             actor->base_tile,
             next_sprite,
             screen_x,
