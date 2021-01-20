@@ -34,7 +34,6 @@ void platform_init() __banked {
   if (PLAYER.dir_x == 0) {
     PLAYER.dir_y = 0;
     PLAYER.dir_x = 1;
-    PLAYER.rerender = TRUE;
   }
 
   tile_x = DIV_8(PLAYER.x)+1;
@@ -205,7 +204,6 @@ void platform_update() __banked {
         on_ladder = FALSE;
         PLAYER.dir_x = 1;
         PLAYER.dir_y = 0;
-        PLAYER.rerender = TRUE;
       } else {
         pl_pos_y -= pl_vel_y >> 8;
         pl_vel_y = 0;
