@@ -31,6 +31,6 @@ extern UWORD BkgPaletteBuffer[32];
 
 extern UBYTE palette_update_mask;
 
-void palette_init();
+void palette_init() __banked;
 
 #endif

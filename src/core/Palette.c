@@ -1,3 +1,5 @@
+#pragma bank 1
+
 #include "Palette.h"
 
 #include <string.h>
@@ -10,7 +12,7 @@ UWORD BkgPalette[32];
 UWORD SprPaletteBuffer[32];
 UWORD BkgPaletteBuffer[32];
 
-void palette_init() {
+void palette_init() __banked {
     palette_update_mask = 0x3F;
     memset(BkgPalette, 0, sizeof(BkgPalette));
     memset(SprPalette, 0, sizeof(SprPalette));
