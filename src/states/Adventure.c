@@ -33,21 +33,17 @@ void adventure_update() __banked {
     if (INPUT_LEFT) {
         PLAYER.dir_x = -1;
         player_moving = TRUE;
-        PLAYER.rerender = TRUE;
     } else if (INPUT_RIGHT) {
         PLAYER.dir_x = 1;
         player_moving = TRUE;
-        PLAYER.rerender = TRUE;
     }
 
     if (INPUT_UP) {
         PLAYER.dir_y = -1;
         player_moving = TRUE;
-        PLAYER.rerender = TRUE;
     } else if (INPUT_DOWN) {
         PLAYER.dir_y = 1;
         player_moving = TRUE;
-        PLAYER.rerender = TRUE;
     }
 
     if ((INPUT_LEFT || INPUT_RIGHT) && !INPUT_UP && !INPUT_DOWN) {

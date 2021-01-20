@@ -39,7 +39,6 @@ extern actor_t *player_collision_actor;
 void actors_update() __banked;
 void deactivate_actor(actor_t *actor) __banked;
 void activate_actor(actor_t *actor) __banked;
-void actor_set_flip_x(actor_t *actor, UBYTE flip) __banked;
 void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked;
 void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked;
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked;

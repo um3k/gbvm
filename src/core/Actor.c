@@ -47,14 +47,15 @@ const metasprite_item_t (*actor_animated_metasprites[])[] = {
     &actor_animated_left_frame_2
 };
 
-void actors_update() __banked
+void actors_update()
 {
+    UBYTE _save = _current_bank;
+    UBYTE next_sprite = 0;
     static actor_t *actor;
+
     actor = actors_active_head;
     
     while (actor) {
-        actor->sprite_tile = 0; // This should come from scene_actors
-
         if (actor->pinned) 
             screen_x = actor->x + 8, screen_y = actor->y + 8;
         else 
@@ -68,7 +69,6 @@ void actors_update() __banked
             continue;
         } else if ((WX_REG != 7) && (WX_REG < (UINT8)screen_x + 8) && (WY_REG < (UINT8)(screen_y)-8)) {
             // Hide if under window (don't deactivate)
-            hide_metasprite(actor_animated_metasprites[actor->frame], actor->sprite_no);
             actor = actor->next;
             continue;
         }
@@ -82,11 +82,19 @@ void actors_update() __banked
             }
         }
 
-        move_metasprite(actor_animated_metasprites[actor->frame], actor->sprite_tile, actor->sprite_no, screen_x, screen_y);
+        move_metasprite(
+            actor_animated_metasprites[actor->frame],
+            actor->base_tile,
+            next_sprite,
+            screen_x,
+            screen_y
+        );
+        next_sprite += 2;
 
         actor = actor->next;
     }
-    return;
+
+    SWITCH_ROM_MBC1(_save);
 }
 
 void deactivate_actor(actor_t *actor) __banked
@@ -105,9 +113,6 @@ void deactivate_actor(actor_t *actor) __banked
 #endif
     if (!actor->enabled) return;
     actor->enabled = FALSE;
-    move_sprite(actor->sprite_no, 0, 0);
-    move_sprite(actor->sprite_no + 1, 0, 0);
-    release_sprite(actor->sprite_no);
     DL_REMOVE_ITEM(actors_active_head, actor);
     DL_PUSH_HEAD(actors_inactive_head, actor);
     if (actor->ctx_id) {
@@ -132,8 +137,6 @@ void activate_actor(actor_t *actor)
 #endif
     if (actor->enabled) return;
     actor->enabled = TRUE;
-    actor->rerender = TRUE;
-    actor->sprite_no = get_free_sprite();
     DL_REMOVE_ITEM(actors_inactive_head, actor);
     DL_PUSH_HEAD(actors_active_head, actor);
     if (actor->script_update.bank) {
@@ -180,26 +183,12 @@ void activate_actors_in_col(UBYTE x, UBYTE y) __banked {
     }
 }
 
-void actor_set_flip_x(actor_t *actor, UBYTE flip) __banked
-{
-    if (flip) {
-        set_sprite_prop(actor->sprite_no, S_FLIPX);
-        set_sprite_prop(actor->sprite_no + 1, S_FLIPX);
-    } else {
-        set_sprite_prop(actor->sprite_no, 0);
-        set_sprite_prop(actor->sprite_no + 1, 0);
-    }
-    actor->flip_x = flip;
-    actor->rerender = TRUE;
-}
-
 void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked
 {
     if (actor->frame_start != frame_start || actor->frame_end != frame_end) {
         actor->frame = frame_start;
         actor->frame_start = frame_start;
         actor->frame_end = frame_end;
-        actor->rerender = TRUE;
     }
 }
 
@@ -221,8 +210,6 @@ void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
     } else {
         actor_set_frames(actor, 0, actor->n_frames);
     }
-
-    actor->rerender = TRUE;
 }
 
 void actor_reset_dir(actor_t *actor) __banked

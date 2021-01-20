@@ -4,7 +4,7 @@
 const void * __current_metasprite;
 UBYTE __current_base_tile;
 
-void __move_metasprite(UINT8 id, UINT8 x, UINT8 y) __naked {
+void __move_metasprite(UINT8 id, UINT8 x, UINT8 y) __naked __nonbanked {
     id; x; y; 
 __asm
         ldhl    sp, #4
@@ -61,7 +61,7 @@ __asm
 __endasm;
 }
 
-void __hide_metasprite(UINT8 id) __naked {
+void __hide_metasprite(UINT8 id) __naked __nonbanked {
     id; 
 __asm
         ldhl    sp, #2
