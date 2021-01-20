@@ -4,6 +4,10 @@
 // Actors
 
 #include "gbs_types.h"
+#include "data/spritesheet_2.h"
+#include "data/spritesheet_3.h"
+#include "data/spritesheet_4.h"
+#include "data/spritesheet_5.h"
 #include "data/script_s0a2_interact.h"
 #include "data/script_s0a5_interact.h"
 
@@ -16,7 +20,7 @@ const struct actor_t scene_0_actors[] = {
     .y = 48,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 6,
+    .sprite = TO_FAR_PTR_T(spritesheet_2),
     .sprite_type = 0,
     .base_tile = 24,
     .palette = 1,
@@ -37,18 +41,17 @@ const struct actor_t scene_0_actors[] = {
     .y = 32,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 7,
+    .sprite = TO_FAR_PTR_T(spritesheet_3),
     .sprite_type = 0,
     .base_tile = 28,    
     .palette = 0,
-    // .n_frames = 4,
-    .n_frames = 2,    
+    .n_frames = 4,
     .animate = TRUE,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,
     .frame_start = 0,
-    .frame_end = 1,
+    .frame_end = 4,
     .pinned = FALSE,
     .collision_group = COLLISION_GROUP_NONE,
     .collision_enabled = TRUE
@@ -59,7 +62,7 @@ const struct actor_t scene_0_actors[] = {
     .y = 56,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 11,
+    .sprite = TO_FAR_PTR_T(spritesheet_4),
     .sprite_type = 0,
     .base_tile = 44,
     .palette = 1,
@@ -81,7 +84,7 @@ const struct actor_t scene_0_actors[] = {
     .y = 48,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 6,
+    .sprite = TO_FAR_PTR_T(spritesheet_2),
     .sprite_type = 0,
     .base_tile = 24,    
     .palette = 1,
@@ -102,18 +105,17 @@ const struct actor_t scene_0_actors[] = {
     .y = 32,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 7,
+    .sprite = TO_FAR_PTR_T(spritesheet_3),
     .sprite_type = 0,
     .base_tile = 28,    
     .palette = 0,
-    // .n_frames = 4,
-    .n_frames = 2,
+    .n_frames = 4,
     .animate = TRUE,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,
     .frame_start = 0,
-    .frame_end = 1,
+    .frame_end = 4,
     .pinned = FALSE,
     .collision_group = COLLISION_GROUP_NONE,
     .collision_enabled = TRUE
@@ -124,7 +126,7 @@ const struct actor_t scene_0_actors[] = {
     .y = 88,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 12,
+    .sprite = TO_FAR_PTR_T(spritesheet_5),
     .sprite_type = 0,
     .base_tile = 48,
     .palette = 0,
@@ -134,7 +136,7 @@ const struct actor_t scene_0_actors[] = {
     .anim_tick = 31,
     .frame = 0,
     .frame_start = 0,
-    .frame_end = 1,
+    .frame_end = 2,
     .pinned = FALSE,
     .collision_group = 0,
     .collision_enabled = TRUE,
