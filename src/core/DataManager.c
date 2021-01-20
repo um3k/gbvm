@@ -240,7 +240,7 @@ void load_player() __banked {
     PLAYER.y = start_scene_y;
     PLAYER.dir_x = start_scene_dir_x;
     PLAYER.dir_y = start_scene_dir_y;    
-    PLAYER.sprite = 0;
+    PLAYER.sprite = start_player_sprite;
 #ifdef CGB
     PLAYER.palette = PLAYER_PALETTE;
 #endif

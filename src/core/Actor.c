@@ -26,27 +26,7 @@ UBYTE player_iframes = 0;
 actor_t *player_collision_actor = 0;
 far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 
-const metasprite_item_t actor_animated_down_frame_1[]  = {{0, 0, 0, 0,  0},    {1, 0, 8, 2,  0},     {metasprite_end}};
-const metasprite_item_t actor_animated_down_frame_2[]  = {{0, 0, 0, 4,  0},    {1, 0, 8, 6,  0},    {metasprite_end}};
-const metasprite_item_t actor_animated_up_frame_1[]    = {{0, 0, 0, 8,  0},    {1, 0, 8, 10, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_up_frame_2[]    = {{0, 0, 0, 12, 0},    {1, 0, 8, 14, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_right_frame_1[] = {{0, 0, 0, 16, 0},    {1, 0, 8, 18, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_right_frame_2[] = {{0, 0, 0, 20, 0},    {1, 0, 8, 22, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_left_frame_1[]  = {{0, 0, 0, 18, 0x20}, {1, 0, 8, 16, 0x20U}, {metasprite_end}};
-const metasprite_item_t actor_animated_left_frame_2[]  = {{0, 0, 0, 22, 0x20}, {1, 0, 8, 20, 0x20U}, {metasprite_end}};
-
-const metasprite_item_t (*actor_animated_metasprites[])[] = {
-    &actor_animated_down_frame_1,
-    &actor_animated_down_frame_2,
-    &actor_animated_up_frame_1,
-    &actor_animated_up_frame_2,
-    &actor_animated_right_frame_1,
-    &actor_animated_right_frame_2,
-    &actor_animated_left_frame_1,
-    &actor_animated_left_frame_2
-};
-
-void actors_update()
+void actors_update() __nonbanked
 {
     UBYTE _save = _current_bank;
     UBYTE next_sprite = 0;
@@ -82,8 +62,11 @@ void actors_update()
             }
         }
 
+        SWITCH_ROM_MBC1(actor->sprite.bank);
+        spritesheet_t *sprite = actor->sprite.ptr;
+        
         next_sprite += move_metasprite(
-            actor_animated_metasprites[actor->frame],
+            sprite->metasprites[0][actor->frame]->items,
             actor->base_tile,
             next_sprite,
             screen_x,

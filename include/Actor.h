@@ -36,7 +36,7 @@ extern actor_t *actors_inactive_head;
 extern UBYTE player_moving;
 extern actor_t *player_collision_actor;
 
-void actors_update() __banked;
+void actors_update() __nonbanked;
 void deactivate_actor(actor_t *actor) __banked;
 void activate_actor(actor_t *actor) __banked;
 void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked;

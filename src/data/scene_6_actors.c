@@ -4,7 +4,7 @@
 // Actors
 
 #include "gbs_types.h"
-
+#include "data/spritesheet_9.h"
 
 const void __at(255) __bank_scene_6_actors;
 
@@ -15,7 +15,7 @@ const struct actor_t scene_6_actors[] = {
     .y = 104,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 6,
+    .sprite = TO_FAR_PTR_T(spritesheet_9),
     .sprite_type = 2,
     .base_tile = 24,
     .palette = 0,
@@ -36,7 +36,7 @@ const struct actor_t scene_6_actors[] = {
     .y = 104,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 6,
+    .sprite = TO_FAR_PTR_T(spritesheet_9),
     .sprite_type = 2,
     .base_tile = 24,
     .palette = 0,
