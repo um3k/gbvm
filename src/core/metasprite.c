@@ -24,7 +24,9 @@ __asm
         ld      hl, #___current_metasprite
         ld      a, (hl+)
         ld      h, (hl)
-        ld      l, a 
+        ld      l, a
+        push    hl
+        inc     hl 
 
         ld      a, (___render_shadow_OAM)
         ld      d, a
@@ -62,7 +64,8 @@ __asm
         or      a
         jr      nz, 1$
 
-        ld      e, #2
+        pop     hl
+        ld      e, (hl)
 
         ret
 __endasm;
