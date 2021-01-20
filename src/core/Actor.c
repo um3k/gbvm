@@ -45,13 +45,13 @@ void actors_update() __nonbanked
 
         if ((UINT8)(screen_x + 8) > 184 || (UINT8)(screen_y) > 160) {
             // Deactivate if offscreen
-            actor_t * next = actor->next;
+            actor_t * prev = actor->prev;
             deactivate_actor(actor);
-            actor = next;
+            actor = prev;
             continue;
         } else if ((WX_REG != 7) && (WX_REG < (UINT8)screen_x + 8) && (WY_REG < (UINT8)(screen_y)-8)) {
             // Hide if under window (don't deactivate)
-            actor = actor->next;
+            actor = actor->prev;
             continue;
         }
 
