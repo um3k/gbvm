@@ -55,12 +55,12 @@ void load_image(const background_t* background, UBYTE bank) __banked {
 }
 
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
-    UBYTE n_frames = ReadBankedUBYTE(&(sprite->n_frames), bank);
-    UBYTE size = n_frames << 2;
-    if ((sprite_offset == 0) && (n_frames > 6)) {
+    UBYTE n_tiles = ReadBankedUBYTE(&(sprite->n_tiles), bank);
+    UBYTE size = n_tiles << 2;
+    if ((sprite_offset == 0) && (n_tiles > 6)) {
         size = MAX_PLAYER_SPRITE_SIZE;
     }
-    SetBankedSpriteData(sprite_offset, size, sprite->frames, bank);
+    SetBankedSpriteData(sprite_offset, size, sprite->tiles, bank);
     return size;
 }
 
@@ -257,7 +257,7 @@ void load_player() __banked {
 }
 
 void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked {
-    SetBankedSpriteData(EMOTE_SPRITE, EMOTE_SPRITE_SIZE, sprite->frames, bank);
+    SetBankedSpriteData(EMOTE_SPRITE, EMOTE_SPRITE_SIZE, sprite->tiles, bank);
     set_sprite_prop(0, 0);
     set_sprite_prop(1, 0);
     set_sprite_tile(0, EMOTE_SPRITE);
