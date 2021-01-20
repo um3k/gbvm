@@ -9,7 +9,6 @@
 #include "Input.h"
 #include "Math.h"
 #include "Scroll.h"
-#include "Sprite.h"
 #include "Trigger.h"
 #include "data/data_ptrs.h"
 

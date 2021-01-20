@@ -9,7 +9,6 @@
 #include "data/cursor_image.h"
 #include "BankData.h"
 #include "Scroll.h"
-#include "Sprite.h"
 #include "Input.h"
 #include "Math.h"
 #include "Actor.h"

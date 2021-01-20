@@ -1,10 +1,12 @@
 
 #include "metasprite.h"
 
+UINT8 hide_sprites = FALSE;
+
 const void * __current_metasprite;
 UBYTE __current_base_tile;
 
-void __move_metasprite(UINT8 id, UINT8 x, UINT8 y) __naked __nonbanked {
+UBYTE __move_metasprite(UINT8 id, UINT8 x, UINT8 y) __naked __nonbanked {
     id; x; y; 
 __asm
         ldhl    sp, #4
@@ -56,6 +58,8 @@ __asm
         ld      a, (hl+)
         or      a
         jr      nz, 1$
+
+        ld      e, #2
 
         ret
 __endasm;

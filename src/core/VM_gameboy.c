@@ -2,7 +2,7 @@
 
 #include "vm.h"
 
-#include "Sprite.h"
+#include "metasprite.h"
 #include "Input.h"
 #include "events.h"
 #include "FadeManager.h"

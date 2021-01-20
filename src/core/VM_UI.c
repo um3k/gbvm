@@ -5,7 +5,6 @@
 
 #include "vm.h"
 #include "UI.h"
-#include "Sprite.h"
 #include "Input.h"
 #include "gbs_types.h"
 

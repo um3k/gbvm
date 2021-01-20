@@ -5,7 +5,6 @@
 #include "Scroll.h"
 #include "LinkedList.h"
 #include "Math.h"
-#include "Sprite.h"
 #include "Collision.h"
 #include "metasprite.h"
 #include "vm.h"
@@ -82,14 +81,13 @@ void actors_update()
             }
         }
 
-        move_metasprite(
+        next_sprite += move_metasprite(
             actor_animated_metasprites[actor->frame],
             actor->base_tile,
             next_sprite,
             screen_x,
             screen_y
         );
-        next_sprite += 2;
 
         actor = actor->next;
     }

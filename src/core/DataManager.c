@@ -5,7 +5,6 @@
 #include "Actor.h"
 #include "Scroll.h"
 #include "Trigger.h"
-#include "Sprite.h"
 #include "Camera.h"
 #ifdef CGB
     #include "Palette.h"
@@ -142,7 +141,6 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         parallax_enabled = TRUE;
     }
 
-    init_sprite_pool();
     //   ProjectilesInit();
 
     // Load sprites
