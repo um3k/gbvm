@@ -92,6 +92,8 @@ void actors_update()
         actor = actor->next;
     }
 
+    hide_hardware_sprites(next_sprite, 40);
+
     SWITCH_ROM_MBC1(_save);
 }
 

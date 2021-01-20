@@ -24,6 +24,7 @@ extern UBYTE __current_base_tile;
 
 UINT8 __move_metasprite(UINT8 id, UINT8 x, UINT8 y);
 void __hide_metasprite(UINT8 id);
+void hide_hardware_sprites(UINT8 from, UINT8 to);
 
 inline UINT8 move_metasprite(const void * metasprite, UINT8 base_tile, UINT8 base_sprite, UINT8 x, UINT8 y) {
     __current_metasprite = metasprite; 

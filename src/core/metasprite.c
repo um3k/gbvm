@@ -3,6 +3,8 @@
 
 UINT8 hide_sprites = FALSE;
 
+UBYTE __render_shadow_OAM = (UWORD)&shadow_OAM >> 8;
+
 const void * __current_metasprite;
 UBYTE __current_base_tile;
 
@@ -24,7 +26,8 @@ __asm
         ld      h, (hl)
         ld      l, a 
 
-        ld      d, #>_shadow_OAM
+        ld      a, (___render_shadow_OAM)
+        ld      d, a
 
         ld      a, (hl+)
         inc     a
@@ -69,7 +72,7 @@ void __hide_metasprite(UINT8 id) __naked __nonbanked {
     id; 
 __asm
         ldhl    sp, #2
-        ld      a, (hl-)
+        ld      a, (hl)
         add     a
         add     a
         ld      e, a
@@ -81,7 +84,8 @@ __asm
 
         ld      bc, #4
 
-        ld      d, #>_shadow_OAM
+        ld      a, (___render_shadow_OAM)
+        ld      d, a
 
         ld      a, (hl+)
         inc     a
@@ -103,6 +107,41 @@ __asm
        
         ld      a, (hl+)
         or      a
+        jr      nz, 1$
+
+        ret
+__endasm;
+}
+
+void hide_hardware_sprites(UINT8 from, UINT8 to) __naked __nonbanked {
+    from; to;
+__asm
+        ldhl    sp, #2
+        ld      a, (hl+)
+
+        add     a
+        add     a
+        ld      d, a
+
+        ld      a, (hl-)
+        sub     (hl)
+        ld      e, a
+
+        ret     c
+        ret     z
+
+        ld      bc, #4
+
+        ld      a, (___render_shadow_OAM)
+        ld      h, a
+        ld      l, d
+
+        xor     a
+1$:
+        ld      (hl), a
+        add     hl, bc
+
+        dec     e
         jr      nz, 1$
 
         ret
