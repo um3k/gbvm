@@ -7,8 +7,8 @@
 #include "DataManager.h"
 #include "Scroll.h"
 #include "Math.h"
+#include "metasprite.h"
 
-#define EMOTE_BOUNCE_FRAMES        15
 #define EMOTE_TOTAL_FRAMES         60
 
 typedef struct act_move_to_t {
@@ -23,8 +23,6 @@ typedef struct act_set_pos_t {
     UBYTE _pad0;
     INT16 X, Y;
 } act_set_pos_t;
-
-const BYTE emote_offsets[] = {2, 1, 0, -1, -2, -3, -4, -5, -6, -5, -4, -3, -2, -1, 0};
 
 void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     actor_t *actor;
@@ -147,36 +145,23 @@ void vm_actor_set_pos(SCRIPT_CTX * THIS, INT16 idx) __banked {
 }
 
 void vm_actor_emote(SCRIPT_CTX * THIS, INT16 idx, UBYTE emote_sprite_bank, spritesheet_t *emote_sprite) __banked {
-    UBYTE * n_actor = VM_REF_TO_PTR(idx);
-    actor_t *actor = actors + *n_actor;
 
     // on first call load emote sprite 
     if (THIS->flags == 0) {
+        UBYTE * n_actor = VM_REF_TO_PTR(idx);
         THIS->flags = 1;
-        *THIS->stack_ptr = 1;
+        emote_actor = actors + *n_actor;
+        emote_timer = 1;
         load_emote(emote_sprite, emote_sprite_bank);
     }
 
-    if (*THIS->stack_ptr == EMOTE_TOTAL_FRAMES) {
+    if (emote_timer == EMOTE_TOTAL_FRAMES) {
         // Reset ctx flags
         THIS->flags = 0;
-        move_sprite(0, 0, 0);
-        move_sprite(1, 0, 0);
+        emote_actor = NULL;
     } else {
-        UINT16 screen_x, screen_y;
         THIS->waitable = 1;
-
-        screen_x = 8u + actor->x - scroll_x;
-        screen_y = 8u + actor->y - scroll_y;
-
-        if (*THIS->stack_ptr < EMOTE_BOUNCE_FRAMES) {
-            screen_y += emote_offsets[*THIS->stack_ptr];
-        }
-
-        move_sprite(0, screen_x, screen_y - 16u);
-        move_sprite(1, screen_x + 8u, screen_y - 16u);
-
-        (*THIS->stack_ptr)++;
+        emote_timer++;
         THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx) + sizeof(emote_sprite_bank) + sizeof(emote_sprite));
     }
 }

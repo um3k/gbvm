@@ -35,6 +35,8 @@ extern actor_t *actors_active_head;
 extern actor_t *actors_inactive_head;
 extern UBYTE player_moving;
 extern actor_t *player_collision_actor;
+extern actor_t *emote_actor;
+extern UBYTE emote_timer;
 
 void actors_update() __nonbanked;
 void deactivate_actor(actor_t *actor) __banked;

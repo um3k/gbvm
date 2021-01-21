@@ -15,6 +15,16 @@
     #include <gb/crash_handler.h>
 #endif
 
+#define EMOTE_BOUNCE_FRAMES        15
+#define EMOTE_TILE                 124
+
+const BYTE emote_offsets[] = {2, 1, 0, -1, -2, -3, -4, -5, -6, -5, -4, -3, -2, -1, 0};
+
+const metasprite_t emote_metasprite  = {
+    .count = 2,
+    .items = {{0, 0, 0, 0, 0}, {1, 0, 8, 2, 0}, {metasprite_end}}
+};
+
 actor_t actors[MAX_ACTORS];
 actor_t *actors_active_head = 0;
 actor_t *actors_inactive_head = 0;
@@ -25,6 +35,8 @@ UBYTE player_moving = FALSE;
 UBYTE player_iframes = 0;
 actor_t *player_collision_actor = 0;
 far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
+actor_t *emote_actor = NULL;
+UBYTE emote_timer;
 
 void actors_update() __nonbanked
 {
@@ -36,6 +48,21 @@ void actors_update() __nonbanked
     actor = &PLAYER;
 
     if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) __render_shadow_OAM = (UWORD)&shadow_OAM2 >> 8; else __render_shadow_OAM = (UWORD)&shadow_OAM >> 8;
+
+    if (emote_actor) {
+        screen_x = (emote_actor->x >> 4) - scroll_x + 8;
+        screen_y = (emote_actor->y >> 4) - scroll_y - 8;   
+        if (emote_timer < EMOTE_BOUNCE_FRAMES) {
+            screen_y += emote_offsets[emote_timer];
+        }             
+        next_sprite += move_metasprite(
+            &emote_metasprite,
+            EMOTE_TILE,
+            next_sprite,
+            screen_x,
+            screen_y
+        );        
+    }
 
     while (actor) {
         if (actor->pinned) 
