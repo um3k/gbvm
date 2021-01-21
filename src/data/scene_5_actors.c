@@ -33,7 +33,7 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // elephant,
-    .x = 188,
+    .x = 32,
     .y = 72,
     .dir_x = 0,
     .dir_y = 0,
