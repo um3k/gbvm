@@ -31,8 +31,8 @@ void platform_init() __banked {
     PLAYER.dir_x = 1;
   }
 
-  tile_x = DIV_8(PLAYER.x)+1;
-  tile_y = DIV_8(PLAYER.y);
+  tile_x = PLAYER.x >> 7;
+  tile_y = PLAYER.y >> 7;
 
   grounded = FALSE;
   // If starting tile was a ladder start scene attached to it
