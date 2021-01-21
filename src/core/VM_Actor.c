@@ -45,23 +45,23 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
                 // Check for horizontal collision
                 if (actor->x != params->X) {
                     UBYTE check_dir = (actor->x > params->X) ? CHECK_DIR_LEFT : CHECK_DIR_RIGHT;
-                    params->X = check_collision_in_direction(DIV_8(actor->x), DIV_8(actor->y), DIV_8(params->X), check_dir) * 8;
+                    params->X = check_collision_in_direction((actor->x >> 7), (actor->y >> 7), (params->X >> 7), check_dir) << 7;
                 }
                 // Check for vertical collision
                 if (actor->y != params->Y) {
                     UBYTE check_dir = (actor->y > params->Y) ? CHECK_DIR_UP : CHECK_DIR_DOWN;
-                    params->Y = check_collision_in_direction(DIV_8(params->X), DIV_8(actor->y), DIV_8(params->Y), check_dir) * 8;
+                    params->Y = check_collision_in_direction((params->X >> 7), (actor->y >> 7), (params->Y >> 7), check_dir) << 7;
                 }
             } else {
                 // Check for vertical collision
                 if (actor->y != params->Y) {
                     UBYTE check_dir = (actor->y > params->Y) ? CHECK_DIR_UP : CHECK_DIR_DOWN;
-                    params->Y = check_collision_in_direction(DIV_8(actor->x), DIV_8(actor->y), DIV_8(params->Y), check_dir) * 8;
+                    params->Y = check_collision_in_direction((actor->x >> 7), (actor->y >> 7), (params->Y >> 7), check_dir) << 7;
                 }
                 // Check for horizontal collision
                 if (actor->x != params->X) {
                     UBYTE check_dir = (actor->x > params->X) ? CHECK_DIR_LEFT : CHECK_DIR_RIGHT;
-                    params->X = check_collision_in_direction(DIV_8(actor->x), DIV_8(params->Y), DIV_8(params->X), check_dir) * 8;
+                    params->X = check_collision_in_direction((actor->x >> 7), (params->Y >> 7), (params->X >> 7), check_dir) << 7;
                 }
             }
         }

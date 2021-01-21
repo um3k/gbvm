@@ -84,5 +84,5 @@ void pointnclick_update() __banked {
     //   }
     // }
 
-    if (player_moving) player_move(PLAYER.dir_x,  PLAYER.dir_y);
+    if (player_moving) actor_move_dir(&PLAYER, PLAYER.dir_x, PLAYER.dir_y, PLAYER.move_speed);
 }

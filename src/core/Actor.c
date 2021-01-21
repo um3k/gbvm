@@ -39,9 +39,9 @@ void actors_update() __nonbanked
 
     while (actor) {
         if (actor->pinned) 
-            screen_x = actor->x + 8, screen_y = actor->y + 8;
+            screen_x = (actor->x >> 4) + 8, screen_y = (actor->y >> 4) + 8;
         else 
-            screen_x = actor->x - draw_scroll_x + 8, screen_y = actor->y - draw_scroll_y + 8;
+            screen_x = (actor->x >> 4) - draw_scroll_x + 8, screen_y = (actor->y >> 4) - draw_scroll_y + 8;
 
         if ((UINT8)(screen_x + 8) > 184 || (UINT8)(screen_y) > 160) {
             // Deactivate if offscreen
@@ -138,9 +138,9 @@ void activate_actors_in_row(UBYTE x, UBYTE y) __banked {
     actor = actors_inactive_head;
 
     while (actor) {
-        UBYTE ty = actor->y >> 3;
+        UBYTE ty = actor->y >> 7;
         if (ty == y) {
-            UBYTE tx = actor->x >> 3;
+            UBYTE tx = actor->x >> 7;
             if ((tx + 1 > x) && (tx < x + SCREEN_TILE_REFRES_W)) {
                 actor_t * next = actor->next;
                 activate_actor(actor);
@@ -157,9 +157,9 @@ void activate_actors_in_col(UBYTE x, UBYTE y) __banked {
     actor = actors_inactive_head;
 
     while (actor) {
-        UBYTE tx = actor->x >> 3;
+        UBYTE tx = actor->x >> 7;
         if (tx == x) {
-            UBYTE ty = actor->y >> 3;
+            UBYTE ty = actor->y >> 7;
             if ((ty > y) && (ty < y + SCREEN_TILE_REFRES_H)) {
                 actor_t * next = actor->next;
                 activate_actor(actor);
@@ -211,24 +211,22 @@ actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
         if ((!inc_noclip && !actor->collision_enabled))
             continue;
 
-        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
+        UBYTE a_tx = (actor->x >> 7), a_ty = (actor->y >> 7);
         if ((ty == a_ty || ty == a_ty + 1) && (tx == a_tx || tx == a_tx + 1 || tx == a_tx - 1)) return actor;
     }
     return NULL;
 }
 
-void player_move(BYTE dir_x, BYTE dir_y) __banked {
-    // Move actor
-    if (PLAYER.move_speed == 0) {
-        // Half speed only move every other frame
-        if (IS_FRAME_2) {
-            PLAYER.x += (WORD)dir_x;
-            PLAYER.y += (WORD)dir_y;
-        }
-    } else {
-        PLAYER.x += (WORD)(dir_x * PLAYER.move_speed);
-        PLAYER.y += (WORD)(dir_y * PLAYER.move_speed);
-    }
+void actor_move_dir(actor_t *actor, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked {
+    actor->x += (WORD)(dir_x * speed);
+    actor->y += (WORD)(dir_y * speed);
+}
+
+void actor_move_angle(actor_t *actor, UBYTE angle, UBYTE speed) __banked {
+    WORD dx = SIN(angle) * (speed);
+    WORD dy = COS(angle) * (speed);
+    actor->x += (dx >> 7);
+    actor->y -= (dy >> 7);
 }
 
 actor_t *actor_at_3x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
@@ -236,7 +234,7 @@ actor_t *actor_at_3x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
         if ((!inc_noclip && !actor->collision_enabled))
             continue;
 
-        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
+        UBYTE a_tx = (actor->x >> 7), a_ty = (actor->y >> 7);
         if ((ty == a_ty || ty == a_ty - 1 || ty == a_ty - 2) && (tx == a_tx || tx == a_tx - 1 || tx == a_tx - 2)) return actor;
     }
     return NULL;
@@ -247,7 +245,7 @@ actor_t *actor_at_1x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
         if ((!inc_noclip && !actor->collision_enabled))
             continue;
 
-        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
+        UBYTE a_tx = (actor->x >> 7), a_ty = (actor->y >> 7);
         if ((ty == a_ty || ty == a_ty - 1 || ty == a_ty - 2) && (tx == a_tx)) return actor;
     }
     return NULL;
@@ -258,7 +256,7 @@ actor_t *actor_at_3x1_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
         if ((!inc_noclip && !actor->collision_enabled)) 
             continue;
 
-        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
+        UBYTE a_tx = (actor->x >> 7), a_ty = (actor->y >> 7);
         if ((ty == a_ty) && (tx == a_tx || tx == a_tx - 1 || tx == a_tx - 2)) return actor;
     }
     return NULL;
@@ -269,14 +267,14 @@ actor_t *actor_at_1x2_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
         if ((!inc_noclip && !actor->collision_enabled))
             continue;
 
-        UBYTE a_tx = DIV_8(actor->x), a_ty = DIV_8(actor->y);
+        UBYTE a_tx = (actor->x >> 7), a_ty = (actor->y >> 7);
         if ((ty == a_ty || ty == a_ty - 1) && (tx == a_tx)) return actor;
     }
     return NULL;
 }
 
 actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked {
-    UBYTE tile_x = DIV_8(PLAYER.x), tile_y = DIV_8(PLAYER.y);
+    UBYTE tile_x = (PLAYER.x >> 7), tile_y = (PLAYER.y >> 7);
 
     if (grid_size == 16) {
         if (PLAYER.dir_y == -1) {
@@ -316,8 +314,8 @@ actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked {
             continue;
         };
 
-        if ((PLAYER.x + 15 >= actor->x) && (PLAYER.x <= actor->x + 15) &&
-            (PLAYER.y + 7 >= actor->y) && (PLAYER.y <= actor->y + 7)) {
+        if ((PLAYER.x + 240 >= actor->x) && (PLAYER.x <= actor->x + 240) &&
+            (PLAYER.y + 112 >= actor->y) && (PLAYER.y <= actor->y + 112)) {
             return actor;
         }
 

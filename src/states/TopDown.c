@@ -20,11 +20,11 @@ void topdown_init() __banked {
 
     if (topdown_grid == 16) {
         // Snap to 16px grid
-        PLAYER.x = MUL_16(DIV_16(PLAYER.x));
-        PLAYER.y = 8 + MUL_16(DIV_16(PLAYER.y));
+        PLAYER.x = ((PLAYER.x >> 8) << 8);
+        PLAYER.y = 8 + ((PLAYER.y >> 8) << 8);
     } else {
-        PLAYER.x = MUL_8(DIV_8(PLAYER.x));
-        PLAYER.y = MUL_8(DIV_8(PLAYER.y));
+        PLAYER.x = ((PLAYER.x >> 7) << 7);
+        PLAYER.y = ((PLAYER.y >> 7) << 7);
     }
 
     actor_set_frames(&PLAYER, 0, 16);
@@ -34,8 +34,8 @@ void topdown_update() __banked {
     actor_t *hit_actor;
     UBYTE tile_x, tile_y;
 
-    tile_x = DIV_8(PLAYER.x);
-    tile_y = DIV_8(PLAYER.y);
+    tile_x = PLAYER.x >> 7;
+    tile_y = PLAYER.y >> 7;
 
     // Is player on an 8x8px tile?
     if ((topdown_grid == 16 && ON_16PX_GRID(PLAYER)) ||
@@ -153,5 +153,5 @@ void topdown_update() __banked {
 
     }
 
-    if (player_moving) player_move(PLAYER.dir_x, PLAYER.dir_y);
+    if (player_moving) actor_move_dir(&PLAYER, PLAYER.dir_x, PLAYER.dir_y, PLAYER.move_speed);
 }

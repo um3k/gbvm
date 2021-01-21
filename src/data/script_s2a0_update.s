@@ -22,8 +22,8 @@ _script_s2a0_update::
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_ACTIVATE       ACTOR
         ; Actor Move To
-        VM_SET_CONST            ^/(ACTOR + 1)/, 80
-        VM_SET_CONST            ^/(ACTOR + 2)/, 80
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1280
+        VM_SET_CONST            ^/(ACTOR + 2)/, 1280
         VM_SET_CONST            ^/(ACTOR + 3)/, 0
         VM_SET_CONST            ^/(ACTOR + 4)/, 0
         VM_ACTOR_MOVE_TO        ACTOR
@@ -33,10 +33,10 @@ _script_s2a0_update::
         ; Actor Move Relative
         VM_RPN
             .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    -64
+            .R_INT16    -1024
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    64
+            .R_INT16    1024
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
@@ -51,10 +51,10 @@ _script_s2a0_update::
         ; Actor Move Relative
         VM_RPN
             .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    64
+            .R_INT16    1024
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    -64
+            .R_INT16    -1024
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1

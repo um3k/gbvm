@@ -8,7 +8,5 @@ void platform_update();
 
 extern WORD pl_vel_x;
 extern WORD pl_vel_y;
-extern WORD pl_pos_x;
-extern WORD pl_pos_y;
 
 #endif

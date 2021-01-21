@@ -23,8 +23,8 @@ _script_s6t1_interact::
         ; Load Scene
         VM_FADE_OUT             2
         VM_SET_CONST            ACTOR, 0
-        VM_SET_CONST            ^/(ACTOR + 1)/, 216
-        VM_SET_CONST            ^/(ACTOR + 2)/, 200
+        VM_SET_CONST            ^/(ACTOR + 1)/, 3456
+        VM_SET_CONST            ^/(ACTOR + 2)/, 3200
         VM_ACTOR_SET_POS        ACTOR
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
