@@ -5,6 +5,7 @@
 
 #include "gbs_types.h"
 #include "data/spritesheet_9.h"
+#include "data/spritesheet_10.h"
 
 const void __at(255) __bank_scene_5_actors;
 
@@ -31,16 +32,16 @@ const struct actor_t scene_5_actors[] = {
     .collision_enabled = TRUE
   },
   {
-    // Actor 2,
+    // elephant,
     .x = 92,
-    .y = 104,
-    .dir_x = -1,
+    .y = 72,
+    .dir_x = 0,
     .dir_y = 0,
-    .sprite = TO_FAR_PTR_T(spritesheet_9),
-    .sprite_type = SPRITE_TYPE_ACTOR,
-    .base_tile = 24,
+    .sprite = TO_FAR_PTR_T(spritesheet_10),
+    .sprite_type = 0,
+    .base_tile = 0x30,
     .palette = 0,
-    .n_frames = 2,
+    .n_frames = 1,
     .animate = FALSE,
     .move_speed = 1,
     .anim_tick = 7,
