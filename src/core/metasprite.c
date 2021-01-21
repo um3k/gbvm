@@ -71,51 +71,6 @@ __asm
 __endasm;
 }
 
-void __hide_metasprite(UINT8 id) __naked __nonbanked {
-    id; 
-__asm
-        ldhl    sp, #2
-        ld      a, (hl)
-        add     a
-        add     a
-        ld      e, a
-
-        ld      hl, #___current_metasprite
-        ld      a, (hl+)
-        ld      h, (hl)
-        ld      l, a 
-
-        ld      bc, #4
-
-        ld      a, (___render_shadow_OAM)
-        ld      d, a
-
-        ld      a, (hl+)
-        inc     a
-1$:
-        dec     a
-        add     a
-        add     a
-        add     e
-        ld      e, a
-
-        xor     a
-        ld      (de), a
-
-        inc     e
-        inc     e
-        inc     e
-        inc     e
-        add     hl, bc
-       
-        ld      a, (hl+)
-        or      a
-        jr      nz, 1$
-
-        ret
-__endasm;
-}
-
 void hide_hardware_sprites(UINT8 from, UINT8 to) __naked __nonbanked {
     from; to;
 __asm

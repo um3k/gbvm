@@ -31,7 +31,7 @@ const struct scene_t scene_5 = {
   },  
   .n_actors = 2,
   .n_triggers = 2,
-  .n_sprites = 1,
+  .n_sprites = 2,
   .actors = TO_FAR_PTR_T(scene_5_actors),
   .triggers = TO_FAR_PTR_T(scene_5_triggers),
   .sprites = TO_FAR_PTR_T(scene_5_sprites),
