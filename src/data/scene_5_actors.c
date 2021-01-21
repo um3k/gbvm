@@ -11,8 +11,8 @@ const void __at(255) __bank_scene_5_actors;
 const struct actor_t scene_5_actors[] = {
   {
     // Actor 1,
-    .x = 128,
-    .y = 104,
+    .x = 128 * 16,
+    .y = 104 * 16,
     .dir_x = -1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
@@ -32,8 +32,8 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // Actor 2,
-    .x = 92,
-    .y = 104,
+    .x = 92 * 16,
+    .y = 104 * 16,
     .dir_x = -1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),

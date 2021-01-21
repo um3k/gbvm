@@ -19,8 +19,8 @@ const void __at(255) __bank_scene_1_actors;
 const struct actor_t scene_1_actors[] = {
   {
     // Sign Post,
-    .x = 56,
-    .y = 200,
+    .x = 56 * 16,
+    .y = 200 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_6),
@@ -41,8 +41,8 @@ const struct actor_t scene_1_actors[] = {
   },
   {
     // Ice Block,
-    .x = 192,
-    .y = 144,
+    .x = 192 * 16,
+    .y = 144 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_1),
@@ -63,8 +63,8 @@ const struct actor_t scene_1_actors[] = {
   },
   {
     // Rock 3,
-    .x = 184,
-    .y = 216,
+    .x = 184 * 16,
+    .y = 216 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
@@ -85,8 +85,8 @@ const struct actor_t scene_1_actors[] = {
   },
   {
     // Rock 2,
-    .x = 168,
-    .y = 216,
+    .x = 168 * 16,
+    .y = 216 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
@@ -107,8 +107,8 @@ const struct actor_t scene_1_actors[] = {
   },
   {
     // Rock 1,
-    .x = 152,
-    .y = 216,
+    .x = 152 * 16,
+    .y = 216 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
@@ -129,8 +129,8 @@ const struct actor_t scene_1_actors[] = {
   },
   {
     // Hidden Stairs,
-    .x = 88,
-    .y = 96,
+    .x = 88 * 16,
+    .y = 96 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_8),

@@ -13,8 +13,8 @@ const void __at(255) __bank_scene_2_actors;
 const struct actor_t scene_2_actors[] = {
   {
     // Actor 1,
-    .x = 168,
-    .y = 104,
+    .x = 168 * 16,
+    .y = 104 * 16,
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
@@ -23,7 +23,7 @@ const struct actor_t scene_2_actors[] = {
     .palette = 0,
     .n_frames = 2,
     .animate = FALSE,
-    .move_speed = 1,
+    .move_speed = 8,
     .anim_tick = 7,
     .frame = 0,
     .frame_start = 0,

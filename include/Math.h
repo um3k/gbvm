@@ -45,4 +45,23 @@
 #define DIV_4(a) ((a) >> 2)
 #define DIV_2(a) ((a) >> 1)
 
+#define SIN(a)  (sine_wave[a])
+#define COS(a)  (sine_wave[(UBYTE)(a + 64u)])
+
+#define ANGLE_UP        0
+#define ANGLE_RIGHT     64
+#define ANGLE_DOWN      128
+#define ANGLE_LEFT      192
+
+#define ANGLE_0DEG      0
+#define ANGLE_45DEG     32
+#define ANGLE_90DEG     64
+#define ANGLE_135DEG    96
+#define ANGLE_180DEG    128
+#define ANGLE_225DEG    160
+#define ANGLE_270DEG    192
+#define ANGLE_315DEG    224
+
+extern const INT8 sine_wave[256];
+
 #endif

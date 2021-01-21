@@ -19,14 +19,10 @@ UBYTE grounded = FALSE;
 UBYTE on_ladder = FALSE;
 WORD pl_vel_x = 0;
 WORD pl_vel_y = 0;
-WORD pl_pos_x = 16512;
-WORD pl_pos_y = 1024;
 
 void platform_init() __banked {
   UBYTE tile_x, tile_y;
 
-  pl_pos_x = (PLAYER.x + 4u) << 4;
-  pl_pos_y = PLAYER.y << 4;
   pl_vel_x = 0;
   pl_vel_y = 0;
 
@@ -58,10 +54,6 @@ void platform_update() __banked {
   UBYTE tile_x, tile_x_mid, tile_y, tile_y_ceil;
   UBYTE hit_actor = 0;
   UBYTE hit_trigger = 0;
-
-  // Update scene pos from player pos (incase was moved by a script)
-  pl_pos_x = ((PLAYER.x + 4u) << 4) + (pl_pos_x & 0xF);
-  pl_pos_y = ((PLAYER.y) << 4) + (pl_pos_y & 0xF);
 
   tile_x = DIV_8(PLAYER.x);
   tile_x_mid = DIV_8(PLAYER.x+4u);
@@ -133,9 +125,9 @@ void platform_update() __banked {
     }
   }
 
-  pl_pos_x += pl_vel_x >> 8;
-  tile_x = pl_pos_x >> 7;
-  tile_y = pl_pos_y >> 7;
+  PLAYER.x += pl_vel_x >> 8;
+  tile_x = PLAYER.x >> 7;
+  tile_y = PLAYER.y >> 7;
 
   /*
   if (grounded && INPUT_A_PRESSED) {
@@ -152,9 +144,9 @@ void platform_update() __banked {
 
   // Jump
   if (INPUT_B_PRESSED && grounded) {
-    if (!( (((pl_pos_x >> 4) & 0x7) != 7 &&
+    if (!( (((PLAYER.x >> 4) & 0x7) != 7 &&
           tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM) ||  // Left Edge
-          (((pl_pos_x >> 4) & 0x7) != 0 &&
+          (((PLAYER.x >> 4) & 0x7) != 0 &&
            tile_at(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM))) {  // Right edge
       pl_vel_y = -plat_jump_vel;
       grounded = FALSE;
@@ -171,17 +163,17 @@ void platform_update() __banked {
   }
 
   pl_vel_y = MIN(pl_vel_y, plat_max_fall_vel);
-  pl_pos_y += pl_vel_y >> 8;
-  tile_y = pl_pos_y >> 7;
-  tile_y_ceil = (pl_pos_y - 7u) >> 7;
+  PLAYER.y += pl_vel_y >> 8;
+  tile_y = PLAYER.y >> 7;
+  tile_y_ceil = (PLAYER.y - 7u) >> 7;
 
   // Left Collision
   if (pl_vel_x < 0) {
     if (tile_at(tile_x, tile_y) & COLLISION_RIGHT || 
         tile_at(tile_x, tile_y_ceil) & COLLISION_RIGHT) {
       pl_vel_x = 0;
-      pl_pos_x = ((tile_x + 1) * 8) << 4;
-      tile_x = pl_pos_x >> 7;
+      PLAYER.x = ((tile_x + 1) * 8) << 4;
+      tile_x = PLAYER.x >> 7;
     }
   }
 
@@ -190,8 +182,8 @@ void platform_update() __banked {
     if (tile_at(tile_x + 1, tile_y) & COLLISION_LEFT ||
         tile_at(tile_x + 1, tile_y_ceil) & COLLISION_LEFT) {
       pl_vel_x = 0;
-      pl_pos_x = (tile_x * 8) << 4;
-      tile_x = pl_pos_x >> 7;
+      PLAYER.x = (tile_x * 8) << 4;
+      tile_x = PLAYER.x >> 7;
     }
   }
 
@@ -204,7 +196,7 @@ void platform_update() __banked {
         PLAYER.dir_x = 1;
         PLAYER.dir_y = 0;
       } else {
-        pl_pos_y -= pl_vel_y >> 8;
+        PLAYER.y -= pl_vel_y >> 8;
         pl_vel_y = 0;
       }
     }
@@ -215,38 +207,34 @@ void platform_update() __banked {
       if ((tile_below & COLLISION_TOP) && !(tile_below & TILE_PROP_LADDER)) {
         grounded = TRUE;
         pl_vel_y = 0;
-        pl_pos_y = (tile_y * 8) << 4;
+        PLAYER.y = (tile_y * 8) << 4;
       }
     }
 
   } else {
     // Ground Collision
     if (pl_vel_y >= 0 && (tile_at(tile_x, tile_y + 1) & COLLISION_TOP ||  // Left Edge
-                          (((pl_pos_x >> 4) & 0x7) != 0 &&
+                          (((PLAYER.x >> 4) & 0x7) != 0 &&
                            tile_at(tile_x + 1, tile_y + 1) & COLLISION_TOP))  // Right edge
     ) {
       grounded = TRUE;
       pl_vel_y = 0;
-      pl_pos_y = (tile_y * 8) << 4;
+      PLAYER.y = (tile_y * 8) << 4;
     } else {
       grounded = FALSE;
 
       // Ceiling Collision
       if (pl_vel_y < 0) {
         if (tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM ||  // Left Edge
-            (((pl_pos_x >> 4) & 0x7) != 0 &&
+            (((PLAYER.x >> 4) & 0x7) != 0 &&
              tile_at(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM)  // Right edge
         ) {
           pl_vel_y = 0;
-          pl_pos_y = (((tile_y + 1) * 8) << 4);
+          PLAYER.y = (((tile_y + 1) * 8) << 4);
         }
       }
     }
   }
-
-  // Position player sprite using precision coordinates
-  PLAYER.x = (pl_pos_x >> 4) - 4u;
-  PLAYER.y = pl_pos_y >> 4;
 
 /*
   // Clamp to screen
