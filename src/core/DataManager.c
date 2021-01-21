@@ -56,7 +56,7 @@ void load_image(const background_t* background, UBYTE bank) __banked {
 
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
     UBYTE n_tiles = ReadBankedUBYTE(&(sprite->n_tiles), bank);
-    UBYTE size = n_tiles << 1;
+    UBYTE size = n_tiles << 2;
     if ((sprite_offset == 0) && (n_tiles > 6)) {
         size = MAX_PLAYER_SPRITE_SIZE;
     }
