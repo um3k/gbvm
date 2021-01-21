@@ -34,8 +34,8 @@ void topdown_update() __banked {
     actor_t *hit_actor;
     UBYTE tile_x, tile_y;
 
-    tile_x = PLAYER.x >> 7;
-    tile_y = PLAYER.y >> 7;
+    tile_x = DIV_8(PLAYER.x);
+    tile_y = DIV_8(PLAYER.y);
 
     // Is player on an 8x8px tile?
     if ((topdown_grid == 16 && ON_16PX_GRID(PLAYER)) ||

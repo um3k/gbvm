@@ -25,21 +25,18 @@ void camera_update() __banked
         // Camera locked to player
         actor_t * actor = &PLAYER;
 
-        UWORD a_x = actor->x >> 4;
-        UWORD a_y = actor->y >> 4;
-
         // Horizontal lock
-        if (camera_x < a_x - camera_deadzone_x - camera_offset_x) { 
-            camera_x = a_x - camera_deadzone_x - camera_offset_x;
-        } else if (camera_x > a_x + camera_deadzone_x - camera_offset_x) { 
-            camera_x = a_x + camera_deadzone_x - camera_offset_x;
+        if (camera_x < actor->x - camera_deadzone_x - camera_offset_x) { 
+            camera_x = actor->x - camera_deadzone_x - camera_offset_x;
+        } else if (camera_x > actor->x + camera_deadzone_x - camera_offset_x) { 
+            camera_x = actor->x + camera_deadzone_x - camera_offset_x;
         }
 
         // Vertical lock
-        if (camera_y < a_y - camera_deadzone_y - camera_offset_y) { 
-            camera_y = a_y - camera_deadzone_y - camera_offset_y;
-        } else if (camera_y > a_y + camera_deadzone_y - camera_offset_y) { 
-            camera_y = a_y + camera_deadzone_y - camera_offset_y;
+        if (camera_y < actor->y - camera_deadzone_y - camera_offset_y) { 
+            camera_y = actor->y - camera_deadzone_y - camera_offset_y;
+        } else if (camera_y > actor->y + camera_deadzone_y - camera_offset_y) { 
+            camera_y = actor->y + camera_deadzone_y - camera_offset_y;
         }
     }
 }
