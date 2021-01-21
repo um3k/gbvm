@@ -223,10 +223,8 @@ void actor_move_dir(actor_t *actor, BYTE dir_x, BYTE dir_y, UBYTE speed) __banke
 }
 
 void actor_move_angle(actor_t *actor, UBYTE angle, UBYTE speed) __banked {
-    WORD dx = SIN(angle) * (speed);
-    WORD dy = COS(angle) * (speed);
-    actor->x += (dx >> 7);
-    actor->y -= (dy >> 7);
+    actor->x += ((SIN(angle) * (speed)) >> 7);
+    actor->y -= ((COS(angle) * (speed)) >> 7);
 }
 
 actor_t *actor_at_3x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
