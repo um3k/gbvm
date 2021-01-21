@@ -26,34 +26,17 @@ UBYTE player_iframes = 0;
 actor_t *player_collision_actor = 0;
 far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 
-const metasprite_item_t actor_animated_down_frame_1[]  = {{0, 0, 0, 0,  0},    {1, 0, 8, 2,  0},     {metasprite_end}};
-const metasprite_item_t actor_animated_down_frame_2[]  = {{0, 0, 0, 4,  0},    {1, 0, 8, 6,  0},    {metasprite_end}};
-const metasprite_item_t actor_animated_up_frame_1[]    = {{0, 0, 0, 8,  0},    {1, 0, 8, 10, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_up_frame_2[]    = {{0, 0, 0, 12, 0},    {1, 0, 8, 14, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_right_frame_1[] = {{0, 0, 0, 16, 0},    {1, 0, 8, 18, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_right_frame_2[] = {{0, 0, 0, 20, 0},    {1, 0, 8, 22, 0},     {metasprite_end}};
-const metasprite_item_t actor_animated_left_frame_1[]  = {{0, 0, 0, 18, 0x20}, {1, 0, 8, 16, 0x20U}, {metasprite_end}};
-const metasprite_item_t actor_animated_left_frame_2[]  = {{0, 0, 0, 22, 0x20}, {1, 0, 8, 20, 0x20U}, {metasprite_end}};
-
-const metasprite_item_t (*actor_animated_metasprites[])[] = {
-    &actor_animated_down_frame_1,
-    &actor_animated_down_frame_2,
-    &actor_animated_up_frame_1,
-    &actor_animated_up_frame_2,
-    &actor_animated_right_frame_1,
-    &actor_animated_right_frame_2,
-    &actor_animated_left_frame_1,
-    &actor_animated_left_frame_2
-};
-
-void actors_update()
+void actors_update() __nonbanked
 {
     UBYTE _save = _current_bank;
     UBYTE next_sprite = 0;
     static actor_t *actor;
 
-    actor = actors_active_head;
-    
+    // PLAYER is always last in the active list and always present
+    actor = &PLAYER;
+
+    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) __render_shadow_OAM = (UWORD)&shadow_OAM2 >> 8; else __render_shadow_OAM = (UWORD)&shadow_OAM >> 8;
+
     while (actor) {
         if (actor->pinned) 
             screen_x = (actor->x >> 4) + 8, screen_y = (actor->y >> 4) + 8;
@@ -62,13 +45,13 @@ void actors_update()
 
         if ((UINT8)(screen_x + 8) > 184 || (UINT8)(screen_y) > 160) {
             // Deactivate if offscreen
-            actor_t * next = actor->next;
+            actor_t * prev = actor->prev;
             deactivate_actor(actor);
-            actor = next;
+            actor = prev;
             continue;
         } else if ((WX_REG != 7) && (WX_REG < (UINT8)screen_x + 8) && (WY_REG < (UINT8)(screen_y)-8)) {
             // Hide if under window (don't deactivate)
-            actor = actor->next;
+            actor = actor->prev;
             continue;
         }
 
@@ -81,18 +64,23 @@ void actors_update()
             }
         }
 
+        SWITCH_ROM_MBC1(actor->sprite.bank);
+        spritesheet_t *sprite = actor->sprite.ptr;
+        
         next_sprite += move_metasprite(
-            actor_animated_metasprites[actor->frame],
+            *(sprite->metasprites + actor->frame),
             actor->base_tile,
             next_sprite,
             screen_x,
             screen_y
         );
 
-        actor = actor->next;
+        actor = actor->prev;
     }
 
     hide_hardware_sprites(next_sprite, 40);
+
+    _shadow_OAM_base = __render_shadow_OAM;
 
     SWITCH_ROM_MBC1(_save);
 }

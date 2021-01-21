@@ -3,6 +3,7 @@
 
 #include "BankData.h"
 #include "parallax.h"
+#include "metasprite.h"
 
 typedef enum {
     SCENE_TYPE_TOPDOWN = 0,
@@ -42,10 +43,10 @@ typedef struct actor_t
   UINT8 anim_tick;
   UINT8 flip_x;
   UINT8 move_speed;
-  UINT8 sprite;
   sprite_type_e sprite_type;
   UINT8 palette;
   UINT8 n_frames;
+  far_ptr_t sprite;
   far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
   UBYTE ctx_id;
 
@@ -87,8 +88,10 @@ typedef struct tileset_t {
 } tileset_t;
 
 typedef struct spritesheet_t {
-    UINT8 n_frames;
-    UINT8 frames[];
+    UINT8 n_tiles;
+    UINT8 n_metasprites;
+    metasprite_t **metasprites;
+    UINT8 tiles[];
 } spritesheet_t;
 
 #endif

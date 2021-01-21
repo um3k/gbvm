@@ -4,6 +4,10 @@
 // Actors
 
 #include "gbs_types.h"
+#include "data/spritesheet_6.h"
+#include "data/spritesheet_1.h"
+#include "data/spritesheet_7.h"
+#include "data/spritesheet_8.h"
 #include "data/script_s1a0_interact.h"
 #include "data/script_s1a1_interact.h"
 #include "data/script_s1a2_interact.h"
@@ -19,7 +23,7 @@ const struct actor_t scene_1_actors[] = {
     .y = 200,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 6,
+    .sprite = TO_FAR_PTR_T(spritesheet_6),
     .sprite_type = 0,
     .base_tile = 24,
     .palette = 0,
@@ -41,7 +45,7 @@ const struct actor_t scene_1_actors[] = {
     .y = 144,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 7,
+    .sprite = TO_FAR_PTR_T(spritesheet_1),
     .sprite_type = 0,
     .base_tile = 28,
     .palette = 0,
@@ -63,7 +67,7 @@ const struct actor_t scene_1_actors[] = {
     .y = 216,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 8,
+    .sprite = TO_FAR_PTR_T(spritesheet_7),
     .sprite_type = 0,
     .base_tile = 32,
     .palette = 0,
@@ -85,7 +89,7 @@ const struct actor_t scene_1_actors[] = {
     .y = 216,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 8,
+    .sprite = TO_FAR_PTR_T(spritesheet_7),
     .sprite_type = 0,
     .base_tile = 32,
     .palette = 0,
@@ -107,7 +111,7 @@ const struct actor_t scene_1_actors[] = {
     .y = 216,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 8,
+    .sprite = TO_FAR_PTR_T(spritesheet_7),
     .sprite_type = 0,
     .base_tile = 32,
     .palette = 0,
@@ -129,7 +133,7 @@ const struct actor_t scene_1_actors[] = {
     .y = 96,
     .dir_x = 0,
     .dir_y = 1,
-    .sprite = 9,
+    .sprite = TO_FAR_PTR_T(spritesheet_8),
     .sprite_type = 0,
     .base_tile = 36,
     .palette = 0,
