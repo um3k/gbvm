@@ -22,9 +22,9 @@ _script_s2_p_hit1::
         ; VM_MUSIC_STOP
 
         ; Emote
-        ; VM_PUSH                 1
-        ; VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
-        ; VM_POP                  1
+        VM_PUSH                 1
+        VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
+        VM_POP                  1
 
         ; Stop Script
         VM_STOP

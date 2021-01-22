@@ -214,6 +214,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     last_trigger_tx = 0xFF;
     last_trigger_ty = 0xFF;
 
+    emote_actor = NULL;
+
     if (init_data && scn.script_init.ptr) {
         return (script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0) != 0);
     }
