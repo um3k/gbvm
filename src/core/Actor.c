@@ -38,6 +38,8 @@ far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 actor_t *emote_actor;
 UBYTE emote_timer;
 
+UBYTE allocated_hardware_sprites;
+
 void actors_init() __banked {
     actors_active_head = actors_inactive_head = NULL;
     player_moving           = FALSE;
@@ -49,17 +51,10 @@ void actors_init() __banked {
 void actors_update() __nonbanked
 {
     UBYTE _save = _current_bank;
-    UBYTE next_sprite = 0;
     static actor_t *actor;
 
     // PLAYER is always last in the active list and always present
     actor = &PLAYER;
-
-    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) { 
-        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM2 >> 8); 
-    } else { 
-        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM >> 8);
-    }
 
     if (emote_actor) {
         screen_x = (emote_actor->x >> 4) - scroll_x + 8;
@@ -67,10 +62,10 @@ void actors_update() __nonbanked
         if (emote_timer < EMOTE_BOUNCE_FRAMES) {
             screen_y += emote_offsets[emote_timer];
         }             
-        next_sprite += move_metasprite(
+        allocated_hardware_sprites += move_metasprite(
             &emote_metasprite,
             EMOTE_TILE,
-            next_sprite,
+            allocated_hardware_sprites,
             screen_x,
             screen_y
         );        
@@ -106,20 +101,16 @@ void actors_update() __nonbanked
         SWITCH_ROM_MBC1(actor->sprite.bank);
         spritesheet_t *sprite = actor->sprite.ptr;
         
-        next_sprite += move_metasprite(
+        allocated_hardware_sprites += move_metasprite(
             *(sprite->metasprites + actor->frame),
             actor->base_tile,
-            next_sprite,
+            allocated_hardware_sprites,
             screen_x,
             screen_y
         );
 
         actor = actor->prev;
     }
-
-    hide_hardware_sprites(next_sprite, 40);
-
-    _shadow_OAM_base = __render_shadow_OAM;
 
     SWITCH_ROM_MBC1(_save);
 }

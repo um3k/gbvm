@@ -71,6 +71,17 @@ void engine_reset() {
     script_runner_init(TRUE);
 }
 
+inline void toggle_shadow_OAM() {
+    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) { 
+        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM2 >> 8); 
+    } else { 
+        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM >> 8);
+    }
+}
+inline void activate_shadow_OAM() {
+    _shadow_OAM_base = __render_shadow_OAM;
+}
+
 void process_VM() {
     while (TRUE) {
         switch (script_runner_update()) {
@@ -90,12 +101,21 @@ void process_VM() {
                     if ((game_time & 0x0F) == 0x00) timers_update();    // update timers
                     music_events_update();                              // update music events
                 }
+
+                toggle_shadow_OAM();
+                allocated_hardware_sprites = 0;
+
                 camera_update();
                 scroll_update();
                 actors_update();
                 // projectiles_update();
+
+                hide_hardware_sprites(allocated_hardware_sprites, 40);
+                activate_shadow_OAM();
+
                 ui_update();
-                actors_handle_player_collision();                
+                actors_handle_player_collision();
+
                 game_time++;
                 wait_vbl_done();
                 break;
@@ -157,9 +177,17 @@ void process_VM() {
 
                 state_init();
                 actor_reset_dir(&PLAYER);
+
+                toggle_shadow_OAM();
+                allocated_hardware_sprites = 0;
+                
                 camera_update();
                 scroll_update();
                 actors_update();
+
+                hide_hardware_sprites(allocated_hardware_sprites, 40);
+                activate_shadow_OAM();
+
                 if (fade_in) fade_in_modal();
             }
         }
