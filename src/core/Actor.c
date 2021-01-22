@@ -47,7 +47,11 @@ void actors_update() __nonbanked
     // PLAYER is always last in the active list and always present
     actor = &PLAYER;
 
-    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) __render_shadow_OAM = (UWORD)&shadow_OAM2 >> 8; else __render_shadow_OAM = (UWORD)&shadow_OAM >> 8;
+    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) { 
+        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM2 >> 8); 
+    } else { 
+        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM >> 8);
+    }
 
     if (emote_actor) {
         screen_x = (emote_actor->x >> 4) - scroll_x + 8;
