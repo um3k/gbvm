@@ -55,9 +55,9 @@ void platform_update() __banked {
   UBYTE hit_actor = 0;
   UBYTE hit_trigger = 0;
 
-  tile_x = DIV_8(PLAYER.x);
-  tile_x_mid = DIV_8(PLAYER.x+4u);
-  tile_y = DIV_8(PLAYER.y);
+  tile_x = PLAYER.x >> 7;
+  tile_x_mid = (PLAYER.x+4u) >> 7;
+  tile_y = PLAYER.y >> 7;
 
   // Move
   if (on_ladder) {
