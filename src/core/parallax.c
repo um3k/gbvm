@@ -1,8 +1,17 @@
+#pragma bank 1
+
+#include <string.h>
+
 #include "parallax.h"
 
-parallax_row_t parallax_rows[3] = { PARALLAX_STEP(0, 2, 2), PARALLAX_STEP(2, 4, 1), PARALLAX_STEP(4, 0, 0)};
+parallax_row_t parallax_rows[3];
 parallax_row_t * parallax_row;
 UBYTE parallax_enabled;
+
+static const parallax_row_t parallax_rows_defaults[3] = { PARALLAX_STEP(0, 2, 2), PARALLAX_STEP(2, 4, 1), PARALLAX_STEP(4, 0, 0)}; 
+void parallax_init() __banked {
+    memcpy(parallax_rows, parallax_rows_defaults, sizeof(parallax_rows)); 
+}
 
 void parallax_LCD_isr() __naked __nonbanked {
 __asm

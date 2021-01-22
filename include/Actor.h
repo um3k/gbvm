@@ -38,6 +38,9 @@ extern actor_t *player_collision_actor;
 extern actor_t *emote_actor;
 extern UBYTE emote_timer;
 
+extern UBYTE allocated_hardware_sprites;
+
+void actors_init() __banked;
 void actors_update() __nonbanked;
 void deactivate_actor(actor_t *actor) __banked;
 void activate_actor(actor_t *actor) __banked;

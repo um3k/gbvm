@@ -27,6 +27,7 @@
     #include "Palette.h"
 #endif
 #include "parallax.h"
+#include "shadow.h"
 #include "data/data_ptrs.h"
 
 
@@ -59,8 +60,10 @@ void VBL_isr() __nonbanked {
 void engine_reset() {
     // cleanup core stuff
     sound_init();
+    parallax_init();
     scroll_reset();
     fade_init();
+    actors_init();
     ui_init();
     events_init(FALSE);
     timers_init(FALSE);
@@ -88,12 +91,19 @@ void process_VM() {
                     if ((game_time & 0x0F) == 0x00) timers_update();    // update timers
                     music_events_update();                              // update music events
                 }
+
+                toggle_shadow_OAM();
+
                 camera_update();
                 scroll_update();
                 actors_update();
                 // projectiles_update();
+
+                activate_shadow_OAM();
+
                 ui_update();
-                actors_handle_player_collision();                
+                actors_handle_player_collision();
+
                 game_time++;
                 wait_vbl_done();
                 break;
@@ -155,9 +165,15 @@ void process_VM() {
 
                 state_init();
                 actor_reset_dir(&PLAYER);
+
+                toggle_shadow_OAM();
+                
                 camera_update();
                 scroll_update();
                 actors_update();
+
+                activate_shadow_OAM();
+
                 if (fade_in) fade_in_modal();
             }
         }

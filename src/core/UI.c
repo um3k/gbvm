@@ -12,6 +12,7 @@
 #include "Input.h"
 #include "Math.h"
 #include "Actor.h"
+#include "shadow.h"
 
 #define ui_frame_tl_tiles 0xC0u
 #define ui_frame_bl_tiles 0xC6u
@@ -246,7 +247,11 @@ UBYTE ui_run_menu() __banked {
     while (1) {
         input_update();
         ui_update();
+        
+        toggle_shadow_OAM();
         actors_update();
+        activate_shadow_OAM();
+
         game_time++;
         wait_vbl_done();
 
@@ -297,7 +302,11 @@ void ui_run_modal(UBYTE wait_flags) __banked {
         if (!fail) return;
         
         ui_update();
+
+        toggle_shadow_OAM();
         actors_update();
+        activate_shadow_OAM();
+
         game_time++;
         wait_vbl_done();
         input_update();
