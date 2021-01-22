@@ -394,48 +394,48 @@ void actors_handle_player_collision() __banked {
 }
 
 UBYTE check_collision_in_direction(UBYTE start_x, UBYTE start_y, UBYTE end_tile, col_check_dir_e check_dir) __banked {
-  switch (check_dir) {
-    case CHECK_DIR_LEFT:  // Check left
-      while (start_x != end_tile) {
-        if (tile_at_2x2(start_x - 1, start_y - 1) ||                    // Tile left
-            actor_at_1x3_tile(start_x - 2, start_y - 1, FALSE) != NULL  // Actor left
-        ) {
-          return start_x;
-        }
-        start_x--;
-      }
-      return end_tile;
-    case CHECK_DIR_RIGHT:  // Check right
-      while (start_x != end_tile) {
-        if (tile_at_2x2(start_x + 1, start_y - 1) ||                    // Tile right
-            actor_at_1x3_tile(start_x + 2, start_y - 1, FALSE) != NULL  // Actor right
-        ) {
-          return start_x;
-        }
-        start_x++;
-      }
-      return end_tile;
-    case CHECK_DIR_UP:  // Check up
-      while (start_y != end_tile) {
-        if (tile_at_2x2(start_x, start_y - 2) ||                          // Tile up
-            (actor_at_3x1_tile(start_x - 1, start_y - 2, FALSE) != NULL)  // Actor up
-        ) {
-          return start_y;
-        }
-        start_y--;
-      }
-      return end_tile;
-    case CHECK_DIR_DOWN:  // Check down
-      while (start_y != end_tile) {
-        if (tile_at_2x2(start_x, start_y) ||                               // Tile down
-            actor_at_3x1_tile(start_x - 1, start_y + 1, FALSE) != NULL ||  // Actor down 1 tile
-            actor_at_3x1_tile(start_x - 1, start_y + 2, FALSE) != NULL     // Actor down 2 tiles
-        ) {
-          return start_y;
-        }
-        start_y++;
-      }
-      return end_tile;
-  }
-  return end_tile;
+    switch (check_dir) {
+        case CHECK_DIR_LEFT:  // Check left
+            while (start_x != end_tile) {
+                    if (tile_at_2x2(start_x - 1, start_y - 1) ||                    // Tile left
+                        actor_at_1x3_tile(start_x - 2, start_y - 1, FALSE) != NULL  // Actor left
+                    ) {
+                        return start_x;
+                    }
+                    start_x--;
+            }
+            return end_tile;
+        case CHECK_DIR_RIGHT:  // Check right
+            while (start_x != end_tile) {
+                if (tile_at_2x2(start_x + 1, start_y - 1) ||                    // Tile right
+                    actor_at_1x3_tile(start_x + 2, start_y - 1, FALSE) != NULL  // Actor right
+                ) {
+                    return start_x;
+                }
+                start_x++;
+            }
+            return end_tile;
+        case CHECK_DIR_UP:  // Check up
+            while (start_y != end_tile) {
+                if (tile_at_2x2(start_x, start_y - 2) ||                          // Tile up
+                    (actor_at_3x1_tile(start_x - 1, start_y - 2, FALSE) != NULL)  // Actor up
+                ) {
+                return start_y;
+                }
+                start_y--;
+            }
+            return end_tile;
+        case CHECK_DIR_DOWN:  // Check down
+            while (start_y != end_tile) {
+                if (tile_at_2x2(start_x, start_y) ||                               // Tile down
+                    actor_at_3x1_tile(start_x - 1, start_y + 1, FALSE) != NULL ||  // Actor down 1 tile
+                    actor_at_3x1_tile(start_x - 1, start_y + 2, FALSE) != NULL     // Actor down 2 tiles
+                ) {
+                return start_y;
+                }
+                start_y++;
+            }
+            return end_tile;
+    }
+    return end_tile;
 }
