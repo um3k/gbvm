@@ -27,6 +27,7 @@
     #include "Palette.h"
 #endif
 #include "parallax.h"
+#include "shadow.h"
 #include "data/data_ptrs.h"
 
 
@@ -71,17 +72,6 @@ void engine_reset() {
     script_runner_init(TRUE);
 }
 
-inline void toggle_shadow_OAM() {
-    if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) { 
-        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM2 >> 8); 
-    } else { 
-        __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM >> 8);
-    }
-}
-inline void activate_shadow_OAM() {
-    _shadow_OAM_base = __render_shadow_OAM;
-}
-
 void process_VM() {
     while (TRUE) {
         switch (script_runner_update()) {
@@ -103,14 +93,12 @@ void process_VM() {
                 }
 
                 toggle_shadow_OAM();
-                allocated_hardware_sprites = 0;
 
                 camera_update();
                 scroll_update();
                 actors_update();
                 // projectiles_update();
 
-                hide_hardware_sprites(allocated_hardware_sprites, 40);
                 activate_shadow_OAM();
 
                 ui_update();
@@ -179,13 +167,11 @@ void process_VM() {
                 actor_reset_dir(&PLAYER);
 
                 toggle_shadow_OAM();
-                allocated_hardware_sprites = 0;
                 
                 camera_update();
                 scroll_update();
                 actors_update();
 
-                hide_hardware_sprites(allocated_hardware_sprites, 40);
                 activate_shadow_OAM();
 
                 if (fade_in) fade_in_modal();
