@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "events.h"
 #include "FadeManager.h"
+#include "LoadSave.h"
 
 void vm_show_sprites() __banked {
     hide_sprites = FALSE;
@@ -66,4 +67,10 @@ void vm_timer_set(SCRIPT_CTX * THIS, UBYTE timer, UBYTE value) __banked {
     timer_time_t * timer_value = &timer_values[(timer - 1) & 3];
     timer_value->value = value;
     timer_value->remains = value;
+}
+
+void vm_data_is_saved(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    INT16 * A;
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
+    *A = data_is_saved();
 }

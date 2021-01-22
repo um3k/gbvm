@@ -26,12 +26,16 @@ _script_s3_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         ; If Variable True
         VM_IF_CONST .EQ         VAR_S3_TITLESCREEN_NEWGAME, 1, 1$, 0
+        VM_DATA_IS_SAVED        VAR_S3_TITLESCREEN_NEWGAME
+        VM_IF_CONST .EQ         VAR_S3_TITLESCREEN_NEWGAME, 0, 2$, 0
+
+        VM_FADE_OUT             1
         ; Load Game
-        VM_FADE_OUT             1
         VM_RAISE                EXCEPTION_LOAD, 0
+
 1$:
-        ; New Game
         VM_FADE_OUT             1
+        ; New Game
         VM_PUSH                 0
         VM_PUSH                 1536
         VM_PUSH                 1280
@@ -39,6 +43,13 @@ _script_s3_init::
         VM_POP                  3
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3    ; sizeof(far_ptr_t) == 3
             IMPORT_FAR_PTR_DATA _scene_2
+
 2$:
-        ; Stop Script
-        VM_STOP
+        VM_LOAD_TEXT            0
+        .asciz "\020No save found!\nPress A"
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT         0, 0, 0
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+        VM_JUMP                 1$

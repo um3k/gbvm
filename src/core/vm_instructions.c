@@ -105,7 +105,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_fade_out,               1}, // 0x57
     {vm_timer_prepare,          4}, // 0x58
     {vm_timer_set,              2}, // 0x59
-    {0, 0},
+    {vm_data_is_saved,          2}, // 0x5A
     {0, 0},
     {0, 0},
     {0, 0},

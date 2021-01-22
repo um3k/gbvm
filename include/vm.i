@@ -486,6 +486,11 @@ OP_VM_TIMER_SET         = 0x59
         .db OP_VM_TIMER_SET, #<INTERVAL, #<TIMER 
 .endm
 
+OP_VM_DATA_IS_SAVED     = 0x5A
+.macro VM_DATA_IS_SAVED IDX
+        .db OP_VM_DATA_IS_SAVED, #>IDX, #<IDX 
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60
