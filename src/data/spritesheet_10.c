@@ -35,7 +35,7 @@ const metasprite_t spritesheet_10_metasprite_0  = {
     }
 };
 
-const metasprite_t *spritesheet_10_metasprites[] = {
+const metasprite_t * const spritesheet_10_metasprites[] = {
     &spritesheet_10_metasprite_0
 };
 

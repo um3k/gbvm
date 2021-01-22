@@ -46,7 +46,7 @@ const metasprite_t spritesheet_0_metasprite_7  = {
     .items = {{0, 0, 0, 22, 32}, {1, 0, 8, 20, 32}, {metasprite_end}}
 };
 
-const metasprite_t * spritesheet_0_metasprites[] = {
+const metasprite_t * const spritesheet_0_metasprites[] = {
     &spritesheet_0_metasprite_0,
     &spritesheet_0_metasprite_1,
     &spritesheet_0_metasprite_2,
