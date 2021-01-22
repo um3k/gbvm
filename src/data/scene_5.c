@@ -29,9 +29,9 @@ const struct scene_t scene_5 = {
     PARALLAX_STEP(10, 13, 3),
     PARALLAX_STEP(13, 0, 0)
   },  
-  .n_actors = 3,
+  .n_actors = 4,
   .n_triggers = 2,
-  .n_sprites = 2,
+  .n_sprites = 3,
   .actors = TO_FAR_PTR_T(scene_5_actors),
   .triggers = TO_FAR_PTR_T(scene_5_triggers),
   .sprites = TO_FAR_PTR_T(scene_5_sprites),
