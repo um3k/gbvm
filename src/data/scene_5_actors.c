@@ -9,11 +9,14 @@
 
 const void __at(255) __bank_scene_5_actors;
 
+#define elephant_x 64
+#define elephant_y 72
+
 const struct actor_t scene_5_actors[] = {
   {
     // Actor 1,
-    .x = (32 + 8 + 3) * 16,
-    .y = (72 - 8 + 2) * 16,
+    .x = (elephant_x + 8 + 3) * 16,
+    .y = (elephant_y - 8 + 2) * 16,
     .dir_x = -1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
@@ -33,8 +36,8 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // Actor 2,
-    .x = (32 + 32 + 2) * 16,
-    .y = (72 - 8 + 2) * 16,
+    .x = (elephant_x + 32 + 2) * 16,
+    .y = (elephant_y - 8 + 2) * 16,
     .dir_x = 1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
@@ -54,8 +57,8 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // elephant,
-    .x = 32 * 16,
-    .y = 72 * 16,
+    .x = elephant_x * 16,
+    .y = elephant_y * 16,
     .dir_x = 0,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_10),
