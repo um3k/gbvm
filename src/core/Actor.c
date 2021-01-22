@@ -26,17 +26,25 @@ const metasprite_t emote_metasprite  = {
 };
 
 actor_t actors[MAX_ACTORS];
-actor_t *actors_active_head = 0;
-actor_t *actors_inactive_head = 0;
+actor_t *actors_active_head;
+actor_t *actors_inactive_head;
 
 INT8 screen_x, screen_y;
 actor_t *invalid;
-UBYTE player_moving = FALSE;
-UBYTE player_iframes = 0;
-actor_t *player_collision_actor = 0;
+UBYTE player_moving;
+UBYTE player_iframes;
+actor_t *player_collision_actor;
 far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
-actor_t *emote_actor = NULL;
+actor_t *emote_actor;
 UBYTE emote_timer;
+
+void actors_init() __banked {
+    actors_active_head = actors_inactive_head = NULL;
+    player_moving           = FALSE;
+    player_iframes          = 0;
+    player_collision_actor  = NULL;
+    emote_actor             = NULL;
+}
 
 void actors_update() __nonbanked
 {

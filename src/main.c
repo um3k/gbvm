@@ -59,8 +59,10 @@ void VBL_isr() __nonbanked {
 void engine_reset() {
     // cleanup core stuff
     sound_init();
+    parallax_init();
     scroll_reset();
     fade_init();
+    actors_init();
     ui_init();
     events_init(FALSE);
     timers_init(FALSE);
