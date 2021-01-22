@@ -9,8 +9,8 @@ const void __at(255) __bank_spritesheet_11;
 const metasprite_t spritesheet_11_metasprite_0  = {
     4, 
     {
-        {0,  0,  0,  0,     0}, {1,  0,  8,  2,     0}, 
-        {1,  0,  0,  4,  0x10}, {1,  0,  8,  6,  0x10}, 
+        {0,  0,  0,  0,  0x10}, {1,  0,  8,  2,  0x10}, 
+        {1,  0,  0,  4,     0}, {1,  0,  8,  6,     0}, 
         {metasprite_end}
     }
 };
