@@ -32,6 +32,7 @@ UINT16 image_height;
 UBYTE sprites_len;
 UBYTE actors_len = 0;
 UBYTE scene_type;
+LCD_isr_t scene_LCD_type;
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
     UBYTE ntiles = ReadBankedUBYTE(&(tiles->n_tiles), bank);
@@ -136,9 +137,9 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     memcpy(&parallax_rows, &scn.parallax_rows, sizeof(parallax_rows));
     if (scn.parallax_rows[0].tile_height == 0) {
         scn.parallax_rows[0].tile_height = PARALLAX_MAX_HEIGHT;
-        parallax_enabled = FALSE;
+        scene_LCD_type = LCD_simple;
     } else {
-        parallax_enabled = TRUE;
+        scene_LCD_type = LCD_parallax;
     }
 
     //   ProjectilesInit();

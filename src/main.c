@@ -155,10 +155,16 @@ void process_VM() {
                 __critical {
                     remove_LCD(parallax_LCD_isr);
                     remove_LCD(window_LCD_isr);
-                    if (parallax_enabled) {
-                        add_LCD(parallax_LCD_isr);
-                    } else {
-                        add_LCD(window_LCD_isr);
+                    switch (scene_LCD_type) {
+                        case LCD_parallax: 
+                            add_LCD(parallax_LCD_isr);
+                            break;
+//                        case LCD_fullscreen:
+//                            add_LCD(fullscreen_LCD_isr);
+//                            break;
+                        default:
+                            add_LCD(window_LCD_isr);
+                            break;
                     }
                     LYC_REG = 0u;
                 }
