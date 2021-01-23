@@ -1,15 +1,25 @@
 #include <gb/gb.h>
 
+#include "interrupts.h"
+
 #include "Scroll.h"
 #include "metasprite.h"
+#include "parallax.h"
 #include "UI.h"
+
+void remove_LCD_ISRs() __critical {
+    remove_LCD(parallax_LCD_isr);
+    remove_LCD(simple_LCD_isr);
+    remove_LCD(fullscreen_LCD_isr);
+    LCDC_REG &= 0b11101111;
+}
 
 void simple_LCD_isr() __nonbanked {
     if (LYC_REG == 0) {
         SCX_REG = draw_scroll_x;
         SCY_REG = draw_scroll_y;
         if (!hide_sprites) SHOW_SPRITES;
-        LYC_REG = win_pos_y;
+        if (win_pos_y) LYC_REG = win_pos_y - 1; else LYC_REG = 0;
     } else {
         LYC_REG = 0;
         if (hide_sprites) return;

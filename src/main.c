@@ -90,6 +90,8 @@ void process_VM() {
                 UBYTE fade_in = TRUE;
                 switch (vm_exception_code) {
                     case EXCEPTION_RESET: {
+                        // remove previous LCD ISR's
+                        remove_LCD_ISRs();
                         // reset everything
                         engine_reset();
                         // load start scene
@@ -99,6 +101,8 @@ void process_VM() {
                         break;
                     }
                     case EXCEPTION_CHANGE_SCENE: {
+                        // remove previous LCD ISR's
+                        remove_LCD_ISRs();
                         // kill all threads, but don't clear variables 
                         script_runner_init(FALSE);
                         // reset timers on scene change
@@ -119,6 +123,9 @@ void process_VM() {
                     }
                     case EXCEPTION_LOAD: {
                         fade_out_modal();
+                        // remove previous LCD ISR's
+                        remove_LCD_ISRs();
+                        // load game state from SRAM
                         data_load();
                         fade_in = !(load_scene(current_scene.ptr, current_scene.bank, FALSE));
                         break;
@@ -130,9 +137,6 @@ void process_VM() {
                 }
 
                 __critical {
-                    remove_LCD(parallax_LCD_isr);
-                    remove_LCD(simple_LCD_isr);
-                    remove_LCD(fullscreen_LCD_isr);
                     switch (scene_LCD_type) {
                         case LCD_parallax: 
                             add_LCD(parallax_LCD_isr);

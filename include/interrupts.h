@@ -6,4 +6,6 @@ void fullscreen_LCD_isr();
 
 void VBL_isr();
 
+void remove_LCD_ISRs();
+
 #endif
