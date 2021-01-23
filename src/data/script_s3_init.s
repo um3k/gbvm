@@ -29,7 +29,7 @@ _script_s3_init::
         VM_DATA_IS_SAVED        VAR_S3_TITLESCREEN_NEWGAME
         VM_IF_CONST .EQ         VAR_S3_TITLESCREEN_NEWGAME, 0, 2$, 0
 
-        VM_FADE_OUT             1
+        ; VM_FADE_OUT             1     ; ! no need to fade out when loading !
         ; Load Game
         VM_RAISE                EXCEPTION_LOAD, 0
 
