@@ -31,8 +31,8 @@ void platform_init() __banked {
     PLAYER.dir_x = 1;
   }
 
-  tile_x = PLAYER.x >> 7;
-  tile_y = PLAYER.y >> 7;
+  tile_x = PLAYER.pos.x >> 7;
+  tile_y = PLAYER.pos.y >> 7;
 
   grounded = FALSE;
   // If starting tile was a ladder start scene attached to it
@@ -55,9 +55,9 @@ void platform_update() __banked {
   UBYTE hit_actor = 0;
   UBYTE hit_trigger = 0;
 
-  tile_x = PLAYER.x >> 7;
-  tile_x_mid = (PLAYER.x+4u) >> 7;
-  tile_y = PLAYER.y >> 7;
+  tile_x = PLAYER.pos.x >> 7;
+  tile_x_mid = (PLAYER.pos.x+4u) >> 7;
+  tile_y = PLAYER.pos.y >> 7;
 
   // Move
   if (on_ladder) {
@@ -125,9 +125,9 @@ void platform_update() __banked {
     }
   }
 
-  PLAYER.x += pl_vel_x >> 8;
-  tile_x = PLAYER.x >> 7;
-  tile_y = PLAYER.y >> 7;
+  PLAYER.pos.x += pl_vel_x >> 8;
+  tile_x = PLAYER.pos.x >> 7;
+  tile_y = PLAYER.pos.y >> 7;
 
   /*
   if (grounded && INPUT_A_PRESSED) {
@@ -144,9 +144,9 @@ void platform_update() __banked {
 
   // Jump
   if (INPUT_B_PRESSED && grounded) {
-    if (!( (((PLAYER.x >> 4) & 0x7) != 7 &&
+    if (!( (((PLAYER.pos.x >> 4) & 0x7) != 7 &&
           tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM) ||  // Left Edge
-          (((PLAYER.x >> 4) & 0x7) != 0 &&
+          (((PLAYER.pos.x >> 4) & 0x7) != 0 &&
            tile_at(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM))) {  // Right edge
       pl_vel_y = -plat_jump_vel;
       grounded = FALSE;
@@ -163,17 +163,17 @@ void platform_update() __banked {
   }
 
   pl_vel_y = MIN(pl_vel_y, plat_max_fall_vel);
-  PLAYER.y += pl_vel_y >> 8;
-  tile_y = PLAYER.y >> 7;
-  tile_y_ceil = (PLAYER.y - 7u) >> 7;
+  PLAYER.pos.y += pl_vel_y >> 8;
+  tile_y = PLAYER.pos.y >> 7;
+  tile_y_ceil = (PLAYER.pos.y - 7u) >> 7;
 
   // Left Collision
   if (pl_vel_x < 0) {
     if (tile_at(tile_x, tile_y) & COLLISION_RIGHT || 
         tile_at(tile_x, tile_y_ceil) & COLLISION_RIGHT) {
       pl_vel_x = 0;
-      PLAYER.x = ((tile_x + 1) * 8) << 4;
-      tile_x = PLAYER.x >> 7;
+      PLAYER.pos.x = ((tile_x + 1) * 8) << 4;
+      tile_x = PLAYER.pos.x >> 7;
     }
   }
 
@@ -182,8 +182,8 @@ void platform_update() __banked {
     if (tile_at(tile_x + 1, tile_y) & COLLISION_LEFT ||
         tile_at(tile_x + 1, tile_y_ceil) & COLLISION_LEFT) {
       pl_vel_x = 0;
-      PLAYER.x = (tile_x * 8) << 4;
-      tile_x = PLAYER.x >> 7;
+      PLAYER.pos.x = (tile_x * 8) << 4;
+      tile_x = PLAYER.pos.x >> 7;
     }
   }
 
@@ -196,7 +196,7 @@ void platform_update() __banked {
         PLAYER.dir_x = 1;
         PLAYER.dir_y = 0;
       } else {
-        PLAYER.y -= pl_vel_y >> 8;
+        PLAYER.pos.y -= pl_vel_y >> 8;
         pl_vel_y = 0;
       }
     }
@@ -207,30 +207,30 @@ void platform_update() __banked {
       if ((tile_below & COLLISION_TOP) && !(tile_below & TILE_PROP_LADDER)) {
         grounded = TRUE;
         pl_vel_y = 0;
-        PLAYER.y = (tile_y * 8) << 4;
+        PLAYER.pos.y = (tile_y * 8) << 4;
       }
     }
 
   } else {
     // Ground Collision
     if (pl_vel_y >= 0 && (tile_at(tile_x, tile_y + 1) & COLLISION_TOP ||  // Left Edge
-                          (((PLAYER.x >> 4) & 0x7) != 0 &&
+                          (((PLAYER.pos.x >> 4) & 0x7) != 0 &&
                            tile_at(tile_x + 1, tile_y + 1) & COLLISION_TOP))  // Right edge
     ) {
       grounded = TRUE;
       pl_vel_y = 0;
-      PLAYER.y = (tile_y * 8) << 4;
+      PLAYER.pos.y = (tile_y * 8) << 4;
     } else {
       grounded = FALSE;
 
       // Ceiling Collision
       if (pl_vel_y < 0) {
         if (tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM ||  // Left Edge
-            (((PLAYER.x >> 4) & 0x7) != 0 &&
+            (((PLAYER.pos.x >> 4) & 0x7) != 0 &&
              tile_at(tile_x + 1, tile_y - 1) & COLLISION_BOTTOM)  // Right edge
         ) {
           pl_vel_y = 0;
-          PLAYER.y = (((tile_y + 1) * 8) << 4);
+          PLAYER.pos.y = (((tile_y + 1) * 8) << 4);
         }
       }
     }
@@ -238,22 +238,22 @@ void platform_update() __banked {
 
 /*
   // Clamp to screen
-  if (PLAYER.x < 0) {
-    PLAYER.x = 0;
+  if (PLAYER.pos.x < 0) {
+    PLAYER.pos.x = 0;
     pl_pos_x = 0;
     pl_vel_x = 0;
-  } else if (PLAYER.x > image_width - 16) {
-    PLAYER.x = image_width - 16;
+  } else if (PLAYER.pos.x > image_width - 16) {
+    PLAYER.pos.x = image_width - 16;
     pl_pos_x = 0;
     pl_vel_x = 0;
   }
 
-  if (PLAYER.y < 0) {
-    PLAYER.y = 0;
+  if (PLAYER.pos.y < 0) {
+    PLAYER.pos.y = 0;
     pl_pos_y = 0;
     pl_vel_y = 0;
-  } else if (PLAYER.y > image_height - 8) {
-    PLAYER.y = image_height - 8;
+  } else if (PLAYER.pos.y > image_height - 8) {
+    PLAYER.pos.y = image_height - 8;
     pl_pos_y = 0;
     pl_vel_y = 0;
     grounded = TRUE;

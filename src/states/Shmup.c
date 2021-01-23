@@ -58,8 +58,8 @@ void shmup_init() __banked {
 void shmup_update() __banked {
   UBYTE tile_x, tile_y, hit_actor;
 
-  tile_x = DIV_8(PLAYER.x);
-  tile_y = DIV_8(PLAYER.y);
+  tile_x = DIV_8(PLAYER.pos.x);
+  tile_y = DIV_8(PLAYER.pos.y);
 
   // Check for trigger collisions
   /*
@@ -70,11 +70,11 @@ void shmup_update() __banked {
 
   if (shooter_horizontal) {
     // Check input to set player movement
-    if (INPUT_RECENT_UP && (PLAYER.y > 8) &&
+    if (INPUT_RECENT_UP && (PLAYER.pos.y > 8) &&
         !(tile_at(tile_x, tile_y - 1) & COLLISION_BOTTOM)) {
       PLAYER.dir_y = -1;
       PLAYER.dir_x = 0;
-    } else if (INPUT_RECENT_DOWN && (PLAYER.y < (image_height - 8)) &&
+    } else if (INPUT_RECENT_DOWN && (PLAYER.pos.y < (image_height - 8)) &&
                !(tile_at(tile_x, tile_y + 1) & COLLISION_TOP)) {
       PLAYER.dir_y = 1;
       PLAYER.dir_x = 0;
@@ -91,12 +91,12 @@ void shmup_update() __banked {
     // Check if player has reached end of scene
     if (shooter_direction == 1) {
       // Left to right
-      if ((PLAYER.x > image_width - SCREEN_WIDTH_HALF - 64)) {
+      if ((PLAYER.pos.x > image_width - SCREEN_WIDTH_HALF - 64)) {
         shooter_reached_end = TRUE;
       }
     } else {
       // Right to left
-      if ((PLAYER.x < SCREEN_WIDTH_HALF + 48)) {
+      if ((PLAYER.pos.x < SCREEN_WIDTH_HALF + 48)) {
         shooter_reached_end = TRUE;
       }
     }
@@ -111,10 +111,10 @@ void shmup_update() __banked {
 
   } else {
     // Check input to set player movement
-    if (INPUT_RECENT_LEFT && (PLAYER.x > 0) && !(tile_at(tile_x, tile_y) & COLLISION_RIGHT)) {
+    if (INPUT_RECENT_LEFT && (PLAYER.pos.x > 0) && !(tile_at(tile_x, tile_y) & COLLISION_RIGHT)) {
       PLAYER.dir_x = -1;
       PLAYER.dir_y = 0;
-    } else if (INPUT_RECENT_RIGHT && (PLAYER.x < image_width - 16) &&
+    } else if (INPUT_RECENT_RIGHT && (PLAYER.pos.x < image_width - 16) &&
                !(tile_at(tile_x + 2, tile_y) & COLLISION_LEFT)) {
       PLAYER.dir_x = 1;
       PLAYER.dir_y = 0;
@@ -130,12 +130,12 @@ void shmup_update() __banked {
 
     if (shooter_direction == 1) {
       // Top to bottom
-      if ((PLAYER.y > image_height - SCREEN_WIDTH_HALF - 40)) {
+      if ((PLAYER.pos.y > image_height - SCREEN_WIDTH_HALF - 40)) {
         shooter_reached_end = TRUE;
       }
     } else {
       // Bottom to top
-      if ((PLAYER.y < SCREEN_WIDTH_HALF + 40)) {
+      if ((PLAYER.pos.y < SCREEN_WIDTH_HALF + 40)) {
         shooter_reached_end = TRUE;
       }
     }

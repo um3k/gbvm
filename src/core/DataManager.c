@@ -239,8 +239,8 @@ void load_player() __banked {
         PLAYER.sprite_type = SPRITE_TYPE_STATIC;
         PLAYER.n_frames = sprite_frames;    
     }
-    PLAYER.x = start_scene_x;
-    PLAYER.y = start_scene_y;
+    PLAYER.pos.x = start_scene_x;
+    PLAYER.pos.y = start_scene_y;
     PLAYER.dir_x = start_scene_dir_x;
     PLAYER.dir_y = start_scene_dir_y;    
     PLAYER.sprite = start_player_sprite;
@@ -257,6 +257,10 @@ void load_player() __banked {
     PLAYER.pinned = FALSE;    
     PLAYER.collision_group = 0;
     PLAYER.collision_enabled = TRUE;
+    PLAYER.bounds.left = 2;
+    PLAYER.bounds.right = 14;
+    PLAYER.bounds.top = -12;
+    PLAYER.bounds.bottom = 0;
 }
 
 void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked {

@@ -16,8 +16,10 @@ const void __at(255) __bank_scene_5_actors;
 const struct actor_t scene_5_actors[] = {
   {
     // Actor 1,
-    .x = (elephant_x + 8 + 3) * 16,
-    .y = (elephant_y - 8 + 2) * 16,
+    .pos = {
+      .x = (elephant_x + 8 + 3) * 16,
+      .y = (elephant_y - 8 + 2) * 16,
+    },
     .dir_x = -1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
@@ -37,8 +39,10 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // Actor 2,
-    .x = (elephant_x + 32 + 2) * 16,
-    .y = (elephant_y - 8 + 2) * 16,
+    .pos = {
+      .x = (elephant_x + 32 + 2) * 16,
+      .y = (elephant_y - 8 + 2) * 16,
+    },
     .dir_x = 1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
@@ -58,8 +62,10 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // elephant,
-    .x = elephant_x * 16,
-    .y = elephant_y * 16,
+    .pos = {
+      .x = elephant_x * 16,
+      .y = elephant_y * 16,
+    },
     .dir_x = 0,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_10),
@@ -79,8 +85,10 @@ const struct actor_t scene_5_actors[] = {
   },
   {
     // coon,
-    .x = (elephant_x - 16) * 16,
-    .y = (elephant_y - 32) * 16,
+    .pos = {
+      .x = (elephant_x - 16) * 16,
+      .y = (elephant_y - 32) * 16,
+    },
     .dir_x = 0,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_11),

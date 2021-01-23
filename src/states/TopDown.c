@@ -20,11 +20,11 @@ void topdown_init() __banked {
 
     if (topdown_grid == 16) {
         // Snap to 16px grid
-        PLAYER.x = ((PLAYER.x >> 8) << 8);
-        PLAYER.y = 8 + ((PLAYER.y >> 8) << 8);
+        PLAYER.pos.x = ((PLAYER.pos.x >> 8) << 8);
+        PLAYER.pos.y = 8 + ((PLAYER.pos.y >> 8) << 8);
     } else {
-        PLAYER.x = ((PLAYER.x >> 7) << 7);
-        PLAYER.y = ((PLAYER.y >> 7) << 7);
+        PLAYER.pos.x = ((PLAYER.pos.x >> 7) << 7);
+        PLAYER.pos.y = ((PLAYER.pos.y >> 7) << 7);
     }
 
     actor_set_frames(&PLAYER, 0, 16);
@@ -34,12 +34,12 @@ void topdown_update() __banked {
     actor_t *hit_actor;
     UBYTE tile_x, tile_y;
 
-    tile_x = PLAYER.x >> 7;
-    tile_y = PLAYER.y >> 7;
+    tile_x = PLAYER.pos.x >> 7;
+    tile_y = PLAYER.pos.y >> 7;
 
     // Is player on an 8x8px tile?
-    if ((topdown_grid == 16 && ON_16PX_GRID(PLAYER)) ||
-        (topdown_grid == 8 && ON_8PX_GRID(PLAYER))) {
+    if ((topdown_grid == 16 && ON_16PX_GRID(PLAYER.pos)) ||
+        (topdown_grid == 8 && ON_8PX_GRID(PLAYER.pos))) {
         // Player landed on an tile
         // so stop movement for now
         player_moving = FALSE;

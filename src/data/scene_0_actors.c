@@ -16,8 +16,10 @@ const void __at(255) __bank_scene_0_actors;
 const struct actor_t scene_0_actors[] = {
   {
     // Actor 1,
-    .x = 32 * 16,
-    .y = 48 * 16,
+    .pos = {
+      .x = 32 * 16,
+      .y = 48 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_2),
@@ -37,8 +39,10 @@ const struct actor_t scene_0_actors[] = {
   },
   {
     // Fire,
-    .x = 32 * 16,
-    .y = 32 * 16,
+    .pos = {    
+      .x = 32 * 16,
+      .y = 32 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_3),
@@ -58,8 +62,10 @@ const struct actor_t scene_0_actors[] = {
   },
   {
     // Sage,
-    .x = 72 * 16,
-    .y = 56 * 16,
+    .pos = {
+      .x = 72 * 16,
+      .y = 56 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_4),
@@ -80,8 +86,10 @@ const struct actor_t scene_0_actors[] = {
   },
   {
     // Actor 4,
-    .x = 112 * 16,
-    .y = 48 * 16,
+    .pos = {    
+      .x = 112 * 16,
+      .y = 48 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_2),
@@ -101,8 +109,10 @@ const struct actor_t scene_0_actors[] = {
   },
   {
     // Fire,
-    .x = 112 * 16,
-    .y = 32 * 16,
+    .pos = {
+      .x = 112 * 16,
+      .y = 32 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_3),
@@ -122,8 +132,10 @@ const struct actor_t scene_0_actors[] = {
   },
   {
     // Savepoint,
-    .x = 104 * 16,
-    .y = 88 * 16,
+    .pos = {
+      .x = 104 * 16,
+      .y = 88 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .sprite = TO_FAR_PTR_T(spritesheet_5),

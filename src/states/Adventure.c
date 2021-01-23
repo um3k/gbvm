@@ -72,8 +72,8 @@ void adventure_update() __banked {
     backup_dir_x = PLAYER.dir_x;
     backup_dir_y = PLAYER.dir_y;
 
-    tile_x = (PLAYER.x + 4 + PLAYER.dir_x) >> 7;  // Add Left right Bias for Moving=True
-    tile_y = (PLAYER.y + 7) >> 7;
+    tile_x = (PLAYER.pos.x + 4 + PLAYER.dir_x) >> 7;  // Add Left right Bias for Moving=True
+    tile_y = (PLAYER.pos.y + 7) >> 7;
 
     // if (INPUT_A_PRESSED) {
     //   hit_actor = ActorInFrontOfPlayer(8, TRUE);
@@ -85,9 +85,9 @@ void adventure_update() __banked {
     // Left Collision
     if (PLAYER.dir_x < 0) {
         if (tile_at(tile_x, tile_y)) {
-            PLAYER.x = (tile_x << 7) + 4;
+            PLAYER.pos.x = (tile_x << 7) + 4;
             PLAYER.dir_x = 0;
-        } else if (tile_at(tile_x, (PLAYER.y) >> 7)) {
+        } else if (tile_at(tile_x, (PLAYER.pos.y) >> 7)) {
             PLAYER.dir_y = 1;
         }
     }
@@ -95,22 +95,22 @@ void adventure_update() __banked {
     // Right Collision
     if (PLAYER.dir_x > 0) {
         if (tile_at(tile_x + 1, tile_y)) {
-            PLAYER.x = (tile_x << 7) - 5;
+            PLAYER.pos.x = (tile_x << 7) - 5;
             PLAYER.dir_x = 0;
-        } else if (tile_at(tile_x + 1, (PLAYER.y) >> 7)) {
+        } else if (tile_at(tile_x + 1, (PLAYER.pos.y) >> 7)) {
             PLAYER.dir_y = 1;
         }
     }
 
-    tile_x = (PLAYER.x + 4 - PLAYER.dir_x) >> 7;  // Remove LeftRight Bias to not stick
-    tile_y = (PLAYER.y + PLAYER.dir_y) >> 7;
+    tile_x = (PLAYER.pos.x + 4 - PLAYER.dir_x) >> 7;  // Remove LeftRight Bias to not stick
+    tile_y = (PLAYER.pos.y + PLAYER.dir_y) >> 7;
 
     // Up Collision
     if (PLAYER.dir_y < 0) {
         if (tile_at(tile_x, tile_y) ||     // Left Edge
             (tile_at(tile_x + 1, tile_y))  // Right edge
         ) {
-            PLAYER.y = (tile_y + 1 << 7);
+            PLAYER.pos.y = (tile_y + 1 << 7);
             PLAYER.dir_y = 0;
         }
     }
@@ -120,7 +120,7 @@ void adventure_update() __banked {
         if (tile_at(tile_x, tile_y + 1) ||     // Left Edge
             (tile_at(tile_x + 1, tile_y + 1))  // Right edge
         ) {
-            PLAYER.y = (tile_y << 7);
+            PLAYER.pos.y = (tile_y << 7);
             PLAYER.dir_y = 0;
         }
     }
@@ -134,8 +134,8 @@ void adventure_update() __banked {
         }
     }
 
-    tile_x = (PLAYER.x + 4) >> 7;
-    tile_y = (PLAYER.y) >> 7;
+    tile_x = (PLAYER.pos.x + 4) >> 7;
+    tile_y = (PLAYER.pos.y) >> 7;
 
     actor_set_anim(&PLAYER, player_moving);
 

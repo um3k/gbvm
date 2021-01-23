@@ -4,6 +4,7 @@
 #include "BankData.h"
 #include "parallax.h"
 #include "metasprite.h"
+#include "Collision.h"
 
 typedef enum {
     SCENE_TYPE_TOPDOWN = 0,
@@ -30,10 +31,10 @@ typedef enum {
 typedef struct actor_t
 {
   UINT8 enabled; 
-  UINT16 x;
-  UINT16 y;
+  position_t pos;
   BYTE dir_x;
   BYTE dir_y;
+  bounding_box_t bounds;
   UINT8 base_tile;
   UINT8 pinned;
   UINT8 animate;

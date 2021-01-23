@@ -25,8 +25,8 @@ void camera_update() __banked
         // Camera locked to player
         actor_t * actor = &PLAYER;
 
-        UWORD a_x = actor->x >> 4;
-        UWORD a_y = actor->y >> 4;
+        UWORD a_x = actor->pos.x >> 4;
+        UWORD a_y = actor->pos.y >> 4;
 
         // Horizontal lock
         if (camera_x < a_x - camera_deadzone_x - camera_offset_x) { 

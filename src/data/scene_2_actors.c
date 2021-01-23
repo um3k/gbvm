@@ -13,10 +13,18 @@ const void __at(255) __bank_scene_2_actors;
 const struct actor_t scene_2_actors[] = {
   {
     // Actor 1,
-    .x = 168 * 16,
-    .y = 104 * 16,
+    .pos = {
+      .x = 168 * 16,
+      .y = 104 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
+    .bounds = {
+      .left = 2,
+      .right = 14,
+      .top = -14,
+      .bottom = 0
+    },
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .sprite_type = SPRITE_TYPE_ACTOR,
     .base_tile = 24,
