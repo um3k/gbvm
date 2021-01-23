@@ -334,11 +334,11 @@ actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked {
 }
 
 actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked {
-    actor_t *actor = actors_active_head;
+    actor_t *actor = PLAYER.prev;
 
     while (actor) {
-        if ((actor == &PLAYER) || (!inc_noclip && !actor->collision_enabled)) {
-            actor = actor->next;
+        if (!inc_noclip && !actor->collision_enabled) {
+            actor = actor->prev;
             continue;
         };
 
@@ -346,7 +346,7 @@ actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked {
             return actor;
         }
 
-        actor = actor->next;
+        actor = actor->prev;
     }
 
     return NULL;
