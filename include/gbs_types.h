@@ -31,8 +31,7 @@ typedef enum {
 typedef struct actor_t
 {
   UINT8 enabled; 
-  UINT16 x;
-  UINT16 y;
+  position_t pos;
   BYTE dir_x;
   BYTE dir_y;
   bounding_box_t bounds;

@@ -13,8 +13,10 @@ const void __at(255) __bank_scene_2_actors;
 const struct actor_t scene_2_actors[] = {
   {
     // Actor 1,
-    .x = 168 * 16,
-    .y = 104 * 16,
+    .pos = {
+      .x = 168 * 16,
+      .y = 104 * 16,
+    },
     .dir_x = 0,
     .dir_y = 1,
     .bounds = {

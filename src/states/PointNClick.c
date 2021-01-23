@@ -28,27 +28,27 @@ void pointnclick_update() __banked {
     UBYTE tile_x, tile_y, hit_actor, hit_trigger, is_hover_actor,
         is_hover_trigger;
 
-    tile_x = DIV_8(PLAYER.x);
-    tile_y = DIV_8(PLAYER.y);
+    tile_x = DIV_8(PLAYER.pos.x);
+    tile_y = DIV_8(PLAYER.pos.y);
 
     player_moving = FALSE;
     PLAYER.dir_x = 0;
     PLAYER.dir_y = 0;
 
     // Move cursor horizontally
-    if (INPUT_LEFT && (PLAYER.x > 0)) {
+    if (INPUT_LEFT && (PLAYER.pos.x > 0)) {
         PLAYER.dir_x = -1;
         player_moving = TRUE;
-    } else if (INPUT_RIGHT && (PLAYER.x < image_width - 8)) {
+    } else if (INPUT_RIGHT && (PLAYER.pos.x < image_width - 8)) {
         PLAYER.dir_x = 1;
         player_moving = TRUE;
     }
 
     // Move cursor vertically
-    if (INPUT_UP && (PLAYER.y > 8)) {
+    if (INPUT_UP && (PLAYER.pos.y > 8)) {
         PLAYER.dir_y = -1;
         player_moving = TRUE;
-    } else if (INPUT_DOWN && (PLAYER.y < image_height)) {
+    } else if (INPUT_DOWN && (PLAYER.pos.y < image_height)) {
         PLAYER.dir_y = 1;
         player_moving = TRUE;
     }

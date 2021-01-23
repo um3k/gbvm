@@ -239,8 +239,8 @@ void load_player() __banked {
         PLAYER.sprite_type = SPRITE_TYPE_STATIC;
         PLAYER.n_frames = sprite_frames;    
     }
-    PLAYER.x = start_scene_x;
-    PLAYER.y = start_scene_y;
+    PLAYER.pos.x = start_scene_x;
+    PLAYER.pos.y = start_scene_y;
     PLAYER.dir_x = start_scene_dir_x;
     PLAYER.dir_y = start_scene_dir_y;    
     PLAYER.sprite = start_player_sprite;
