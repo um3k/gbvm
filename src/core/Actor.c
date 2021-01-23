@@ -342,8 +342,7 @@ actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked {
             continue;
         };
 
-        if ((PLAYER.pos.x + 240 >= actor->pos.x) && (PLAYER.pos.x <= actor->pos.x + 240) &&
-            (PLAYER.pos.y + 112 >= actor->pos.y) && (PLAYER.pos.y <= actor->pos.y + 112)) {
+        if (bb_intersects(&PLAYER.bounds, &PLAYER.pos, &actor->bounds, &actor->pos)) {
             return actor;
         }
 

@@ -20,9 +20,9 @@ const struct actor_t scene_2_actors[] = {
     .dir_x = 0,
     .dir_y = 1,
     .bounds = {
-      .left = 0,
-      .right = 16,
-      .top = -16,
+      .left = 2,
+      .right = 14,
+      .top = -14,
       .bottom = 0
     },
     .sprite = TO_FAR_PTR_T(spritesheet_9),
