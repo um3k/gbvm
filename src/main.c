@@ -2,13 +2,13 @@
 #include <string.h>
 #include <rand.h>
 
+#include "interrupts.h"
 #include "BankData.h"
 #include "GameTime.h"
 #include "Actor.h"
 #include "Camera.h"
 #include "LinkedList.h"
 #include "UI.h"
-#include "metasprite.h"
 #include "Input.h"
 #include "events.h"
 #include "DataManager.h"
@@ -33,29 +33,6 @@
 
 extern void __bank_bootstrap_script;
 extern const UBYTE bootstrap_script[];
-
-void window_LCD_isr() __nonbanked {
-    if (LYC_REG == 0) {
-        SCX_REG = draw_scroll_x;
-        SCY_REG = draw_scroll_y;
-        if (!hide_sprites) SHOW_SPRITES;
-        LYC_REG = win_pos_y;
-    } else {
-        LYC_REG = 0;
-        if (hide_sprites) return;
-        if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u)) HIDE_SPRITES;
-    }
-}
-
-void VBL_isr() __nonbanked {
-    if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
-        WX_REG = win_pos_x + 7u;
-        WY_REG = win_pos_y;
-        SHOW_WIN;
-    } else {
-        HIDE_WIN;
-    }
-}
 
 void engine_reset() {
     // cleanup core stuff
@@ -154,16 +131,17 @@ void process_VM() {
 
                 __critical {
                     remove_LCD(parallax_LCD_isr);
-                    remove_LCD(window_LCD_isr);
+                    remove_LCD(simple_LCD_isr);
+                    remove_LCD(fullscreen_LCD_isr);
                     switch (scene_LCD_type) {
                         case LCD_parallax: 
                             add_LCD(parallax_LCD_isr);
                             break;
-//                        case LCD_fullscreen:
-//                            add_LCD(fullscreen_LCD_isr);
-//                            break;
+                        case LCD_fullscreen:
+                            add_LCD(fullscreen_LCD_isr);
+                            break;
                         default:
-                            add_LCD(window_LCD_isr);
+                            add_LCD(simple_LCD_isr);
                             break;
                     }
                     LYC_REG = 0u;
