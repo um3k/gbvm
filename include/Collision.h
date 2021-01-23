@@ -10,6 +10,35 @@
 #define COLLISION_ALL 0xF
 #define TILE_PROP_LADDER 0x10
 
+typedef struct position_t {
+    UINT16 x, y;
+} position_t;
+
+typedef struct bounding_box_t {
+    BYTE left, right, top, bottom;
+} bounding_box_t;
+
+/**
+ * Check if point is within positioned bounding box.
+ *
+ * @param bb Pointer to bounding box
+ * @param offset Pointer to position offset for bounding box (e.g Actor position)
+ * @param point Pointer to position to look for within bounding box
+ * @return Point is within bounding box
+ */
+UBYTE bb_contains(bounding_box_t *bb, position_t *offset, position_t *point);
+
+/**
+ * Check if two positioned bounding boxes intersect.
+ *
+ * @param bb_a Pointer to bounding box A
+ * @param offset_a Pointer to position offset for bounding box A
+ * @param bb_b Pointer to bounding box B
+ * @param offset_b Pointer to position offset for bounding box B
+ * @return Positioned bounding boxes intersect
+ */
+UBYTE bb_intersects(bounding_box_t *bb_a, position_t *offset_a, bounding_box_t *bb_b, position_t *offset_b);
+
 /**
  * Return collision tile value at given tile x,y coordinate.
  *

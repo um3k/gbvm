@@ -17,6 +17,12 @@ const struct actor_t scene_2_actors[] = {
     .y = 104 * 16,
     .dir_x = 0,
     .dir_y = 1,
+    .bounds = {
+      .left = 0,
+      .right = 16,
+      .top = -16,
+      .bottom = 0
+    },
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .sprite_type = SPRITE_TYPE_ACTOR,
     .base_tile = 24,
