@@ -25,7 +25,7 @@ LFLAGS = -Wl-yt0x1B $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib -Wl-g_shadow_O
 PACKFLAGS = -b 3 -f 255 -e rel -c
 
 #--- del ----
-CFLAGS += -DSGB -DDEVBUILD
+CFLAGS += -DSGB
 LFLAGS += -Wm-ys
 #------------
 
@@ -56,7 +56,7 @@ release:
 	@echo "RELEASE mode ON"
 	
 debug:
-	$(eval CFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y -DVM_DEBUG_OUTPUT -DDEVBUILD)
+	$(eval CFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y -DVM_DEBUG_OUTPUT)
 	$(eval CFLAGS += -Wf--nolospre -Wf--nogcse)
 	$(eval LFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y)
 	@echo "DEBUG mode ON"

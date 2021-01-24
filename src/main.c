@@ -185,12 +185,6 @@ void main() {
 #endif
 
     display_off();
-#ifdef SGB
-    #ifdef DEVBUILD
-    memset((UBYTE *)0x8000, 0, 384 * 16);
-    #endif
-#endif
-    memset(actors, 0, sizeof(actors));
 #ifdef CGB
     palette_init();
 #endif

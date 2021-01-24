@@ -1,5 +1,8 @@
 #pragma bank 1
 
+#include <gb/gb.h>
+#include <string.h>
+
 #include "Actor.h"
 #include "GameTime.h"
 #include "Scroll.h"
@@ -8,7 +11,6 @@
 #include "Collision.h"
 #include "metasprite.h"
 #include "vm.h"
-#include <gb/gb.h>
 
 #ifdef STRICT
     #include <gb/bgb_emu.h>
@@ -46,6 +48,8 @@ void actors_init() __banked {
     player_iframes          = 0;
     player_collision_actor  = NULL;
     emote_actor             = NULL;
+
+    memset(actors, 0, sizeof(actors));
 }
 
 void actors_update() __nonbanked
