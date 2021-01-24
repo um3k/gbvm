@@ -21,6 +21,7 @@ const UBYTE start_player_move_speed = 16;
 const UBYTE start_player_anim_tick = 7;
 WORD plat_min_vel = 304;
 WORD plat_walk_vel = 6400;
+WORD plat_climb_vel = 4000;
 WORD plat_run_vel = 10496;
 WORD plat_walk_acc = 152;
 WORD plat_run_acc = 228;
