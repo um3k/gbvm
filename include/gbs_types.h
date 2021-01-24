@@ -11,8 +11,15 @@ typedef enum {
     SCENE_TYPE_PLATFORM,
     SCENE_TYPE_ADVENTURE,
     SCENE_TYPE_SHMUP,
-    SCENE_TYPE_POINTNCLICK
+    SCENE_TYPE_POINTNCLICK,
+    SCENE_TYPE_LOGO
 } scene_type_e;
+
+typedef enum { 
+    LCD_simple, 
+    LCD_parallax, 
+    LCD_fullscreen 
+} LCD_isr_e;
 
 typedef enum {
     SPRITE_TYPE_STATIC = 0,
@@ -84,7 +91,7 @@ typedef struct background_t {
 } background_t;
 
 typedef struct tileset_t {
-    UINT8 n_tiles;
+    UWORD n_tiles;
     UINT8 tiles[];
 } tileset_t;
 

@@ -33,12 +33,20 @@ UINT16 image_width;
 UINT16 image_height;
 UBYTE sprites_len;
 UBYTE actors_len = 0;
-UBYTE scene_type;
-LCD_isr_t scene_LCD_type;
+UBYTE player_sprite_len = 0;
+scene_type_e scene_type;
+LCD_isr_e scene_LCD_type;
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
-    UBYTE ntiles = ReadBankedUBYTE(&(tiles->n_tiles), bank);
-    SetBankedBkgData(0, ntiles, tiles->tiles, bank);    
+    UWORD ntiles = ReadBankedUWORD(&(tiles->n_tiles), bank);
+    UBYTE bkg_tiles, sprite_tiles;
+    if (ntiles > 256) {
+        bkg_tiles = 0; sprite_tiles = ntiles - 256; 
+    } else {
+        bkg_tiles = ntiles; sprite_tiles = 0;
+    }
+    SetBankedBkgData(0, bkg_tiles, tiles->tiles, bank);
+    if (sprite_tiles) SetBankedSpriteData(0, sprite_tiles, tiles->tiles + (256 * 16), bank);
 }
 
 void load_image(const background_t* background, UBYTE bank) __banked {
@@ -106,6 +114,24 @@ void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
 }
 #endif
 
+static void load_player_data() {
+    UBYTE sprite_frames = DIV_4(load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank));
+    if (sprite_frames > 6) {
+        // Limit player to 6 frames to prevent overflow into scene actor vram
+        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
+        PLAYER.n_frames = 6;
+    } else if (sprite_frames == 6) {
+        PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
+        PLAYER.n_frames = 2;
+    } else if (sprite_frames == 3) {
+        PLAYER.sprite_type = SPRITE_TYPE_ACTOR;
+        PLAYER.n_frames = 1;    
+    } else {
+        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
+        PLAYER.n_frames = sprite_frames;    
+    }
+}
+
 UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     UBYTE i, k;
     scene_t scn;
@@ -141,7 +167,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     memcpy(&parallax_rows, &scn.parallax_rows, sizeof(parallax_rows));
     if (scn.parallax_rows[0].tile_height == 0) {
         scn.parallax_rows[0].tile_height = PARALLAX_MAX_HEIGHT;
-        scene_LCD_type = LCD_simple;
+        scene_LCD_type = (scene_type == SCENE_TYPE_LOGO) ? LCD_fullscreen : LCD_simple;
     } else {
         scene_LCD_type = LCD_parallax;
     }
@@ -221,6 +247,9 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 
     emote_actor = NULL;
 
+    // load initial player
+    if (scene_type != SCENE_TYPE_LOGO) load_player_data();
+
     if (init_data && scn.script_init.ptr) {
         return (script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0) != 0);
     }
@@ -228,21 +257,6 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 }
 
 void load_player() __banked {
-    UBYTE sprite_frames = DIV_4(load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank));
-    if (sprite_frames > 6) {
-        // Limit player to 6 frames to prevent overflow into scene actor vram
-        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
-        PLAYER.n_frames = 6;
-    } else if (sprite_frames == 6) {
-        PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
-        PLAYER.n_frames = 2;
-    } else if (sprite_frames == 3) {
-        PLAYER.sprite_type = SPRITE_TYPE_ACTOR;
-        PLAYER.n_frames = 1;    
-    } else {
-        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
-        PLAYER.n_frames = sprite_frames;    
-    }
     PLAYER.pos.x = start_scene_x;
     PLAYER.pos.y = start_scene_y;
     PLAYER.dir_x = start_scene_dir_x;

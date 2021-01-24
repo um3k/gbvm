@@ -4,8 +4,6 @@
 #include <gb/gb.h>
 #include "gbs_types.h"
 
-typedef enum { LCD_simple, LCD_parallax, LCD_fullscreen } LCD_isr_t;
-
 extern far_ptr_t current_scene;
 extern UBYTE image_bank;
 extern UBYTE image_attr_bank;
@@ -17,11 +15,11 @@ extern UBYTE image_tile_width;
 extern UBYTE image_tile_height;
 extern UINT16 image_width;
 extern UINT16 image_height;
-extern UBYTE scene_type;
+extern scene_type_e scene_type;
 extern UBYTE actors_len;
 extern UBYTE sprites_len;
 extern UBYTE actors_len;
-extern LCD_isr_t scene_LCD_type;
+extern LCD_isr_e scene_LCD_type;
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked;
 void load_image(const background_t *background, UBYTE bank) __banked;
