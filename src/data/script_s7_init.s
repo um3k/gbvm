@@ -12,6 +12,8 @@ ___bank_script_s7_init = 255
 _script_s7_init::
         VM_LOCK
 
+        VM_MUSIC_PLAY           0, 1
+
         VM_FADE_IN              .UI_MODAL
         VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_BTN_ANY
         VM_FADE_OUT             .UI_MODAL
