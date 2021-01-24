@@ -1,17 +1,19 @@
 #pragma bank 1
 
+#include <string.h>
+
+#include "vm.h"
 #include "DataManager.h"
 #include "LinkedList.h"
 #include "Actor.h"
 #include "Scroll.h"
 #include "Trigger.h"
 #include "Camera.h"
+#include "UI.h"
 #ifdef CGB
     #include "Palette.h"
 #endif
 #include "data/spritesheet_0.h" // @todo don't hard code this
-#include "vm.h"
-#include <string.h>
 #include "data/data_ptrs.h"
 
 #define MAX_PLAYER_SPRITE_SIZE  24
@@ -106,8 +108,10 @@ void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
 
 UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     UBYTE i, k;
-
     scene_t scn;
+
+    ui_load_tiles();
+
     MemcpyBanked(&scn, scene, sizeof(scn), bank);
 
     current_scene.bank = bank;

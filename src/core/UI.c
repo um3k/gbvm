@@ -93,6 +93,10 @@ void ui_init() __banked {
     text_drawn                  = TRUE;
     text_draw_speed             = 1;
 
+    ui_load_tiles();
+}
+
+void ui_load_tiles() __banked {
     ui_load_frame_tiles(frame_image, BANK(frame_image));
     ui_load_cursor_tile(cursor_image, BANK(cursor_image));
 

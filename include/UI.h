@@ -59,6 +59,8 @@ extern far_ptr_t font_image_ptr;
 void ui_init() __banked;
 void ui_update() __nonbanked;  // critical path, __nonbanked for speed
 
+void ui_load_tiles() __banked; 
+
 #define UI_WAIT_WINDOW  1
 #define UI_WAIT_TEXT    2
 #define UI_WAIT_BTN_A   4
