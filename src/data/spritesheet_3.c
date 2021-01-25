@@ -8,22 +8,22 @@ const void __at(255) __bank_spritesheet_3;
 
 const metasprite_t spritesheet_3_metasprite_0  = {
     .count = 2,
-    .items = {{0, 0, 0, 0, 0}, {1, 0, 8, 2, 0}, {metasprite_end}}
+    .items = {{0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}}
 };
 
 const metasprite_t spritesheet_3_metasprite_1  = {
     .count = 2,
-    .items = {{0, 0, 0, 4, 0}, {1, 0, 8, 6, 0}, {metasprite_end}}
+    .items = {{0, 0, 4, 0}, {0, 8, 6, 0}, {metasprite_end}}
 };
 
 const metasprite_t spritesheet_3_metasprite_2  = {
     .count = 2,
-    .items = {{0, 0, 0, 8,  0}, {1, 0, 8, 10, 0}, {metasprite_end}}
+    .items = {{0, 0, 8,  0}, {0, 8, 10, 0}, {metasprite_end}}
 };
 
 const metasprite_t spritesheet_3_metasprite_3  = {
     .count = 2,
-    .items = {{0, 0, 0, 12, 0}, {1, 0, 8, 14, 0}, {metasprite_end}}
+    .items = {{0, 0, 12, 0}, {0, 8, 14, 0}, {metasprite_end}}
 };
 
 const metasprite_t * const spritesheet_3_metasprites[] = {
