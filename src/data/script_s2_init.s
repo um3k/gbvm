@@ -22,6 +22,9 @@ _script_s2_init::
         VM_PUSH                 256
         VM_PUSH                 ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
 
+        ; set a bit larger bounding box
+        VM_ACTOR_SET_BOUNDS     ACTOR, -2, 18, -18, 2
+
         ; Actor 1 Face Right
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
@@ -35,8 +38,6 @@ _script_s2_init::
 
         VM_CONTEXT_PREPARE       1, ___bank_script_s2_input1, _script_s2_input1
         VM_INPUT_ATTACH          0x40, 1
-
-        VM_ACTOR_SET_BOUNDS     ACTOR, 0, 32, 0, 32
 
         ; Emote
         ; VM_SET_CONST            ACTOR, 0
