@@ -24,6 +24,7 @@ extern const UBYTE start_player_anim_tick;
 extern WORD plat_min_vel;
 extern WORD plat_walk_vel;
 extern WORD plat_run_vel;
+extern WORD plat_climb_vel;
 extern WORD plat_walk_acc;
 extern WORD plat_run_acc;
 extern WORD plat_dec;
