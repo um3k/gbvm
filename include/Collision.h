@@ -2,6 +2,7 @@
 #define COLLISIONS_H
 
 #include <gb/gb.h>
+#include "Math.h"
 
 #define COLLISION_TOP 0x1
 #define COLLISION_BOTTOM 0x2
@@ -9,10 +10,6 @@
 #define COLLISION_RIGHT 0x8
 #define COLLISION_ALL 0xF
 #define TILE_PROP_LADDER 0x10
-
-typedef struct position_t {
-    UINT16 x, y;
-} position_t;
 
 typedef struct bounding_box_t {
     BYTE left, right, top, bottom;
@@ -26,7 +23,7 @@ typedef struct bounding_box_t {
  * @param point Pointer to position to look for within bounding box
  * @return Point is within bounding box
  */
-UBYTE bb_contains(bounding_box_t *bb, position_t *offset, position_t *point);
+UBYTE bb_contains(bounding_box_t *bb, upoint16_t *offset, upoint16_t *point);
 
 /**
  * Check if two positioned bounding boxes intersect.
@@ -37,7 +34,7 @@ UBYTE bb_contains(bounding_box_t *bb, position_t *offset, position_t *point);
  * @param offset_b Pointer to position offset for bounding box B
  * @return Positioned bounding boxes intersect
  */
-UBYTE bb_intersects(bounding_box_t *bb_a, position_t *offset_a, bounding_box_t *bb_b, position_t *offset_b);
+UBYTE bb_intersects(bounding_box_t *bb_a, upoint16_t *offset_a, bounding_box_t *bb_b, upoint16_t *offset_b);
 
 /**
  * Return collision tile value at given tile x,y coordinate.

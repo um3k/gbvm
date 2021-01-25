@@ -62,6 +62,13 @@
 #define ANGLE_270DEG    192
 #define ANGLE_315DEG    224
 
+typedef struct upoint16_t {
+    UINT16 x, y;
+} upoint16_t;
+
 extern const INT8 sine_wave[256];
+
+void point_translate_dir(upoint16_t *point, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked;
+void point_translate_angle(upoint16_t *point, UBYTE angle, UBYTE speed) __banked;
 
 #endif

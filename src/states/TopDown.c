@@ -9,6 +9,7 @@
 #include "GameTime.h"
 #include "Input.h"
 #include "Trigger.h"
+#include "Math.h"
 #include "vm.h"
 #include "data/data_ptrs.h"
 
@@ -153,5 +154,5 @@ void topdown_update() __banked {
 
     }
 
-    if (player_moving) actor_move_dir(&PLAYER, PLAYER.dir_x, PLAYER.dir_y, PLAYER.move_speed);
+    if (player_moving) point_translate_dir(&PLAYER.pos, PLAYER.dir_x, PLAYER.dir_y, PLAYER.move_speed);
 }

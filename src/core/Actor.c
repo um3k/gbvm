@@ -251,16 +251,6 @@ actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
     return NULL;
 }
 
-void actor_move_dir(actor_t *actor, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked {
-    actor->pos.x += (WORD)(dir_x * speed);
-    actor->pos.y += (WORD)(dir_y * speed);
-}
-
-void actor_move_angle(actor_t *actor, UBYTE angle, UBYTE speed) __banked {
-    actor->pos.x += ((SIN(angle) * (speed)) >> 7);
-    actor->pos.y -= ((COS(angle) * (speed)) >> 7);
-}
-
 actor_t *actor_at_3x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
     for (actor_t *actor = actors_active_head; (actor); actor = actor->next) {
         if ((!inc_noclip && !actor->collision_enabled))

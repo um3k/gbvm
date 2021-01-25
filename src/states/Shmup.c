@@ -104,9 +104,9 @@ void shmup_update() __banked {
     // Move player - Horizontal Scenes
     if (shooter_reached_end) {
       // Reached end of scene only move vertically
-      actor_move_dir(&PLAYER, 0, PLAYER.dir_y, PLAYER.move_speed);
+      point_translate_dir(&PLAYER.pos, 0, PLAYER.dir_y, PLAYER.move_speed);
     } else {
-      actor_move_dir(&PLAYER, shooter_direction, PLAYER.dir_y, PLAYER.move_speed);
+      point_translate_dir(&PLAYER.pos, shooter_direction, PLAYER.dir_y, PLAYER.move_speed);
     }
 
   } else {
@@ -142,9 +142,9 @@ void shmup_update() __banked {
 
     // Move player - Vertical Scenes
     if (shooter_reached_end) {
-      actor_move_dir(&PLAYER, PLAYER.dir_x, 0, PLAYER.move_speed);
+      point_translate_dir(&PLAYER.pos, PLAYER.dir_x, 0, PLAYER.move_speed);
     } else {
-      actor_move_dir(&PLAYER, PLAYER.dir_x, shooter_direction, PLAYER.move_speed);
+      point_translate_dir(&PLAYER.pos, PLAYER.dir_x, shooter_direction, PLAYER.move_speed);
     }
   }
 
