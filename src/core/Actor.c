@@ -24,7 +24,7 @@ const BYTE emote_offsets[] = {2, 1, 0, -1, -2, -3, -4, -5, -6, -5, -4, -3, -2, -
 
 const metasprite_t emote_metasprite  = {
     .count = 2,
-    .items = {{0, 0, 0, 0, 0}, {1, 0, 8, 2, 0}, {metasprite_end}}
+    .items = {{0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}}
 };
 
 actor_t actors[MAX_ACTORS];
