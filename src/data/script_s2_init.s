@@ -23,7 +23,7 @@ _script_s2_init::
         VM_PUSH                 ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
 
         ; set a bit larger bounding box
-        VM_ACTOR_SET_BOUNDS     ACTOR, -2, 18, -18, 2
+        ; VM_ACTOR_SET_BOUNDS     ACTOR, -2, 18, -18, 2
 
         ; Actor 1 Face Right
         VM_SET_CONST            ACTOR, 1
