@@ -165,3 +165,12 @@ void vm_actor_emote(SCRIPT_CTX * THIS, INT16 idx, UBYTE emote_sprite_bank, sprit
         THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx) + sizeof(emote_sprite_bank) + sizeof(emote_sprite));
     }
 }
+
+void vm_actor_set_bounds(SCRIPT_CTX * THIS, INT16 idx, BYTE left, BYTE right, BYTE top, BYTE bottom) __banked {
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    actor_t * actor = actors + *n_actor;
+    actor->bounds.left = left;
+    actor->bounds.right = right;
+    actor->bounds.top = top;
+    actor->bounds.bottom = bottom;
+}
