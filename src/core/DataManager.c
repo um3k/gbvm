@@ -165,7 +165,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 
     if (scene_type != SCENE_TYPE_LOGO) {
         // Load player
-        tile_allocation_hiwater = load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank, &PLAYER.n_frames);
+        PLAYER.base_tile = 0;
+        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, start_player_sprite.ptr, start_player_sprite.bank, &PLAYER.n_frames);
         if (PLAYER.n_frames > 6) {
             // Limit player to 6 frames to prevent overflow into scene actor vram
             PLAYER.sprite_type = SPRITE_TYPE_STATIC;
@@ -228,10 +229,13 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         // Load actors
         actors_active_head = 0;
         actors_inactive_head = 0;
-        // Add player to inactive
+
+        // Add player to inactive, then activate
         PLAYER.enabled = FALSE;
         DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
         activate_actor(&PLAYER);
+
+        // Add other actors, activate pinned
         if (actors_len != 0) {
             actor_t * actor = actors + 1;
             MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
@@ -239,10 +243,12 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
                 // resolve and set base_tile for each actor
                 UBYTE idx = get_farptr_index(scn.sprites.ptr, scn.sprites.bank, sprites_len, &actor->sprite);
                 actor->base_tile = (idx < sprites_len) ? base_tiles[idx] : 0;
-
+                
+                // add to inactive list by default 
                 actor->enabled = FALSE;
                 DL_PUSH_HEAD(actors_inactive_head, actor);
-                // Enable all pinned actors by default
+
+                // activate all pinned actors by default
                 if (actor->pinned) activate_actor(actor);
             }
         }
