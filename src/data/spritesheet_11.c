@@ -6,28 +6,23 @@
 
 const void __at(255) __bank_spritesheet_11;
 
-const metasprite_t spritesheet_11_metasprite_0  = {
-    4, 
-    {
-        {0,  0,  0,  0x10}, {0,  8,  2,  0x10}, 
-        {0, -8,  4,     0}, {0,  8,  6,     0}, 
-        {metasprite_end}
-    }
+const metasprite_t spritesheet_11_metasprite_0[]  = {
+    {0,  0,  0,  0x10}, {0,  8,  2,  0x10}, 
+    {0, -8,  4,     0}, {0,  8,  6,     0}, 
+    {metasprite_end}
 };
-const metasprite_t spritesheet_11_metasprite_1  = {
-    2, 
-    {
-        {0,  4,  8,  0x10}, {0,  0, 10,     0}, 
-        {metasprite_end}
-    }
+const metasprite_t spritesheet_11_metasprite_1[]  = {
+    {0,  4,  8,  0x10}, {0,  0, 10,     0}, 
+    {metasprite_end}
 };
 
 const metasprite_t * const spritesheet_11_metasprites[] = {
-    &spritesheet_11_metasprite_0, &spritesheet_11_metasprite_1
+    spritesheet_11_metasprite_0, 
+    spritesheet_11_metasprite_1
 };
 
 const struct spritesheet_t spritesheet_11 = {
-  .n_tiles = 3,
+  .n_tiles = 12,
   .n_metasprites = 2,
   .metasprites = spritesheet_11_metasprites,
   .tiles = {

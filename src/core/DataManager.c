@@ -16,7 +16,8 @@
 #include "data/spritesheet_0.h" // @todo don't hard code this
 #include "data/data_ptrs.h"
 
-#define MAX_PLAYER_SPRITE_SIZE  24
+#define MAX_SCENE_SPRITES       128
+
 #define EMOTE_SPRITE            124
 #define EMOTE_SPRITE_SIZE       4
 
@@ -65,14 +66,11 @@ void load_image(const background_t* background, UBYTE bank) __banked {
     load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
 }
 
-UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
+UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank, UBYTE * res_frames) __banked {
     UBYTE n_tiles = ReadBankedUBYTE(&(sprite->n_tiles), bank);
-    UBYTE size = n_tiles << 2;
-    if ((sprite_offset == 0) && (n_tiles > 6)) {
-        size = MAX_PLAYER_SPRITE_SIZE;
-    }
-    SetBankedSpriteData(sprite_offset, size, sprite->tiles, bank);
-    return size;
+    *res_frames =  ReadBankedUBYTE(&(sprite->n_metasprites), bank);
+    SetBankedSpriteData(sprite_offset, n_tiles, sprite->tiles, bank);
+    return n_tiles;
 }
 
 #ifdef CGB
@@ -114,26 +112,17 @@ void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
 }
 #endif
 
-static void load_player_data() {
-    UBYTE sprite_frames = DIV_4(load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank));
-    if (sprite_frames > 6) {
-        // Limit player to 6 frames to prevent overflow into scene actor vram
-        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
-        PLAYER.n_frames = 6;
-    } else if (sprite_frames == 6) {
-        PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
-        PLAYER.n_frames = 2;
-    } else if (sprite_frames == 3) {
-        PLAYER.sprite_type = SPRITE_TYPE_ACTOR;
-        PLAYER.n_frames = 1;    
-    } else {
-        PLAYER.sprite_type = SPRITE_TYPE_STATIC;
-        PLAYER.n_frames = sprite_frames;    
+UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {
+    far_ptr_t v;
+    for (UBYTE i = 0; i < count; i++, list++) {
+        ReadBankedFarPtr(&v, (void *)list, bank);
+        if ((v.bank == item->bank) && (v.ptr == item->ptr)) return i; 
     }
+    return count;
 }
 
 UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
-    UBYTE i, k;
+    UBYTE i, tile_allocation_hiwater;
     scene_t scn;
 
     ui_load_tiles();
@@ -174,14 +163,42 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 
     //   ProjectilesInit();
 
+    if (scene_type != SCENE_TYPE_LOGO) {
+        // Load player
+        PLAYER.base_tile = 0;
+        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, start_player_sprite.ptr, start_player_sprite.bank, &PLAYER.n_frames);
+        if (PLAYER.n_frames > 6) {
+            // Limit player to 6 frames to prevent overflow into scene actor vram
+            PLAYER.sprite_type = SPRITE_TYPE_STATIC;
+            PLAYER.n_frames = 6;
+        } else if (PLAYER.n_frames == 6) {
+            PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
+            PLAYER.n_frames = 2;
+        } else if (PLAYER.n_frames == 3) {
+            PLAYER.sprite_type = SPRITE_TYPE_ACTOR;
+            PLAYER.n_frames = 1;    
+        } else {
+            PLAYER.sprite_type = SPRITE_TYPE_STATIC;
+        }
+    } else {
+        // no player on logo, but still some little amount of actors may be present
+        tile_allocation_hiwater = 0x68;
+    }
+
+    UBYTE base_tiles[MAX_SCENE_SPRITES];
+
     // Load sprites
-    k = 24;
     if (sprites_len != 0) {
         far_ptr_t * scene_sprite_ptrs = scn.sprites.ptr;
         for (i = 0; i != sprites_len; i++) {
+            if (i == MAX_SCENE_SPRITES) break;
+
             far_ptr_t tmp_ptr;
             ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
-            UBYTE sprite_len = load_sprite(k, tmp_ptr.ptr, tmp_ptr.bank);
+            UBYTE frames_len; 
+            UBYTE allocated_tiles = load_sprite(tile_allocation_hiwater, tmp_ptr.ptr, tmp_ptr.bank, &frames_len);
+            base_tiles[i] = tile_allocation_hiwater;
+
             // sprites_info[i].sprite_offset = DIV_4(k);
             // sprites_info[i].frames_len = DIV_4(sprite_len);
             // if (sprites_info[i].frames_len == 6) {
@@ -193,7 +210,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
             // } else {
             //   sprites_info[i].sprite_type = SPRITE_STATIC;
             // }
-            k += sprite_len;
+            tile_allocation_hiwater += allocated_tiles;
             scene_sprite_ptrs++;
         }
     }
@@ -212,17 +229,26 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         // Load actors
         actors_active_head = 0;
         actors_inactive_head = 0;
-        // Add player to inactive
+
+        // Add player to inactive, then activate
         PLAYER.enabled = FALSE;
         DL_PUSH_HEAD(actors_inactive_head, &PLAYER);
         activate_actor(&PLAYER);
+
+        // Add other actors, activate pinned
         if (actors_len != 0) {
             actor_t * actor = actors + 1;
             MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
             for (i = actors_len - 1; i != 0; i--, actor++) {
+                // resolve and set base_tile for each actor
+                UBYTE idx = get_farptr_index(scn.sprites.ptr, scn.sprites.bank, sprites_len, &actor->sprite);
+                actor->base_tile = (idx < sprites_len) ? base_tiles[idx] : 0;
+                
+                // add to inactive list by default 
                 actor->enabled = FALSE;
                 DL_PUSH_HEAD(actors_inactive_head, actor);
-                // Enable all pinned actors by default
+
+                // activate all pinned actors by default
                 if (actor->pinned) activate_actor(actor);
             }
         }
@@ -246,9 +272,6 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     last_trigger_ty = 0xFF;
 
     emote_actor = NULL;
-
-    // load initial player
-    if (scene_type != SCENE_TYPE_LOGO) load_player_data();
 
     if (init_data && scn.script_init.ptr) {
         return (script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0) != 0);

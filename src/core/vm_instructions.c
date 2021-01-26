@@ -66,7 +66,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_actor_set_anim,         4}, // 0x34
     {vm_actor_set_pos,          2}, // 0x35
     {vm_actor_emote,            5}, // 0x36
-    {0, 0},
+    {vm_actor_set_bounds,       6}, // 0x37
     {0, 0},
     {0, 0},
     {0, 0},
