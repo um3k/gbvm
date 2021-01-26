@@ -172,7 +172,8 @@ void platform_update() __banked {
             UBYTE tile_x = ((new_x >> 4) + PLAYER.bounds.right) >> 3;
             while (tile_start != tile_end) {
                 if (tile_at(tile_x, tile_start) & COLLISION_LEFT) {
-                    new_x = (((tile_x << 3) - PLAYER.bounds.right) << 4) - 1;           
+                    new_x = (((tile_x << 3) - PLAYER.bounds.right) << 4) - 1;
+                    pl_vel_x = 0;
                     break;
                 }
                 tile_start++;
