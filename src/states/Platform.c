@@ -35,12 +35,14 @@ void platform_init() __banked {
     tile_x = PLAYER.pos.x >> 7;
     tile_y = PLAYER.pos.y >> 7;
 
-    grounded = FALSE;
-    // If starting tile was a ladder start scene attached to it
+    // grounded = FALSE;
+    // // If starting tile was a ladder start scene attached to it
     if (tile_at(tile_x, tile_y) & TILE_PROP_LADDER) {
+        // Snap to ladder
+        UBYTE p_half_width = (PLAYER.bounds.right - PLAYER.bounds.left) >> 1;
+        PLAYER.pos.x = (((tile_x << 3) + 4 - (PLAYER.bounds.left + p_half_width) << 4));
+        actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);        
         on_ladder = TRUE;
-        PLAYER.dir_x = 0;
-        PLAYER.dir_y = -1;
     } else {
         on_ladder = FALSE;
     }
@@ -235,7 +237,8 @@ void platform_update() __banked {
 
     // Check for trigger collisions
     // Probably should check entire bounding box for trigger collision...
-    if (trigger_activate_at(tile_x_mid, tile_y_mid, INPUT_UP_PRESSED)) {
+    // if (trigger_activate_at(tile_x_mid, tile_y_mid, INPUT_UP_PRESSED)) {
+    if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, INPUT_UP_PRESSED)) {
         // Landed on a trigger
         return;
     }

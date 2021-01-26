@@ -277,7 +277,7 @@ void load_player() __banked {
     PLAYER.collision_enabled = TRUE;
     PLAYER.bounds.left = 4;
     PLAYER.bounds.right = 12;
-    PLAYER.bounds.top = -15;
+    PLAYER.bounds.top = -8;
     PLAYER.bounds.bottom = -1;
 }
 

@@ -127,14 +127,9 @@ void adventure_update() __banked {
 
     actor_set_anim(&PLAYER, player_moving);
 
-    UBYTE p_half_width = (PLAYER.bounds.right - PLAYER.bounds.left) >> 1;
-    UBYTE p_half_height = (PLAYER.bounds.bottom - PLAYER.bounds.top) >> 1;
-    UBYTE tile_x_mid = ((PLAYER.pos.x >> 4) + PLAYER.bounds.left + p_half_width) >> 3; 
-    UBYTE tile_y_mid = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom + p_half_height) >> 3) - 1;
-
     // Check for trigger collisions
-    if (trigger_activate_at(tile_x_mid, tile_y_mid, FALSE)) {
-        // If landed on a trigger don't update movement this frame
+    if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, INPUT_UP_PRESSED)) {
+        // Landed on a trigger
         return;
     }
 
