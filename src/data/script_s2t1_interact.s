@@ -19,7 +19,7 @@ _script_s2t1_interact::
 
         VM_PUSH                 0
         VM_PUSH                 1152
-        VM_PUSH                 1920
+        VM_PUSH                 2048
         VM_ACTOR_SET_POS        .ARG2
         VM_POP                  3
 

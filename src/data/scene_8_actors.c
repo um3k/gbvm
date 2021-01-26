@@ -14,7 +14,7 @@ const struct actor_t scene_8_actors[] = {
     // Actor 1,
     .pos = {
       .x = 216 * 16,
-      .y = 120 * 16,
+      .y = 128 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,

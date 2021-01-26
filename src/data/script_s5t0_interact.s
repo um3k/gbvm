@@ -24,7 +24,7 @@ _script_s5t0_interact::
         VM_FADE_OUT             2
         VM_SET_CONST            ACTOR, 0
         VM_SET_CONST            ^/(ACTOR + 1)/, 1152
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1664
+        VM_SET_CONST            ^/(ACTOR + 2)/, 1792
         VM_ACTOR_SET_POS        ACTOR
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3

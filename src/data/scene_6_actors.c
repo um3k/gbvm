@@ -13,7 +13,7 @@ const struct actor_t scene_6_actors[] = {
     // Actor 1,
     .pos = {
       .x = 48 * 16,
-      .y = 104 * 16,
+      .y = 112 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -36,7 +36,7 @@ const struct actor_t scene_6_actors[] = {
     // Actor 2,
     .pos = {
       .x = 96 * 16,
-      .y = 104 * 16,
+      .y = 112 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
