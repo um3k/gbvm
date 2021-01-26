@@ -1,4 +1,4 @@
-#pragma bank 2
+#pragma bank 3
 
 #include "states/Adventure.h"
 
@@ -9,7 +9,10 @@
 #include "Input.h"
 #include "Scroll.h"
 #include "Trigger.h"
+#include "DataManager.h"
 #include "rand.h"
+#include "vm.h"
+#include "Math.h"
 
 #define ADVENTURE_CAMERA_DEADZONE 8
 
@@ -23,133 +26,123 @@ void adventure_init() __banked {
 
 void adventure_update() __banked {
     actor_t *hit_actor;
-    UBYTE tile_x, tile_y;
-    UBYTE hit_trigger = 0;
-    BYTE backup_dir_x, backup_dir_y;
+    UBYTE tile_start, tile_end;
+    UBYTE angle = 0;
 
     player_moving = FALSE;
 
-    UBYTE angle = 0;
-
-    // Move
-    if (INPUT_LEFT) {
+    if (INPUT_RECENT_LEFT) {
         actor_set_dir(&PLAYER, -1, 0);
-        angle = ANGLE_LEFT;
-        player_moving = TRUE;
-    } else if (INPUT_RIGHT) {
+    } else if (INPUT_RECENT_RIGHT) {
         actor_set_dir(&PLAYER, 1, 0);
-        angle = ANGLE_RIGHT;
-        player_moving = TRUE;
-    }
-
-    if (INPUT_UP) {
+    } else if (INPUT_RECENT_UP) {
         actor_set_dir(&PLAYER, 0, -1);
-        angle = ANGLE_UP;
-        player_moving = TRUE;
-    } else if (INPUT_DOWN) {
+    } else if (INPUT_RECENT_DOWN) {
         actor_set_dir(&PLAYER, 0, 1);
-        angle = ANGLE_DOWN;
+    }
+
+    if (INPUT_LEFT) {
         player_moving = TRUE;
-    }
-
-    if ((INPUT_LEFT || INPUT_RIGHT) && !INPUT_UP && !INPUT_DOWN) {
-        PLAYER.dir_y = 0;
-    } else if ((INPUT_UP || INPUT_DOWN) && !INPUT_LEFT && !INPUT_RIGHT) {
-        PLAYER.dir_x = 0;
-    }
-
-    if (INPUT_LEFT && INPUT_UP) {
-        angle = ANGLE_315DEG;
-    } else if (INPUT_LEFT && INPUT_DOWN) {
-        angle = ANGLE_225DEG;
-    }
-    if (INPUT_RIGHT && INPUT_UP) {
-        angle = ANGLE_45DEG;
-    } else if (INPUT_RIGHT && INPUT_DOWN) {
-        angle = ANGLE_135DEG;
-    }
-
-    backup_dir_x = PLAYER.dir_x;
-    backup_dir_y = PLAYER.dir_y;
-
-    tile_x = (PLAYER.pos.x + 4 + PLAYER.dir_x) >> 7;  // Add Left right Bias for Moving=True
-    tile_y = (PLAYER.pos.y + 7) >> 7;
-
-    // if (INPUT_A_PRESSED) {
-    //   hit_actor = ActorInFrontOfPlayer(8, TRUE);
-    //   if (hit_actor != NO_ACTOR_COLLISON) {
-    //     ScriptStart(&actors[hit_actor].events_ptr);
-    //   }
-    // }
-
-    // Left Collision
-    if (PLAYER.dir_x < 0) {
-        if (tile_at(tile_x, tile_y)) {
-            PLAYER.pos.x = (tile_x << 7) + 4;
-            PLAYER.dir_x = 0;
-        } else if (tile_at(tile_x, (PLAYER.pos.y) >> 7)) {
-            PLAYER.dir_y = 1;
+        if (INPUT_UP) {
+            angle = ANGLE_315DEG;
+        } else if (INPUT_DOWN) {
+            angle = ANGLE_225DEG;
+        } else {
+            angle = ANGLE_270DEG;
         }
-    }
-
-    // Right Collision
-    if (PLAYER.dir_x > 0) {
-        if (tile_at(tile_x + 1, tile_y)) {
-            PLAYER.pos.x = (tile_x << 7) - 5;
-            PLAYER.dir_x = 0;
-        } else if (tile_at(tile_x + 1, (PLAYER.pos.y) >> 7)) {
-            PLAYER.dir_y = 1;
+    } else if (INPUT_RIGHT) {
+        player_moving = TRUE;
+        if (INPUT_UP) {
+            angle = ANGLE_45DEG;
+        } else if (INPUT_DOWN) {
+            angle = ANGLE_135DEG;
+        } else {
+            angle = ANGLE_90DEG;
         }
-    }
-
-    tile_x = (PLAYER.pos.x + 4 - PLAYER.dir_x) >> 7;  // Remove LeftRight Bias to not stick
-    tile_y = (PLAYER.pos.y + PLAYER.dir_y) >> 7;
-
-    // Up Collision
-    if (PLAYER.dir_y < 0) {
-        if (tile_at(tile_x, tile_y) ||     // Left Edge
-            (tile_at(tile_x + 1, tile_y))  // Right edge
-        ) {
-            PLAYER.pos.y = (tile_y + 1 << 7);
-            PLAYER.dir_y = 0;
-        }
-    }
-
-    // Down Collision
-    if (PLAYER.dir_y > 0) {
-        if (tile_at(tile_x, tile_y + 1) ||     // Left Edge
-            (tile_at(tile_x + 1, tile_y + 1))  // Right edge
-        ) {
-            PLAYER.pos.y = (tile_y << 7);
-            PLAYER.dir_y = 0;
-        }
+    } else if (INPUT_UP) {
+        player_moving = TRUE;
+        angle = ANGLE_0DEG;
+    } else if (INPUT_DOWN) {
+        player_moving = TRUE;
+        angle = ANGLE_180DEG;
     }
 
     if (player_moving) {
-        if (!(PLAYER.dir_x > 0 | PLAYER.dir_x<0 | PLAYER.dir_y> 0 |
-              PLAYER.dir_y < 0)) {
-            player_moving = FALSE;
-            PLAYER.dir_x = backup_dir_x;
-            PLAYER.dir_y = backup_dir_y;
+        upoint16_t new_pos;
+        new_pos.x = PLAYER.pos.x;
+        new_pos.y = PLAYER.pos.y;
+        point_translate_angle(&new_pos, angle, PLAYER.move_speed);
+
+        // Step X
+        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
+        tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
+        if (angle < ANGLE_180DEG) {
+            UBYTE tile_x = ((new_pos.x >> 4) + PLAYER.bounds.right) >> 3;
+            while (tile_start != tile_end) {
+
+                if (tile_at(tile_x, tile_start) & COLLISION_LEFT) {
+                    new_pos.x = (((tile_x << 3) - PLAYER.bounds.right) << 4) - 1;           
+                    break;
+                }
+                tile_start++;
+            }
+            PLAYER.pos.x = MIN((image_width - 16) << 4, new_pos.x);
+        } else {
+            UBYTE tile_x = ((new_pos.x >> 4) + PLAYER.bounds.left) >> 3;
+            while (tile_start != tile_end) {
+                if (tile_at(tile_x, tile_start) & COLLISION_RIGHT) {
+                    new_pos.x = ((((tile_x + 1) << 3) - PLAYER.bounds.left) << 4) + 1;         
+                    break;
+                }
+                tile_start++;
+            }
+            PLAYER.pos.x = MAX(0, (WORD)new_pos.x);
+        }
+
+        // Step Y
+        tile_start = (((PLAYER.pos.x >> 4) + PLAYER.bounds.left)  >> 3);
+        tile_end   = (((PLAYER.pos.x >> 4) + PLAYER.bounds.right) >> 3) + 1;
+        if (angle > ANGLE_90DEG && angle < ANGLE_270DEG) {
+            UBYTE tile_y = ((new_pos.y >> 4) + PLAYER.bounds.bottom) >> 3;
+            while (tile_start != tile_end) {
+                if (tile_at(tile_start, tile_y) & COLLISION_TOP) {
+                    new_pos.y = ((((tile_y) << 3) - PLAYER.bounds.bottom) << 4) - 1;
+                    break;
+                }
+                tile_start++;
+            }
+            PLAYER.pos.y = new_pos.y;
+        } else {
+            UBYTE tile_y = (((new_pos.y >> 4) + PLAYER.bounds.top) >> 3);
+            while (tile_start != tile_end) {
+                if (tile_at(tile_start, tile_y) & COLLISION_BOTTOM) {
+                    new_pos.y = ((((UBYTE)(tile_y + 1) << 3) - PLAYER.bounds.top) << 4) + 1;
+                    break;
+                }
+                tile_start++;
+            }
+            PLAYER.pos.y = new_pos.y;
         }
     }
-
-    tile_x = (PLAYER.pos.x + 4) >> 7;
-    tile_y = (PLAYER.pos.y) >> 7;
 
     actor_set_anim(&PLAYER, player_moving);
 
     // Check for trigger collisions
-    if (trigger_activate_at(tile_x, tile_y, FALSE)) {
-        // If landed on a trigger don't update movement this frame
+    if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, FALSE)) {
+        // Landed on a trigger
         return;
     }
 
-    // Actor Collisions
+    // Check for actor collisions
     hit_actor = actor_overlapping_player(FALSE);
     if (hit_actor != NULL && hit_actor->collision_group) {
         player_register_collision_with(hit_actor);
+    } else if (INPUT_A_PRESSED) {
+        if (!hit_actor) {
+            hit_actor = actor_in_front_of_player(8, TRUE);
+        }
+        if (hit_actor && !hit_actor->collision_group && hit_actor->script.bank) {
+            script_execute(hit_actor->script.bank, hit_actor->script.ptr, 0, 0);
+        }
     }
-    
-    if (player_moving) actor_move_angle(&PLAYER, angle, PLAYER.move_speed);
 }

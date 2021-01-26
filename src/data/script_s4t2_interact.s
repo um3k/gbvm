@@ -24,7 +24,7 @@ _script_s4t2_interact::
         VM_FADE_OUT             2
         VM_SET_CONST            ACTOR, 0
         VM_SET_CONST            ^/(ACTOR + 1)/, 640
-        VM_SET_CONST            ^/(ACTOR + 2)/, 512
+        VM_SET_CONST            ^/(ACTOR + 2)/, 640
         VM_ACTOR_SET_POS        ACTOR
         VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT, 0
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3

@@ -11,7 +11,7 @@
 const void __at(255) __bank_scene_5_actors;
 
 #define elephant_x 64
-#define elephant_y 72
+#define elephant_y 80
 
 const struct actor_t scene_5_actors[] = {
   {
@@ -84,7 +84,7 @@ const struct actor_t scene_5_actors[] = {
     .collision_enabled = TRUE
   },
   {
-    // coon,
+    // coin,
     .pos = {
       .x = (elephant_x - 16) * 16,
       .y = (elephant_y - 32) * 16,

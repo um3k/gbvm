@@ -35,12 +35,14 @@ void platform_init() __banked {
     tile_x = PLAYER.pos.x >> 7;
     tile_y = PLAYER.pos.y >> 7;
 
-    grounded = FALSE;
-    // If starting tile was a ladder start scene attached to it
+    // grounded = FALSE;
+    // // If starting tile was a ladder start scene attached to it
     if (tile_at(tile_x, tile_y) & TILE_PROP_LADDER) {
+        // Snap to ladder
+        UBYTE p_half_width = (PLAYER.bounds.right - PLAYER.bounds.left) >> 1;
+        PLAYER.pos.x = (((tile_x << 3) + 4 - (PLAYER.bounds.left + p_half_width) << 4));
+        actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);        
         on_ladder = TRUE;
-        PLAYER.dir_x = 0;
-        PLAYER.dir_y = -1;
     } else {
         on_ladder = FALSE;
     }
@@ -65,20 +67,42 @@ void platform_update() __banked {
         pl_vel_y = 0;
         if (INPUT_UP) {
             // Climb laddder
-            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.top) >> 3;
-            if (tile_at(tile_x_mid, tile_y + 1) & TILE_PROP_LADDER) {
+            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.top + 1) >> 3;
+            if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 pl_vel_y = -plat_climb_vel;
                 actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);
             }
         } else if (INPUT_DOWN) {
             // Descend ladder
-            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3;
-            if (tile_at(tile_x_mid, tile_y + 1) & TILE_PROP_LADDER) {
+            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom + 1) >> 3;
+            if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 pl_vel_y = plat_climb_vel;
                 actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);
             }
-        } else if (INPUT_LEFT || INPUT_RIGHT) {
-            on_ladder = FALSE;           
+        } else if (INPUT_LEFT) {
+            on_ladder = FALSE;
+            // Check if able to leave ladder on left
+            tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
+            tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
+            while (tile_start != tile_end) {
+                if (tile_at(tile_x_mid - 1, tile_start) & COLLISION_RIGHT) {
+                    on_ladder = TRUE;
+                    break;
+                }
+                tile_start++;
+            }            
+        } else if (INPUT_RIGHT) {
+            on_ladder = FALSE;
+            // Check if able to leave ladder on right
+            tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
+            tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
+            while (tile_start != tile_end) {
+                if (tile_at(tile_x_mid + 1, tile_start) & COLLISION_LEFT) {
+                    on_ladder = TRUE;
+                    break;
+                }
+                tile_start++;
+            }
         }
         PLAYER.pos.y += (pl_vel_y >> 8);
     } else {
@@ -143,10 +167,10 @@ void platform_update() __banked {
         }
 
         // Step X
-        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3) + 1;
+        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
         tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
         if (pl_vel_x > 0) {
-            WORD new_x = PLAYER.pos.x + (pl_vel_x >> 8);
+            UWORD new_x = PLAYER.pos.x + (pl_vel_x >> 8);
             UBYTE tile_x = ((new_x >> 4) + PLAYER.bounds.right) >> 3;
             while (tile_start != tile_end) {
                 if (tile_at(tile_x, tile_start) & COLLISION_LEFT) {
@@ -179,10 +203,10 @@ void platform_update() __banked {
             UWORD new_y = PLAYER.pos.y + (pl_vel_y >> 8);
             UBYTE tile_y = ((new_y >> 4) + PLAYER.bounds.bottom) >> 3;
             while (tile_start != tile_end) {
-                if (tile_at(tile_start, tile_y + 1) & COLLISION_TOP) {
-                    new_y = (((tile_y) << 3) - PLAYER.bounds.bottom) << 4;
-                    pl_vel_y = 0;
+                if (tile_at(tile_start, tile_y) & COLLISION_TOP) {
+                    new_y = ((((tile_y) << 3) - PLAYER.bounds.bottom) << 4) - 1;
                     grounded = TRUE;
+                    pl_vel_y = 0;
                     break;
                 }
                 tile_start++;
@@ -190,10 +214,10 @@ void platform_update() __banked {
             PLAYER.pos.y = new_y;
         } else if (pl_vel_y < 0) {
             UWORD new_y = PLAYER.pos.y + (pl_vel_y >> 8);
-            UBYTE tile_y = (((new_y >> 4) + PLAYER.bounds.top) >> 3) + 1;
+            UBYTE tile_y = (((new_y >> 4) + PLAYER.bounds.top) >> 3);
             while (tile_start != tile_end) {
                 if (tile_at(tile_start, tile_y) & COLLISION_BOTTOM) {
-                    new_y = (((UBYTE)(tile_y) << 3) - PLAYER.bounds.top) << 4;
+                    new_y = ((((UBYTE)(tile_y + 1) << 3) - PLAYER.bounds.top) << 4) + 1;
                     pl_vel_y = 0;
                     break;
                 }
@@ -212,8 +236,7 @@ void platform_update() __banked {
     UBYTE tile_y_mid = ((PLAYER.pos.y >> 4) + ((PLAYER.bounds.bottom - PLAYER.bounds.top) >> 2)) >> 3;
 
     // Check for trigger collisions
-    // Probably should check entire bounding box for trigger collision...
-    if (trigger_activate_at(tile_x_mid, tile_y_mid, INPUT_UP_PRESSED)) {
+    if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, INPUT_UP_PRESSED)) {
         // Landed on a trigger
         return;
     }

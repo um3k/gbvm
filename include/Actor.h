@@ -47,8 +47,6 @@ void activate_actor(actor_t *actor) __banked;
 void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked;
 void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked;
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked;
-void actor_move_dir(actor_t *actor, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked;
-void actor_move_angle(actor_t *actor, UBYTE angle, UBYTE speed) __banked;
 actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked;
 actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked;
 void actor_reset_dir(actor_t *actor) __banked;

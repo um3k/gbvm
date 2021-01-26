@@ -61,7 +61,7 @@ void actors_update() __nonbanked
 
     if (emote_actor) {
         screen_x = (emote_actor->pos.x >> 4) - scroll_x + 8;
-        screen_y = (emote_actor->pos.y >> 4) - scroll_y - 8;   
+        screen_y = (emote_actor->pos.y >> 4) - scroll_y - 16;   
         if (emote_timer < EMOTE_BOUNCE_FRAMES) {
             screen_y += emote_offsets[emote_timer];
         }             
@@ -76,9 +76,9 @@ void actors_update() __nonbanked
 
     while (actor) {
         if (actor->pinned) 
-            screen_x = (actor->pos.x >> 4) + 8, screen_y = (actor->pos.y >> 4) + 8;
+            screen_x = (actor->pos.x >> 4) + 8, screen_y = (actor->pos.y >> 4);
         else 
-            screen_x = (actor->pos.x >> 4) - draw_scroll_x + 8, screen_y = (actor->pos.y >> 4) - draw_scroll_y + 8;
+            screen_x = (actor->pos.x >> 4) - draw_scroll_x + 8, screen_y = (actor->pos.y >> 4) - draw_scroll_y;
 
         if ((UINT8)(screen_x + 8) > 184 || (UINT8)(screen_y) > 160) {
             // Deactivate if offscreen
@@ -248,16 +248,6 @@ actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
         if ((ty == a_ty || ty == a_ty + 1) && (tx == a_tx || tx == a_tx + 1 || tx == a_tx - 1)) return actor;
     }
     return NULL;
-}
-
-void actor_move_dir(actor_t *actor, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked {
-    actor->pos.x += (WORD)(dir_x * speed);
-    actor->pos.y += (WORD)(dir_y * speed);
-}
-
-void actor_move_angle(actor_t *actor, UBYTE angle, UBYTE speed) __banked {
-    actor->pos.x += ((SIN(angle) * (speed)) >> 7);
-    actor->pos.y -= ((COS(angle) * (speed)) >> 7);
 }
 
 actor_t *actor_at_3x3_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
