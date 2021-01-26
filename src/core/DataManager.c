@@ -196,7 +196,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
             ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
             UBYTE frames_len; 
             UBYTE allocated_tiles = load_sprite(tile_allocation_hiwater, tmp_ptr.ptr, tmp_ptr.bank, &frames_len);
-            base_tiles[i] = allocated_tiles;
+            base_tiles[i] = tile_allocation_hiwater;
 
             // sprites_info[i].sprite_offset = DIV_4(k);
             // sprites_info[i].frames_len = DIV_4(sprite_len);
