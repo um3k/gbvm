@@ -77,9 +77,9 @@ void actors_update() __nonbanked
 
     while (actor) {
         if (actor->pinned) 
-            screen_x = (actor->pos.x >> 4) + 8, screen_y = (actor->pos.y >> 4) + 8;
+            screen_x = (actor->pos.x >> 4) + 8, screen_y = (actor->pos.y >> 4);
         else 
-            screen_x = (actor->pos.x >> 4) - draw_scroll_x + 8, screen_y = (actor->pos.y >> 4) - draw_scroll_y + 8;
+            screen_x = (actor->pos.x >> 4) - draw_scroll_x + 8, screen_y = (actor->pos.y >> 4) - draw_scroll_y;
 
         if ((UINT8)(screen_x + 8) > 184 || (UINT8)(screen_y) > 160) {
             // Deactivate if offscreen

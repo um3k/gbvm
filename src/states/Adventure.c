@@ -74,11 +74,12 @@ void adventure_update() __banked {
         point_translate_angle(&new_pos, angle, PLAYER.move_speed);
 
         // Step X
-        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3) + 1;
+        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
         tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
         if (angle < ANGLE_180DEG) {
             UBYTE tile_x = ((new_pos.x >> 4) + PLAYER.bounds.right) >> 3;
             while (tile_start != tile_end) {
+
                 if (tile_at(tile_x, tile_start) & COLLISION_LEFT) {
                     new_pos.x = (((tile_x << 3) - PLAYER.bounds.right) << 4) - 1;           
                     break;
@@ -104,18 +105,18 @@ void adventure_update() __banked {
         if (angle > ANGLE_90DEG && angle < ANGLE_270DEG) {
             UBYTE tile_y = ((new_pos.y >> 4) + PLAYER.bounds.bottom) >> 3;
             while (tile_start != tile_end) {
-                if (tile_at(tile_start, tile_y + 1) & COLLISION_TOP) {
-                    new_pos.y = (((tile_y) << 3) - PLAYER.bounds.bottom) << 4;
+                if (tile_at(tile_start, tile_y) & COLLISION_TOP) {
+                    new_pos.y = ((((tile_y) << 3) - PLAYER.bounds.bottom) << 4) - 1;
                     break;
                 }
                 tile_start++;
             }
             PLAYER.pos.y = new_pos.y;
         } else {
-            UBYTE tile_y = (((new_pos.y >> 4) + PLAYER.bounds.top) >> 3) + 1;
+            UBYTE tile_y = (((new_pos.y >> 4) + PLAYER.bounds.top) >> 3);
             while (tile_start != tile_end) {
                 if (tile_at(tile_start, tile_y) & COLLISION_BOTTOM) {
-                    new_pos.y = (((UBYTE)(tile_y) << 3) - PLAYER.bounds.top) << 4;
+                    new_pos.y = ((((UBYTE)(tile_y + 1) << 3) - PLAYER.bounds.top) << 4) + 1;
                     break;
                 }
                 tile_start++;
