@@ -61,7 +61,7 @@ void actors_update() __nonbanked
 
     if (emote_actor) {
         screen_x = (emote_actor->pos.x >> 4) - scroll_x + 8;
-        screen_y = (emote_actor->pos.y >> 4) - scroll_y - 8;   
+        screen_y = (emote_actor->pos.y >> 4) - scroll_y - 16;   
         if (emote_timer < EMOTE_BOUNCE_FRAMES) {
             screen_y += emote_offsets[emote_timer];
         }             
