@@ -65,20 +65,42 @@ void platform_update() __banked {
         pl_vel_y = 0;
         if (INPUT_UP) {
             // Climb laddder
-            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.top) >> 3;
-            if (tile_at(tile_x_mid, tile_y + 1) & TILE_PROP_LADDER) {
+            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.top + 1) >> 3;
+            if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 pl_vel_y = -plat_climb_vel;
                 actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);
             }
         } else if (INPUT_DOWN) {
             // Descend ladder
-            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3;
-            if (tile_at(tile_x_mid, tile_y + 1) & TILE_PROP_LADDER) {
+            UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom + 1) >> 3;
+            if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 pl_vel_y = plat_climb_vel;
                 actor_set_dir(&PLAYER, DIR_NONE, DIR_UP);
             }
-        } else if (INPUT_LEFT || INPUT_RIGHT) {
-            on_ladder = FALSE;           
+        } else if (INPUT_LEFT) {
+            on_ladder = FALSE;
+            // Check if able to leave ladder on left
+            tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
+            tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
+            while (tile_start != tile_end) {
+                if (tile_at(tile_x_mid - 1, tile_start) & COLLISION_RIGHT) {
+                    on_ladder = TRUE;
+                    break;
+                }
+                tile_start++;
+            }            
+        } else if (INPUT_RIGHT) {
+            on_ladder = FALSE;
+            // Check if able to leave ladder on right
+            tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
+            tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
+            while (tile_start != tile_end) {
+                if (tile_at(tile_x_mid + 1, tile_start) & COLLISION_LEFT) {
+                    on_ladder = TRUE;
+                    break;
+                }
+                tile_start++;
+            }
         }
         PLAYER.pos.y += (pl_vel_y >> 8);
     } else {
