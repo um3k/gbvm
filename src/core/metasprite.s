@@ -35,6 +35,8 @@ ___move_metasprite::
         add     a
         add     a
         ld      e, a
+        cp      #0xa0
+        jr      nc, 2$
 
         ld      hl, #___current_metasprite
         ld      a, (hl+)
@@ -43,7 +45,7 @@ ___move_metasprite::
 
         ld      a, (___render_shadow_OAM)
         ld      d, a
-1$:
+1$:        
         ld      a, (hl+)    ; dy
         cp      #0x80
         jr      z, 2$
@@ -68,7 +70,9 @@ ___move_metasprite::
         ld      (de), a
         inc     e
 
-        jr      1$
+        ld      a, e
+        cp      #0xa0
+        jr      c, 1$
 2$:
         ldhl    sp, #2
         ld      a, e
@@ -89,6 +93,8 @@ ___move_metasprite_hflip::
         add     a
         add     a
         ld      e, a
+        cp      #0xa0
+        jr      nc, 2$
 
         ld      hl, #___current_metasprite
         ld      a, (hl+)
@@ -125,7 +131,9 @@ ___move_metasprite_hflip::
         ld      (de), a
         inc     e
 
-        jr      1$
+        ld      a, e
+        cp      #0xa0
+        jr      c, 1$
 2$:
         ldhl    sp, #2
         ld      a, e
@@ -146,6 +154,8 @@ ___move_metasprite_vflip::
         add     a
         add     a
         ld      e, a
+        cp      #0xa0
+        jr      nc, 2$
 
         ld      hl, #___current_metasprite
         ld      a, (hl+)
@@ -182,7 +192,9 @@ ___move_metasprite_vflip::
         ld      (de), a
         inc     e
 
-        jr      1$
+        ld      a, e
+        cp      #0xa0
+        jr      c, 1$
 2$:
         ldhl    sp, #2
         ld      a, e
@@ -203,6 +215,8 @@ ___move_metasprite_hvflip::
         add     a
         add     a
         ld      e, a
+        cp      #0xa0
+        jr      nc, 2$
 
         ld      hl, #___current_metasprite
         ld      a, (hl+)
@@ -241,7 +255,9 @@ ___move_metasprite_hvflip::
         ld      (de), a
         inc     e
 
-        jr      1$
+        ld      a, e
+        cp      #0xa0
+        jr      c, 1$
 2$:
         ldhl    sp, #2
         ld      a, e
