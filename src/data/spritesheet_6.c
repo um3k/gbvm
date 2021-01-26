@@ -58,7 +58,7 @@ const metasprite_t * const spritesheet_6_metasprites[] = {
 };
 
 const struct spritesheet_t spritesheet_6 = {
-  .n_tiles = 1,
+  .n_tiles = 4,
   .n_metasprites = 6,
   .metasprites = spritesheet_6_metasprites,  
   .tiles = {

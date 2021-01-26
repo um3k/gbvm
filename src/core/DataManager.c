@@ -65,14 +65,15 @@ void load_image(const background_t* background, UBYTE bank) __banked {
     load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
 }
 
-UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
+UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank, UBYTE * res_frames) __banked {
     UBYTE n_tiles = ReadBankedUBYTE(&(sprite->n_tiles), bank);
-    UBYTE size = n_tiles << 2;
-    if ((sprite_offset == 0) && (n_tiles > 6)) {
-        size = MAX_PLAYER_SPRITE_SIZE;
+    UBYTE n_metasprites = ReadBankedUBYTE(&(sprite->n_metasprites), bank);
+    if ((sprite_offset == 0) && (n_metasprites > 6)) {
+        n_metasprites = MAX_PLAYER_SPRITE_SIZE;
     }
-    SetBankedSpriteData(sprite_offset, size, sprite->tiles, bank);
-    return size;
+    SetBankedSpriteData(sprite_offset, n_tiles, sprite->tiles, bank);
+    *res_frames = n_metasprites;
+    return n_tiles;
 }
 
 #ifdef CGB
@@ -115,7 +116,8 @@ void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
 #endif
 
 static void load_player_data() {
-    UBYTE sprite_frames = DIV_4(load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank));
+    UBYTE sprite_frames; 
+    load_sprite(0, start_player_sprite.ptr, start_player_sprite.bank, &sprite_frames);
     if (sprite_frames > 6) {
         // Limit player to 6 frames to prevent overflow into scene actor vram
         PLAYER.sprite_type = SPRITE_TYPE_STATIC;
@@ -181,7 +183,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         for (i = 0; i != sprites_len; i++) {
             far_ptr_t tmp_ptr;
             ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
-            UBYTE sprite_len = load_sprite(k, tmp_ptr.ptr, tmp_ptr.bank);
+            UBYTE frames_len; 
+            UBYTE allocated_tiles = load_sprite(k, tmp_ptr.ptr, tmp_ptr.bank, &frames_len);
             // sprites_info[i].sprite_offset = DIV_4(k);
             // sprites_info[i].frames_len = DIV_4(sprite_len);
             // if (sprites_info[i].frames_len == 6) {
@@ -193,7 +196,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
             // } else {
             //   sprites_info[i].sprite_type = SPRITE_STATIC;
             // }
-            k += sprite_len;
+            k += allocated_tiles;
             scene_sprite_ptrs++;
         }
     }

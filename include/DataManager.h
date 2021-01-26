@@ -27,7 +27,7 @@ void load_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_ui_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_sprite_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
 void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked;
-UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked;
+UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank, UBYTE * res_frames) __banked;
 UBYTE load_scene(const scene_t *scene, UBYTE bank, UBYTE init_data) __banked;
 void load_player() __banked;
 void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked;
