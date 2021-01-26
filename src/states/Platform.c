@@ -143,15 +143,14 @@ void platform_update() __banked {
         }
 
         // Step X
-        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3) + 1;
+        tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
         tile_end   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
         if (pl_vel_x > 0) {
-            WORD new_x = PLAYER.pos.x + (pl_vel_x >> 8);
+            UWORD new_x = PLAYER.pos.x + (pl_vel_x >> 8);
             UBYTE tile_x = ((new_x >> 4) + PLAYER.bounds.right) >> 3;
             while (tile_start != tile_end) {
                 if (tile_at(tile_x, tile_start) & COLLISION_LEFT) {
-                    new_x = (((tile_x << 3) - PLAYER.bounds.right) << 4) - 1;
-                    pl_vel_x = 0;
+                    new_x = (((tile_x << 3) - PLAYER.bounds.right) << 4) - 1;           
                     break;
                 }
                 tile_start++;
@@ -179,10 +178,10 @@ void platform_update() __banked {
             UWORD new_y = PLAYER.pos.y + (pl_vel_y >> 8);
             UBYTE tile_y = ((new_y >> 4) + PLAYER.bounds.bottom) >> 3;
             while (tile_start != tile_end) {
-                if (tile_at(tile_start, tile_y + 1) & COLLISION_TOP) {
-                    new_y = (((tile_y) << 3) - PLAYER.bounds.bottom) << 4;
-                    pl_vel_y = 0;
+                if (tile_at(tile_start, tile_y) & COLLISION_TOP) {
+                    new_y = ((((tile_y) << 3) - PLAYER.bounds.bottom) << 4) - 1;
                     grounded = TRUE;
+                    pl_vel_y = 0;
                     break;
                 }
                 tile_start++;
@@ -190,10 +189,10 @@ void platform_update() __banked {
             PLAYER.pos.y = new_y;
         } else if (pl_vel_y < 0) {
             UWORD new_y = PLAYER.pos.y + (pl_vel_y >> 8);
-            UBYTE tile_y = (((new_y >> 4) + PLAYER.bounds.top) >> 3) + 1;
+            UBYTE tile_y = (((new_y >> 4) + PLAYER.bounds.top) >> 3);
             while (tile_start != tile_end) {
                 if (tile_at(tile_start, tile_y) & COLLISION_BOTTOM) {
-                    new_y = (((UBYTE)(tile_y) << 3) - PLAYER.bounds.top) << 4;
+                    new_y = ((((UBYTE)(tile_y + 1) << 3) - PLAYER.bounds.top) << 4) + 1;
                     pl_vel_y = 0;
                     break;
                 }
