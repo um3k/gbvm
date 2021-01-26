@@ -21,7 +21,7 @@ const struct actor_t scene_1_actors[] = {
     // Sign Post,
     .pos = {
       .x = 56 * 16,
-      .y = 200 * 16,
+      .y = 208 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -45,7 +45,7 @@ const struct actor_t scene_1_actors[] = {
     // Ice Block,
     .pos = {
       .x = 192 * 16,
-      .y = 144 * 16,
+      .y = 152 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -69,7 +69,7 @@ const struct actor_t scene_1_actors[] = {
     // Rock 3,
     .pos = {
       .x = 184 * 16,
-      .y = 216 * 16,
+      .y = 224 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -93,7 +93,7 @@ const struct actor_t scene_1_actors[] = {
     // Rock 2,
     .pos = {
       .x = 168 * 16,
-      .y = 216 * 16,
+      .y = 224 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -117,7 +117,7 @@ const struct actor_t scene_1_actors[] = {
     // Rock 1,
     .pos = {
       .x = 152 * 16,
-      .y = 216 * 16,
+      .y = 224 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -141,7 +141,7 @@ const struct actor_t scene_1_actors[] = {
     // Hidden Stairs,
     .pos = {
       .x = 88 * 16,
-      .y = 96 * 16,
+      .y = 104 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,

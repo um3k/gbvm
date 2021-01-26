@@ -128,7 +128,7 @@ void adventure_update() __banked {
     actor_set_anim(&PLAYER, player_moving);
 
     // Check for trigger collisions
-    if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, INPUT_UP_PRESSED)) {
+    if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, FALSE)) {
         // Landed on a trigger
         return;
     }

@@ -236,8 +236,6 @@ void platform_update() __banked {
     UBYTE tile_y_mid = ((PLAYER.pos.y >> 4) + ((PLAYER.bounds.bottom - PLAYER.bounds.top) >> 2)) >> 3;
 
     // Check for trigger collisions
-    // Probably should check entire bounding box for trigger collision...
-    // if (trigger_activate_at(tile_x_mid, tile_y_mid, INPUT_UP_PRESSED)) {
     if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, INPUT_UP_PRESSED)) {
         // Landed on a trigger
         return;

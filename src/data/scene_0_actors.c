@@ -18,7 +18,7 @@ const struct actor_t scene_0_actors[] = {
     // Actor 1,
     .pos = {
       .x = 32 * 16,
-      .y = 48 * 16,
+      .y = 56 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -41,7 +41,7 @@ const struct actor_t scene_0_actors[] = {
     // Fire,
     .pos = {    
       .x = 32 * 16,
-      .y = 32 * 16,
+      .y = 40 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -64,7 +64,7 @@ const struct actor_t scene_0_actors[] = {
     // Sage,
     .pos = {
       .x = 72 * 16,
-      .y = 56 * 16,
+      .y = 64 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -88,7 +88,7 @@ const struct actor_t scene_0_actors[] = {
     // Actor 4,
     .pos = {    
       .x = 112 * 16,
-      .y = 48 * 16,
+      .y = 56 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -111,7 +111,7 @@ const struct actor_t scene_0_actors[] = {
     // Fire,
     .pos = {
       .x = 112 * 16,
-      .y = 32 * 16,
+      .y = 40 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
@@ -134,7 +134,7 @@ const struct actor_t scene_0_actors[] = {
     // Savepoint,
     .pos = {
       .x = 104 * 16,
-      .y = 88 * 16,
+      .y = 96 * 16,
     },
     .dir_x = 0,
     .dir_y = 1,
