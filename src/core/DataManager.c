@@ -16,7 +16,8 @@
 #include "data/spritesheet_0.h" // @todo don't hard code this
 #include "data/data_ptrs.h"
 
-#define MAX_PLAYER_SPRITE_SIZE  24
+#define MAX_SCENE_SPRITES       128
+
 #define EMOTE_SPRITE            124
 #define EMOTE_SPRITE_SIZE       4
 
@@ -111,6 +112,15 @@ void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
 }
 #endif
 
+UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {
+    far_ptr_t v;
+    for (UBYTE i = 0; i < count; i++, list++) {
+        ReadBankedFarPtr(&v, (void *)list, bank);
+        if ((v.bank == item->bank) && (v.ptr == item->ptr)) return i; 
+    }
+    return count;
+}
+
 UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     UBYTE i, tile_allocation_hiwater;
     scene_t scn;
@@ -174,14 +184,20 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         tile_allocation_hiwater = 0x68;
     }
 
+    UBYTE base_tiles[MAX_SCENE_SPRITES];
+
     // Load sprites
     if (sprites_len != 0) {
         far_ptr_t * scene_sprite_ptrs = scn.sprites.ptr;
         for (i = 0; i != sprites_len; i++) {
+            if (i == MAX_SCENE_SPRITES) break;
+
             far_ptr_t tmp_ptr;
             ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
             UBYTE frames_len; 
             UBYTE allocated_tiles = load_sprite(tile_allocation_hiwater, tmp_ptr.ptr, tmp_ptr.bank, &frames_len);
+            base_tiles[i] = allocated_tiles;
+
             // sprites_info[i].sprite_offset = DIV_4(k);
             // sprites_info[i].frames_len = DIV_4(sprite_len);
             // if (sprites_info[i].frames_len == 6) {
@@ -220,6 +236,10 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
             actor_t * actor = actors + 1;
             MemcpyBanked(actor, scn.actors.ptr, sizeof(actor_t) * (actors_len - 1), scn.actors.bank);
             for (i = actors_len - 1; i != 0; i--, actor++) {
+                // resolve and set base_tile for each actor
+                UBYTE idx = get_farptr_index(scn.sprites.ptr, scn.sprites.bank, sprites_len, &actor->sprite);
+                actor->base_tile = (idx < sprites_len) ? base_tiles[idx] : 0;
+
                 actor->enabled = FALSE;
                 DL_PUSH_HEAD(actors_inactive_head, actor);
                 // Enable all pinned actors by default
