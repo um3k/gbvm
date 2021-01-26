@@ -35,9 +35,10 @@ void platform_init() __banked {
     tile_x = PLAYER.pos.x >> 7;
     tile_y = PLAYER.pos.y >> 7;
 
-    // grounded = FALSE;
+    grounded = FALSE;
+
     // // If starting tile was a ladder start scene attached to it
-    if (tile_at(tile_x, tile_y) & TILE_PROP_LADDER) {
+    if (tile_at(tile_x, tile_y - 1) & TILE_PROP_LADDER) {
         // Snap to ladder
         UBYTE p_half_width = (PLAYER.bounds.right - PLAYER.bounds.left) >> 1;
         PLAYER.pos.x = (((tile_x << 3) + 4 - (PLAYER.bounds.left + p_half_width) << 4));
