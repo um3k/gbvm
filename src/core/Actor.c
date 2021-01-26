@@ -22,9 +22,8 @@
 
 const BYTE emote_offsets[] = {2, 1, 0, -1, -2, -3, -4, -5, -6, -5, -4, -3, -2, -1, 0};
 
-const metasprite_t emote_metasprite  = {
-    .count = 2,
-    .items = {{0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}}
+const metasprite_t emote_metasprite[]  = {
+    {0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}
 };
 
 actor_t actors[MAX_ACTORS];
@@ -67,7 +66,7 @@ void actors_update() __nonbanked
             screen_y += emote_offsets[emote_timer];
         }             
         allocated_hardware_sprites += move_metasprite(
-            &emote_metasprite,
+            emote_metasprite,
             EMOTE_TILE,
             allocated_hardware_sprites,
             screen_x,

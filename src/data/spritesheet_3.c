@@ -6,31 +6,27 @@
 
 const void __at(255) __bank_spritesheet_3;
 
-const metasprite_t spritesheet_3_metasprite_0  = {
-    .count = 2,
-    .items = {{0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}}
+const metasprite_t spritesheet_3_metasprite_0[]  = {
+    {0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}
 };
 
-const metasprite_t spritesheet_3_metasprite_1  = {
-    .count = 2,
-    .items = {{0, 0, 4, 0}, {0, 8, 6, 0}, {metasprite_end}}
+const metasprite_t spritesheet_3_metasprite_1[]  = {
+    {0, 0, 4, 0}, {0, 8, 6, 0}, {metasprite_end}
 };
 
-const metasprite_t spritesheet_3_metasprite_2  = {
-    .count = 2,
-    .items = {{0, 0, 8,  0}, {0, 8, 10, 0}, {metasprite_end}}
+const metasprite_t spritesheet_3_metasprite_2[]  = {
+    {0, 0, 8,  0}, {0, 8, 10, 0}, {metasprite_end}
 };
 
-const metasprite_t spritesheet_3_metasprite_3  = {
-    .count = 2,
-    .items = {{0, 0, 12, 0}, {0, 8, 14, 0}, {metasprite_end}}
+const metasprite_t spritesheet_3_metasprite_3[]  = {
+    {0, 0, 12, 0}, {0, 8, 14, 0}, {metasprite_end}
 };
 
 const metasprite_t * const spritesheet_3_metasprites[] = {
-    &spritesheet_3_metasprite_0,
-    &spritesheet_3_metasprite_1,
-    &spritesheet_3_metasprite_2,
-    &spritesheet_3_metasprite_3,
+    spritesheet_3_metasprite_0,
+    spritesheet_3_metasprite_1,
+    spritesheet_3_metasprite_2,
+    spritesheet_3_metasprite_3,
 };
 
 const struct spritesheet_t spritesheet_3 = {
