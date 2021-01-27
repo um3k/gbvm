@@ -506,6 +506,11 @@ OP_VM_DATA_IS_SAVED     = 0x5A
         .db OP_VM_DATA_IS_SAVED, #>IDX, #<IDX 
 .endm
 
+OP_VM_REPLACE_TILE      = 0x5B
+.macro VM_REPLACE_TILE TARGET_TILE, TILEDATA_BANK, TILEDATA, START, LEN
+        .db OP_VM_REPLACE_TILE, #<LEN, #<START, #>TILEDATA, #<TILEDATA, #<TILEDATA_BANK, #<TARGET_TILE
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60

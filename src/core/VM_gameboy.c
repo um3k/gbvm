@@ -7,6 +7,7 @@
 #include "events.h"
 #include "FadeManager.h"
 #include "LoadSave.h"
+#include "BankData.h"
 
 void vm_show_sprites() __banked {
     hide_sprites = FALSE;
@@ -73,4 +74,9 @@ void vm_data_is_saved(SCRIPT_CTX * THIS, INT16 idx) __banked {
     INT16 * A;
     if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     *A = data_is_saved();
+}
+
+void vm_replace_tile(SCRIPT_CTX * THIS, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile, UBYTE length) __banked {
+    THIS;
+    SetBankedBkgData(target_tile, length, tileset->tiles + (start_tile << 4), tileset_bank);
 }
