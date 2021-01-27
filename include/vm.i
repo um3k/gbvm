@@ -360,6 +360,11 @@ OP_VM_ACTOR_SET_BOUNDS  = 0x37
         .db OP_VM_ACTOR_SET_BOUNDS, #<BOTTOM, #<TOP, #<RIGHT, #<LEFT, #>ACTOR, #<ACTOR
 .endm
 
+OP_VM_ACTOR_SET_SPRITESHEET     = 0x38
+.macro VM_ACTOR_SET_SPRITESHEET ACTOR, SHEET_BANK, SHEET
+        .db OP_VM_ACTOR_SET_SPRITESHEET, #>SHEET, #<SHEET, #<SHEET_BANK, #>ACTOR, #<ACTOR
+.endm
+
 ; --- UI ------------------------------------------
 
 OP_VM_LOAD_TEXT         = 0x40

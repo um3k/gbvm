@@ -34,9 +34,10 @@ ___move_metasprite::
         ld      a, (hl-)
         add     a
         add     a
-        ld      e, a
+        ld      e, #0
         cp      #0xa0
-        jr      nc, 2$
+        ret     nc
+        ld      e, a
 
         ld      hl, #___current_metasprite
         ld      a, (hl+)

@@ -7,6 +7,7 @@ ___bank_script_s2_p_hit1 = 255
 .globl ___bank_script_s2_p_hit1
 
 .globl ___bank_spritesheet_1, _spritesheet_1
+.globl ___bank_spritesheet_11, _spritesheet_11
 
 _script_s2_p_hit1::
 
@@ -24,6 +25,7 @@ _script_s2_p_hit1::
         ; Emote
         VM_PUSH                 1
         VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
+        VM_ACTOR_SET_SPRITESHEET .ARG0, ___bank_spritesheet_11, _spritesheet_11
         VM_POP                  1
 
         ; Stop Script

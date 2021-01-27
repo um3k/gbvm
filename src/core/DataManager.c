@@ -167,19 +167,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         // Load player
         PLAYER.base_tile = 0;
         tile_allocation_hiwater = load_sprite(PLAYER.base_tile, start_player_sprite.ptr, start_player_sprite.bank, &PLAYER.n_frames);
-        if (PLAYER.n_frames > 6) {
-            // Limit player to 6 frames to prevent overflow into scene actor vram
-            PLAYER.sprite_type = SPRITE_TYPE_STATIC;
-            PLAYER.n_frames = 6;
-        } else if (PLAYER.n_frames == 6) {
-            PLAYER.sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
-            PLAYER.n_frames = 2;
-        } else if (PLAYER.n_frames == 3) {
-            PLAYER.sprite_type = SPRITE_TYPE_ACTOR;
-            PLAYER.n_frames = 1;    
-        } else {
-            PLAYER.sprite_type = SPRITE_TYPE_STATIC;
-        }
+        actor_update_properties(&PLAYER);
     } else {
         // no player on logo, but still some little amount of actors may be present
         tile_allocation_hiwater = 0x68;

@@ -431,3 +431,21 @@ UBYTE check_collision_in_direction(UBYTE start_x, UBYTE start_y, UBYTE end_tile,
     }
     return end_tile;
 }
+
+void actor_update_properties(actor_t * actor) __banked {
+    UBYTE n_frames = actor->n_frames;
+    if (n_frames > 6) {
+        actor->sprite_type = SPRITE_TYPE_STATIC;
+        actor->n_frames = 6;
+        actor_set_frames(actor, 0, 6);
+    } else if (n_frames == 6) {
+        actor->sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
+        actor->n_frames = 2;
+    } else if (n_frames == 3) {
+        actor->sprite_type = SPRITE_TYPE_ACTOR;
+        actor->n_frames = 1;    
+    } else {
+        actor->sprite_type = SPRITE_TYPE_STATIC;
+        actor_set_frames(actor, 0, n_frames);
+    }
+}

@@ -62,4 +62,6 @@ UBYTE check_collision_in_direction(UBYTE start_x, UBYTE start_y, UBYTE end_tile,
 void activate_actors_in_row(UBYTE x, UBYTE y) __banked;
 void activate_actors_in_col(UBYTE x, UBYTE y) __banked;
 
+void actor_update_properties(actor_t * actor) __banked;
+
 #endif
