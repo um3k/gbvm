@@ -1,7 +1,7 @@
-#ifndef TILESET_5_H
-#define TILESET_5_H
+#ifndef TILESET_6_H
+#define TILESET_6_H
 
-// Tileset: 4
+// Tileset: 3 (flowers)
 
 #include "gbs_types.h"
 

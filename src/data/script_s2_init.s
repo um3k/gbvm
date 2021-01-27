@@ -9,6 +9,7 @@
 ___bank_script_s2_init = 255
 .globl ___bank_script_s2_init
 .globl ___bank_script_s2_timer1, _script_s2_timer1 
+.globl ___bank_script_s2_timer2, _script_s2_timer2 
 .globl ___bank_script_s2_input1, _script_s2_input1
 
 ACTOR = -4
@@ -60,8 +61,8 @@ _script_s2_init::
         ; VM_MUSIC_ROUTINE        3, ___bank_script_s2_timer1, _script_s2_timer1
         ; VM_MUSIC_PLAY           4, 1
 
-;        VM_TIMER_PREPARE        1, ___bank_script_s2_timer1, _script_s2_timer1
-;        VM_TIMER_SET            1, 5
+        VM_TIMER_PREPARE        1, ___bank_script_s2_timer2, _script_s2_timer2
+        VM_TIMER_SET            1, 2
 
         ; Stop Script
         VM_STOP
