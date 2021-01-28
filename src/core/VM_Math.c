@@ -1,3 +1,5 @@
+#pragma bank 2
+
 #include "VM_Math.h"
 
 #include "vm.h"

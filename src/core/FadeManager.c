@@ -31,11 +31,11 @@ static const UBYTE obj1_fade_black_vals[] = {0xFF, 0xFF, 0xFE, 0xE9, 0xE5, 0xE4,
 static const UBYTE bgp_fade_black_vals[] = {0xFF, 0xFF, 0xFE, 0xE9, 0xE5, 0xE4, 0xE4};
 
 #ifdef CGB
-UWORD UpdateColorBlack(UINT8 i, UWORD col) {
+static UWORD UpdateColorBlack(UINT8 i, UWORD col) {
     return RGB2((PAL_RED(col) >> 5 - i),  (PAL_GREEN(col) >> 5 - i), (PAL_BLUE(col) >> 5 - i));
 }
 
-void ApplyPaletteChangeColor(UBYTE index) {
+static void ApplyPaletteChangeColor(UBYTE index) {
     UINT8 c;
     UWORD paletteWhite;
     UWORD* col = BkgPalette;
@@ -70,7 +70,7 @@ void ApplyPaletteChangeColor(UBYTE index) {
 }
 #endif
 
-void ApplyPaletteChangeDMG(UBYTE index) {
+static void ApplyPaletteChangeDMG(UBYTE index) {
     if (!fade_style) {
         OBP0_REG = obj0_fade_vals[index];
         OBP1_REG = obj1_fade_vals[index];

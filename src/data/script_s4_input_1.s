@@ -9,9 +9,9 @@ _script_s4_input1::
 
         VM_PUSH                 28              ; bit less than 45 degrees 
         VM_PUSH                 100
-        VM_SIN_SCALE            .ARG0, .ARG1, 5 
+        VM_SIN_SCALE            .ARG0, .ARG1, 6 
         VM_PUSH                 100 
-        VM_COS_SCALE            .ARG0, .ARG2, 5
+        VM_COS_SCALE            .ARG0, .ARG2, 6
         VM_RPN
             .R_INT16    -240
             .R_REF      .ARG1
