@@ -1,5 +1,3 @@
-#pragma bank 1
-
 #include "Math.h"
 
 const INT8 sine_wave[256] = {
@@ -21,13 +19,3 @@ const INT8 sine_wave[256] = {
     -68,-65,-63,-60,-57,-54,-51,-49,-46,-43,-40,-37,-34,-31,-28,
     -25,-22,-19,-16,-12,-9,-6,-3
 };
-
-void point_translate_dir(upoint16_t *point, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked {
-    point->x += (WORD)(dir_x * speed);
-    point->y += (WORD)(dir_y * speed);
-}
-
-void point_translate_angle(upoint16_t *point, UBYTE angle, UBYTE speed) __banked {
-    point->x += ((SIN(angle) * (speed)) >> 7);
-    point->y -= ((COS(angle) * (speed)) >> 7);
-}

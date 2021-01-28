@@ -68,7 +68,14 @@ typedef struct upoint16_t {
 
 extern const INT8 sine_wave[256];
 
-void point_translate_dir(upoint16_t *point, BYTE dir_x, BYTE dir_y, UBYTE speed) __banked;
-void point_translate_angle(upoint16_t *point, UBYTE angle, UBYTE speed) __banked;
+inline void point_translate_dir(upoint16_t *point, BYTE dir_x, BYTE dir_y, UBYTE speed) {
+    point->x += (WORD)(dir_x * speed);
+    point->y += (WORD)(dir_y * speed);
+}
+
+inline void point_translate_angle(upoint16_t *point, UBYTE angle, UBYTE speed) {
+    point->x += ((SIN(angle) * (speed)) >> 7);
+    point->y -= ((COS(angle) * (speed)) >> 7);
+}
 
 #endif

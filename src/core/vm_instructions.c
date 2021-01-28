@@ -67,8 +67,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_actor_set_pos,          2}, // 0x35
     {vm_actor_emote,            5}, // 0x36
     {vm_actor_set_bounds,       6}, // 0x37
-    {0, 0},
-    {0, 0},
+    {vm_actor_set_spritesheet,  5}, // 0x38
+    {vm_actor_replace_tile,     8}, // 0x39
     {0, 0},
     {0, 0},
     {0, 0},
@@ -106,7 +106,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_timer_prepare,          4}, // 0x58
     {vm_timer_set,              2}, // 0x59
     {vm_data_is_saved,          2}, // 0x5A
-    {0, 0},
+    {vm_replace_tile,           6}, // 0x5B
     {0, 0},
     {0, 0},
     {0, 0},

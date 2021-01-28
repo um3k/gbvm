@@ -9,6 +9,7 @@
 #include "data/palette_2.h"
 #include "data/palette_4.h"
 #include "data/scene_4_triggers.h"
+#include "data/script_s4_init.h"
 
 const void __at(255) __bank_scene_4;
 
@@ -29,5 +30,6 @@ const struct scene_t scene_4 = {
   .n_actors = 0,
   .n_triggers = 3,
   .n_sprites = 0,
-  .triggers = TO_FAR_PTR_T(scene_4_triggers)
+  .triggers = TO_FAR_PTR_T(scene_4_triggers),
+  .script_init = TO_FAR_PTR_T(script_s4_init)
 };

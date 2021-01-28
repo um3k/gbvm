@@ -174,3 +174,16 @@ void vm_actor_set_bounds(SCRIPT_CTX * THIS, INT16 idx, BYTE left, BYTE right, BY
     actor->bounds.top = top;
     actor->bounds.bottom = bottom;
 }
+
+void vm_actor_set_spritesheet(SCRIPT_CTX * THIS, INT16 idx, UBYTE spritesheet_bank, const spritesheet_t *spritesheet) __banked {
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    actor_t * actor = actors + *n_actor;
+    load_sprite(actor->base_tile, spritesheet, spritesheet_bank, &actor->n_frames);
+    actor_update_properties(actor);
+}
+
+void vm_actor_replace_tile(SCRIPT_CTX * THIS, INT16 idx, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile, UBYTE length) __banked {
+    UBYTE * n_actor = VM_REF_TO_PTR(idx);
+    actor_t * actor = actors + *n_actor;
+    SetBankedSpriteData(actor->base_tile + target_tile, length, tileset->tiles + (start_tile << 4), tileset_bank);
+}
