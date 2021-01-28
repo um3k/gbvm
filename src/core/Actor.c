@@ -202,7 +202,7 @@ void activate_actors_in_col(UBYTE x, UBYTE y) __banked {
             actor_t * next = actor->next;
             activate_actor(actor);
             actor=next;
-            continue;            
+            continue;
         }
         actor = actor->next;
     }
