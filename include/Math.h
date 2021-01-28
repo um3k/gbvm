@@ -45,8 +45,8 @@
 #define DIV_4(a) ((a) >> 2)
 #define DIV_2(a) ((a) >> 1)
 
-#define SIN(a)  (sine_wave[a])
-#define COS(a)  (sine_wave[(UBYTE)(a + 64u)])
+#define SIN(a)  (sine_wave[(UBYTE)(a)])
+#define COS(a)  (sine_wave[(UBYTE)((UBYTE)(a) + 64u)])
 
 #define ANGLE_UP        0
 #define ANGLE_RIGHT     64
