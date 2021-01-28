@@ -30,7 +30,7 @@ actor_t actors[MAX_ACTORS];
 actor_t *actors_active_head;
 actor_t *actors_inactive_head;
 
-INT8 screen_x, screen_y;
+UINT8 screen_x, screen_y;
 actor_t *invalid;
 UBYTE player_moving;
 UBYTE player_iframes;
@@ -80,7 +80,12 @@ void actors_update() __nonbanked
         else 
             screen_x = (actor->pos.x >> 4) - draw_scroll_x + 8, screen_y = (actor->pos.y >> 4) - draw_scroll_y;
 
-        if ((UINT8)(screen_x + 8) > 184 || (UINT8)(screen_y) > 160) {
+        if (
+            // Offscreen horizontally
+            ((screen_x > 168) && (screen_x < 256 - actor->bounds.right)) ||
+            // or offscreen vertically
+            ((screen_y > 160) && (screen_y < 256 + actor->bounds.top))
+        ) {
             // Deactivate if offscreen
             actor_t * prev = actor->prev;
             deactivate_actor(actor);
@@ -188,17 +193,16 @@ void activate_actors_in_row(UBYTE x, UBYTE y) __banked {
 void activate_actors_in_col(UBYTE x, UBYTE y) __banked {
     static actor_t *actor;
     actor = actors_inactive_head;
-
     while (actor) {
-        UBYTE tx = actor->pos.x >> 7;
-        if (tx == x) {
-            UBYTE ty = actor->pos.y >> 7;
-            if ((ty > y) && (ty < y + SCREEN_TILE_REFRES_H)) {
-                actor_t * next = actor->next;
-                activate_actor(actor);
-                actor=next;
-                continue;
-            }
+        UBYTE tx_left   = actor->pos.x >> 7;
+        UBYTE ty_bottom = actor->pos.y >> 7;
+        UBYTE tx_right  = ((actor->pos.x >> 4) + (actor->bounds.right)) >> 3;
+        UBYTE ty_top    = ((actor->pos.y >> 4) + (actor->bounds.top)) >> 3;
+        if (tx_left <= x && tx_right >= x && ty_top <= (y + SCREEN_TILE_REFRES_H) && ty_bottom >= y) {
+            actor_t * next = actor->next;
+            activate_actor(actor);
+            actor=next;
+            continue;
         }
         actor = actor->next;
     }
