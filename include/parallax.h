@@ -9,7 +9,7 @@
 typedef struct parallax_row_t {
     UBYTE scx;      // x scroll position for current slice
     UBYTE next_y;   // y position of next LYC
-    UBYTE shift;    // shift of scroll position within the world
+    INT8  shift;    // shift of scroll position within the world
     UBYTE start_tile;
     UBYTE tile_height;
 } parallax_row_t;
