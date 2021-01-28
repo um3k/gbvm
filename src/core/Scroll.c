@@ -129,12 +129,16 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             // Queue right column
             UBYTE x = new_col - SCREEN_PAD_LEFT + SCREEN_TILE_REFRES_W - 1;
             UBYTE y = MAX(0, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
+            UBYTE full_y = MAX(0, (new_row - SCREEN_PAD_TOP));
             scroll_queue_col(x, y);
+            activate_actors_in_col(x, full_y);
         } else if (current_col == new_col + 1) {
             // Queue left column
             UBYTE x = MAX(0, new_col - SCREEN_PAD_LEFT);
             UBYTE y = MAX(0, MAX((new_row - SCREEN_PAD_TOP), port->start_tile));
+            UBYTE full_y = MAX(0, (new_row - SCREEN_PAD_TOP));
             scroll_queue_col(x, y);
+            activate_actors_in_col(x, full_y);
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire screen
             scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
@@ -147,11 +151,13 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             UBYTE x = MAX(0, new_col - SCREEN_PAD_LEFT);
             UBYTE y = new_row - SCREEN_PAD_TOP + SCREEN_TILE_REFRES_H - 1;
             scroll_queue_row(x, y);
+            activate_actors_in_row(x, y);
         } else if (current_row == new_row + 1) {
             // Queue top row
             UBYTE x = MAX(0, new_col - SCREEN_PAD_LEFT);
             UBYTE y = MAX(0, new_row - SCREEN_PAD_TOP);
             scroll_queue_row(x, y);
+            activate_actors_in_row(x, y);
         } else if (current_row != new_row) {
             // If row differs by more than 1 render entire screen
             scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
@@ -193,6 +199,7 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
 
     for (i = 0; i != n_rows, y != image_tile_height; ++i, y++) {
         scroll_load_row(x, y);
+        activate_actors_in_row(x, y);
     }
 
     game_time = 0;
@@ -220,8 +227,6 @@ void scroll_queue_row(UBYTE x, UBYTE y) {
     pending_w_x = x;
     pending_w_y = y;
     pending_w_i = SCREEN_TILE_REFRES_W;
-
-    activate_actors_in_row(x, y);
 }
 
 void scroll_queue_col(UBYTE x, UBYTE y) {
@@ -234,8 +239,6 @@ void scroll_queue_col(UBYTE x, UBYTE y) {
     pending_h_x = x;
     pending_h_y = y;
     pending_h_i = MIN(SCREEN_TILE_REFRES_H, image_tile_height - y);
-
-    activate_actors_in_col(x, y);
 }
 
 /* Update pending (up to 5) rows */
@@ -276,8 +279,6 @@ void scroll_load_row(UBYTE x, UBYTE y) __nonbanked {
     // DMG Row Load
     SWITCH_ROM_MBC1(image_bank);
     map_to_screen(x, y, SCREEN_TILE_REFRES_W, 1, tilemap_buffer, image_ptr);
-
-    activate_actors_in_row(x, y);
 
     SWITCH_ROM_MBC1(_save);
 }

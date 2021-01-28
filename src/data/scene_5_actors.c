@@ -10,20 +10,26 @@
 
 const void __at(255) __bank_scene_5_actors;
 
-#define elephant_x 64
-#define elephant_y 80
+#define elephant_x 180
+#define elephant_y 112
 
 const struct actor_t scene_5_actors[] = {
   {
     // Actor 1,
     .pos = {
       .x = (elephant_x + 8 + 3) * 16,
-      .y = (elephant_y - 8 + 2) * 16,
+      .y = (elephant_y - 40 + 2) * 16,
     },
     .dir_x = -1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .sprite_type = SPRITE_TYPE_ACTOR,
+    .bounds = {
+      .left = 0,
+      .right = 16,
+      .top = -16,
+      .bottom = 0
+    },
     .base_tile = 24,
     .palette = 0,
     .n_frames = 2,
@@ -41,12 +47,18 @@ const struct actor_t scene_5_actors[] = {
     // Actor 2,
     .pos = {
       .x = (elephant_x + 32 + 2) * 16,
-      .y = (elephant_y - 8 + 2) * 16,
+      .y = (elephant_y - 40 + 2) * 16,
     },
     .dir_x = 1,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .sprite_type = SPRITE_TYPE_ACTOR,
+    .bounds = {
+      .left = 0,
+      .right = 16,
+      .top = -16,
+      .bottom = 0
+    },
     .base_tile = 24,
     .palette = 0,
     .n_frames = 2,
@@ -70,6 +82,12 @@ const struct actor_t scene_5_actors[] = {
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_10),
     .sprite_type = SPRITE_TYPE_ACTOR,
+    .bounds = {
+      .left = 0,
+      .right = 56,
+      .top = -40,
+      .bottom = 0
+    },
     .base_tile = 0x30,
     .palette = 0,
     .n_frames = 8,
@@ -87,12 +105,18 @@ const struct actor_t scene_5_actors[] = {
     // coin,
     .pos = {
       .x = (elephant_x - 16) * 16,
-      .y = (elephant_y - 32) * 16,
+      .y = (elephant_y - 64) * 16,
     },
     .dir_x = 0,
     .dir_y = 0,
     .sprite = TO_FAR_PTR_T(spritesheet_11),
     .sprite_type = SPRITE_TYPE_ACTOR,
+    .bounds = {
+      .left = 0,
+      .right = 16,
+      .top = -16,
+      .bottom = 0
+    },    
     .base_tile = 0x68,
     .palette = 0,
     .n_frames = 2,
