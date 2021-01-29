@@ -55,9 +55,14 @@ void music_mute(UBYTE channels) __nonbanked;
 void music_update() __nonbanked;
 
 /**
- * Poll music events
+ * Update music events
  */ 
 void music_events_update() __nonbanked;
+
+/**
+ * Poll music events
+ */ 
+UBYTE music_events_poll() __banked;
 
 /**
  * Plays FX sound on given channel
