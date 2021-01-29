@@ -19,9 +19,7 @@ void pointnclick_init() __banked {
     camera_deadzone_x = POINT_N_CLICK_CAMERA_DEADZONE;
     camera_deadzone_y = POINT_N_CLICK_CAMERA_DEADZONE;
 
-    // PLAYER.sprite_type = SPRITE_STATIC;
-    PLAYER.dir_x = 0;
-    PLAYER.dir_y = 1;
+    PLAYER.dir = DIR_DOWN;
 }
 
 void pointnclick_update() __banked {
@@ -32,24 +30,23 @@ void pointnclick_update() __banked {
     tile_y = DIV_8(PLAYER.pos.y);
 
     player_moving = FALSE;
-    PLAYER.dir_x = 0;
-    PLAYER.dir_y = 0;
+    PLAYER.dir = DIR_DOWN;
 
     // Move cursor horizontally
     if (INPUT_LEFT && (PLAYER.pos.x > 0)) {
-        PLAYER.dir_x = -1;
+        actor_set_dir(&PLAYER, DIR_LEFT);
         player_moving = TRUE;
     } else if (INPUT_RIGHT && (PLAYER.pos.x < image_width - 8)) {
-        PLAYER.dir_x = 1;
+        actor_set_dir(&PLAYER, DIR_RIGHT);
         player_moving = TRUE;
     }
 
     // Move cursor vertically
     if (INPUT_UP && (PLAYER.pos.y > 8)) {
-        PLAYER.dir_y = -1;
+        actor_set_dir(&PLAYER, DIR_UP);
         player_moving = TRUE;
     } else if (INPUT_DOWN && (PLAYER.pos.y < image_height)) {
-        PLAYER.dir_y = 1;
+        actor_set_dir(&PLAYER, DIR_DOWN);
         player_moving = TRUE;
     }
 
@@ -84,5 +81,5 @@ void pointnclick_update() __banked {
     //   }
     // }
 
-    if (player_moving) point_translate_dir(&PLAYER.pos, PLAYER.dir_x, PLAYER.dir_y, PLAYER.move_speed);
+    if (player_moving) point_translate_dir(&PLAYER.pos, PLAYER.dir, PLAYER.move_speed);
 }

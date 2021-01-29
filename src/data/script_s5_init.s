@@ -23,11 +23,11 @@ _script_s5_init::
 
         ; ; Actor 1 Face Left
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT, 0
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
 
         ; ; Actor 1 Face Left
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT, 0
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
 
         ; Wait 1 frame to allow actors to rerender before fade in starts
         VM_PUSH                 1

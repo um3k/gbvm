@@ -22,12 +22,6 @@ typedef enum {
 } LCD_isr_e;
 
 typedef enum {
-    SPRITE_TYPE_STATIC = 0,
-    SPRITE_TYPE_ACTOR,
-    SPRITE_TYPE_ACTOR_ANIMATED
-} sprite_type_e;
-
-typedef enum {
     COLLISION_GROUP_NONE = 0,
     COLLISION_GROUP_PLAYER = 1,
     COLLISION_GROUP_1 = 2,
@@ -35,12 +29,17 @@ typedef enum {
     COLLISION_GROUP_3 = 8,
 } collision_group_e;
 
+typedef struct animation_t
+{
+    UINT8 start;
+    UINT8 end;
+} animation_t;
+
 typedef struct actor_t
 {
   UINT8 enabled; 
   upoint16_t pos;
-  BYTE dir_x;
-  BYTE dir_y;
+  direction_e dir;
   bounding_box_t bounds;
   UINT8 base_tile;
   UINT8 pinned;
@@ -49,11 +48,9 @@ typedef struct actor_t
   UINT8 frame_start;
   UINT8 frame_end;
   UINT8 anim_tick;
-  UINT8 flip_x;
   UINT8 move_speed;
-  sprite_type_e sprite_type;
   UINT8 palette;
-  UINT8 n_frames;
+  animation_t animations[4];
   far_ptr_t sprite;
   far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
   UBYTE ctx_id;
@@ -99,6 +96,7 @@ typedef struct spritesheet_t {
     UINT8 n_tiles;
     UINT8 n_metasprites;
     metasprite_t * const *metasprites;
+    animation_t animations[4];
     UINT8 tiles[];
 } spritesheet_t;
 

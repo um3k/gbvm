@@ -62,15 +62,29 @@
 #define ANGLE_270DEG    192
 #define ANGLE_315DEG    224
 
+#define FLIPPED_DIR(dir) MOD_4((dir) + 2)
+
 typedef struct upoint16_t {
     UINT16 x, y;
 } upoint16_t;
 
-extern const INT8 sine_wave[256];
+typedef struct point8_t {
+    INT8 x, y;
+} point8_t;
 
-inline void point_translate_dir(upoint16_t *point, BYTE dir_x, BYTE dir_y, UBYTE speed) {
-    point->x += (WORD)(dir_x * speed);
-    point->y += (WORD)(dir_y * speed);
+typedef enum {
+    DIR_DOWN = 0,
+    DIR_RIGHT,
+    DIR_UP,
+    DIR_LEFT
+} direction_e;
+
+extern const INT8 sine_wave[256];
+extern const point8_t dir_lookup[4];
+
+inline void point_translate_dir(upoint16_t *point, direction_e dir, UBYTE speed) {
+    point->x += (WORD)(dir_lookup[dir].x * speed);
+    point->y += (WORD)(dir_lookup[dir].y * speed);
 }
 
 inline void point_translate_angle(upoint16_t *point, UBYTE angle, UBYTE speed) {

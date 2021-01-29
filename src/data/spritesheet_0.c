@@ -53,6 +53,12 @@ const struct spritesheet_t spritesheet_0 = {
     .n_tiles = 24,
     .n_metasprites = 6,
     .metasprites = spritesheet_0_metasprites,
+    .animations  = {
+        { .start = 0, .end = 1 }, // bottom
+        { .start = 4, .end = 5 }, // right
+        { .start = 2, .end = 3 }, // top
+        { .start = 6, .end = 7 }, // left
+    },
     .tiles = {
       0,0,7,7,8,15,16,31,61,35,34,63,45,62,43,60,43,62,47,58,63,44,111,95,127,127,57,63,29,27,14,14,
       0,0,224,224,16,240,56,200,92,164,172,212,66,254,190,126,212,124,244,92,244,60,250,254,60,228,

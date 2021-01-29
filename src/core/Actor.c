@@ -163,6 +163,7 @@ void activate_actor(actor_t *actor)
 #endif
     if (actor->enabled) return;
     actor->enabled = TRUE;
+    actor_reset_dir(actor);
     DL_REMOVE_ITEM(actors_inactive_head, actor);
     DL_PUSH_HEAD(actors_active_head, actor);
     if (actor->script_update.bank) {
@@ -217,29 +218,15 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
     }
 }
 
-void actor_set_dir(actor_t *actor, BYTE dir_x, BYTE dir_y) __banked
+void actor_set_dir(actor_t *actor, direction_e dir) __banked
 {
-    actor->dir_x = dir_x;
-    actor->dir_y = dir_y;
-    
-    if (actor->sprite_type != SPRITE_TYPE_STATIC) {
-        if (dir_x == DIR_LEFT) {
-            actor_set_frames(actor, 3 * actor->n_frames, 4 * actor->n_frames);
-        } else if (dir_x == DIR_RIGHT) {
-            actor_set_frames(actor, 2 * actor->n_frames, 3 * actor->n_frames);
-        } else if (dir_y == DIR_UP) {
-            actor_set_frames(actor, actor->n_frames, 2 * actor->n_frames);
-        } else if (dir_y == DIR_DOWN) {
-            actor_set_frames(actor, 0, actor->n_frames);
-        }
-    } else {
-        actor_set_frames(actor, 0, actor->n_frames);
-    }
+    actor->dir = dir;
+    actor_set_frames(actor, actor->animations[dir].start, actor->animations[dir].end + 1);
 }
 
 void actor_reset_dir(actor_t *actor) __banked
 {
-    actor_set_dir(actor, actor->dir_x, actor->dir_y);
+    actor_set_dir(actor, actor->dir);
 }
 
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
@@ -302,26 +289,26 @@ actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked {
     UBYTE tile_x = (PLAYER.pos.x >> 7), tile_y = (PLAYER.pos.y >> 7);
 
     if (grid_size == 16) {
-        if (PLAYER.dir_y == -1) {
+        if (PLAYER.dir == DIR_UP) {
             return actor_at_3x3_tile(tile_x - 1, tile_y - 3, inc_noclip);
-        } else if (PLAYER.dir_y == 1) {
+        } else if (PLAYER.dir == DIR_DOWN) {
             return actor_at_3x3_tile(tile_x - 1, tile_y + 1, inc_noclip);
         } else {
-            if (PLAYER.dir_x == -1) {
+            if (PLAYER.dir == DIR_LEFT) {
                 return actor_at_3x3_tile(tile_x - 3, tile_y - 1, inc_noclip);
-            } else if (PLAYER.dir_x == 1) {
+            } else if (PLAYER.dir == DIR_RIGHT) {
                 return actor_at_3x3_tile(tile_x + 1, tile_y - 1, inc_noclip);
             }
         }
     } else {
-        if (PLAYER.dir_y == -1) {
+        if (PLAYER.dir == DIR_UP) {
             return actor_at_3x1_tile(tile_x - 1, tile_y - 1, inc_noclip);
-        } else if (PLAYER.dir_y == 1) {
+        } else if (PLAYER.dir == DIR_DOWN) {
             return actor_at_3x1_tile(tile_x - 1, tile_y + 2, inc_noclip);
         } else {
-            if (PLAYER.dir_x == -1) {
+            if (PLAYER.dir == DIR_LEFT) {
                 return actor_at_1x2_tile(tile_x - 2, tile_y, inc_noclip);
-            } else if (PLAYER.dir_x == 1) {
+            } else if (PLAYER.dir == DIR_RIGHT) {
                 return actor_at_1x2_tile(tile_x + 2, tile_y, inc_noclip);
             }
         }
@@ -434,22 +421,4 @@ UBYTE check_collision_in_direction(UBYTE start_x, UBYTE start_y, UBYTE end_tile,
             return end_tile;
     }
     return end_tile;
-}
-
-void actor_update_properties(actor_t * actor) __banked {
-    UBYTE n_frames = actor->n_frames;
-    if (n_frames > 6) {
-        actor->sprite_type = SPRITE_TYPE_STATIC;
-        actor->n_frames = 6;
-        actor_set_frames(actor, 0, 6);
-    } else if (n_frames == 6) {
-        actor->sprite_type = SPRITE_TYPE_ACTOR_ANIMATED;
-        actor->n_frames = 2;
-    } else if (n_frames == 3) {
-        actor->sprite_type = SPRITE_TYPE_ACTOR;
-        actor->n_frames = 1;    
-    } else {
-        actor->sprite_type = SPRITE_TYPE_STATIC;
-        actor_set_frames(actor, 0, n_frames);
-    }
 }
