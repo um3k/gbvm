@@ -16,8 +16,7 @@ const struct actor_t scene_8_actors[] = {
       .x = 216 * 16,
       .y = 128 * 16,
     },
-    .dir_x = 0,
-    .dir_y = 1,
+    .dir = DIR_DOWN,
     .bounds = {
       .left = 2,
       .right = 14,
@@ -25,10 +24,7 @@ const struct actor_t scene_8_actors[] = {
       .bottom = 0
     },
     .sprite = TO_FAR_PTR_T(spritesheet_1),
-    .sprite_type = 0,
-    .base_tile = 24,
     .palette = 0,
-    .n_frames = 2,
     .animate = FALSE,
     .move_speed = 1,
     .anim_tick = 7,

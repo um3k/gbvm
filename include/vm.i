@@ -338,12 +338,12 @@ OP_VM_ACTOR_ACTIVATE    = 0x31
 .endm
 
 OP_VM_ACTOR_SET_DIR     = 0x32
-.DIR_LEFT               = -1
+.DIR_DOWN               = 0
 .DIR_RIGHT              = 1
-.DIR_UP                 = -1
-.DIR_DOWN               = 1
-.macro VM_ACTOR_SET_DIR ACTOR, DIR_X, DIR_Y
-        .db OP_VM_ACTOR_SET_DIR, #<DIR_Y, #<DIR_X, #>ACTOR, #<ACTOR
+.DIR_UP                 = 2
+.DIR_LEFT               = 3
+.macro VM_ACTOR_SET_DIR ACTOR, DIR
+        .db OP_VM_ACTOR_SET_DIR, #<DIR, #>ACTOR, #<ACTOR
 .endm
 
 OP_VM_ACTOR_DEACTIVATE  = 0x33

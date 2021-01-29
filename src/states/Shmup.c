@@ -16,14 +16,15 @@ BYTE shooter_direction = 0;
 UBYTE shooter_reached_end = 0;
 
 void shmup_init() __banked {
+
+/*
+  // @todo
+  // Shooter needs rewrite to remove dir_x, dir_y references
+
   camera_offset_x = 0;
   camera_offset_y = 0;
   camera_deadzone_x = 0;
   camera_deadzone_y = 0;
-
-  // PLAYER.dir_x = 1;
-  // PLAYER.dir_y = 0;
-  actor_set_dir(&PLAYER, 1, 0);
 
   if (PLAYER.dir_x < 0) {
     // Right to left scrolling
@@ -53,20 +54,20 @@ void shmup_init() __banked {
   shooter_reached_end = FALSE;
 
   PLAYER.animate = TRUE;
+  */
 }
 
 void shmup_update() __banked {
   UBYTE tile_x, tile_y, hit_actor;
 
+  /*
   tile_x = DIV_8(PLAYER.pos.x);
   tile_y = DIV_8(PLAYER.pos.y);
 
   // Check for trigger collisions
-  /*
   if (trigger_activate_at(tile_x, tile_y, FALSE)) {
     return;
   };
-  */
 
   if (shooter_horizontal) {
     // Check input to set player movement
@@ -149,7 +150,6 @@ void shmup_update() __banked {
   }
 
   // Actor Collisions
-  /*
   hit_actor = ActorOverlapsPlayer(FALSE);
   if (hit_actor && hit_actor != NO_ACTOR_COLLISON && player_iframes == 0) {
     if (actors[hit_actor].collision_group) {

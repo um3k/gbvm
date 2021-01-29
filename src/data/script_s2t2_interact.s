@@ -26,7 +26,7 @@ _script_s2t2_interact::
         VM_SET_CONST            ^/(ACTOR + 1)/, 1024
         VM_SET_CONST            ^/(ACTOR + 2)/, 1792
         VM_ACTOR_SET_POS        ACTOR
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT, 0
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
             IMPORT_FAR_PTR_DATA _scene_4
         ; Stop Script

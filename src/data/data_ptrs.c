@@ -12,8 +12,7 @@ const far_ptr_t music_tracks[] = {
 
 const INT16 start_scene_x = 2560;
 const INT16 start_scene_y = 0;
-const INT8 start_scene_dir_x = 1;
-const INT8 start_scene_dir_y = 0;
+const direction_e start_scene_dir = DIR_RIGHT;
 const far_ptr_t start_scene = TO_FAR_PTR_T(scene_7);
 const far_ptr_t start_player_sprite = TO_FAR_PTR_T(spritesheet_0);
 const far_ptr_t start_player_palette = TO_FAR_PTR_T(palette_0);

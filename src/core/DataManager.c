@@ -13,7 +13,6 @@
 #ifdef CGB
     #include "Palette.h"
 #endif
-#include "data/spritesheet_0.h" // @todo don't hard code this
 #include "data/data_ptrs.h"
 
 #define MAX_SCENE_SPRITES       128
@@ -66,11 +65,14 @@ void load_image(const background_t* background, UBYTE bank) __banked {
     load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
 }
 
-UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank, UBYTE * res_frames) __banked {
+UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
     UBYTE n_tiles = ReadBankedUBYTE(&(sprite->n_tiles), bank);
-    *res_frames =  ReadBankedUBYTE(&(sprite->n_metasprites), bank);
     SetBankedSpriteData(sprite_offset, n_tiles, sprite->tiles, bank);
     return n_tiles;
+}
+
+void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t res_animations[4]) __banked {
+    MemcpyBanked(res_animations, sprite->animations, sizeof(res_animations) * 4, bank);
 }
 
 #ifdef CGB
@@ -166,8 +168,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     if (scene_type != SCENE_TYPE_LOGO) {
         // Load player
         PLAYER.base_tile = 0;
-        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, start_player_sprite.ptr, start_player_sprite.bank, &PLAYER.n_frames);
-        actor_update_properties(&PLAYER);
+        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, start_player_sprite.ptr, start_player_sprite.bank);
+        load_animations(start_player_sprite.ptr, start_player_sprite.bank, PLAYER.animations);
     } else {
         // no player on logo, but still some little amount of actors may be present
         tile_allocation_hiwater = 0x68;
@@ -183,21 +185,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 
             far_ptr_t tmp_ptr;
             ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
-            UBYTE frames_len; 
-            UBYTE allocated_tiles = load_sprite(tile_allocation_hiwater, tmp_ptr.ptr, tmp_ptr.bank, &frames_len);
+            UBYTE allocated_tiles = load_sprite(tile_allocation_hiwater, tmp_ptr.ptr, tmp_ptr.bank);
             base_tiles[i] = tile_allocation_hiwater;
-
-            // sprites_info[i].sprite_offset = DIV_4(k);
-            // sprites_info[i].frames_len = DIV_4(sprite_len);
-            // if (sprites_info[i].frames_len == 6) {
-            //   sprites_info[i].sprite_type = SPRITE_ACTOR_ANIMATED;
-            //   sprites_info[i].frames_len = 2;
-            // } else if (sprites_info[i].frames_len == 3) {
-            //   sprites_info[i].sprite_type = SPRITE_ACTOR;
-            //   sprites_info[i].frames_len = 1;
-            // } else {
-            //   sprites_info[i].sprite_type = SPRITE_STATIC;
-            // }
             tile_allocation_hiwater += allocated_tiles;
             scene_sprite_ptrs++;
         }
@@ -231,7 +220,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
                 // resolve and set base_tile for each actor
                 UBYTE idx = get_farptr_index(scn.sprites.ptr, scn.sprites.bank, sprites_len, &actor->sprite);
                 actor->base_tile = (idx < sprites_len) ? base_tiles[idx] : 0;
-                
+                load_animations((void *)actor->sprite.ptr, actor->sprite.bank, actor->animations);
                 // add to inactive list by default 
                 actor->enabled = FALSE;
                 DL_PUSH_HEAD(actors_inactive_head, actor);
@@ -270,8 +259,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
 void load_player() __banked {
     PLAYER.pos.x = start_scene_x;
     PLAYER.pos.y = start_scene_y;
-    PLAYER.dir_x = start_scene_dir_x;
-    PLAYER.dir_y = start_scene_dir_y;    
+    PLAYER.dir = start_scene_dir;
     PLAYER.sprite = start_player_sprite;
 #ifdef CGB
     PLAYER.palette = PLAYER_PALETTE;
@@ -282,7 +270,6 @@ void load_player() __banked {
     PLAYER.frame = 0;
     PLAYER.frame_start = 0;
     PLAYER.frame_end = 2;
-    PLAYER.flip_x = FALSE;
     PLAYER.pinned = FALSE;    
     PLAYER.collision_group = 0;
     PLAYER.collision_enabled = TRUE;

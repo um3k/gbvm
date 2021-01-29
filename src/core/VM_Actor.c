@@ -26,8 +26,7 @@ typedef struct act_set_pos_t {
 
 void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     actor_t *actor;
-    BYTE new_dir_x = 0;
-    BYTE new_dir_y = 0;
+    direction_e new_dir = DIR_DOWN;
 
     // indicate waitable state of context
     THIS->waitable = 1;
@@ -76,38 +75,27 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     if ((actor->pos.x != params->X) &&
         ((params->ATTR & ACTOR_ATTR_H_FIRST) || (actor->pos.y == params->Y))) {
         if (actor->pos.x < params->X) {
-            new_dir_x = 1;
+            new_dir = DIR_RIGHT;
         } else if (actor->pos.x > params->X) {
-            new_dir_x = -1;
+            new_dir = DIR_LEFT;
         }
     } else {
         // Actor not at vertical destination
         if (actor->pos.y < params->Y) {
-            new_dir_y = 1;
+            new_dir = DIR_DOWN;
         } else if (actor->pos.y > params->Y) {
-            new_dir_y = -1;
+            new_dir = DIR_UP;
         }
     }
 
     // If changed direction, trigger actor rerender
-    if ((actor->dir_x != new_dir_x) ||
-        (actor->dir_y != new_dir_y)) {
-        actor_set_dir(actor, new_dir_x, new_dir_y);
+    if (actor->dir != new_dir) {
+        actor_set_dir(actor, new_dir);
+        actor_set_anim(actor, TRUE);
     }
-
-    actor_set_anim(actor, TRUE);
 
     // Move actor
-    if (actor->move_speed == 0) {
-        // Half speed only move every other frame
-        if (IS_FRAME_2) {
-            actor->pos.x += (WORD)new_dir_x;
-            actor->pos.y += (WORD)new_dir_y;
-        }
-    } else {
-        actor->pos.x += (WORD)(new_dir_x * actor->move_speed);
-        actor->pos.y += (WORD)(new_dir_y * actor->move_speed);
-    }
+    point_translate_dir(&actor->pos, actor->dir, actor->move_speed);
 
     THIS->PC -= (INSTRUCTION_SIZE + sizeof(idx));
     return;
@@ -123,9 +111,9 @@ void vm_actor_deactivate(SCRIPT_CTX * THIS, INT16 idx) __banked {
     deactivate_actor(actors + *n_actor);
 }
 
-void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, INT8 dir_x, INT8 dir_y) __banked {
+void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, direction_e dir) __banked {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
-    actor_set_dir(actors + *n_actor, dir_x, dir_y);
+    actor_set_dir(actors + *n_actor, dir);
 }
 
 void vm_actor_set_anim(SCRIPT_CTX * THIS, INT16 idx, INT16 idx_anim) __banked {
@@ -178,8 +166,11 @@ void vm_actor_set_bounds(SCRIPT_CTX * THIS, INT16 idx, BYTE left, BYTE right, BY
 void vm_actor_set_spritesheet(SCRIPT_CTX * THIS, INT16 idx, UBYTE spritesheet_bank, const spritesheet_t *spritesheet) __banked {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
     actor_t * actor = actors + *n_actor;
-    load_sprite(actor->base_tile, spritesheet, spritesheet_bank, &actor->n_frames);
-    actor_update_properties(actor);
+    load_sprite(actor->base_tile, spritesheet, spritesheet_bank);
+    actor->sprite.bank = spritesheet_bank;
+    actor->sprite.ptr = (void *)spritesheet;
+    load_animations(spritesheet, spritesheet_bank, actor->animations);
+    actor_reset_dir(actor);
 }
 
 void vm_actor_replace_tile(SCRIPT_CTX * THIS, INT16 idx, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile, UBYTE length) __banked {

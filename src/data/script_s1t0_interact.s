@@ -26,7 +26,7 @@ _script_s1t0_interact::
         VM_SET_CONST            ^/(ACTOR + 1)/, 3200
         VM_SET_CONST            ^/(ACTOR + 2)/, 2048
         VM_ACTOR_SET_POS        ACTOR
-        VM_ACTOR_SET_DIR        ACTOR, 0, .DIR_DOWN
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_DOWN
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
             IMPORT_FAR_PTR_DATA _scene_2
         ; Stop Script

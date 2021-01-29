@@ -32,13 +32,13 @@ void adventure_update() __banked {
     player_moving = FALSE;
 
     if (INPUT_RECENT_LEFT) {
-        actor_set_dir(&PLAYER, -1, 0);
+        actor_set_dir(&PLAYER, DIR_LEFT);
     } else if (INPUT_RECENT_RIGHT) {
-        actor_set_dir(&PLAYER, 1, 0);
+        actor_set_dir(&PLAYER, DIR_RIGHT);
     } else if (INPUT_RECENT_UP) {
-        actor_set_dir(&PLAYER, 0, -1);
+        actor_set_dir(&PLAYER, DIR_UP);
     } else if (INPUT_RECENT_DOWN) {
-        actor_set_dir(&PLAYER, 0, 1);
+        actor_set_dir(&PLAYER, DIR_DOWN);
     }
 
     if (INPUT_LEFT) {
