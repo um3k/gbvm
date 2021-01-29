@@ -3,8 +3,9 @@
 #include "VM_Actor.h"
 #include "VM_UI.h"
 #include "VM_gameboy.h"
-#include "VM_music.h"
-#include "VM_camera.h"
+#include "VM_Music.h"
+#include "VM_Camera.h"
+#include "VM_Math.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
@@ -53,8 +54,8 @@ const SCRIPT_CMD script_cmds[] = {
     {0, 0},
     {0, 0},
     {0, 0},
-    {0, 0},
-    {0, 0},
+    {vm_sin_scale,              5}, // 0x2C 
+    {vm_cos_scale,              5}, // 0x2D
     {0, 0},
     {0, 0},
 

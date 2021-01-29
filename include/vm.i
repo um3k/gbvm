@@ -311,6 +311,17 @@ OP_VM_RAISE           = 0x27
 
 ; --- engine-specific instructions ------------------------------------------
 
+; --- MATH -------------------------------------------
+
+OP_VM_SIN_SCALE         = 0x2C
+.macro VM_SIN_SCALE IDX, IDX_ANGLE, SCALE
+        .db OP_VM_SIN_SCALE, #<SCALE, #>IDX_ANGLE, #<IDX_ANGLE, #>IDX, #<IDX
+.endm
+
+OP_VM_COS_SCALE         = 0x2D
+.macro VM_COS_SCALE IDX, IDX_ANGLE, SCALE
+        .db OP_VM_COS_SCALE, #<SCALE, #>IDX_ANGLE, #<IDX_ANGLE, #>IDX, #<IDX
+.endm
 
 ; --- ACTOR ------------------------------------------
 
