@@ -89,7 +89,7 @@ UBYTE music_events_poll() __banked {
             routine_queue_tail++, routine_queue_tail &= (MAX_ROUTINE_QUEUE_LEN - 1);
             data = routine_queue[routine_queue_tail];
         }
-        return data;
+        return (data & 0x03 + 1) | (data & 0xf0);
     }
     return 0;
 }
