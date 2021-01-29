@@ -1,3 +1,5 @@
+#pragma bank 3
+
 #include <string.h>
 
 #include "events.h"

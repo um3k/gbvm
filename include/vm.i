@@ -522,6 +522,11 @@ OP_VM_REPLACE_TILE      = 0x5B
         .db OP_VM_REPLACE_TILE, #<LEN, #<START, #>TILEDATA, #<TILEDATA, #<TILEDATA_BANK, #<TARGET_TILE
 .endm
 
+OP_VM_POLL              = 0x5C
+.macro VM_POLL IDX_EVENT, IDX_VALUE, MASK
+        .db OP_VM_POLL, #<MASK, #>IDX_VALUE, #<IDX_VALUE, #>IDX_EVENT, #<IDX_EVENT 
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60

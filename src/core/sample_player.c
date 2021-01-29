@@ -1,3 +1,5 @@
+#pragma bank 3
+
 #include "sample_player.h"
 
 UINT8 play_bank = 1;

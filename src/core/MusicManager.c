@@ -1,3 +1,5 @@
+#pragma bank 3
+
 #include <string.h>
 
 #include "MusicManager.h"
@@ -78,6 +80,18 @@ void music_events_update() __nonbanked {
         if ((event->handle == 0) || ((event->handle & 0x8000) != 0))
             script_execute(event->script_bank, event->script_addr, &event->handle, 1, (UWORD)(data >> 4));
     }
+}
+
+UBYTE music_events_poll() __banked {
+    if (routine_queue_head != routine_queue_tail) {
+        UBYTE data;
+        __critical {
+            routine_queue_tail++, routine_queue_tail &= (MAX_ROUTINE_QUEUE_LEN - 1);
+            data = routine_queue[routine_queue_tail];
+        }
+        return (data & 0x03 + 1) | (data & 0xf0);
+    }
+    return 0;
 }
 
 void music_play(UBYTE index, UBYTE loop) __nonbanked {

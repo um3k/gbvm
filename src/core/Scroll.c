@@ -101,11 +101,17 @@ void scroll_update() __banked {
 UBYTE scroll_viewport(parallax_row_t * port) {
     if (port->shift) {
         // Parallax
-        UINT16 shift_scroll_x = draw_scroll_x >> port->shift;
-        UBYTE shift_col;
+        UINT16 shift_scroll_x;
+        if (port->shift == 127) {
+            shift_scroll_x = 0;
+        } else if (port->shift < 0) {
+            shift_scroll_x = draw_scroll_x << (-port->shift);
+        } else {
+            shift_scroll_x = draw_scroll_x >> port->shift;
+        }
 
         port->scx = shift_scroll_x;
-        shift_col = shift_scroll_x >> 3;
+        UBYTE shift_col = shift_scroll_x >> 3;
 
         // If column is +/- 1 just render next column
         if (current_col == new_col - 1) {
