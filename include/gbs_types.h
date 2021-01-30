@@ -73,6 +73,7 @@ typedef struct scene_t {
     UINT8 width, height;
     scene_type_e type;
     UINT8 n_actors, n_triggers, n_sprites;
+    far_ptr_t player_sprite;
     far_ptr_t background, collisions, colors, palette, sprite_palette;
     far_ptr_t script_init, script_p_hit1, script_p_hit2, script_p_hit3;
     far_ptr_t sprites;
