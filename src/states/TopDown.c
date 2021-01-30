@@ -34,6 +34,7 @@ void topdown_init() __banked {
 void topdown_update() __banked {
     actor_t *hit_actor;
     UBYTE tile_start, tile_end;
+    direction_e new_dir = DIR_NONE;
 
     // Is player on an 8x8px tile?
     if ((topdown_grid == 16 && ON_16PX_GRID(PLAYER.pos)) ||
@@ -51,7 +52,7 @@ void topdown_update() __banked {
         // Check input to set player movement
         if (INPUT_RECENT_LEFT) {
             player_moving = TRUE;
-            actor_set_dir(&PLAYER, DIR_LEFT);
+            new_dir = DIR_LEFT;
 
             // Check for collisions to left of player
             tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
@@ -66,7 +67,7 @@ void topdown_update() __banked {
             }
         } else if (INPUT_RECENT_RIGHT) {
             player_moving = TRUE;
-            actor_set_dir(&PLAYER, DIR_RIGHT);
+            new_dir = DIR_RIGHT;
 
             // Check for collisions to right of player
             tile_start = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top)    >> 3);
@@ -81,7 +82,7 @@ void topdown_update() __banked {
             }
         } else if (INPUT_RECENT_UP) {
             player_moving = TRUE;
-            actor_set_dir(&PLAYER, DIR_UP);
+            new_dir = DIR_UP;
 
             // Check for collisions below player
             tile_start = (((PLAYER.pos.x >> 4) + PLAYER.bounds.left)  >> 3);
@@ -96,7 +97,7 @@ void topdown_update() __banked {
             }
         } else if (INPUT_RECENT_DOWN) {
             player_moving = TRUE;
-            actor_set_dir(&PLAYER, DIR_DOWN);
+            new_dir = DIR_DOWN;
 
             // Check for collisions below player
             tile_start = (((PLAYER.pos.x >> 4) + PLAYER.bounds.left)  >> 3);
@@ -128,7 +129,7 @@ void topdown_update() __banked {
         if (INPUT_A_PRESSED) {
             hit_actor = actor_in_front_of_player(topdown_grid, TRUE);
             if (hit_actor != NULL && !hit_actor->collision_group) {
-                actor_set_dir(hit_actor, FLIPPED_DIR(PLAYER.dir));
+                actor_set_dir(hit_actor, FLIPPED_DIR(PLAYER.dir), FALSE);
                 player_moving = FALSE;
                 if (hit_actor->script.bank) {
                     script_execute(hit_actor->script.bank, hit_actor->script.ptr, 0, 0);
@@ -136,8 +137,11 @@ void topdown_update() __banked {
             }
         }
 
-        actor_set_anim(&PLAYER, player_moving);
-
+        if (new_dir != DIR_NONE) {
+            actor_set_dir(&PLAYER, new_dir, player_moving);
+        } else {
+            actor_set_anim_idle(&PLAYER);
+        }
     }
 
     if (player_moving) point_translate_dir(&PLAYER.pos, PLAYER.dir, PLAYER.move_speed);

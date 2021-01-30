@@ -56,10 +56,16 @@ const struct spritesheet_t spritesheet_10 = {
     .n_metasprites = 8,
     .metasprites = spritesheet_10_metasprites,
     .animations  = {
+        // Idle
         { .start = 0, .end = 7 }, // bottom
         { .start = 0, .end = 7 }, // right
         { .start = 0, .end = 7 }, // top
         { .start = 0, .end = 7 }, // left
+        // Moving
+        { .start = 0, .end = 7 }, // bottom
+        { .start = 0, .end = 7 }, // right
+        { .start = 0, .end = 7 }, // top
+        { .start = 0, .end = 7 }, // left        
     },    
     .tiles = {
         0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x03,0x03,0x0d,0x0e,0x1f,0x10,0x3f,0x20,0x3f,0x20,

@@ -98,7 +98,7 @@ void actors_update() __nonbanked
         }
 
         // Check reached animation tick frame
-        if ((actor->animate) && ((game_time & actor->anim_tick) == 0)) {
+        if ((game_time & actor->anim_tick) == 0) {
             actor->frame++;
             // Check reached end of animation
             if (actor->frame == actor->frame_end) {
@@ -163,7 +163,7 @@ void activate_actor(actor_t *actor)
 #endif
     if (actor->enabled) return;
     actor->enabled = TRUE;
-    actor_reset_dir(actor);
+    actor_set_anim_idle(actor);
     DL_REMOVE_ITEM(actors_inactive_head, actor);
     DL_PUSH_HEAD(actors_active_head, actor);
     if (actor->script_update.bank) {
@@ -218,15 +218,24 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
     }
 }
 
-void actor_set_dir(actor_t *actor, direction_e dir) __banked
+void actor_set_anim_idle(actor_t *actor) __banked
 {
-    actor->dir = dir;
-    actor_set_frames(actor, actor->animations[dir].start, actor->animations[dir].end + 1);
+    actor_set_anim(actor, actor->dir);
 }
 
-void actor_reset_dir(actor_t *actor) __banked
+void actor_set_anim_moving(actor_t *actor) __banked
 {
-    actor_set_dir(actor, actor->dir);
+    actor_set_anim(actor, actor->dir + N_DIRECTIONS);
+}
+
+void actor_set_dir(actor_t *actor, direction_e dir, UBYTE moving) __banked
+{
+    actor->dir = dir;
+    if (moving) {
+        actor_set_anim(actor, dir + N_DIRECTIONS);
+    } else {
+        actor_set_anim(actor, dir);
+    }
 }
 
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked

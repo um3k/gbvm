@@ -43,14 +43,14 @@ typedef struct actor_t
   bounding_box_t bounds;
   UINT8 base_tile;
   UINT8 pinned;
-  UINT8 animate;
   UINT8 frame;
   UINT8 frame_start;
   UINT8 frame_end;
   UINT8 anim_tick;
   UINT8 move_speed;
   UINT8 palette;
-  animation_t animations[4];
+  UINT8 animation;
+  animation_t animations[8];
   far_ptr_t sprite;
   far_ptr_t script, script_update, script_hit1, script_hit2, script_hit3;
   UBYTE ctx_id;
@@ -96,7 +96,7 @@ typedef struct spritesheet_t {
     UINT8 n_tiles;
     UINT8 n_metasprites;
     metasprite_t * const *metasprites;
-    animation_t animations[4];
+    animation_t animations[8];
     UINT8 tiles[];
 } spritesheet_t;
 
