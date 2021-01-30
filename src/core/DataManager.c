@@ -168,12 +168,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     if (scene_type != SCENE_TYPE_LOGO) {
         // Load player
         PLAYER.base_tile = 0;
-        if (scn.player_sprite.bank) {
-            tile_allocation_hiwater = load_sprite(PLAYER.base_tile, scn.player_sprite.ptr, scn.player_sprite.bank);
-            load_animations(start_player_sprite.ptr, start_player_sprite.bank, PLAYER.animations);
-        } else {
-            tile_allocation_hiwater = 0;
-        }
+        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, scn.player_sprite.ptr, scn.player_sprite.bank);
+        load_animations(start_player_sprite.ptr, start_player_sprite.bank, PLAYER.animations);
     } else {
         // no player on logo, but still some little amount of actors may be present
         tile_allocation_hiwater = 0x68;
