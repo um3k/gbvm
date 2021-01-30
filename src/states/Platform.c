@@ -271,7 +271,7 @@ void platform_update() __banked {
             actor_set_anim_idle(&PLAYER);
         }
     } else {
-        if (pl_vel_x < 0) {
+        if (PLAYER.dir == DIR_LEFT) {
             actor_set_anim(&PLAYER, ANIM_JUMP_LEFT);
         } else {
             actor_set_anim(&PLAYER, ANIM_JUMP_RIGHT);
