@@ -34,19 +34,19 @@ void pointnclick_update() __banked {
 
     // Move cursor horizontally
     if (INPUT_LEFT && (PLAYER.pos.x > 0)) {
-        actor_set_dir(&PLAYER, DIR_LEFT);
+        actor_set_dir(&PLAYER, DIR_LEFT, FALSE);
         player_moving = TRUE;
     } else if (INPUT_RIGHT && (PLAYER.pos.x < image_width - 8)) {
-        actor_set_dir(&PLAYER, DIR_RIGHT);
+        actor_set_dir(&PLAYER, DIR_RIGHT, FALSE);
         player_moving = TRUE;
     }
 
     // Move cursor vertically
     if (INPUT_UP && (PLAYER.pos.y > 8)) {
-        actor_set_dir(&PLAYER, DIR_UP);
+        actor_set_dir(&PLAYER, DIR_UP, FALSE);
         player_moving = TRUE;
     } else if (INPUT_DOWN && (PLAYER.pos.y < image_height)) {
-        actor_set_dir(&PLAYER, DIR_DOWN);
+        actor_set_dir(&PLAYER, DIR_DOWN, FALSE);
         player_moving = TRUE;
     }
 

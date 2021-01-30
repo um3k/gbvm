@@ -53,12 +53,18 @@ const struct spritesheet_t spritesheet_9 = {
   .n_tiles = 24,
   .n_metasprites = 6,
   .metasprites = spritesheet_9_metasprites,
-  .animations  = {
-    { .start = 0, .end = 1 }, // bottom
-    { .start = 4, .end = 5 }, // right
-    { .start = 2, .end = 3 }, // top
-    { .start = 6, .end = 7 }, // left
-  },
+    .animations  = {
+        // Idle
+        { .start = 0, .end = 0 }, // bottom
+        { .start = 4, .end = 4 }, // right
+        { .start = 2, .end = 2 }, // top
+        { .start = 6, .end = 6 }, // left
+        // Moving
+        { .start = 0, .end = 1 }, // bottom
+        { .start = 4, .end = 5 }, // right
+        { .start = 2, .end = 3 }, // top
+        { .start = 6, .end = 7 }, // left
+    },
   .tiles = {
     7,7,24,31,48,47,109,83,82,111,77,126,83,124,91,118,95,114,127,88,207,188,159,255,127,127,57,63,29,27,14,14,
     224,224,24,248,52,204,91,167,169,215,70,254,186,126,218,110,250,78,251,29,241,63,254,254,60,228,252,228,248,

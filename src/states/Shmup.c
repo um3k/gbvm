@@ -53,7 +53,6 @@ void shmup_init() __banked {
 
   shooter_reached_end = FALSE;
 
-  PLAYER.animate = TRUE;
   */
 }
 

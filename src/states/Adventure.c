@@ -28,17 +28,18 @@ void adventure_update() __banked {
     actor_t *hit_actor;
     UBYTE tile_start, tile_end;
     UBYTE angle = 0;
+    direction_e new_dir = DIR_NONE;
 
     player_moving = FALSE;
 
     if (INPUT_RECENT_LEFT) {
-        actor_set_dir(&PLAYER, DIR_LEFT);
+        new_dir = DIR_LEFT;
     } else if (INPUT_RECENT_RIGHT) {
-        actor_set_dir(&PLAYER, DIR_RIGHT);
+        new_dir = DIR_RIGHT;
     } else if (INPUT_RECENT_UP) {
-        actor_set_dir(&PLAYER, DIR_UP);
+        new_dir = DIR_UP;
     } else if (INPUT_RECENT_DOWN) {
-        actor_set_dir(&PLAYER, DIR_DOWN);
+        new_dir = DIR_DOWN;
     }
 
     if (INPUT_LEFT) {
@@ -125,7 +126,11 @@ void adventure_update() __banked {
         }
     }
 
-    actor_set_anim(&PLAYER, player_moving);
+    if (new_dir != DIR_NONE) {
+        actor_set_dir(&PLAYER, new_dir, player_moving);
+    } else {
+        actor_set_anim_idle(&PLAYER);
+    }
 
     // Check for trigger collisions
     if (trigger_activate_at_intersection(&PLAYER.bounds, &PLAYER.pos, FALSE)) {

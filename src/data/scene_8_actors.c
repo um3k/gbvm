@@ -25,7 +25,6 @@ const struct actor_t scene_8_actors[] = {
     },
     .sprite = TO_FAR_PTR_T(spritesheet_1),
     .palette = 0,
-    .animate = FALSE,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,

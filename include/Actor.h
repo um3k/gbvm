@@ -17,6 +17,10 @@
 
 #define PLAYER_HURT_IFRAMES   20
 
+#define ANIM_JUMP_LEFT        4
+#define ANIM_JUMP_RIGHT       6
+#define ANIM_CLIMB            2
+
 typedef enum {
   CHECK_DIR_LEFT = 1,
   CHECK_DIR_RIGHT,
@@ -39,14 +43,22 @@ void actors_update() __nonbanked;
 void deactivate_actor(actor_t *actor) __banked;
 void activate_actor(actor_t *actor) __banked;
 void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked;
-void actor_set_dir(actor_t *actor, direction_e dir) __banked;
 actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked;
 actor_t *actor_in_front_of_player(UBYTE grid_size, UBYTE inc_noclip) __banked;
 actor_t *actor_overlapping_player(UBYTE inc_noclip) __banked;
-void actor_reset_dir(actor_t *actor) __banked;
-
-inline void actor_set_anim(actor_t *actor, UBYTE animate) {
-    actor->animate = animate;
+void actor_set_anim_idle(actor_t *actor) __banked;
+void actor_set_anim_moving(actor_t *actor) __banked;
+void actor_set_dir(actor_t *actor, direction_e dir, UBYTE moving) __banked;
+inline void actor_set_anim(actor_t *actor, UBYTE anim) {
+    actor->animation = anim;
+    actor_set_frames(actor, actor->animations[anim].start, actor->animations[anim].end + 1);
+}
+inline void actor_reset_anim(actor_t *actor) {
+    actor_set_frames(actor, actor->animations[actor->animation].start, actor->animations[actor->animation].end + 1);
+}
+inline void actor_stop_anim(actor_t *actor) {
+    actor->frame_start = actor->frame;
+    actor->frame_end = actor->frame + 1;
 }
 inline void player_register_collision_with(actor_t *actor) {
     player_collision_actor = actor;

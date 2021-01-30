@@ -54,6 +54,12 @@ const struct spritesheet_t spritesheet_0 = {
     .n_metasprites = 6,
     .metasprites = spritesheet_0_metasprites,
     .animations  = {
+        // Idle
+        { .start = 0, .end = 0 }, // bottom
+        { .start = 4, .end = 4 }, // right
+        { .start = 2, .end = 2 }, // top
+        { .start = 6, .end = 6 }, // left
+        // Moving
         { .start = 0, .end = 1 }, // bottom
         { .start = 4, .end = 5 }, // right
         { .start = 2, .end = 3 }, // top

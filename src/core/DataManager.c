@@ -72,7 +72,7 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) 
 }
 
 void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t res_animations[4]) __banked {
-    MemcpyBanked(res_animations, sprite->animations, sizeof(res_animations) * 4, bank);
+    MemcpyBanked(res_animations, sprite->animations, sizeof(sprite->animations), bank);
 }
 
 #ifdef CGB
@@ -168,7 +168,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     if (scene_type != SCENE_TYPE_LOGO) {
         // Load player
         PLAYER.base_tile = 0;
-        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, start_player_sprite.ptr, start_player_sprite.bank);
+        tile_allocation_hiwater = load_sprite(PLAYER.base_tile, scn.player_sprite.ptr, scn.player_sprite.bank);
         load_animations(start_player_sprite.ptr, start_player_sprite.bank, PLAYER.animations);
     } else {
         // no player on logo, but still some little amount of actors may be present
@@ -201,7 +201,6 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
         memcpy(&PLAYER.script_hit3, &scn.script_p_hit3, sizeof(far_ptr_t));
 
         player_moving = FALSE;
-        PLAYER.animate = FALSE;
 
         // Load actors
         actors_active_head = 0;
@@ -232,7 +231,7 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     } else {
         actor_t *actor = actors_active_head;
         while (actor) {
-            actor_reset_dir(actor);
+            actor_set_anim_idle(actor);
             actor = actor->next;
         }
     }
@@ -264,7 +263,6 @@ void load_player() __banked {
 #ifdef CGB
     PLAYER.palette = PLAYER_PALETTE;
 #endif
-    PLAYER.animate = FALSE;
     PLAYER.move_speed = start_player_move_speed;
     PLAYER.anim_tick = start_player_anim_tick;
     PLAYER.frame = 0;

@@ -64,6 +64,8 @@
 
 #define FLIPPED_DIR(dir) MOD_4((dir) + 2)
 
+#define N_DIRECTIONS    4
+
 typedef struct upoint16_t {
     UINT16 x, y;
 } upoint16_t;
@@ -76,7 +78,8 @@ typedef enum {
     DIR_DOWN = 0,
     DIR_RIGHT,
     DIR_UP,
-    DIR_LEFT
+    DIR_LEFT,
+    DIR_NONE
 } direction_e;
 
 extern const INT8 sine_wave[256];

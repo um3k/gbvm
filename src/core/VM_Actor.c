@@ -67,7 +67,7 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
     // Actor reached destination
     if ((actor->pos.x == params->X) && (actor->pos.y == params->Y)) {
         THIS->flags = 0;
-        actor_set_anim(actor, FALSE);
+        actor_set_anim_idle(actor);
         return;
     }
 
@@ -90,8 +90,7 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
     // If changed direction, trigger actor rerender
     if (actor->dir != new_dir) {
-        actor_set_dir(actor, new_dir);
-        actor_set_anim(actor, TRUE);
+        actor_set_dir(actor, new_dir, TRUE);        
     }
 
     // Move actor
@@ -113,7 +112,7 @@ void vm_actor_deactivate(SCRIPT_CTX * THIS, INT16 idx) __banked {
 
 void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, direction_e dir) __banked {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
-    actor_set_dir(actors + *n_actor, dir);
+    actor_set_dir(actors + *n_actor, dir, FALSE);
 }
 
 void vm_actor_set_anim(SCRIPT_CTX * THIS, INT16 idx, INT16 idx_anim) __banked {
@@ -170,7 +169,7 @@ void vm_actor_set_spritesheet(SCRIPT_CTX * THIS, INT16 idx, UBYTE spritesheet_ba
     actor->sprite.bank = spritesheet_bank;
     actor->sprite.ptr = (void *)spritesheet;
     load_animations(spritesheet, spritesheet_bank, actor->animations);
-    actor_reset_dir(actor);
+    actor_reset_anim(actor);
 }
 
 void vm_actor_replace_tile(SCRIPT_CTX * THIS, INT16 idx, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile, UBYTE length) __banked {

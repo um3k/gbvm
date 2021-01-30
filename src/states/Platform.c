@@ -25,10 +25,10 @@ void platform_init() __banked {
     UBYTE tile_x, tile_y;
 
     pl_vel_x = 0;
-    pl_vel_y = 0;
+    pl_vel_y = plat_grav << 2;
 
     if (PLAYER.dir == DIR_UP || PLAYER.dir == DIR_DOWN) {
-        actor_set_dir(&PLAYER, DIR_RIGHT);
+        PLAYER.dir = DIR_RIGHT;
     }
 
     tile_x = PLAYER.pos.x >> 7;
@@ -36,15 +36,17 @@ void platform_init() __banked {
 
     grounded = FALSE;
 
-    // // If starting tile was a ladder start scene attached to it
+    // If starting tile was a ladder start scene attached to it
     if (tile_at(tile_x, tile_y - 1) & TILE_PROP_LADDER) {
         // Snap to ladder
         UBYTE p_half_width = (PLAYER.bounds.right - PLAYER.bounds.left) >> 1;
         PLAYER.pos.x = (((tile_x << 3) + 4 - (PLAYER.bounds.left + p_half_width) << 4));
-        actor_set_dir(&PLAYER, DIR_UP);        
+        actor_set_anim(&PLAYER, ANIM_CLIMB);
+        actor_stop_anim(&PLAYER);
         on_ladder = TRUE;
     } else {
         on_ladder = FALSE;
+        actor_set_anim_idle(&PLAYER);
     }
 
     camera_offset_x = 0;
@@ -70,14 +72,12 @@ void platform_update() __banked {
             UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.top + 1) >> 3;
             if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 pl_vel_y = -plat_climb_vel;
-                actor_set_dir(&PLAYER, DIR_UP);
             }
         } else if (INPUT_DOWN) {
             // Descend ladder
             UBYTE tile_y = ((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom + 1) >> 3;
             if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 pl_vel_y = plat_climb_vel;
-                actor_set_dir(&PLAYER, DIR_UP);
             }
         } else if (INPUT_LEFT) {
             on_ladder = FALSE;
@@ -114,7 +114,6 @@ void platform_update() __banked {
                 pl_vel_x -= plat_walk_acc;
                 pl_vel_x = CLAMP(pl_vel_x, -plat_walk_vel, -plat_min_vel);
             } 
-            actor_set_dir(&PLAYER, DIR_LEFT);
         } else if (INPUT_RIGHT) {
             if (INPUT_B) {
                 pl_vel_x += plat_run_acc;
@@ -123,14 +122,12 @@ void platform_update() __banked {
                 pl_vel_x += plat_walk_acc;
                 pl_vel_x = CLAMP(pl_vel_x, plat_min_vel, plat_walk_vel);
             }
-            actor_set_dir(&PLAYER, DIR_RIGHT);
         } else if (INPUT_UP) {
             // Grab upwards ladder
             UBYTE tile_x_mid = ((PLAYER.pos.x >> 4) + PLAYER.bounds.left + p_half_width) >> 3;
             UBYTE tile_y   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.top) >> 3);
             if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 PLAYER.pos.x = (((tile_x_mid << 3) + 4 - (PLAYER.bounds.left + p_half_width) << 4));
-                actor_set_dir(&PLAYER, DIR_UP);
                 on_ladder = TRUE;
                 pl_vel_x = 0;
             }
@@ -140,7 +137,6 @@ void platform_update() __banked {
             UBYTE tile_y   = (((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom) >> 3) + 1;
             if (tile_at(tile_x_mid, tile_y) & TILE_PROP_LADDER) {
                 PLAYER.pos.x = (((tile_x_mid << 3) + 4 - (PLAYER.bounds.left + p_half_width) << 4));
-                actor_set_dir(&PLAYER, DIR_UP);
                 on_ladder = TRUE;
                 pl_vel_x = 0;
             }
@@ -229,8 +225,6 @@ void platform_update() __banked {
         pl_vel_y = MIN(pl_vel_y, plat_max_fall_vel);
     }
 
-    actor_set_anim(&PLAYER, (grounded && pl_vel_x != 0) || (on_ladder && pl_vel_y != 0));
-
     UBYTE tile_x_mid = ((PLAYER.pos.x >> 4) + ((PLAYER.bounds.right - PLAYER.bounds.left) >> 2)) >> 3;
     UBYTE tile_y_mid = ((PLAYER.pos.y >> 4) + ((PLAYER.bounds.bottom - PLAYER.bounds.top) >> 2)) >> 3;
 
@@ -260,5 +254,27 @@ void platform_update() __banked {
     if (INPUT_A_PRESSED && grounded && can_jump) {
         pl_vel_y = -plat_jump_vel;
         grounded = FALSE;
-    }    
+    }
+
+    // Player animation
+    if (on_ladder) {
+        actor_set_anim(&PLAYER, ANIM_CLIMB);
+        if (pl_vel_y == 0) {
+            actor_stop_anim(&PLAYER);
+        }
+    } else if (grounded) {
+        if (pl_vel_x < 0) {
+            actor_set_dir(&PLAYER, DIR_LEFT, TRUE);
+        } else if (pl_vel_x > 0) {
+            actor_set_dir(&PLAYER, DIR_RIGHT, TRUE);
+        } else {
+            actor_set_anim_idle(&PLAYER);
+        }
+    } else {
+        if (PLAYER.dir == DIR_LEFT) {
+            actor_set_anim(&PLAYER, ANIM_JUMP_LEFT);
+        } else {
+            actor_set_anim(&PLAYER, ANIM_JUMP_RIGHT);
+        }
+    }
 }
