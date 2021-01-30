@@ -112,6 +112,14 @@ void topdown_update() __banked {
             }
         }
 
+        // Update direction animation
+        if (new_dir != DIR_NONE) {
+            actor_set_dir(&PLAYER, new_dir, player_moving);
+        } else {
+            actor_set_anim_idle(&PLAYER);
+        }
+
+        // Check for actor overlap
         hit_actor = actor_overlapping_player(FALSE);
         if (hit_actor != NULL && hit_actor->collision_group) {
             player_register_collision_with(hit_actor);
@@ -122,6 +130,7 @@ void topdown_update() __banked {
             hit_actor = actor_in_front_of_player(topdown_grid, FALSE);
             if (hit_actor != NULL) {
                 player_register_collision_with(hit_actor);
+                actor_stop_anim(&PLAYER);
                 player_moving = FALSE;
             }
         }
@@ -135,12 +144,6 @@ void topdown_update() __banked {
                     script_execute(hit_actor->script.bank, hit_actor->script.ptr, 0, 0);
                 }
             }
-        }
-
-        if (new_dir != DIR_NONE) {
-            actor_set_dir(&PLAYER, new_dir, player_moving);
-        } else {
-            actor_set_anim_idle(&PLAYER);
         }
     }
 
