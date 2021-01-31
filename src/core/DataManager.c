@@ -14,6 +14,7 @@
     #include "Palette.h"
 #endif
 #include "data/data_ptrs.h"
+#include "data/spritesheet_none.h"
 
 #define MAX_SCENE_SPRITES       128
 
@@ -36,6 +37,8 @@ UBYTE actors_len = 0;
 UBYTE player_sprite_len = 0;
 scene_type_e scene_type;
 LCD_isr_e scene_LCD_type;
+
+const far_ptr_t spritesheet_none_far = TO_FAR_PTR_T(spritesheet_none);
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
     UWORD ntiles = ReadBankedUWORD(&(tiles->n_tiles), bank);
@@ -174,6 +177,8 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     } else {
         // no player on logo, but still some little amount of actors may be present
         tile_allocation_hiwater = 0x68;
+        PLAYER.sprite = spritesheet_none_far;
+        memset(PLAYER.animations, 0, sizeof(PLAYER.animations));
     }
 
     UBYTE base_tiles[MAX_SCENE_SPRITES];
