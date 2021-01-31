@@ -106,3 +106,8 @@ void vm_poll(SCRIPT_CTX * THIS, INT16 idx, INT16 res, UBYTE event_mask) __banked
     THIS->waitable = 1;
     THIS->PC -= INSTRUCTION_SIZE + sizeof(idx) + sizeof(res) + sizeof(event_mask);
 }
+
+void vm_set_sprite_mode(SCRIPT_CTX * THIS, UBYTE mode) __banked {
+    THIS;
+    if (mode) SPRITES_8x16; else SPRITES_8x8;
+}

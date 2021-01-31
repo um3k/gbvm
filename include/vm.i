@@ -537,6 +537,13 @@ OP_VM_POLL              = 0x5C
         .db OP_VM_POLL, #<MASK, #>IDX_VALUE, #<IDX_VALUE, #>IDX_EVENT, #<IDX_EVENT 
 .endm
 
+OP_VM_SET_SPRITE_MODE   = 0x5D
+.MODE_8X8               = 0
+.MODE_8X16              = 1
+.macro VM_SET_SPRITE_MODE MODE
+        .db OP_VM_SET_SPRITE_MODE, #<MODE 
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60
