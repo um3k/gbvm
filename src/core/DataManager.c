@@ -14,6 +14,7 @@
     #include "Palette.h"
 #endif
 #include "data/data_ptrs.h"
+#include "data/spritesheet_none.h"
 
 #define MAX_SCENE_SPRITES       128
 
@@ -36,6 +37,8 @@ UBYTE actors_len = 0;
 UBYTE player_sprite_len = 0;
 scene_type_e scene_type;
 LCD_isr_e scene_LCD_type;
+
+const far_ptr_t spritesheet_none_far = TO_FAR_PTR_T(spritesheet_none);
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
     UWORD ntiles = ReadBankedUWORD(&(tiles->n_tiles), bank);
@@ -168,11 +171,14 @@ UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
     if (scene_type != SCENE_TYPE_LOGO) {
         // Load player
         PLAYER.base_tile = 0;
+        PLAYER.sprite = scn.player_sprite;
         tile_allocation_hiwater = load_sprite(PLAYER.base_tile, scn.player_sprite.ptr, scn.player_sprite.bank);
-        load_animations(start_player_sprite.ptr, start_player_sprite.bank, PLAYER.animations);
+        load_animations(scn.player_sprite.ptr, scn.player_sprite.bank, PLAYER.animations);
     } else {
         // no player on logo, but still some little amount of actors may be present
         tile_allocation_hiwater = 0x68;
+        PLAYER.sprite = spritesheet_none_far;
+        memset(PLAYER.animations, 0, sizeof(PLAYER.animations));
     }
 
     UBYTE base_tiles[MAX_SCENE_SPRITES];
@@ -259,7 +265,6 @@ void load_player() __banked {
     PLAYER.pos.x = start_scene_x;
     PLAYER.pos.y = start_scene_y;
     PLAYER.dir = start_scene_dir;
-    PLAYER.sprite = start_player_sprite;
 #ifdef CGB
     PLAYER.palette = PLAYER_PALETTE;
 #endif

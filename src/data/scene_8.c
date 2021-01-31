@@ -4,7 +4,7 @@
 
 #include "gbs_types.h"
 #include "data/background_8.h"
-#include "data/spritesheet_0.h"
+#include "data/spritesheet_12.h"
 #include "data/scene_8_collisions.h"
 #include "data/scene_8_colors.h"
 #include "data/palette_2.h"
@@ -24,7 +24,7 @@ const struct scene_t scene_8 = {
   .colors = TO_FAR_PTR_T(scene_8_colors),
   .palette = TO_FAR_PTR_T(palette_2),
   .sprite_palette = TO_FAR_PTR_T(palette_5),
-  .player_sprite = TO_FAR_PTR_T(spritesheet_0),    
+  .player_sprite = TO_FAR_PTR_T(spritesheet_12),    
   .n_actors = 1,
   .n_triggers = 1,
   .n_sprites = 1,

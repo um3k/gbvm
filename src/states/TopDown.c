@@ -27,8 +27,6 @@ void topdown_init() __banked {
         PLAYER.pos.x = ((PLAYER.pos.x >> 7) << 7);
         PLAYER.pos.y = ((PLAYER.pos.y >> 7) << 7);
     }
-
-    actor_set_frames(&PLAYER, 0, 16);
 }
 
 void topdown_update() __banked {
