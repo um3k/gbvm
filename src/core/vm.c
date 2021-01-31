@@ -448,6 +448,29 @@ void vm_raise(SCRIPT_CTX * THIS, UBYTE code, UBYTE size) __banked {
     THIS->PC += size;
 }
 
+// sets variable indirect
+void vm_set_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked {
+    INT16 * A, * B;
+    // get target address indirect
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    if (*A < 0) A = THIS->stack_ptr + *A; else A = script_memory + *A;
+    // get source address
+    if (idxB < 0) B = THIS->stack_ptr + idxB; else B = script_memory + idxB;
+    // assign
+    *A = *B;
+}
+// sets variable indirect
+void vm_get_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked {
+    INT16 * A, * B;
+    // get target address
+    if (idxA < 0) A = THIS->stack_ptr + idxA; else A = script_memory + idxA;
+    // get source address indirect
+    if (idxB < 0) B = THIS->stack_ptr + idxB; else B = script_memory + idxB;
+    if (*B < 0) B = THIS->stack_ptr + *B; else B = script_memory + *B;
+    // assign
+    *A = *B;
+}
+
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active

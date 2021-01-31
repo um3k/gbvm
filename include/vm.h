@@ -118,6 +118,8 @@ void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask
 void vm_lock(SCRIPT_CTX * THIS) __banked;
 void vm_unlock(SCRIPT_CTX * THIS) __banked;
 void vm_raise(SCRIPT_CTX * THIS, UBYTE code, UBYTE size) __banked;
+void vm_set_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked;
+void vm_get_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked;
 
 // return zero if script end
 // bank with VM code must be active

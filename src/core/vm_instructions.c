@@ -50,8 +50,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_lock,                   0}, // 0x25
     {vm_unlock,                 0}, // 0x26
     {vm_raise,                  2}, // 0x27
-    {0, 0},
-    {0, 0},
+    {vm_set_indirect,           4}, // 0x28
+    {vm_get_indirect,           4}, // 0x29
     {0, 0},
     {0, 0},
     {vm_sin_scale,              5}, // 0x2C 
