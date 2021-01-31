@@ -1,6 +1,5 @@
 #include "data/data_ptrs.h"
 #include "data/scene_7.h"
-#include "data/spritesheet_0.h"
 #include "data/palette_0.h"
 #include "data/music_data.h"
 
@@ -14,7 +13,6 @@ const INT16 start_scene_x = 2560;
 const INT16 start_scene_y = 0;
 const direction_e start_scene_dir = DIR_RIGHT;
 const far_ptr_t start_scene = TO_FAR_PTR_T(scene_7);
-const far_ptr_t start_player_sprite = TO_FAR_PTR_T(spritesheet_0);
 const far_ptr_t start_player_palette = TO_FAR_PTR_T(palette_0);
 const UBYTE start_player_move_speed = 16;
 const UBYTE start_player_anim_tick = 7;
