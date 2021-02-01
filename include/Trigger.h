@@ -43,5 +43,6 @@ void trigger_interact(UBYTE i) __banked;
 UBYTE trigger_activate_at(UBYTE tx, UBYTE ty, UBYTE force) __banked;
 
 UBYTE trigger_activate_at_intersection(bounding_box_t *bb, upoint16_t *offset, UBYTE force) __banked;
+UBYTE trigger_at_intersection(bounding_box_t *bb, upoint16_t *offset) __banked;
 
 #endif

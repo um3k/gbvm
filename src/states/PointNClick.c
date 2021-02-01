@@ -8,6 +8,7 @@
 #include "GameTime.h"
 #include "Input.h"
 #include "Trigger.h"
+#include "vm.h"
 
 #define POINT_N_CLICK_CAMERA_DEADZONE 24
 
@@ -18,68 +19,87 @@ void pointnclick_init() __banked {
     camera_offset_y = 0;
     camera_deadzone_x = POINT_N_CLICK_CAMERA_DEADZONE;
     camera_deadzone_y = POINT_N_CLICK_CAMERA_DEADZONE;
-
-    PLAYER.dir = DIR_DOWN;
+    PLAYER.dir = DIR_RIGHT;
+    actor_set_anim_idle(&PLAYER);
 }
 
 void pointnclick_update() __banked {
-    UBYTE tile_x, tile_y, hit_actor, hit_trigger, is_hover_actor,
-        is_hover_trigger;
-
-    tile_x = DIV_8(PLAYER.pos.x);
-    tile_y = DIV_8(PLAYER.pos.y);
+    UBYTE angle, hit_trigger, is_hover_trigger, is_hover_actor;
+    actor_t *hit_actor;
 
     player_moving = FALSE;
-    PLAYER.dir = DIR_DOWN;
 
-    // Move cursor horizontally
-    if (INPUT_LEFT && (PLAYER.pos.x > 0)) {
-        actor_set_dir(&PLAYER, DIR_LEFT, FALSE);
+    // Handle input
+    if (INPUT_LEFT) {
         player_moving = TRUE;
-    } else if (INPUT_RIGHT && (PLAYER.pos.x < image_width - 8)) {
-        actor_set_dir(&PLAYER, DIR_RIGHT, FALSE);
+        if (INPUT_UP) {
+            angle = ANGLE_315DEG;
+        } else if (INPUT_DOWN) {
+            angle = ANGLE_225DEG;
+        } else {
+            angle = ANGLE_270DEG;
+        }
+    } else if (INPUT_RIGHT) {
         player_moving = TRUE;
+        if (INPUT_UP) {
+            angle = ANGLE_45DEG;
+        } else if (INPUT_DOWN) {
+            angle = ANGLE_135DEG;
+        } else {
+            angle = ANGLE_90DEG;
+        }
+    } else if (INPUT_UP) {
+        player_moving = TRUE;
+        angle = ANGLE_0DEG;
+    } else if (INPUT_DOWN) {
+        player_moving = TRUE;
+        angle = ANGLE_180DEG;
     }
 
-    // Move cursor vertically
-    if (INPUT_UP && (PLAYER.pos.y > 8)) {
-        actor_set_dir(&PLAYER, DIR_UP, FALSE);
-        player_moving = TRUE;
-    } else if (INPUT_DOWN && (PLAYER.pos.y < image_height)) {
-        actor_set_dir(&PLAYER, DIR_DOWN, FALSE);
-        player_moving = TRUE;
+    // Move cursor
+    if (player_moving) {
+        point_translate_angle(&(PLAYER.pos), angle, PLAYER.move_speed);
+        // Clamp X
+        if ((PLAYER.pos.x >> 4) - PLAYER.bounds.left > image_width) {
+            PLAYER.pos.x = (PLAYER.bounds.left << 4);
+        } else if ((PLAYER.pos.x >> 4) + PLAYER.bounds.right > image_width) {
+            PLAYER.pos.x = (image_width - PLAYER.bounds.right) << 4;
+        }
+        // Clamp Y
+        if ((PLAYER.pos.y >> 4) + PLAYER.bounds.top > image_height) {
+            PLAYER.pos.y = -(PLAYER.bounds.top << 4);
+        } else if ((PLAYER.pos.y >> 4) + PLAYER.bounds.bottom > image_height) {
+            PLAYER.pos.y = (image_height - PLAYER.bounds.bottom) << 4;
+        }             
     }
 
-    // Find trigger or actor under player cursor
-    // hit_trigger = trigger_at_tile(tile_x, tile_y - 1);
-    // hit_actor = ActorAtTile(tile_x, tile_y, TRUE);
+    // Check for trigger collisions
+    hit_trigger = trigger_at_intersection(&PLAYER.bounds, &PLAYER.pos);
 
-    // is_hover_trigger = (hit_trigger != NO_TRIGGER_COLLISON) &&
-    //                    (hit_trigger != last_hit_trigger) &&
-    //                    (triggers[hit_trigger].events_ptr.bank != 0);
-    // is_hover_actor = (hit_actor != NO_ACTOR_COLLISON) && (hit_actor != 0) &&
-    //                  (actors[hit_actor].events_ptr.bank != 0);
+    // Check for actor collisions
+    hit_actor = actor_overlapping_player(FALSE);
 
-    // Set player cursor to second frame on hover
-    // if ((is_hover_trigger || is_hover_actor) && PLAYER.frames_len != 1) {
-    //     PLAYER.frame = 1;
-    //     PLAYER.rerender = TRUE;
-    // } else {
-    //     PLAYER.frame = 0;
-    //     PLAYER.rerender = TRUE;
-    // }
+    is_hover_trigger = (hit_trigger != NO_TRIGGER_COLLISON)
+        && (triggers[hit_trigger].script.bank);
 
-    // if (INPUT_A_PRESSED) {
-    //   player_moving = FALSE;
+    is_hover_actor = hit_actor && hit_actor->script.bank;
 
-    //   if (is_hover_actor) {
-    //     // Run actor's interact script
-    //     ActorRunScript(hit_actor);
-    //   } else if (is_hover_trigger) {
-    //     // Run trigger script
-    //     trigger_interact(hit_trigger);
-    //   }
-    // }
+    // Set cursor animation
+    if (is_hover_trigger || is_hover_actor) {
+        actor_set_anim(&PLAYER, ANIM_CURSOR_HOVER);
+    } else {
+        actor_set_anim(&PLAYER, ANIM_CURSOR);
+    }
 
-    if (player_moving) point_translate_dir(&PLAYER.pos, PLAYER.dir, PLAYER.move_speed);
+    if (INPUT_A_PRESSED) {
+        player_moving = FALSE;
+        if (is_hover_actor) {
+            // Run actor script
+            script_execute(hit_actor->script.bank, hit_actor->script.ptr, 0, 0);
+        }
+        else if (is_hover_trigger) {
+            // Run trigger script
+            trigger_interact(hit_trigger);
+        }
+    }
 }

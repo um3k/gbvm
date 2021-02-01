@@ -21,6 +21,9 @@
 #define ANIM_JUMP_RIGHT       6
 #define ANIM_CLIMB            2
 
+#define ANIM_CURSOR           0
+#define ANIM_CURSOR_HOVER     1
+
 typedef enum {
   CHECK_DIR_LEFT = 1,
   CHECK_DIR_RIGHT,
