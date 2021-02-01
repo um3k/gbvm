@@ -54,6 +54,8 @@ void pointnclick_update() __banked {
     } else if (INPUT_DOWN) {
         player_moving = TRUE;
         angle = ANGLE_180DEG;
+    } else {
+        angle = ANGLE_0DEG;
     }
 
     // Move cursor
