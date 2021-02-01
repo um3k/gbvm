@@ -7,7 +7,7 @@ ___bank_script_s2_timer1 = 255
 .globl ___bank_script_s2_timer1
 
 _script_s2_timer1::
-        VM_PUSH                 1
+        VM_PUSH_CONST           1
         VM_IF_CONST     .EQ     VAR_ACTOR_DIRECTION, 0, 1$, 0
         VM_ACTOR_SET_DIR        .ARG0, .DIR_RIGHT
         VM_SET_CONST            VAR_ACTOR_DIRECTION, 0

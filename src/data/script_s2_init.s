@@ -18,10 +18,10 @@ _script_s2_init::
         VM_LOCK
 
         ; Local Actor
-        VM_PUSH                 0
-        VM_PUSH                 256
-        VM_PUSH                 256
-        VM_PUSH                 ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           256
+        VM_PUSH_CONST           256
+        VM_PUSH_CONST           ^/(.ACTOR_ATTR_H_FIRST | .ACTOR_ATTR_CHECK_COLL)/
 
         ; set a bit larger bounding box
         ; VM_ACTOR_SET_BOUNDS     ACTOR, -2, 18, -18, 2
@@ -31,7 +31,7 @@ _script_s2_init::
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
 
         ; Wait 1 frame to allow actors to rerender before fade in starts
-        VM_PUSH                 1
+        VM_PUSH_CONST           1
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         ; Fade IN

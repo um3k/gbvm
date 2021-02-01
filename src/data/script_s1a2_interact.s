@@ -12,10 +12,10 @@ _script_s1a2_interact::
         VM_LOCK
 
         ; Local Actor
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3

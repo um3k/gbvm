@@ -10,10 +10,10 @@ ___bank_script_s1_init = 255
 
 _script_s1_init::
         VM_MUSIC_PLAY           0, 1
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
         ; If Variable True
         VM_IF_CONST .EQ         VAR_PUSHED_ICE_BLOCK, 1, 1$, 0
         VM_JUMP                 2$

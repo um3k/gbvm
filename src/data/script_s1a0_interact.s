@@ -12,10 +12,10 @@ _script_s1a0_interact::
         VM_LOCK
 
         ; Local Actor
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

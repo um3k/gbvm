@@ -17,9 +17,9 @@ _script_s2t1_interact::
 
         VM_SOUND_PLAY           2, 1, 0x4c,0x81,0x43,0x73,0x86
 
-        VM_PUSH                 0
-        VM_PUSH                 1152
-        VM_PUSH                 2048
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           1152
+        VM_PUSH_CONST           2048
         VM_ACTOR_SET_POS        .ARG2
         VM_POP                  3
 

@@ -28,9 +28,9 @@ OP_VM_STOP         = 0x00
 .endm
 
 ; push immediate value onto VM stack
-OP_VM_PUSH         = 0x01
-.macro VM_PUSH ARG0
-        .db OP_VM_PUSH, #>ARG0, #<ARG0
+OP_VM_PUSH_CONST   = 0x01
+.macro VM_PUSH_CONST ARG0
+        .db OP_VM_PUSH_CONST, #>ARG0, #<ARG0
 .endm
 
 ; removes ARG0 values from VM stack
@@ -142,9 +142,9 @@ OP_VM_DEBUG        = 0x10
 .endm
 
 ; pushes a value on VM stack or a global onto VM stack
-OP_VM_PUSHVALUE    = 0x11
-.macro VM_PUSHVALUE ARG0
-        .db OP_VM_PUSHVALUE, #>ARG0, #<ARG0
+OP_VM_PUSH_VALUE   = 0x11
+.macro VM_PUSH_VALUE ARG0
+        .db OP_VM_PUSH_VALUE, #>ARG0, #<ARG0
 .endm
 
 ; similar to pop

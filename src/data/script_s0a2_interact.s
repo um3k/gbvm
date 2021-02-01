@@ -22,7 +22,7 @@ _script_s0a2_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Emote
-        VM_PUSH                 3
+        VM_PUSH_CONST           3
         VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
         VM_POP                  1
 

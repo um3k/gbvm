@@ -15,10 +15,10 @@ _script_s1t0_interact::
         VM_LOCK
 
         ; Local Actor
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
-        VM_PUSH                 0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
 
         ; Load Scene
         VM_FADE_OUT             2

@@ -9,10 +9,10 @@ ___bank_script_s4t3_interact = 255
 .globl _pl_vel_x, _pl_vel_y
 
 _script_s4t3_interact::
-        VM_PUSH                 28              ; bit less than 45 degrees 
-        VM_PUSH                 100
+        VM_PUSH_CONST           28              ; bit less than 45 degrees 
+        VM_PUSH_CONST           100
         VM_SIN_SCALE            .ARG0, .ARG1, 6 
-        VM_PUSH                 100 
+        VM_PUSH_CONST           100 
         VM_COS_SCALE            .ARG0, .ARG2, 6
         VM_RPN
             .R_INT16    -360
