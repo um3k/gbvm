@@ -12,7 +12,7 @@
 #define MAX_MUSIC 255
 #define MASK_ALL_CHANNELS 0x0f
 
-TRACK_T *current_track;
+const TRACK_T *current_track;
 UBYTE tone_frames;
 UBYTE channel_mask;
 UBYTE sound_channel;
