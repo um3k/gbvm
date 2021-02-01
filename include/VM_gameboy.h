@@ -22,5 +22,6 @@ void vm_replace_tile(SCRIPT_CTX * THIS, UBYTE target_tile, UBYTE tileset_bank, c
 
 void vm_poll(SCRIPT_CTX * THIS, INT16 idx, INT16 res, UBYTE event_mask) __banked;
 void vm_set_sprite_mode(SCRIPT_CTX * THIS, UBYTE mode) __banked;
+void vm_replace_tile_xy(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile) __banked;
 
 #endif

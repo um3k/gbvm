@@ -544,6 +544,11 @@ OP_VM_SET_SPRITE_MODE   = 0x5D
         .db OP_VM_SET_SPRITE_MODE, #<MODE 
 .endm
 
+OP_VM_REPLACE_TILE_XY   = 0x5E
+.macro VM_REPLACE_TILE_XY X, Y, TILEDATA_BANK, TILEDATA, START
+        .db OP_VM_REPLACE_TILE_XY, #<START, #>TILEDATA, #<TILEDATA, #<TILEDATA_BANK, #<Y, #<X
+.endm
+
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60

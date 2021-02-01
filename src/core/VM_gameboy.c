@@ -11,6 +11,7 @@
 #include "MusicManager.h"
 #include "LoadSave.h"
 #include "BankData.h"
+#include "DataManager.h"
 
 void vm_show_sprites() __banked {
     hide_sprites = FALSE;
@@ -110,4 +111,17 @@ void vm_poll(SCRIPT_CTX * THIS, INT16 idx, INT16 res, UBYTE event_mask) __banked
 void vm_set_sprite_mode(SCRIPT_CTX * THIS, UBYTE mode) __banked {
     THIS;
     if (mode) SPRITES_8x16; else SPRITES_8x8;
+}
+
+void vm_replace_tile_xy(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile) __banked {
+    THIS;
+
+    UBYTE * ptr = image_ptr + (image_tile_width * y) + x;  
+    UBYTE target_tile = ReadBankedUBYTE(ptr, image_bank);
+
+    if ((scene_type == SCENE_TYPE_LOGO) && (y > 9u)) {
+        SetBankedSpriteData(target_tile, 1, tileset->tiles + (start_tile << 4), tileset_bank);
+        return;
+    }  
+    SetBankedBkgData(target_tile, 1, tileset->tiles + (start_tile << 4), tileset_bank);
 }

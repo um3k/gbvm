@@ -110,7 +110,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_replace_tile,           6}, // 0x5B
     {vm_poll,                   5}, // 0x5C
     {vm_set_sprite_mode,        1}, // 0x5D
-    {0, 0},
+    {vm_replace_tile_xy,        6}, // 0x5E
     {0, 0},
 
     // music and sound instructions section
