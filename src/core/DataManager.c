@@ -74,7 +74,7 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) 
     return n_tiles;
 }
 
-void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t res_animations[4]) __banked {
+void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t * res_animations) __banked {
     MemcpyBanked(res_animations, sprite->animations, sizeof(sprite->animations), bank);
 }
 
