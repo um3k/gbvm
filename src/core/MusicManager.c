@@ -12,7 +12,7 @@
 #define MAX_MUSIC 255
 #define MASK_ALL_CHANNELS 0x0f
 
-UBYTE current_index;
+TRACK_T *current_track;
 UBYTE tone_frames;
 UBYTE channel_mask;
 UBYTE sound_channel;
@@ -35,7 +35,7 @@ void sound_init() __banked {
     NR51_REG = 0xFF;
     NR50_REG = 0x77;
 
-    current_index       = MAX_MUSIC;
+    current_track       = NULL;
     tone_frames         = 0;
     channel_mask        = MASK_ALL_CHANNELS;
     sound_channel       = 0;
@@ -94,15 +94,15 @@ UBYTE music_events_poll() __banked {
     return 0;
 }
 
-void music_play(UBYTE index, UBYTE loop) __nonbanked {
-    if (index == MAX_MUSIC) {
+void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) __nonbanked {
+    if (track == NULL) {
         music_stop();
-    } else if (index != current_index) {
+    } else if (track != current_track) {
         channel_mask = MASK_ALL_CHANNELS;
 #ifdef GBT_PLAYER
         UBYTE _save = _current_bank;
         __critical {
-            gbt_play(music_tracks[index].ptr, music_tracks[index].bank, 7);
+            gbt_play(track, bank, 7);
             gbt_loop(loop);
             SWITCH_ROM_MBC1(_save);
             music_mute(channel_mask);
@@ -111,18 +111,18 @@ void music_play(UBYTE index, UBYTE loop) __nonbanked {
 #ifdef HUGE_TRACKER
         loop;
         UBYTE _save = _current_bank;
-        current_track_bank = music_tracks[index].bank;
+        current_track_bank = bank;
         __critical {
             music_stop();
             SWITCH_ROM_MBC1(current_track_bank);
-            hUGE_init(music_tracks[index].ptr);
+            hUGE_init(track);
             SWITCH_ROM_MBC1(_save);
             huge_initialized = TRUE;
             music_mute(channel_mask);
             music_stopped = FALSE;        
         }
 #endif
-        current_index = index;
+        current_track = track;
     } else {
 #ifdef SAME_TUNE_RESTARTS
         // restart current song from beginning
@@ -142,7 +142,7 @@ void music_stop() __banked {
     music_stopped = TRUE;
     music_mute(0);
 #endif
-    current_index = MAX_MUSIC;
+    current_track = NULL;
 }
 
 void music_mute(UBYTE channels) __nonbanked {

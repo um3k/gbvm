@@ -2,8 +2,9 @@
 #define _VM_MUSIC_H_INCLUDE
 
 #include "vm.h"
+#include "MusicManager.h"
 
-void vm_music_play(SCRIPT_CTX * THIS, UBYTE track, UBYTE loop) __banked;
+void vm_music_play(SCRIPT_CTX * THIS, UBYTE track_bank, const TRACK_T *track, UBYTE loop) __banked;
 void vm_music_stop() __banked;
 void vm_music_mute(SCRIPT_CTX * THIS, UBYTE channels) __banked;
 void vm_music_routine(SCRIPT_CTX * THIS, UBYTE routine, UBYTE bank, UBYTE * pc) __banked;
