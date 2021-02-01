@@ -7,10 +7,12 @@
 
 #ifdef GBT_PLAYER
     #undef HUGE_TRACKER 
+    #define TRACK_T unsigned char
     #include "gbt_player.h"
 #endif
 #ifdef HUGE_TRACKER
     #undef GBT_PLAYER
+    #define TRACK_T hUGESong_t
     #include "hUGEDriver.h"
 #endif
 //#define SAME_TUNE_RESTARTS
@@ -35,7 +37,7 @@ void music_init(UBYTE preserve) __banked;
  * @param index index of music in data_ptrs.h
  * @param loop if TRUE will infinitely loop the music
  */
-void music_play(UBYTE index, UBYTE loop) __nonbanked;
+void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) __nonbanked;
 
 /**
  * Stop currently playing music

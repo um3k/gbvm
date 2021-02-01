@@ -3,12 +3,6 @@
 #include "data/palette_0.h"
 #include "data/music_data.h"
 
-const far_ptr_t music_tracks[] = {
-    TO_FAR_PTR_T(music_track_101__Data), TO_FAR_PTR_T(music_track_102__Data), TO_FAR_PTR_T(music_track_103__Data), TO_FAR_PTR_T(music_track_104__Data),
-    TO_FAR_PTR_T(music_track_105__Data), TO_FAR_PTR_T(music_track_106__Data), TO_FAR_PTR_T(music_track_107__Data), TO_FAR_PTR_T(music_track_108__Data),
-    TO_FAR_PTR_T(music_track_109__Data), {0, 0}
-};
-
 const INT16 start_scene_x = 2560;
 const INT16 start_scene_y = 0;
 const direction_e start_scene_dir = DIR_RIGHT;

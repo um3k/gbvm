@@ -55,7 +55,7 @@ _script_s5_init::
         VM_MUSIC_ROUTINE        1, ___bank_script_s5_timer1, _script_s5_timer1
         VM_MUSIC_ROUTINE        2, ___bank_script_s5_timer1, _script_s5_timer1
         VM_MUSIC_ROUTINE        3, ___bank_script_s5_timer1, _script_s5_timer1
-        VM_MUSIC_PLAY           4, 1
+        VM_MUSIC_PLAY           ___bank_music_track_105__Data, _music_track_105__Data, .MUSIC_LOOP
 
         ; Stop Script
         VM_STOP

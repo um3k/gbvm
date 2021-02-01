@@ -5,9 +5,9 @@
 #include "VM_Music.h"
 #include "MusicManager.h"
 
-void vm_music_play(SCRIPT_CTX * THIS, UBYTE track, UBYTE loop) __banked {
+void vm_music_play(SCRIPT_CTX * THIS, UBYTE track_bank, const TRACK_T *track, UBYTE loop) __banked {
     THIS;
-    music_play(track, loop);
+    music_play(track, track_bank, loop);
 }
 
 void vm_music_stop() __banked {

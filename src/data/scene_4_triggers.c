@@ -8,6 +8,7 @@
 #include "data/script_s4t1_interact.h"
 #include "data/script_s4t2_interact.h"
 #include "data/script_s4t3_interact.h"
+#include "data/script_s4t4_interact.h"
 
 const void __at(255) __bank_scene_4_triggers;
 
@@ -43,5 +44,13 @@ const struct trigger_t scene_4_triggers[] = {
     .width = 1,
     .height = 1,
     .script = TO_FAR_PTR_T(script_s4t3_interact)
-  }  
+  },
+  {
+    // Trigger 5,
+    .x = 106,
+    .y = 17,
+    .width = 5,
+    .height = 1,
+    .script = TO_FAR_PTR_T(script_s4t4_interact)
+  }    
 };

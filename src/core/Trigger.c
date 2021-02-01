@@ -52,7 +52,7 @@ UBYTE trigger_activate_at_intersection(bounding_box_t *bb, upoint16_t *offset, U
     return FALSE;
 }
 
-UBYTE trigger_at_intersection(bounding_box_t *bb, upoint16_t *offset) {
+UBYTE trigger_at_intersection(bounding_box_t *bb, upoint16_t *offset) __banked {
     UBYTE tile_left   = ((offset->x >> 4) + bb->left)   >> 3;
     UBYTE tile_right  = ((offset->x >> 4) + bb->right)  >> 3;
     UBYTE tile_top    = ((offset->y >> 4) + bb->top)    >> 3;

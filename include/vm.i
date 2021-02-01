@@ -547,8 +547,10 @@ OP_VM_SET_SPRITE_MODE   = 0x5D
 ; --- MUSIC AND SOUND -------------------------------
 
 OP_VM_MUSIC_PLAY        = 0x60
-.macro VM_MUSIC_PLAY TRACK, LOOP
-        .db OP_VM_MUSIC_PLAY, #<LOOP, #<TRACK
+.MUSIC_NO_LOOP          = 0
+.MUSIC_LOOP             = 1
+.macro VM_MUSIC_PLAY TRACK_BANK, TRACK, LOOP
+        .db OP_VM_MUSIC_PLAY, #<LOOP, #>TRACK, #<TRACK, #<TRACK_BANK
 .endm
 
 OP_VM_MUSIC_STOP        = 0x61
