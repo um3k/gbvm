@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include "events.h"
-#include "Input.h"
+#include "input.h"
 
 script_event_t input_events[8];
 UBYTE input_slots[8];

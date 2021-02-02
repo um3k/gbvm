@@ -1,11 +1,11 @@
 #include "vm.h"
 
-#include "VM_Actor.h"
-#include "VM_UI.h"
-#include "VM_gameboy.h"
-#include "VM_Music.h"
-#include "VM_Camera.h"
-#include "VM_Math.h"
+#include "vm_actor.h"
+#include "vm_ui.h"
+#include "vm_gameboy.h"
+#include "vm_music.h"
+#include "vm_camera.h"
+#include "vm_math.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()

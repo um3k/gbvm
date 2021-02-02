@@ -1,7 +1,7 @@
 #pragma bank 1
 
 #include <gb/gb.h>
-#include <BankData.h>
+#include <bankdata.h>
 
 #include "flasher.h"
 

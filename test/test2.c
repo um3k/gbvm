@@ -3,13 +3,13 @@
 #include <string.h>
 
 #include "framework/test_main.h"
-#include "BankData.h"
-#include "GameTime.h"
+#include "bankdata.h"
+#include "game_time.h"
 #include "Actor.h"
-#include "Camera.h"
-#include "LinkedList.h"
+#include "camera.h"
+#include "linked_list.h"
 #include "Sprite.h"
-#include "UI.h"
+#include "ui.h"
 #include "vm.h"
 
 const unsigned char sprite_1_data[] = {
