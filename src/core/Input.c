@@ -1,6 +1,6 @@
 #pragma bank 2
 
-#include "Input.h"
+#include "input.h"
 
 UBYTE joy = 0;
 UBYTE last_joy = 0;

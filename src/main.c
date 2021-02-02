@@ -3,33 +3,32 @@
 #include <rand.h>
 
 #include "interrupts.h"
-#include "BankData.h"
-#include "GameTime.h"
+#include "bankdata.h"
+#include "game_time.h"
 #include "Actor.h"
-#include "Camera.h"
-#include "LinkedList.h"
-#include "UI.h"
-#include "Input.h"
+#include "camera.h"
+#include "linked_list.h"
+#include "ui.h"
+#include "input.h"
 #include "events.h"
-#include "DataManager.h"
-#include "MusicManager.h"
-#include "FadeManager.h"
-#include "Scroll.h"
+#include "data_manager.h"
+#include "music_manager.h"
+#include "fade_manager.h"
+#include "scroll.h"
 #include "vm.h"
-#include "VM_Exceptions.h"
-#include "StatesCaller.h"
-#include "LoadSave.h"
+#include "vm_exceptions.h"
+#include "states_caller.h"
+#include "load_save.h"
 #ifdef SGB
-    #include "SGBBorder.h"
+    #include "sgb_border.h"
     #include "data/border.h"
 #endif
 #ifdef CGB
-    #include "Palette.h"
+    #include "palette.h"
 #endif
 #include "parallax.h"
 #include "shadow.h"
-#include "data/data_ptrs.h"
-
+#include "data/data_bootstrap.h"
 
 extern void __bank_bootstrap_script;
 extern const UBYTE bootstrap_script[];

@@ -1,10 +1,10 @@
 #ifndef GBS_TYPES_H
 #define GBS_TYPES_H
 
-#include "BankData.h"
+#include "bankdata.h"
 #include "parallax.h"
 #include "metasprite.h"
-#include "Collision.h"
+#include "collision.h"
 
 typedef enum {
     SCENE_TYPE_TOPDOWN = 0,

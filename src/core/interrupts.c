@@ -2,10 +2,10 @@
 
 #include "interrupts.h"
 
-#include "Scroll.h"
+#include "scroll.h"
 #include "metasprite.h"
 #include "parallax.h"
-#include "UI.h"
+#include "ui.h"
 
 void remove_LCD_ISRs() __critical {
     remove_LCD(parallax_LCD_isr);

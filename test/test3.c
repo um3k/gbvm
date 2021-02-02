@@ -3,10 +3,10 @@
 #include <string.h>
 
 #include "Actor.h"
-#include "Camera.h"
-#include "DataManager.h"
-#include "LinkedList.h"
-#include "Scroll.h"
+#include "camera.h"
+#include "data_manager.h"
+#include "linked_list.h"
+#include "scroll.h"
 #include "Sprite.h"
 #include "framework/test_main.h"
 
