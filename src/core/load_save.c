@@ -47,8 +47,16 @@ const save_point_t save_points[] = {
     extern void _start_save; 
 #endif
 
+size_t save_blob_size;
+
 void data_init() __banked {
     ENABLE_RAM_MBC5;
+    // calculate save blob size
+    save_blob_size = sizeof(signature);
+    for(const save_point_t * point = save_points; (point->target); point++) {
+        save_blob_size += point->size;  
+    }
+    // load from FLASH ROM
 #ifdef BATTERYLESS
     UINT32 rom_signarture;
     MemcpyBanked(&rom_signarture, (void *)0x4000, sizeof(rom_signarture), (UBYTE)&_start_save);
@@ -56,15 +64,15 @@ void data_init() __banked {
 #endif
 }
 
-UBYTE data_is_saved() __banked {
+UBYTE data_is_saved(UBYTE slot) __banked {
     SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000;
+    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot);
     return (*((UINT32 *)save_data) == signature);
 }
 
-void data_save() __banked {
+void data_save(UBYTE slot) __banked {
     SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000;
+    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot);
     *((UINT32 *)save_data) = signature; save_data += sizeof(signature);
     
     for(const save_point_t * point = save_points; (point->target); point++) {
@@ -76,10 +84,10 @@ void data_save() __banked {
 #endif
 }
 
-UBYTE data_load() __banked {
-    if (!data_is_saved()) return FALSE;
+UBYTE data_load(UBYTE slot) __banked {
+    if (!data_is_saved(slot)) return FALSE;
     SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000 + sizeof(signature);
+    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot) + sizeof(signature);
 
     for(const save_point_t * point = save_points; (point->target); point++) {
         memcpy(point->target, save_data, point->size);    

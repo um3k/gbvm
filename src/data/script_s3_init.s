@@ -26,12 +26,13 @@ _script_s3_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         ; If Variable True
         VM_IF_CONST .EQ         VAR_S3_TITLESCREEN_NEWGAME, 1, 1$, 0
-        VM_DATA_IS_SAVED        VAR_S3_TITLESCREEN_NEWGAME
+        VM_DATA_IS_SAVED        VAR_S3_TITLESCREEN_NEWGAME, 0
         VM_IF_CONST .EQ         VAR_S3_TITLESCREEN_NEWGAME, 0, 2$, 0
 
         ; VM_FADE_OUT             1     ; ! no need to fade out when loading !
         ; Load Game
-        VM_RAISE                EXCEPTION_LOAD, 0
+        VM_RAISE                EXCEPTION_LOAD, 1
+            .SAVE_SLOT 0
 
 1$:
         VM_FADE_OUT             1
