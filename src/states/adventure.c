@@ -2,7 +2,7 @@
 
 #include "states/adventure.h"
 
-#include "Actor.h"
+#include "actor.h"
 #include "camera.h"
 #include "collision.h"
 #include "game_time.h"

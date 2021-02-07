@@ -2,7 +2,7 @@
 
 #include "states/pointnclick.h"
 
-#include "Actor.h"
+#include "actor.h"
 #include "camera.h"
 #include "data_manager.h"
 #include "game_time.h"

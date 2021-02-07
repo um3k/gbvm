@@ -5,7 +5,7 @@
 #include "interrupts.h"
 #include "bankdata.h"
 #include "game_time.h"
-#include "Actor.h"
+#include "actor.h"
 #include "camera.h"
 #include "linked_list.h"
 #include "ui.h"
