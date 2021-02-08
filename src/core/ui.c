@@ -11,7 +11,7 @@
 #include "scroll.h"
 #include "input.h"
 #include "math.h"
-#include "Actor.h"
+#include "actor.h"
 #include "shadow.h"
 
 #define ui_frame_tl_tiles 0xC0u

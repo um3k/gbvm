@@ -1,7 +1,7 @@
 #ifndef _SHADOW_H_INCLUDE
 #define _SHADOW_H_INCLUDE
 
-#include "Actor.h"
+#include "actor.h"
 
 inline void toggle_shadow_OAM() {
     if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) { 

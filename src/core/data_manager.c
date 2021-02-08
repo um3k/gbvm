@@ -5,7 +5,7 @@
 #include "vm.h"
 #include "data_manager.h"
 #include "linked_list.h"
-#include "Actor.h"
+#include "actor.h"
 #include "scroll.h"
 #include "trigger.h"
 #include "camera.h"

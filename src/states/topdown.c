@@ -2,7 +2,7 @@
 
 #include "states/topdown.h"
 
-#include "Actor.h"
+#include "actor.h"
 #include "camera.h"
 #include "collision.h"
 #include "data_manager.h"

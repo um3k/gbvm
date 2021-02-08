@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "Actor.h"
+#include "actor.h"
 #include "camera.h"
 #include "data_manager.h"
 #include "linked_list.h"

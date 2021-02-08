@@ -2,7 +2,7 @@
 
 #include "vm.h"
 
-#include "Actor.h"
+#include "actor.h"
 #include "game_time.h"
 #include "data_manager.h"
 #include "scroll.h"
