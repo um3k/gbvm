@@ -74,10 +74,10 @@ void vm_timer_set(SCRIPT_CTX * THIS, UBYTE timer, UBYTE value) __banked {
     timer_value->remains = value;
 }
 
-void vm_data_is_saved(SCRIPT_CTX * THIS, INT16 idx) __banked {
+void vm_data_is_saved(SCRIPT_CTX * THIS, INT16 idx, UBYTE slot) __banked {
     INT16 * A;
     if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
-    *A = data_is_saved();
+    *A = data_is_saved(slot);
 }
 
 void vm_replace_tile(SCRIPT_CTX * THIS, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile, UBYTE length) __banked {

@@ -11,7 +11,7 @@
 #include "scroll.h"
 #include "input.h"
 #include "math.h"
-#include "Actor.h"
+#include "actor.h"
 #include "projectiles.h"
 #include "shadow.h"
 

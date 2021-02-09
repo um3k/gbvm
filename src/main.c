@@ -5,7 +5,7 @@
 #include "interrupts.h"
 #include "bankdata.h"
 #include "game_time.h"
-#include "Actor.h"
+#include "actor.h"
 #include "projectiles.h"
 #include "camera.h"
 #include "linked_list.h"
@@ -119,7 +119,7 @@ void process_VM() {
                         break;
                     }
                     case EXCEPTION_SAVE: {
-                        data_save();
+                        data_save(ReadBankedUBYTE(vm_exception_params_offset, vm_exception_params_bank));
                         continue;
                     }
                     case EXCEPTION_LOAD: {
@@ -127,7 +127,7 @@ void process_VM() {
                         // remove previous LCD ISR's
                         remove_LCD_ISRs();
                         // load game state from SRAM
-                        data_load();
+                        data_load(ReadBankedUBYTE(vm_exception_params_offset, vm_exception_params_bank));
                         fade_in = !(load_scene(current_scene.ptr, current_scene.bank, FALSE));
                         break;
                     }

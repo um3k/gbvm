@@ -522,9 +522,12 @@ OP_VM_TIMER_SET         = 0x59
         .db OP_VM_TIMER_SET, #<INTERVAL, #<TIMER 
 .endm
 
+.macro .SAVE_SLOT SLOT
+        .db #<SLOT
+.endm
 OP_VM_DATA_IS_SAVED     = 0x5A
-.macro VM_DATA_IS_SAVED IDX
-        .db OP_VM_DATA_IS_SAVED, #>IDX, #<IDX 
+.macro VM_DATA_IS_SAVED IDX, SLOT
+        .db OP_VM_DATA_IS_SAVED, #<SLOT, #>IDX, #<IDX 
 .endm
 
 OP_VM_REPLACE_TILE      = 0x5B

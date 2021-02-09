@@ -3,7 +3,7 @@
 #include <gb/gb.h>
 #include <string.h>
 
-#include "Actor.h"
+#include "actor.h"
 #include "game_time.h"
 #include "scroll.h"
 #include "linked_list.h"
