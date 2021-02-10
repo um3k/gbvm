@@ -1,50 +1,5 @@
 #include "collision.h"
 
-#include "data_manager.h"
-
-#define MAX_UINT8 0xFF
-
-UBYTE tile_at(UBYTE tx, UBYTE ty) {
-    UBYTE _save = _current_bank;
-    UWORD y_offset;
-    UBYTE tile;
-
-    // Check tile outside of bounds
-    if (tx == MAX_UINT8 || tx == image_tile_width || ty == image_tile_height ||
-        ty == MAX_UINT8) {
-        return COLLISION_ALL;
-    }
-
-    y_offset = ty * (UINT16)image_tile_width;
-
-    SWITCH_ROM_MBC1(collision_bank);
-    tile = (UBYTE) * (collision_ptr + y_offset + tx);
-    SWITCH_ROM_MBC1(_save);
-
-    return tile;
-}
-
-UBYTE tile_at_2x1(UBYTE tx, UBYTE ty) {
-    UBYTE _save = _current_bank;
-    UBYTE* collision_ptr_tmp;
-    UBYTE tile;
-
-    // Check tile outside of bounds
-    if (tx == MAX_UINT8 || tx == image_tile_width || ty == image_tile_height ||
-        ty == MAX_UINT8) {
-        return COLLISION_ALL;
-    }
-
-    // Get y_offset with ty * width. Then add tx + collision_ptr offset
-    collision_ptr_tmp = ty * (UINT16)image_tile_width + tx + collision_ptr;
-
-    SWITCH_ROM_MBC1(collision_bank);
-    tile = (UBYTE)*collision_ptr_tmp | (UBYTE) * (collision_ptr_tmp + 1U);
-    SWITCH_ROM_MBC1(_save);
-
-    return tile;
-}
-
 UBYTE tile_at_2x2(UBYTE tx, UBYTE ty) {
     UBYTE _save = _current_bank;
     UBYTE* collision_ptr_tmp;

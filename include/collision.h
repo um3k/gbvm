@@ -2,7 +2,9 @@
 #define COLLISIONS_H
 
 #include <gb/gb.h>
+
 #include "math.h"
+#include "bankdata.h"
 
 #define COLLISION_TOP 0x1
 #define COLLISION_BOTTOM 0x2
@@ -11,9 +13,16 @@
 #define COLLISION_ALL 0xF
 #define TILE_PROP_LADDER 0x10
 
+#define MAX_UINT8 0xFF
+
 typedef struct bounding_box_t {
     BYTE left, right, top, bottom;
 } bounding_box_t;
+
+extern UBYTE collision_bank;
+extern unsigned char *collision_ptr;
+extern UBYTE image_tile_width;
+extern UBYTE image_tile_height;
 
 /**
  * Check if point is within positioned bounding box.
@@ -55,16 +64,11 @@ inline UBYTE bb_intersects(bounding_box_t *bb_a, upoint16_t *offset_a, bounding_
  * @param ty Top tile
  * @return Tile value, 0 if no collisions, COLLISION_ALL if out of bounds
  */
-UBYTE tile_at(UBYTE tx, UBYTE ty);
-
-/**
- * Return collision tile value at given tile x,y coordinate. (check 2 tiles wide, 1 tile high)
- *
- * @param tx Left tile
- * @param ty Top tile
- * @return Tile value, 0 if no collisions, COLLISION_ALL if out of bounds
- */
-UBYTE tile_at_2x1(UBYTE tx, UBYTE ty);
+inline UBYTE tile_at(UBYTE tx, UBYTE ty) {
+    if ((tx < image_tile_width) && (ty < image_tile_height)) 
+        return ReadBankedUBYTE(collision_ptr + (ty * (UINT16)image_tile_width) + tx, collision_bank);
+    return COLLISION_ALL;
+}
 
 /**
  * Return collision tile value at given tile x,y coordinate. (check 2 tiles wide, 2 tiles high)

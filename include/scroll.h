@@ -41,10 +41,10 @@ void scroll_init() __banked;
 void scroll_update() __banked;
 
 /**
- * Set vram tile at memory location to a value from a second memory location
+ * Set vram tile at memory location to a value
  * 
  * @param r address of tile to write to
- * @param t address of new tile value
+ * @param t new tile value
  */
 void SetTile(UBYTE * r, UINT8 t) __preserves_regs(b, c);
 
