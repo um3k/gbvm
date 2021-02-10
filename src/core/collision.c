@@ -4,22 +4,6 @@
 
 #define MAX_UINT8 0xFF
 
-UBYTE bb_contains(bounding_box_t *bb, upoint16_t *offset, upoint16_t *point) {
-    if ((point->x < (offset->x >> 4) + bb->left) || 
-        (point->x > (offset->x >> 4) + bb->right)) return FALSE;
-    if ((point->y < (offset->y >> 4) + bb->top) || 
-        (point->y > (offset->y >> 4) + bb->bottom)) return FALSE;
-    return TRUE;
-}
-
-UBYTE bb_intersects(bounding_box_t *bb_a, upoint16_t *offset_a, bounding_box_t *bb_b, upoint16_t *offset_b) {
-    if (((offset_b->x >> 4) + bb_b->left   > (offset_a->x >> 4) + bb_a->right) ||
-        ((offset_b->x >> 4) + bb_b->right  < (offset_a->x >> 4) + bb_a->left)) return FALSE;
-    if (((offset_b->y >> 4) + bb_b->top    > (offset_a->y >> 4) + bb_a->bottom) ||
-        ((offset_b->y >> 4) + bb_b->bottom < (offset_a->y >> 4) + bb_a->top)) return FALSE;
-    return TRUE;
-}
-
 UBYTE tile_at(UBYTE tx, UBYTE ty) {
     UBYTE _save = _current_bank;
     UWORD y_offset;

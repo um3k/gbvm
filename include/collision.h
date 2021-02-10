@@ -23,7 +23,13 @@ typedef struct bounding_box_t {
  * @param point Pointer to position to look for within bounding box
  * @return Point is within bounding box
  */
-UBYTE bb_contains(bounding_box_t *bb, upoint16_t *offset, upoint16_t *point);
+inline UBYTE bb_contains(bounding_box_t *bb, upoint16_t *offset, upoint16_t *point) {
+    if ((point->x < (offset->x >> 4) + bb->left) || 
+        (point->x > (offset->x >> 4) + bb->right)) return FALSE;
+    if ((point->y < (offset->y >> 4) + bb->top) || 
+        (point->y > (offset->y >> 4) + bb->bottom)) return FALSE;
+    return TRUE;
+}
 
 /**
  * Check if two positioned bounding boxes intersect.
@@ -34,7 +40,13 @@ UBYTE bb_contains(bounding_box_t *bb, upoint16_t *offset, upoint16_t *point);
  * @param offset_b Pointer to position offset for bounding box B
  * @return Positioned bounding boxes intersect
  */
-UBYTE bb_intersects(bounding_box_t *bb_a, upoint16_t *offset_a, bounding_box_t *bb_b, upoint16_t *offset_b);
+inline UBYTE bb_intersects(bounding_box_t *bb_a, upoint16_t *offset_a, bounding_box_t *bb_b, upoint16_t *offset_b) {
+    if (((offset_b->x >> 4) + bb_b->left   > (offset_a->x >> 4) + bb_a->right) ||
+        ((offset_b->x >> 4) + bb_b->right  < (offset_a->x >> 4) + bb_a->left)) return FALSE;
+    if (((offset_b->y >> 4) + bb_b->top    > (offset_a->y >> 4) + bb_a->bottom) ||
+        ((offset_b->y >> 4) + bb_b->bottom < (offset_a->y >> 4) + bb_a->top)) return FALSE;
+    return TRUE;
+}
 
 /**
  * Return collision tile value at given tile x,y coordinate.

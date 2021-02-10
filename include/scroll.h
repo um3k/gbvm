@@ -64,7 +64,7 @@ UINT8 * GetBkgAddr() __preserves_regs(b, c, h, l);
  * @param y Y-coordinate
  * @param t tile index
  */ 
-void set_win_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
+UBYTE * set_win_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
 
 /**
  * Set single tile t on background layer at x,y
@@ -72,6 +72,6 @@ void set_win_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
  * @param y Y-coordinate
  * @param t tile index
  */ 
-void set_bkg_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
+UBYTE * set_bkg_tile_xy(UBYTE x, UBYTE y, UBYTE t) __preserves_regs(b, c);
 
 #endif
