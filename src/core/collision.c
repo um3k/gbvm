@@ -1,5 +1,7 @@
 #include "collision.h"
 
+#define MAX_UINT8 0xFF
+
 UBYTE tile_at_2x2(UBYTE tx, UBYTE ty) {
     UBYTE _save = _current_bank;
     UBYTE* collision_ptr_tmp;

@@ -13,8 +13,6 @@
 #define COLLISION_ALL 0xF
 #define TILE_PROP_LADDER 0x10
 
-#define MAX_UINT8 0xFF
-
 typedef struct bounding_box_t {
     BYTE left, right, top, bottom;
 } bounding_box_t;
