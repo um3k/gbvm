@@ -18,7 +18,7 @@ MUSIC_DRIVER = HUGE_TRACKER
 
 CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -D$(MUSIC_DRIVER)
 
-LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j
+LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j -Wl-m -Wl-w
 
 LFLAGS = -Wl-yt0x1B $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib -Wl-g_shadow_OAM2=0xDF00 -Wl-g.STACK=0xDF00 -Wi-e
 
