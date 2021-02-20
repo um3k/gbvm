@@ -261,7 +261,10 @@ void sound_stop(UBYTE channel) __nonbanked {
             NR32_REG = 0x00;                    // set volume 0
 #ifdef GBT_PLAYER      
             gbt_reset_ch3_instrument();
-#endif             
+#endif         
+#ifdef HUGE_TRACKER
+            hUGE_reset_wave();    
+#endif         
             break;
         } 
         case 4: NR42_REG = 0x00; break;         // would that work?
