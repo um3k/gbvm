@@ -20,7 +20,7 @@ typedef enum {
 
 inline void RTC_LATCH() { RTC_LATCH_REG = 0; RTC_LATCH_REG = 1; }
 
-inline UWORD RTC_GET(rtc_dateparts_e part) {
+inline UWORD RTC_GET(const rtc_dateparts_e part) {
     UWORD v;
     RTC_SELECT_REG = part;
     v = RTC_VALUE_REG;
@@ -31,7 +31,7 @@ inline UWORD RTC_GET(rtc_dateparts_e part) {
     return v;
 }
 
-inline void RTC_SET(rtc_dateparts_e part, UWORD v) {
+inline void RTC_SET(const rtc_dateparts_e part, const UWORD v) {
     RTC_SELECT_REG = part;
     RTC_VALUE_REG = v;
     if (part == RTC_VALUE_DAY) {
@@ -40,7 +40,7 @@ inline void RTC_SET(rtc_dateparts_e part, UWORD v) {
     }
 }
 
-inline void RTC_START(UBYTE start) {
+inline void RTC_START(const UBYTE start) {
     RTC_SELECT_REG = RTC_VALUE_FLAGS;
     if (start) RTC_VALUE_REG &= ~RTC_TIMER_STOP; else RTC_VALUE_REG |= RTC_TIMER_STOP;
 }
