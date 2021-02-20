@@ -603,6 +603,34 @@ OP_VM_CAMERA_SET_POS     = 0x71
         .db OP_VM_CAMERA_SET_POS, #>IDX, #<IDX
 .endm
 
+; --- RTC ----------------------------------
+
+OP_VM_RTC_LATCH          = 0x78
+.macro VM_RTC_LATCH
+        .db OP_VM_RTC_LATCH
+.endm
+
+OP_VM_RTC_GET            = 0x79
+.RTC_SECONDS             = 0x00
+.RTC_MINUTES             = 0x01
+.RTC_HOURS               = 0x02
+.RTC_DAYS                = 0x03
+.macro VM_RTC_GET IDX, WHAT
+        .db OP_VM_RTC_GET, #<WHAT, #>IDX, #<IDX
+.endm
+
+OP_VM_RTC_SET            = 0x7A
+.macro VM_RTC_SET IDX, WHAT
+        .db OP_VM_RTC_SET, #<WHAT, #>IDX, #<IDX
+.endm
+
+OP_VM_RTC_START          = 0x7B
+.RTC_STOP                = 0
+.RTC_START               = 1
+.macro VM_RTC_START START
+        .db OP_VM_RTC_START, #<START
+.endm
+
 ; --- PROJECTILES ---------------------------------
 
 OP_VM_PROJECTILE_LAUNCH     = 0x80

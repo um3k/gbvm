@@ -8,6 +8,8 @@ GBSPACK = ../../gbspack/gbspack
 TEST_CHK = python $(TEST_FW)/unit_checker.py
 
 CART_SIZE = 16
+#CART_MBC = 0x1B
+CART_MBC = 0x10
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
@@ -20,7 +22,7 @@ CFLAGS = -Iinclude -Wa-Iinclude -Wa-I$(GBDKLIB) -Wl-a -D$(MUSIC_DRIVER)
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j -Wl-m -Wl-w
 
-LFLAGS = -Wl-yt0x1B $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib -Wl-g_shadow_OAM2=0xDF00 -Wl-g.STACK=0xDF00 -Wi-e
+LFLAGS = -Wl-yt$(CART_MBC) $(LFLAGS_NBANKS) -Wl-klib -Wl-lhUGEDriver.lib -Wl-g_shadow_OAM2=0xDF00 -Wl-g.STACK=0xDF00 -Wi-e
 
 PACKFLAGS = -b 4 -f 255 -e rel -c
 

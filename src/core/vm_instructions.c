@@ -6,6 +6,7 @@
 #include "vm_music.h"
 #include "vm_camera.h"
 #include "vm_math.h"
+#include "vm_rtc.h"
 #include "vm_projectiles.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
@@ -141,16 +142,16 @@ const SCRIPT_CMD script_cmds[] = {
     {0, 0},
     {0, 0},
     {0, 0},
-    {0, 0},
-    {0, 0},
-    {0, 0},
-    {0, 0},
+    {vm_rtc_latch,              0}, // 0x78
+    {vm_rtc_get,                3}, // 0x79
+    {vm_rtc_set,                3}, // 0x7A
+    {vm_rtc_start,              1}, // 0x7B
     {0, 0},
     {0, 0},
     {0, 0},
     {0, 0},
 
     // projectiles instructions section
-    {vm_projectile_launch,         3}, // 0x80
+    {vm_projectile_launch,      3}, // 0x80
 
 };
