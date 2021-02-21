@@ -13,7 +13,9 @@ ___bank_script_s7_init = 255
 _script_s7_init::
         VM_LOCK
 
-        VM_REPLACE_TILE_XY      19, 17, ___bank_tileset_6, _tileset_6, 3
+        VM_PUSH_CONST           3
+        VM_REPLACE_TILE_XY      19, 17, ___bank_tileset_6, _tileset_6, .ARG0
+        VM_POP                  1
 
         VM_MUSIC_PLAY           ___bank_music_track_102__Data, _music_track_102__Data, .MUSIC_LOOP
 

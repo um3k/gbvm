@@ -80,15 +80,17 @@ void vm_data_is_saved(SCRIPT_CTX * THIS, INT16 idx, UBYTE slot) __banked {
     *A = data_is_saved(slot);
 }
 
-void vm_replace_tile(SCRIPT_CTX * THIS, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile, UBYTE length) __banked {
-    THIS;
-    SetBankedBkgData(target_tile, length, tileset->tiles + (start_tile << 4), tileset_bank);
+void vm_replace_tile(SCRIPT_CTX * THIS, UBYTE target_tile, UBYTE tileset_bank, const tileset_t * tileset, INT16 idx_start_tile, INT16 idx_length) __banked {
+    INT16 * A, * B;
+    if (idx_start_tile < 0) A = THIS->stack_ptr + idx_start_tile; else A = script_memory + idx_start_tile;
+    if (idx_length < 0) B = THIS->stack_ptr + idx_length; else B = script_memory + idx_length;
+    SetBankedBkgData(target_tile, *B, tileset->tiles + (*A << 4), tileset_bank);
 }
 
 void vm_poll(SCRIPT_CTX * THIS, INT16 idx, INT16 res, UBYTE event_mask) __banked {
     INT16 * result_mask, * result;
     if (idx < 0) result_mask = THIS->stack_ptr + idx; else result_mask = script_memory + idx;
-    if (idx < 0) result = THIS->stack_ptr + res; else result = script_memory + res;
+    if (res < 0) result = THIS->stack_ptr + res; else result = script_memory + res;
     if (event_mask & POLL_EVENT_INPUT) { 
         if (joy != last_joy) {
             *result_mask = POLL_EVENT_INPUT;
@@ -113,8 +115,12 @@ void vm_set_sprite_mode(SCRIPT_CTX * THIS, UBYTE mode) __banked {
     if (mode) SPRITES_8x16; else SPRITES_8x8;
 }
 
-void vm_replace_tile_xy(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE tileset_bank, const tileset_t * tileset, UBYTE start_tile) __banked {
+void vm_replace_tile_xy(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE tileset_bank, const tileset_t * tileset, INT16 idx_start_tile) __banked {
     THIS;
+
+    INT16 * A;
+    if (idx_start_tile < 0) A = THIS->stack_ptr + idx_start_tile; else A = script_memory + idx_start_tile;
+    UBYTE start_tile = (UBYTE)*A;
 
     UBYTE * ptr = image_ptr + (image_tile_width * y) + x;  
     UBYTE target_tile = ReadBankedUBYTE(ptr, image_bank);

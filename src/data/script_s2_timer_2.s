@@ -20,11 +20,13 @@ _script_s2_timer2::
 
         VM_IF_CONST     .EQ     VAR_S2_FLOWER_STATE, 0, 1$, 0
 
-        VM_REPLACE_TILE         0x40, ___bank_tileset_6, _tileset_6, 0, 1
         VM_SET_CONST            VAR_S2_FLOWER_STATE, 0
-        VM_STOP
+        VM_JUMP_REL             2$
 
 1$:
-        VM_REPLACE_TILE         0x40, ___bank_tileset_6, _tileset_6, 1, 1
         VM_SET_CONST            VAR_S2_FLOWER_STATE, 1
+2$:
+        VM_PUSH_CONST           1
+        VM_REPLACE_TILE         0x40, ___bank_tileset_6, _tileset_6, VAR_S2_FLOWER_STATE, .ARG0
+        VM_POP                  1
         VM_STOP
