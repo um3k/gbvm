@@ -11,9 +11,11 @@
 #define MASK_ALL_CHANNELS 0x0f
 
 const TRACK_T *current_track;
+// -- don't change order, accessed from asm ---
 UBYTE tone_frames;
 UBYTE channel_mask;
 UBYTE sound_channel;
+// --------------------------------------------
 #ifdef HUGE_TRACKER
     UBYTE current_track_bank;
     UBYTE music_stopped;
@@ -37,6 +39,7 @@ void sound_init() __banked {
     tone_frames         = 0;
     channel_mask        = MASK_ALL_CHANNELS;
     sound_channel       = 0;
+
 #ifdef HUGE_TRACKER
     current_track_bank  = 0;
     music_stopped       = TRUE;
@@ -143,17 +146,52 @@ void music_stop() __banked {
     current_track = NULL;
 }
 
-void music_mute(UBYTE channels) __nonbanked {
+void music_mute(UBYTE channels) __nonbanked __naked {
+    channels;
+__asm
 #ifdef GBT_PLAYER
-    UBYTE _save = _current_bank;
-    gbt_enable_channels(channels);
-    SWITCH_ROM_MBC1(_save);
+        ldh a, (__current_bank)
+        push af
+
+        ldhl sp, #4
+        ld e, (hl)
+        push de
+        call _gbt_enable_channels
+        pop de
+
+        pop af
+        ldh (__current_bank), a
+        ld (0x2000), a
 #endif
 #ifdef HUGE_TRACKER
-    if (huge_initialized) 
-        for (UBYTE i = HT_CH1, ch = ~channels; i <= HT_CH4; i++, ch >>= 1) 
-            hUGE_mute_channel(i, ch & 1);
+        ld a, (_huge_initialized)
+        or a
+        ret z
+
+        xor a
+        ld e, a
+        ld l, a
+        ldhl sp, #2
+        ld a, (hl)      ; channels
+        cpl
+
+        ld h, #4
+1$:
+        rrca
+        ld d, l
+        rl d
+        push de
+        inc e
+        dec h
+        jr nz, 1$
+
+        .rept 4
+            call _hUGE_mute_channel
+            pop de
+        .endm 
 #endif
+        ret
+__endasm;
 }
 
 UINT8 ISR_counter = 0;
@@ -177,17 +215,17 @@ __asm
         or a
         jr z, 1$
         dec a
-        ld (hl), a
+        ld (hl+), a
         jr nz, 1$
-        ld a, (_sound_channel)
-        push af
-        inc sp
+
+        ld a, (hl+)         ; channel_mask
+        ld d, a
+        ld e, (hl)          ; sound_channel
+        push de
         call _sound_stop
-        ld a, (_channel_mask)
-        push af
         inc sp
         call _music_mute
-        pop hl
+        inc sp
 1$:
 #ifdef GBT_PLAYER
         ldh a, (__current_bank)
