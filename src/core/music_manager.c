@@ -232,6 +232,7 @@ __asm
         push af
         call _gbt_update
         pop af
+        ldh (__current_bank), a
         ld (0x2000), a
 #endif
 #ifdef HUGE_TRACKER
