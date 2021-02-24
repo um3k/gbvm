@@ -69,12 +69,11 @@ void process_VM() {
                     music_events_update();                              // update music events
                 }
 
-                toggle_shadow_OAM();
-                
+                toggle_shadow_OAM();                
+
                 camera_update();
                 scroll_update();
                 actors_update();
-
                 projectiles_update();                                   // update and render projectiles
 
                 activate_shadow_OAM();

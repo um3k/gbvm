@@ -27,10 +27,10 @@ void projectiles_init() __banked {
 }
 
 static UBYTE _save_bank; 
+static projectile_t *projectile;
+static projectile_t *prev_projectile;
 
 void projectiles_update() __nonbanked {
-    static projectile_t *projectile;
-    static projectile_t *prev_projectile;
     projectile_t *next;
 
     projectile = projectiles_active_head;
@@ -108,9 +108,6 @@ void projectiles_update() __nonbanked {
 }
 
 void projectiles_render() __nonbanked {    
-    static projectile_t *projectile;
-    static projectile_t *prev_projectile;
-
     projectile = projectiles_active_head;
     prev_projectile = NULL;
 

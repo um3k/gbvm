@@ -12,15 +12,13 @@ BYTE camera_deadzone_x = 0;
 BYTE camera_deadzone_y = 0;
 UBYTE camera_settings = 0;
 
-void camera_init() __banked
-{
+void camera_init() __banked {
     camera_settings = CAMERA_LOCK_FLAG;
     camera_deadzone_x = 0;
     camera_deadzone_y = 0;
 }
 
-void camera_update() __nonbanked
-{
+void camera_update() __nonbanked {
     if (camera_settings & CAMERA_LOCK_FLAG) {
         // Camera locked to player
         actor_t * actor = &PLAYER;
