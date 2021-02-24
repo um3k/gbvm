@@ -74,8 +74,9 @@ void process_VM() {
                 camera_update();
                 scroll_update();
                 actors_update();
-                projectiles_update();
-                projectiles_render();
+                
+                // update and render projectiles is necessary
+                if (projectiles_update()) projectiles_render();
 
                 activate_shadow_OAM();
 

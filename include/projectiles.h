@@ -11,7 +11,7 @@
 extern projectile_def_t projectile_defs[MAX_PROJECTILES];
 
 void projectiles_init() __banked;
-void projectiles_update() __nonbanked;
+UBYTE projectiles_update() __nonbanked;
 void projectiles_render() __nonbanked;
 void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked;
 

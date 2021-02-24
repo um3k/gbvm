@@ -26,7 +26,7 @@ void projectiles_init() __banked {
     }
 }
 
-void projectiles_update() __nonbanked {
+UBYTE projectiles_update() __nonbanked {
     static projectile_t *projectile;
     static projectile_t *prev_projectile;
     projectile_t *next;
@@ -76,16 +76,18 @@ void projectiles_update() __nonbanked {
         prev_projectile = projectile;
         projectile = projectile->next;
     }
+
+    return (projectiles_active_head) ? (UBYTE)TRUE : (UBYTE)FALSE;
 }
 
 void projectiles_render() __nonbanked {
     static projectile_t *projectile;
     static projectile_t *prev_projectile;
 
-    UBYTE _save = _current_bank;
-
     projectile = projectiles_active_head;
     prev_projectile = NULL;
+
+    UBYTE _save = _current_bank;
 
     while (projectile) {
         UINT8 screen_x = (projectile->pos.x >> 4) - draw_scroll_x + 8,
@@ -121,13 +123,10 @@ void projectiles_render() __nonbanked {
 void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked {    
     projectile_t *projectile = projectiles_inactive_head;
     if (projectile) {
-        projectile->pos.x = pos->x;
-        projectile->pos.y = pos->y;
-
-//        projectile->angle = angle;
-
         memcpy(&projectile->def, &projectile_defs[index], sizeof(projectile_def_t));
 
+        projectile->pos.x = pos->x;
+        projectile->pos.y = pos->y;
         point_translate_angle_to_delta(&projectile->delta_pos, angle, projectile->def.move_speed);
 
         LL_REMOVE_HEAD(projectiles_inactive_head);
