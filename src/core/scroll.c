@@ -65,7 +65,7 @@ void scroll_init() __banked {
     memset(tilemap_buffer, 0, sizeof(tilemap_buffer));
 }
 
-void scroll_update() __banked {
+void scroll_update() __nonbanked {
     INT16 x, y;
     UBYTE render = FALSE;
 

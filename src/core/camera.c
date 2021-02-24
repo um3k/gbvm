@@ -19,7 +19,7 @@ void camera_init() __banked
     camera_deadzone_y = 0;
 }
 
-void camera_update() __banked
+void camera_update() __nonbanked
 {
     if (camera_settings & CAMERA_LOCK_FLAG) {
         // Camera locked to player
