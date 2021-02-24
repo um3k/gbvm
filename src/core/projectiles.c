@@ -26,13 +26,17 @@ void projectiles_init() __banked {
     }
 }
 
-UBYTE projectiles_update() __nonbanked {
+static UBYTE _save_bank; 
+
+void projectiles_update() __nonbanked {
     static projectile_t *projectile;
     static projectile_t *prev_projectile;
     projectile_t *next;
 
     projectile = projectiles_active_head;
     prev_projectile = NULL;
+    
+    _save_bank = _current_bank;
 
     while (projectile) {
         if (projectile->def.life_time == 0) {
@@ -73,21 +77,44 @@ UBYTE projectiles_update() __nonbanked {
             continue;            
         }
 
+        UINT8 screen_x = (projectile->pos.x >> 4) - draw_scroll_x + 8,
+              screen_y = (projectile->pos.y >> 4) - draw_scroll_y;
+
+        if (screen_x > 160 || screen_y > 144) {
+            // Remove projectile
+            projectile_t *next = projectile->next;
+            LL_REMOVE_ITEM(projectiles_active_head, projectile, prev_projectile);
+            LL_PUSH_HEAD(projectiles_inactive_head, projectile);
+            projectile = next;
+            continue;
+        }
+
+        SWITCH_ROM_MBC1(projectile->def.sprite.bank);
+        spritesheet_t *sprite = projectile->def.sprite.ptr;
+    
+        allocated_hardware_sprites += move_metasprite(
+            *(sprite->metasprites + projectile->def.frame),
+            projectile->def.base_tile,
+            allocated_hardware_sprites,
+            screen_x,
+            screen_y
+        );
+
         prev_projectile = projectile;
         projectile = projectile->next;
     }
 
-    return (projectiles_active_head) ? (UBYTE)TRUE : (UBYTE)FALSE;
+    SWITCH_ROM_MBC1(_save_bank);
 }
 
-void projectiles_render() __nonbanked {
+void projectiles_render() __nonbanked {    
     static projectile_t *projectile;
     static projectile_t *prev_projectile;
 
     projectile = projectiles_active_head;
     prev_projectile = NULL;
 
-    UBYTE _save = _current_bank;
+    _save_bank = _current_bank;
 
     while (projectile) {
         UINT8 screen_x = (projectile->pos.x >> 4) - draw_scroll_x + 8,
@@ -117,7 +144,7 @@ void projectiles_render() __nonbanked {
         projectile = projectile->next;
     }
 
-    SWITCH_ROM_MBC1(_save);
+    SWITCH_ROM_MBC1(_save_bank);
 }
 
 void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked {    

@@ -70,13 +70,12 @@ void process_VM() {
                 }
 
                 toggle_shadow_OAM();
-
+                
                 camera_update();
                 scroll_update();
                 actors_update();
 
-                // update and render projectiles is necessary
-                if (projectiles_update()) projectiles_render();
+                projectiles_update();                                   // update and render projectiles
 
                 activate_shadow_OAM();
 

@@ -38,7 +38,7 @@ void scroll_init() __banked;
 /**
  * Update scroll position and load in any newly visible background tiles and actors
  */
-void scroll_update() __nonbanked;
+void scroll_update() __banked;
 
 /**
  * Set vram tile at memory location to a value

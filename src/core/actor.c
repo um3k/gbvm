@@ -51,8 +51,7 @@ void actors_init() __banked {
     memset(actors, 0, sizeof(actors));
 }
 
-void actors_update() __nonbanked
-{
+void actors_update() __nonbanked {
     UBYTE _save = _current_bank;
     static actor_t *actor;
 
@@ -123,8 +122,7 @@ void actors_update() __nonbanked
     SWITCH_ROM_MBC1(_save);
 }
 
-void deactivate_actor(actor_t *actor) __banked
-{
+void deactivate_actor(actor_t *actor) __banked {
 #ifdef STRICT
     // Check exists in inactive list
     UBYTE found = 0;
@@ -147,8 +145,7 @@ void deactivate_actor(actor_t *actor) __banked
     }
 }
 
-void activate_actor(actor_t *actor)
-{
+void activate_actor(actor_t *actor) __banked {
 #ifdef STRICT
     // Check exists in inactive list
     UBYTE found = 0;
@@ -209,8 +206,7 @@ void activate_actors_in_col(UBYTE x, UBYTE y) __banked {
     }
 }
 
-void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked
-{
+void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __banked {
     if (actor->frame_start != frame_start || actor->frame_end != frame_end) {
         actor->frame = frame_start;
         actor->frame_start = frame_start;
@@ -218,18 +214,15 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
     }
 }
 
-void actor_set_anim_idle(actor_t *actor) __banked
-{
+void actor_set_anim_idle(actor_t *actor) __banked {
     actor_set_anim(actor, actor->dir);
 }
 
-void actor_set_anim_moving(actor_t *actor) __banked
-{
+void actor_set_anim_moving(actor_t *actor) __banked {
     actor_set_anim(actor, actor->dir + N_DIRECTIONS);
 }
 
-void actor_set_dir(actor_t *actor, direction_e dir, UBYTE moving) __banked
-{
+void actor_set_dir(actor_t *actor, direction_e dir, UBYTE moving) __banked {
     actor->dir = dir;
     if (moving) {
         actor_set_anim(actor, dir + N_DIRECTIONS);
@@ -238,8 +231,7 @@ void actor_set_dir(actor_t *actor, direction_e dir, UBYTE moving) __banked
     }
 }
 
-actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked
-{
+actor_t *actor_at_tile(UBYTE tx, UBYTE ty, UBYTE inc_noclip) __banked {
     for (actor_t *actor = actors_active_head; (actor); actor = actor->next) {
         if ((!inc_noclip && !actor->collision_enabled))
             continue;
