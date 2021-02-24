@@ -26,7 +26,7 @@ void projectiles_init() __banked {
     }
 }
 
-void projectiles_update() __banked {
+void projectiles_update() __nonbanked {
     static projectile_t *projectile;
     static projectile_t *prev_projectile;
     projectile_t *next;
@@ -55,7 +55,8 @@ void projectiles_update() __banked {
         }
 
         // Move projectile
-        point_translate_angle(&projectile->pos, projectile->angle, projectile->def.move_speed);
+        projectile->pos.x += projectile->delta_pos.x;
+        projectile->pos.y -= projectile->delta_pos.y;
 
         actor_t *hit_actor = actor_overlapping_bb(&projectile->def.bounds, &projectile->pos, FALSE);
         if (hit_actor) {
@@ -122,8 +123,13 @@ void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked {
     if (projectile) {
         projectile->pos.x = pos->x;
         projectile->pos.y = pos->y;
-        projectile->angle = angle;
+
+//        projectile->angle = angle;
+
         memcpy(&projectile->def, &projectile_defs[index], sizeof(projectile_def_t));
+
+        point_translate_angle_to_delta(&projectile->delta_pos, angle, projectile->def.move_speed);
+
         LL_REMOVE_HEAD(projectiles_inactive_head);
         LL_PUSH_HEAD(projectiles_active_head, projectile);
     }

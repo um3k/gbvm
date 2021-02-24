@@ -119,7 +119,7 @@ typedef struct projectile_def_t
 typedef struct projectile_t
 {
     upoint16_t pos;
-    UBYTE angle;
+    point16_t delta_pos;
     projectile_def_t def;
     struct projectile_t *next;
 } projectile_t;

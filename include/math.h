@@ -70,6 +70,10 @@ typedef struct upoint16_t {
     UINT16 x, y;
 } upoint16_t;
 
+typedef struct point16_t {
+    INT16 x, y;
+} point16_t;
+
 typedef struct point8_t {
     INT8 x, y;
 } point8_t;
@@ -93,6 +97,11 @@ inline void point_translate_dir(upoint16_t *point, direction_e dir, UBYTE speed)
 inline void point_translate_angle(upoint16_t *point, UBYTE angle, UBYTE speed) {
     point->x += ((SIN(angle) * (speed)) >> 7);
     point->y -= ((COS(angle) * (speed)) >> 7);
+}
+
+inline void point_translate_angle_to_delta(point16_t *point, UBYTE angle, UBYTE speed) {
+    point->x = ((SIN(angle) * (speed)) >> 7);
+    point->y = ((COS(angle) * (speed)) >> 7);
 }
 
 #endif
