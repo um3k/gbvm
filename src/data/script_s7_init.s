@@ -8,19 +8,16 @@
 
 ___bank_script_s7_init = 255
 .globl ___bank_script_s7_init
-.globl ___bank_tileset_6, _tileset_6
+.globl ___bank_script_s7_timer1, _script_s7_timer1
 
 _script_s7_init::
-        VM_LOCK
-
-        VM_PUSH_CONST           3
-        VM_REPLACE_TILE_XY      19, 17, ___bank_tileset_6, _tileset_6, .ARG0
-        VM_POP                  1
+        VM_TIMER_PREPARE        1, ___bank_script_s7_timer1, _script_s7_timer1
+        VM_TIMER_SET            1, 2
 
         VM_MUSIC_PLAY           ___bank_music_track_102__Data, _music_track_102__Data, .MUSIC_LOOP
 
         VM_FADE_IN              .UI_MODAL
-        VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_BTN_ANY
+        VM_INPUT_WAIT           0xff
         VM_FADE_OUT             .UI_MODAL
 
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3    ; sizeof(far_ptr_t) == 3
