@@ -118,6 +118,9 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
     fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
+#define BACKGROUND_FILL 0
+//#define BACKGROUND_FILL 0xffu
+
 static UBYTE current_tile;
 static UBYTE current_offset;
 static UBYTE tile_data[16 * 2];
@@ -125,7 +128,7 @@ static UBYTE tile_data[16 * 2];
 static void print_reset(UBYTE tile) {
     current_tile = tile;
     current_offset = 0;
-    memset(tile_data, 0, sizeof(tile_data));
+    memset(tile_data, BACKGROUND_FILL, sizeof(tile_data));
 }
 
 static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
@@ -136,27 +139,30 @@ static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const
     UBYTE width = (font->attr & RECODE_VWF) ? font->widths[letter] : 8;
     const UBYTE * bitmap = font->bitmaps + letter * 16;
     const UBYTE * src = bitmap;
-    UBYTE * dest = tile_data; 
+    UBYTE * dest = tile_data;
+    UBYTE mask; 
+    mask = (0xffu << (8 - current_offset)) | (0xffu >> (current_offset + width));
     for (UBYTE i = 0; i != 8; i++) {
-       *dest++ |= *src++ >> current_offset; 
-       *dest++ |= *src++ >> current_offset;
+       *dest++ = (*dest & mask) | (*src++ >> current_offset); 
+       *dest++ = (*dest & mask) | (*src++ >> current_offset);
     }    
     if (current_offset + width > 8) {
         UBYTE dx = 8 - current_offset;
+        mask = 0xffu >> (width - dx);
         src = bitmap;
         UBYTE tmp; 
         for (UBYTE i = 0; i != 8; i++) {
             tmp = *src++;
-            *dest++ |= tmp << dx;
+            *dest++ = (*dest & mask) | (tmp << dx);
             tmp = *src++;
-            *dest++ |= tmp << dx;
+            *dest++ = (*dest & mask) | (tmp << dx);
         }
     }
     current_offset += width;
     set_bkg_data(current_tile, 1, tile_data);
     if (current_offset > 7) {
         memcpy(tile_data, tile_data + 16, 16);
-        memset(tile_data + 16, 0, 16);
+        memset(tile_data + 16, BACKGROUND_FILL, 16);
         current_offset -= 8;
         current_tile++;
         if (current_offset) set_bkg_data(current_tile, 1, tile_data);
@@ -243,9 +249,6 @@ static void ui_draw_text_buffer_char() {
                 SetTile(ui_dest_ptr++, current_tile - 1);
             }
             if (current_offset) SetTile(ui_dest_ptr, current_tile);
-//            SetBankedBkgData(ui_tile_no, 1, (UBYTE *)font_image_ptr.ptr + ((UWORD)(*ui_text_ptr - 0x20) << 4), font_image_ptr.bank);
-//            SetTile(ui_dest_ptr++, ui_tile_no);
-//            ui_tile_no++;
             break;
     }
     ui_text_ptr++;
