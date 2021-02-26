@@ -6,6 +6,7 @@
 #include "game_time.h"
 #include "data/frame_image.h"
 #include "data/font_image.h"
+#include "data/vwf_font.h"
 #include "data/cursor_image.h"
 #include "bankdata.h"
 #include "scroll.h"
@@ -67,7 +68,7 @@ static UBYTE ui_width_left;
 static UBYTE ui_tile_no;
 static UBYTE ui_line_no;
 
-far_ptr_t font_image_ptr = TO_FAR_PTR_T(font_image);
+far_ptr_t font_image_ptr = TO_FAR_PTR_T(vwf_font);
 
 void ui_init() __banked {
     text_in_speed               = 1;
@@ -117,6 +118,55 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
     fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
+static UBYTE current_tile;
+static UBYTE current_offset;
+static UBYTE tile_data[16 * 2];
+
+static void print_reset(UBYTE tile) {
+    current_tile = tile;
+    current_offset = 0;
+    memset(tile_data, 0, sizeof(tile_data));
+}
+
+static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
+    UBYTE _save = _current_bank;
+    SWITCH_ROM_MBC1(font_bank);
+
+    UBYTE letter = (font->attr & RECODE_7BIT) ? font->recode_table[ch & 0x7f] : font->recode_table[ch];
+    UBYTE width = (font->attr & RECODE_VWF) ? font->widths[letter] : 8;
+    const UBYTE * bitmap = font->bitmaps + letter * 16;
+    const UBYTE * src = bitmap;
+    UBYTE * dest = tile_data; 
+    for (UBYTE i = 0; i != 8; i++) {
+       *dest++ |= *src++ >> current_offset; 
+       *dest++ |= *src++ >> current_offset;
+    }    
+    if (current_offset + width > 8) {
+        UBYTE dx = 8 - current_offset;
+        src = bitmap;
+        UBYTE tmp; 
+        for (UBYTE i = 0; i != 8; i++) {
+            tmp = *src++;
+            *dest++ |= tmp << dx;
+            tmp = *src++;
+            *dest++ |= tmp << dx;
+        }
+    }
+    current_offset += width;
+    set_bkg_data(current_tile, 1, tile_data);
+    if (current_offset > 7) {
+        memcpy(tile_data, tile_data + 16, 16);
+        memset(tile_data + 16, 0, 16);
+        current_offset -= 8;
+        current_tile++;
+        if (current_offset) set_bkg_data(current_tile, 1, tile_data);
+        SWITCH_ROM_MBC1(_save);
+        return TRUE;
+    }
+    SWITCH_ROM_MBC1(_save);
+    return FALSE;
+}
+
 static void ui_draw_text_buffer_char() {
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
@@ -152,6 +202,7 @@ static void ui_draw_text_buffer_char() {
         if (avatar_enabled) {
             ui_tile_no += 4;
         }    
+        print_reset(ui_tile_no);
     }
 
     switch (*ui_text_ptr) {
@@ -167,6 +218,7 @@ static void ui_draw_text_buffer_char() {
             } else {
                 ui_dest_ptr = ui_dest_base += 32;
             }
+            if (current_offset) print_reset(current_tile + 1);
             break; 
         case 0x10:
             current_text_speed = 0;
@@ -187,9 +239,13 @@ static void ui_draw_text_buffer_char() {
             current_text_speed = 0x1f;
             break;
         default:
-            SetBankedBkgData(ui_tile_no, 1, (UBYTE *)font_image_ptr.ptr + ((UWORD)(*ui_text_ptr - 32) << 4), font_image_ptr.bank);
-            SetTile(ui_dest_ptr++, ui_tile_no);
-            ui_tile_no++;
+            if (print_render(font_image_ptr.ptr, font_image_ptr.bank, *ui_text_ptr)) {
+                SetTile(ui_dest_ptr++, current_tile - 1);
+            }
+            if (current_offset) SetTile(ui_dest_ptr, current_tile);
+//            SetBankedBkgData(ui_tile_no, 1, (UBYTE *)font_image_ptr.ptr + ((UWORD)(*ui_text_ptr - 0x20) << 4), font_image_ptr.bank);
+//            SetTile(ui_dest_ptr++, ui_tile_no);
+//            ui_tile_no++;
             break;
     }
     ui_text_ptr++;
