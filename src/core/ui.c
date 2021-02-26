@@ -5,7 +5,6 @@
 #include "ui.h"
 #include "game_time.h"
 #include "data/frame_image.h"
-#include "data/font_image.h"
 #include "data/vwf_font.h"
 #include "data/cursor_image.h"
 #include "bankdata.h"
@@ -132,45 +131,53 @@ static void print_reset(UBYTE tile) {
 }
 
 static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
+    UBYTE result;
     UBYTE _save = _current_bank;
     SWITCH_ROM_MBC1(font_bank);
 
     UBYTE letter = (font->attr & RECODE_7BIT) ? font->recode_table[ch & 0x7f] : font->recode_table[ch];
-    UBYTE width = (font->attr & RECODE_VWF) ? font->widths[letter] : 8;
     const UBYTE * bitmap = font->bitmaps + letter * 16;
-    const UBYTE * src = bitmap;
-    UBYTE * dest = tile_data;
-    UBYTE mask; 
-    mask = (0xffu << (8 - current_offset)) | (0xffu >> (current_offset + width));
-    for (UBYTE i = 0; i != 8; i++) {
-       *dest++ = (*dest & mask) | (*src++ >> current_offset); 
-       *dest++ = (*dest & mask) | (*src++ >> current_offset);
-    }    
-    if (current_offset + width > 8) {
-        UBYTE dx = 8 - current_offset;
-        mask = 0xffu >> (width - dx);
-        src = bitmap;
-        UBYTE tmp; 
+    if (font->attr & RECODE_VWF) {
+        UBYTE width = font->widths[letter];
+        const UBYTE * src = bitmap;
+        UBYTE * dest = tile_data;
+        UBYTE mask; 
+        mask = (0xffu << (8 - current_offset)) | (0xffu >> (current_offset + width));
         for (UBYTE i = 0; i != 8; i++) {
-            tmp = *src++;
-            *dest++ = (*dest & mask) | (tmp << dx);
-            tmp = *src++;
-            *dest++ = (*dest & mask) | (tmp << dx);
+        *dest++ = (*dest & mask) | (*src++ >> current_offset); 
+        *dest++ = (*dest & mask) | (*src++ >> current_offset);
+        }    
+        if (current_offset + width > 8) {
+            UBYTE dx = 8 - current_offset;
+            mask = 0xffu >> (width - dx);
+            src = bitmap;
+            UBYTE tmp; 
+            for (UBYTE i = 0; i != 8; i++) {
+                tmp = *src++;
+                *dest++ = (*dest & mask) | (tmp << dx);
+                tmp = *src++;
+                *dest++ = (*dest & mask) | (tmp << dx);
+            }
         }
-    }
-    current_offset += width;
-    set_bkg_data(current_tile, 1, tile_data);
-    if (current_offset > 7) {
-        memcpy(tile_data, tile_data + 16, 16);
-        memset(tile_data + 16, BACKGROUND_FILL, 16);
-        current_offset -= 8;
-        current_tile++;
-        if (current_offset) set_bkg_data(current_tile, 1, tile_data);
-        SWITCH_ROM_MBC1(_save);
-        return TRUE;
+        current_offset += width;
+        set_bkg_data(current_tile, 1, tile_data);
+        if (current_offset > 7) {
+            memcpy(tile_data, tile_data + 16, 16);
+            memset(tile_data + 16, BACKGROUND_FILL, 16);
+            current_offset -= 8;
+            current_tile++;
+            if (current_offset) set_bkg_data(current_tile, 1, tile_data);
+            result = TRUE;
+        } else {
+            result = FALSE;
+        }
+    } else {
+        set_bkg_data(current_tile++, 1, bitmap);
+        current_offset = 0;
+        result = TRUE;
     }
     SWITCH_ROM_MBC1(_save);
-    return FALSE;
+    return result;
 }
 
 static void ui_draw_text_buffer_char() {
