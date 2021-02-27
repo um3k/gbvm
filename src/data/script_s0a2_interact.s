@@ -28,7 +28,7 @@ _script_s0a2_interact::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "Check out GBS documentation:\nhttps://www.gbstudio.dev/docs/"
+        .asciz "Check out GameBoy Studio docs:\nhttps://www.gbstudio.dev/docs/"
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
