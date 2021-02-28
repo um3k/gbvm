@@ -124,13 +124,26 @@ static UBYTE current_tile;
 static UBYTE current_offset;
 static UBYTE tile_data[16 * 2];
 
-static void print_reset(UBYTE tile) {
+static void ui_print_reset(UBYTE tile) {
     current_tile = tile;
     current_offset = 0;
     memset(tile_data, BACKGROUND_FILL, sizeof(tile_data));
 }
 
-static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
+static UBYTE ui_print_update_tiles() __banked {    // declared __banked because it is called from nonbanked print_render()
+    set_bkg_data(current_tile, 1, tile_data);
+    if (current_offset > 7) {
+        memcpy(tile_data, tile_data + 16, 16);
+        memset(tile_data + 16, BACKGROUND_FILL, 16);
+        current_offset -= 8;
+        current_tile++;
+        if (current_offset) set_bkg_data(current_tile, 1, tile_data);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
     UBYTE result;
     UBYTE _save = _current_bank;
     SWITCH_ROM_MBC1(font_bank);
@@ -138,20 +151,20 @@ static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const
     UBYTE letter = (font->attr & RECODE_7BIT) ? font->recode_table[ch & 0x7f] : font->recode_table[ch];
     const UBYTE * bitmap = font->bitmaps + letter * 16;
     if (font->attr & RECODE_VWF) {
-        UBYTE width = font->widths[letter];
+        static UBYTE width, mask; 
+        width = font->widths[letter];
         const UBYTE * src = bitmap;
         UBYTE * dest = tile_data;
-        UBYTE mask; 
         mask = (0xffu << (8 - current_offset)) | (0xffu >> (current_offset + width));
         for (UBYTE i = 0; i != 8; i++) {
-        *dest++ = (*dest & mask) | (*src++ >> current_offset); 
-        *dest++ = (*dest & mask) | (*src++ >> current_offset);
+            *dest++ = (*dest & mask) | (*src++ >> current_offset); 
+            *dest++ = (*dest & mask) | (*src++ >> current_offset);
         }    
         if (current_offset + width > 8) {
-            UBYTE dx = 8 - current_offset;
+            static UBYTE dx, tmp; 
+            dx = 8 - current_offset;
             mask = 0xffu >> (width - dx);
             src = bitmap;
-            UBYTE tmp; 
             for (UBYTE i = 0; i != 8; i++) {
                 tmp = *src++;
                 *dest++ = (*dest & mask) | (tmp << dx);
@@ -160,17 +173,7 @@ static UBYTE print_render(const font_desc_t * font, const UBYTE font_bank, const
             }
         }
         current_offset += width;
-        set_bkg_data(current_tile, 1, tile_data);
-        if (current_offset > 7) {
-            memcpy(tile_data, tile_data + 16, 16);
-            memset(tile_data + 16, BACKGROUND_FILL, 16);
-            current_offset -= 8;
-            current_tile++;
-            if (current_offset) set_bkg_data(current_tile, 1, tile_data);
-            result = TRUE;
-        } else {
-            result = FALSE;
-        }
+        result = ui_print_update_tiles();
     } else {
         set_bkg_data(current_tile++, 1, bitmap);
         current_offset = 0;
@@ -215,7 +218,7 @@ static void ui_draw_text_buffer_char() {
         if (avatar_enabled) {
             ui_tile_no += 4;
         }    
-        print_reset(ui_tile_no);
+        ui_print_reset(ui_tile_no);
     }
 
     switch (*ui_text_ptr) {
@@ -231,7 +234,7 @@ static void ui_draw_text_buffer_char() {
             } else {
                 ui_dest_ptr = ui_dest_base += 32;
             }
-            if (current_offset) print_reset(current_tile + 1);
+            if (current_offset) ui_print_reset(current_tile + 1);
             break; 
         case 0x10:
             current_text_speed = 0;
@@ -252,7 +255,7 @@ static void ui_draw_text_buffer_char() {
             current_text_speed = 0x1f;
             break;
         default:
-            if (print_render(font_image_ptr.ptr, font_image_ptr.bank, *ui_text_ptr)) {
+            if (ui_print_render(font_image_ptr.ptr, font_image_ptr.bank, *ui_text_ptr)) {
                 SetTile(ui_dest_ptr++, current_tile - 1);
             }
             if (current_offset) SetTile(ui_dest_ptr, current_tile);
