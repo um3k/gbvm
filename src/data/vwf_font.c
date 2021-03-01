@@ -221,7 +221,7 @@ static const UBYTE font_bitmaps[] = {
 
 const void __at(255) __bank_vwf_font;
 const font_desc_t vwf_font = {
-    RECODE_7BIT | RECODE_VWF, 
+    RECODE_7BIT | FONT_VWF, 
     font_table,
     font_widths,
     font_bitmaps

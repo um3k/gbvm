@@ -143,6 +143,85 @@ static UBYTE ui_print_update_tiles() __banked {    // declared __banked because 
     return FALSE;
 }
 
+static UBYTE current_mask;
+static UBYTE current_rotate;
+static void ui_print_shift_char(void * dest, const void * src) __nonbanked __naked {
+    dest; src;
+__asm
+        ldhl sp, #5
+        ld a, (hl-)
+        ld d, a
+        ld a, (hl-)
+        ld e, a 
+        ld a, (hl-)
+        ld l, (hl)
+        ld h, a 
+
+        ld a, #8
+3$:
+        push af
+
+        ld a, (de)        
+        ld c, a
+        inc de
+        ld a, (de)
+        ld b, a
+        inc de
+
+        ld a, (_current_rotate)
+        sla a
+        jr z, 1$
+        jr c, 4$
+        srl a
+        srl a
+        jr nc, 6$
+        srl c
+        srl b
+6$:
+        or a
+        jr z, 1$
+2$:
+        srl c
+        srl b
+        srl c
+        srl b
+        dec a
+        jr nz, 2$
+        jr 1$
+4$:
+        srl a
+        srl a
+        jr nc, 7$
+        sla c
+        sla b
+7$:     or a
+        jr z, 1$
+5$:
+        sla c
+        sla b
+        sla c
+        sla b
+        dec a
+        jr nz, 5$
+1$:
+        ld a, (_current_mask)
+        and (hl)
+        or c
+        ld (hl+), a
+
+        ld a, (_current_mask)
+        and (hl)
+        or b
+        ld (hl+), a
+
+        pop af
+        dec a
+        jr nz, 3$
+
+        ret
+__endasm;
+}
+
 static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
     UBYTE result;
     UBYTE _save = _current_bank;
@@ -150,27 +229,17 @@ static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, co
 
     UBYTE letter = (font->attr & RECODE_7BIT) ? font->recode_table[ch & 0x7f] : font->recode_table[ch];
     const UBYTE * bitmap = font->bitmaps + letter * 16;
-    if (font->attr & RECODE_VWF) {
-        static UBYTE width, mask; 
-        width = font->widths[letter];
-        const UBYTE * src = bitmap;
-        UBYTE * dest = tile_data;
-        mask = (0xffu << (8 - current_offset)) | (0xffu >> (current_offset + width));
-        for (UBYTE i = 0; i != 8; i++) {
-            *dest++ = (*dest & mask) | (*src++ >> current_offset); 
-            *dest++ = (*dest & mask) | (*src++ >> current_offset);
-        }    
+    if (font->attr & FONT_VWF) {
+        UBYTE width = font->widths[letter];
+        UBYTE dx = (8 - current_offset);
+        current_mask = (0xffu << dx) | (0xffu >> (current_offset + width));
+
+        current_rotate = current_offset;
+        ui_print_shift_char(tile_data, bitmap);
         if (current_offset + width > 8) {
-            static UBYTE dx, tmp; 
-            dx = 8 - current_offset;
-            mask = 0xffu >> (width - dx);
-            src = bitmap;
-            for (UBYTE i = 0; i != 8; i++) {
-                tmp = *src++;
-                *dest++ = (*dest & mask) | (tmp << dx);
-                tmp = *src++;
-                *dest++ = (*dest & mask) | (tmp << dx);
-            }
+            current_rotate = dx | 0x80u;
+            current_mask = 0xffu >> (width - dx);
+            ui_print_shift_char(tile_data + 16, bitmap);
         }
         current_offset += width;
         result = ui_print_update_tiles();

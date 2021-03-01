@@ -125,7 +125,7 @@ typedef struct projectile_t
 } projectile_t;
 
 #define RECODE_7BIT 1
-#define RECODE_VWF 2
+#define FONT_VWF 2
 
 typedef struct font_desc_t {
     UBYTE attr;
