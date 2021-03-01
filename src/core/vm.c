@@ -298,6 +298,9 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 case '&': *A = *A  &  *B; break;
                 case '|': *A = *A  |  *B; break;
                 case '^': *A = *A  ^  *B; break;
+                // funcs
+                case 'm': *A = (*A < *B) ? *A : *B; break;  // min
+                case 'M': *A = (*A > *B) ? *A : *B; break;  // max
                 // unary
                 case '@': *B = abs(*B); continue;
                 case '~': *B = ~(*B);   continue;

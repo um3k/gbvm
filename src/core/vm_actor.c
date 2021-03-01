@@ -19,8 +19,7 @@ typedef struct act_move_to_t {
 } act_move_to_t;
 
 typedef struct act_set_pos_t {
-    UBYTE ID;
-    UBYTE _pad0;
+    INT16 ID;
     INT16 X, Y;
 } act_set_pos_t;
 
@@ -125,10 +124,20 @@ void vm_actor_set_pos(SCRIPT_CTX * THIS, INT16 idx) __banked {
     actor_t *actor;
     
     act_set_pos_t * params = VM_REF_TO_PTR(idx);
-    actor = actors + params->ID;
+    actor = actors + (UBYTE)(params->ID);
 
     actor->pos.x = params->X;
     actor->pos.y = params->Y;
+}
+
+void vm_actor_get_pos(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    actor_t *actor;
+    
+    act_set_pos_t * params = VM_REF_TO_PTR(idx);
+    actor = actors + (UBYTE)(params->ID);
+
+    params->X = actor->pos.x;
+    params->Y = actor->pos.y;
 }
 
 void vm_actor_emote(SCRIPT_CTX * THIS, INT16 idx, UBYTE emote_sprite_bank, spritesheet_t *emote_sprite) __banked {

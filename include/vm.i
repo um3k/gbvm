@@ -177,6 +177,8 @@ OP_VM_RPN        = 0x15
 .B_XOR           = '^'
 .B_NOT           = '~' 
 .ABS             = '@'
+.MIN             = 'm'
+.MAX             = 'M'
 .macro VM_RPN
         .db OP_VM_RPN
 .endm
@@ -389,6 +391,11 @@ OP_VM_ACTOR_SET_SPRITESHEET     = 0x38
 OP_VM_ACTOR_REPLACE_TILE        = 0x39
 .macro VM_ACTOR_REPLACE_TILE ACTOR, TARGET_TILE, TILEDATA_BANK, TILEDATA, START, LEN
         .db OP_VM_ACTOR_REPLACE_TILE, #<LEN, #<START, #>TILEDATA, #<TILEDATA, #<TILEDATA_BANK, #<TARGET_TILE, #>ACTOR, #<ACTOR
+.endm
+
+OP_VM_ACTOR_GET_POS     = 0x3A
+.macro VM_ACTOR_GET_POS IDX
+        .db OP_VM_ACTOR_GET_POS, #>IDX, #<IDX
 .endm
 
 ; --- UI ------------------------------------------
