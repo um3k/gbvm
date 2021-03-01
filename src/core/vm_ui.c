@@ -152,6 +152,7 @@ void vm_overlay_move_to(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, BYTE speed)
 // clears overlay window
 void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE color) __banked {
     THIS;
+    text_color = color;
     fill_win_rect(0, 0, 20, 18, ((color) ? ui_while_tile : ui_black_tile));
 }
 

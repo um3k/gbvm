@@ -51,6 +51,7 @@ extern UBYTE text_out_speed;
 extern UBYTE text_draw_speed;
 extern UBYTE text_ff_joypad;
 extern UBYTE text_ff;
+extern UBYTE text_color;
 
 extern unsigned char ui_text_data[80];
 
