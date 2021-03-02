@@ -13,6 +13,7 @@
 #define TEXT_BUFFER_START 0xCCU
 #define TEXT_BKG_FILL_W 0x00u
 #define TEXT_BKG_FILL_B 0xffu
+#define TEXT_MAX_LENGTH 160
 
 #define AVATAR_WIDTH 2
 #define SELECTOR_WIDTH 1
@@ -56,7 +57,7 @@ extern UBYTE text_ff_joypad;
 extern UBYTE text_ff;
 extern UBYTE text_bkg_fill;
 
-extern unsigned char ui_text_data[80];
+extern unsigned char ui_text_data[TEXT_MAX_LENGTH];
 
 extern far_ptr_t font_image_ptr;
 

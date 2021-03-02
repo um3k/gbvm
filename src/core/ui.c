@@ -52,7 +52,7 @@ UBYTE menu_layout;
 UBYTE menu_cancel_on_last_option;
 UBYTE menu_cancel_on_b;
 
-unsigned char ui_text_data[80];
+unsigned char ui_text_data[TEXT_MAX_LENGTH];
 
 // char printer internals
 static UBYTE * ui_text_ptr;
@@ -235,7 +235,7 @@ static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, co
 
         vwf_current_rotate = vwf_current_offset;
         ui_print_shift_char(vwf_tile_data, bitmap, font_bank);
-        if (vwf_current_offset + width > 8u) {
+        if ((UBYTE)(vwf_current_offset + width) > 8u) {
             vwf_current_rotate = dx | 0x80u;
             vwf_current_mask = 0xffu >> (width - dx);
             ui_print_shift_char(vwf_tile_data + 16u, bitmap, font_bank);
