@@ -16,10 +16,8 @@
 #endif
 #include "data/data_bootstrap.h"
 
-// extract tile map from buffer, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
-void get_map_from_buf(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image) __preserves_regs(b, c);
-// put tile map from buffer onto screen, containing another tilemap with image_tile_width X image_tile_width dimentions, stored in global variables
-void map_to_screen(UBYTE x, UBYTE y, UBYTE w, UBYTE h, unsigned char * dest, unsigned char * image);
+// put submap of a large map to screen
+void set_bkg_submap(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const unsigned char *map, UINT8 map_w);
 
 void scroll_queue_row(UBYTE x, UBYTE y);
 void scroll_queue_col(UBYTE x, UBYTE y);
@@ -45,8 +43,6 @@ UBYTE pending_w_i;
 INT16 current_row, new_row;
 INT16 current_col, new_col;
 
-UBYTE tilemap_buffer[MAX(MAX(PENDING_BATCH_SIZE, SCREEN_TILE_REFRES_W), SCREEN_TILE_REFRES_H)];
-
 void scroll_reset() __banked {
     draw_scroll_x   = 0;
     draw_scroll_y   = 0;
@@ -62,7 +58,6 @@ void scroll_init() __banked {
     pending_h_i     = 0;
     scroll_x        = 0x7FFF;
     scroll_y        = 0x7FFF;
-    memset(tilemap_buffer, 0, sizeof(tilemap_buffer));
 }
 
 void scroll_update() __banked {
@@ -180,8 +175,6 @@ UBYTE scroll_viewport(parallax_row_t * port) {
 }
 
 void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_rows) {
-    BYTE i;
-
     if (!fade_style) {
         DISPLAY_OFF;
     } else if (!fade_timer == 0) {
@@ -203,7 +196,7 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
     UBYTE x = MAX(0, (scroll_x >> 3) - SCREEN_PAD_LEFT);
     UBYTE y = MAX(0, (scroll_y >> 3) + row_offset);
 
-    for (i = 0; i != n_rows, y != image_tile_height; ++i, y++) {
+    for (BYTE i = 0; i != n_rows, y != image_tile_height; ++i, y++) {
         scroll_load_row(x, y);
         activate_actors_in_row(x, y);
     }
@@ -256,13 +249,13 @@ void scroll_load_pending_row() __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Row Load
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
-        map_to_screen(pending_w_x, pending_w_y, width, 1, tilemap_buffer, image_attr_ptr);
+        set_bkg_submap(pending_w_x, pending_w_y, width, 1, image_attr_ptr, image_tile_width);
         VBK_REG = 0;
     }
 #endif
     // DMG Row Load
     SWITCH_ROM_MBC1(image_bank);
-    map_to_screen(pending_w_x, pending_w_y, width, 1, tilemap_buffer, image_ptr);
+    set_bkg_submap(pending_w_x, pending_w_y, width, 1, image_ptr, image_tile_width);
 
     pending_w_x += width;
     pending_w_i -= width;
@@ -278,13 +271,13 @@ void scroll_load_row(UBYTE x, UBYTE y) __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Column Load
         VBK_REG = 1;
         SWITCH_ROM_MBC1(image_attr_bank);
-        map_to_screen(x, y, SCREEN_TILE_REFRES_W, 1, tilemap_buffer, image_attr_ptr);
+        set_bkg_submap(x, y, SCREEN_TILE_REFRES_W, 1, image_attr_ptr, image_tile_width);
         VBK_REG = 0;
     }
 #endif
     // DMG Row Load
     SWITCH_ROM_MBC1(image_bank);
-    map_to_screen(x, y, SCREEN_TILE_REFRES_W, 1, tilemap_buffer, image_ptr);
+    set_bkg_submap(x, y, SCREEN_TILE_REFRES_W, 1, image_ptr, image_tile_width);
 
     SWITCH_ROM_MBC1(_save);
 }
@@ -296,14 +289,14 @@ void scroll_load_col(UBYTE x, UBYTE y, UBYTE height) __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Column Load
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
-        map_to_screen(x, y, 1, height, tilemap_buffer, image_attr_ptr);
+        set_bkg_submap(x, y, 1, height, image_attr_ptr, image_tile_width);
         VBK_REG = 0;
     }
 #endif
     // DMG Column Load
     unsigned char* map = image_ptr + image_tile_width * y + x;
     SWITCH_ROM_MBC1(image_bank);
-    map_to_screen(x, y, 1, height, tilemap_buffer, image_ptr);
+    set_bkg_submap(x, y, 1, height, image_ptr, image_tile_width);
     SWITCH_ROM_MBC1(_save);
 }
 
@@ -316,13 +309,13 @@ void scroll_load_pending_col() __nonbanked {
     if (_cpu == CGB_TYPE) {  // Color Column Load
         SWITCH_ROM_MBC1(image_attr_bank);
         VBK_REG = 1;
-        map_to_screen(pending_h_x, pending_h_y, 1, height, tilemap_buffer, image_attr_ptr);
+        set_bkg_submap(pending_h_x, pending_h_y, 1, height, image_attr_ptr, image_tile_width);
         VBK_REG = 0;
     }
 #endif
     // DMG Column Load
     SWITCH_ROM_MBC1(image_bank);
-    map_to_screen(pending_h_x, pending_h_y, 1, height, tilemap_buffer, image_ptr);
+    set_bkg_submap(pending_h_x, pending_h_y, 1, height, image_ptr, image_tile_width);
 
     pending_h_y += height;
     pending_h_i -= height;
