@@ -60,16 +60,15 @@ static UBYTE * ui_dest_ptr;
 static UBYTE * ui_dest_base;
 static UBYTE ui_text_width;
 static UBYTE ui_width_left;
-static UBYTE ui_tile_no;
 static UBYTE ui_line_no;
+static UBYTE ui_current_tile;
+static UBYTE vwf_current_offset;
+static UBYTE vwf_tile_data[16 * 2];
+static UBYTE vwf_current_mask;
+static UBYTE vwf_current_rotate;
+static UBYTE vwf_inverse_map;
 
 far_ptr_t font_image_ptr = TO_FAR_PTR_T(vwf_font);
-
-static UBYTE current_tile;
-static UBYTE current_offset;
-static UBYTE tile_data[16 * 2];
-static UBYTE current_mask;
-static UBYTE current_rotate;
 
 void ui_init() __banked {
     text_in_speed               = 1;
@@ -86,7 +85,6 @@ void ui_init() __banked {
     ui_dest_base                = 0;
     ui_text_width               = 0;
     ui_width_left               = 0;
-    ui_tile_no                  = 0;
     ui_line_no                  = 0;
 
     ui_set_pos(0, MENU_CLOSED_Y);
@@ -104,10 +102,10 @@ void ui_load_tiles() __banked {
     ui_load_frame_tiles(frame_image, BANK(frame_image));
     ui_load_cursor_tile(cursor_image, BANK(cursor_image));
 
-    memset(tile_data, TEXT_BKG_FILL_W, 16);
-    set_bkg_data(ui_while_tile, 1, tile_data);
-    memset(tile_data, TEXT_BKG_FILL_B, 16);
-    set_bkg_data(ui_black_tile, 1, tile_data);
+    memset(vwf_tile_data, TEXT_BKG_FILL_W, 16);
+    set_bkg_data(ui_while_tile, 1, vwf_tile_data);
+    memset(vwf_tile_data, TEXT_BKG_FILL_B, 16);
+    set_bkg_data(ui_black_tile, 1, vwf_tile_data);
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
@@ -123,19 +121,19 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
 }
 
 static void ui_print_reset(UBYTE tile) {
-    current_tile = tile;
-    current_offset = 0;
-    memset(tile_data, text_bkg_fill, sizeof(tile_data));
+    ui_current_tile = tile;
+    vwf_current_offset = 0;
+    memset(vwf_tile_data, text_bkg_fill, sizeof(vwf_tile_data));
 }
 
 static UBYTE ui_print_update_tiles() __banked {    // declared __banked because it is called from nonbanked print_render()
-    set_bkg_data(current_tile, 1, tile_data);
-    if (current_offset > 7) {
-        memcpy(tile_data, tile_data + 16, 16);
-        memset(tile_data + 16, text_bkg_fill, 16);
-        current_offset -= 8;
-        current_tile++;
-        if (current_offset) set_bkg_data(current_tile, 1, tile_data);
+    set_bkg_data(ui_current_tile, 1, vwf_tile_data);
+    if (vwf_current_offset > 7) {
+        memcpy(vwf_tile_data, vwf_tile_data + 16, 16);
+        memset(vwf_tile_data + 16, text_bkg_fill, 16);
+        vwf_current_offset -= 8;
+        ui_current_tile++;
+        if (vwf_current_offset) set_bkg_data(ui_current_tile, 1, vwf_tile_data);
         return TRUE;
     }
     return FALSE;
@@ -157,14 +155,21 @@ __asm
 3$:
         push af
 
-        ld a, (de)        
+        ld a, (de)
+        ld c, a
+        ld a, (_vwf_inverse_map)
+        xor c
         ld c, a
         inc de
         ld a, (de)
         ld b, a
+        ld a, (_vwf_inverse_map)
+        xor b
+        ld b, a
+
         inc de
 
-        ld a, (_current_rotate)
+        ld a, (_vwf_current_rotate)
         sla a
         jr z, 1$
         jr c, 4$
@@ -200,12 +205,12 @@ __asm
         dec a
         jr nz, 5$
 1$:
-        ld a, (_current_mask)
+        ld a, (_vwf_current_mask)
         and (hl)
         or c
         ld (hl+), a
 
-        ld a, (_current_mask)
+        ld a, (_vwf_current_mask)
         and (hl)
         or b
         ld (hl+), a
@@ -226,22 +231,23 @@ static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, co
     UBYTE letter = (font->attr & RECODE_7BIT) ? font->recode_table[ch & 0x7f] : font->recode_table[ch];
     const UBYTE * bitmap = font->bitmaps + letter * 16;
     if (font->attr & FONT_VWF) {
+        vwf_inverse_map = (font->attr & FONT_VWF_1BIT) ? text_bkg_fill : 0;
         UBYTE width = font->widths[letter];
-        UBYTE dx = (8 - current_offset);
-        current_mask = (0xffu << dx) | (0xffu >> (current_offset + width));
+        UBYTE dx = (8 - vwf_current_offset);
+        vwf_current_mask = (0xffu << dx) | (0xffu >> (vwf_current_offset + width));
 
-        current_rotate = current_offset;
-        ui_print_shift_char(tile_data, bitmap);
-        if (current_offset + width > 8) {
-            current_rotate = dx | 0x80u;
-            current_mask = 0xffu >> (width - dx);
-            ui_print_shift_char(tile_data + 16, bitmap);
+        vwf_current_rotate = vwf_current_offset;
+        ui_print_shift_char(vwf_tile_data, bitmap);
+        if (vwf_current_offset + width > 8) {
+            vwf_current_rotate = dx | 0x80u;
+            vwf_current_mask = 0xffu >> (width - dx);
+            ui_print_shift_char(vwf_tile_data + 16, bitmap);
         }
-        current_offset += width;
+        vwf_current_offset += width;
         result = ui_print_update_tiles();
     } else {
-        set_bkg_data(current_tile++, 1, bitmap);
-        current_offset = 0;
+        set_bkg_data(ui_current_tile++, 1, bitmap);
+        vwf_current_offset = 0;
         result = TRUE;
     }
     SWITCH_ROM_MBC1(_save);
@@ -279,11 +285,7 @@ static void ui_draw_text_buffer_char() {
         // character counter
         ui_width_left = ui_text_width;
         // tileno destination
-        ui_tile_no = TEXT_BUFFER_START;  
-        if (avatar_enabled) {
-            ui_tile_no += 4;
-        }    
-        ui_print_reset(ui_tile_no);
+        ui_print_reset(((avatar_enabled) ? (UBYTE)(TEXT_BUFFER_START + 4) : TEXT_BUFFER_START));
     }
 
     switch (*ui_text_ptr) {
@@ -293,13 +295,13 @@ static void ui_draw_text_buffer_char() {
             return;
         case '\n':
             ui_line_no++;
-            if (menu_enabled && menu_layout == MENU_LAYOUT_2_COLUMN && ui_line_no == 4) {
+            if (menu_enabled && (menu_layout == MENU_LAYOUT_2_COLUMN) && (ui_line_no == 4)) {
                 ui_dest_base = GetWinAddr() + 32 + 1 + 9;
                 ui_dest_ptr = ui_dest_base;
             } else {
                 ui_dest_ptr = ui_dest_base += 32;
             }
-            if (current_offset) ui_print_reset(current_tile + 1);
+            if (vwf_current_offset) ui_print_reset(ui_current_tile + 1);
             break; 
         case 0x10:
             current_text_speed = 0;
@@ -321,9 +323,9 @@ static void ui_draw_text_buffer_char() {
             break;
         default:
             if (ui_print_render(font_image_ptr.ptr, font_image_ptr.bank, *ui_text_ptr)) {
-                SetTile(ui_dest_ptr++, current_tile - 1);
+                SetTile(ui_dest_ptr++, ui_current_tile - 1);
             }
-            if (current_offset) SetTile(ui_dest_ptr, current_tile);
+            if (vwf_current_offset) SetTile(ui_dest_ptr, ui_current_tile);
             break;
     }
     ui_text_ptr++;
