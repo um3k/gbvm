@@ -126,23 +126,17 @@ static void ui_print_reset(UBYTE tile) {
     memset(vwf_tile_data, text_bkg_fill, sizeof(vwf_tile_data));
 }
 
-static UBYTE ui_print_update_tiles() __banked {    // declared __banked because it is called from nonbanked print_render()
-    set_bkg_data(ui_current_tile, 1, vwf_tile_data);
-    if (vwf_current_offset > 7) {
-        memcpy(vwf_tile_data, vwf_tile_data + 16, 16);
-        memset(vwf_tile_data + 16, text_bkg_fill, 16);
-        vwf_current_offset -= 8;
-        ui_current_tile++;
-        if (vwf_current_offset) set_bkg_data(ui_current_tile, 1, vwf_tile_data);
-        return TRUE;
-    }
-    return FALSE;
-}
-
-static void ui_print_shift_char(void * dest, const void * src) __nonbanked __naked {
-    dest; src;
+static void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked __naked {
+    dest; src; bank;
 __asm
-        ldhl sp, #5
+        ldhl sp, #6
+        
+        ldh a, (__current_bank)
+        push af
+        ld a, (hl-)
+        ldh (__current_bank), a
+        ld  (#0x2000), a
+
         ld a, (hl-)
         ld d, a
         ld a, (hl-)
@@ -219,39 +213,50 @@ __asm
         dec a
         jr nz, 3$
 
+        pop af
+        ldh (__current_bank),a
+        ld  (#0x2000), a
+
         ret
 __endasm;
 }
 
-static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) __nonbanked {
-    UBYTE result;
-    UBYTE _save = _current_bank;
-    SWITCH_ROM_MBC1(font_bank);
+static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) {
+    font_desc_t font_desc;
+    MemcpyBanked(&font_desc, font, sizeof(font_desc_t), font_bank);
 
-    UBYTE letter = (font->attr & RECODE_7BIT) ? font->recode_table[ch & 0x7f] : font->recode_table[ch];
-    const UBYTE * bitmap = font->bitmaps + letter * 16;
-    if (font->attr & FONT_VWF) {
-        vwf_inverse_map = (font->attr & FONT_VWF_1BIT) ? text_bkg_fill : 0;
-        UBYTE width = font->widths[letter];
-        UBYTE dx = (8 - vwf_current_offset);
+    UBYTE letter = ReadBankedUBYTE(font_desc.recode_table + (ch & ((font_desc.attr & RECODE_7BIT) ? 0x7fu : 0xffu)), font_bank);
+    const UBYTE * bitmap = font_desc.bitmaps + letter * 16u;
+    if (font_desc.attr & FONT_VWF) {
+        vwf_inverse_map = (font_desc.attr & FONT_VWF_1BIT) ? text_bkg_fill : 0;
+        UBYTE width = ReadBankedUBYTE(font_desc.widths + letter, font_bank);
+        UBYTE dx = (8u - vwf_current_offset);
         vwf_current_mask = (0xffu << dx) | (0xffu >> (vwf_current_offset + width));
 
         vwf_current_rotate = vwf_current_offset;
-        ui_print_shift_char(vwf_tile_data, bitmap);
-        if (vwf_current_offset + width > 8) {
+        ui_print_shift_char(vwf_tile_data, bitmap, font_bank);
+        if (vwf_current_offset + width > 8u) {
             vwf_current_rotate = dx | 0x80u;
             vwf_current_mask = 0xffu >> (width - dx);
-            ui_print_shift_char(vwf_tile_data + 16, bitmap);
+            ui_print_shift_char(vwf_tile_data + 16u, bitmap, font_bank);
         }
         vwf_current_offset += width;
-        result = ui_print_update_tiles();
+
+        set_bkg_data(ui_current_tile, 1, vwf_tile_data);
+        if (vwf_current_offset > 7u) {
+            memcpy(vwf_tile_data, vwf_tile_data + 16u, 16);
+            memset(vwf_tile_data + 16u, text_bkg_fill, 16);
+            vwf_current_offset -= 8u;
+            ui_current_tile++;
+            if (vwf_current_offset) set_bkg_data(ui_current_tile, 1, vwf_tile_data);
+            return TRUE;
+        } 
+        return FALSE;
     } else {
-        set_bkg_data(ui_current_tile++, 1, bitmap);
+        SetBankedBkgData(ui_current_tile++, 1, bitmap, font_bank);
         vwf_current_offset = 0;
-        result = TRUE;
+        return TRUE;
     }
-    SWITCH_ROM_MBC1(_save);
-    return result;
 }
 
 static void ui_draw_text_buffer_char() {
