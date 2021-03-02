@@ -25,14 +25,6 @@
 #define ui_frame_r_tiles  0xC5u
 #define ui_frame_bg_tiles 0xC4u
 
-#define FILL_W 0x00u
-#define FILL_B 0xffu
-
-const unsigned char ui_white[16] = {FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, 
-                                    FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, FILL_W, FILL_W};
-const unsigned char ui_black[16] = {FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, 
-                                    FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, FILL_B, FILL_B};
-
 const unsigned char avatar_tiles[4] = {TEXT_BUFFER_START, TEXT_BUFFER_START + 2U, TEXT_BUFFER_START + 1U, TEXT_BUFFER_START + 3U};
 
 UBYTE win_pos_x, win_dest_pos_x;
@@ -55,7 +47,7 @@ UBYTE text_out_speed;
 UBYTE text_draw_speed;
 UBYTE text_ff_joypad;
 UBYTE text_ff; 
-UBYTE text_color;
+UBYTE text_bkg_fill;
 UBYTE menu_layout;
 UBYTE menu_cancel_on_last_option;
 UBYTE menu_cancel_on_b;
@@ -73,12 +65,18 @@ static UBYTE ui_line_no;
 
 far_ptr_t font_image_ptr = TO_FAR_PTR_T(vwf_font);
 
+static UBYTE current_tile;
+static UBYTE current_offset;
+static UBYTE tile_data[16 * 2];
+static UBYTE current_mask;
+static UBYTE current_rotate;
+
 void ui_init() __banked {
     text_in_speed               = 1;
     text_out_speed              = 1;
     text_draw_speed             = 1;
     text_ff_joypad              = 1;
-    text_color                  = 1;
+    text_bkg_fill               = TEXT_BKG_FILL_W;
     menu_layout                 = MENU_LAYOUT_1_COLUMN;
     menu_cancel_on_last_option  = 0;
     menu_cancel_on_b            = 0;
@@ -106,8 +104,10 @@ void ui_load_tiles() __banked {
     ui_load_frame_tiles(frame_image, BANK(frame_image));
     ui_load_cursor_tile(cursor_image, BANK(cursor_image));
 
-    set_bkg_data(ui_while_tile, 1, ui_white);
-    set_bkg_data(ui_black_tile, 1, ui_black);
+    memset(tile_data, TEXT_BKG_FILL_W, 16);
+    set_bkg_data(ui_while_tile, 1, tile_data);
+    memset(tile_data, TEXT_BKG_FILL_B, 16);
+    set_bkg_data(ui_black_tile, 1, tile_data);
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
@@ -122,21 +122,17 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
     fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
-static UBYTE current_tile;
-static UBYTE current_offset;
-static UBYTE tile_data[16 * 2];
-
 static void ui_print_reset(UBYTE tile) {
     current_tile = tile;
     current_offset = 0;
-    memset(tile_data, (text_color) ? FILL_W : FILL_B, sizeof(tile_data));
+    memset(tile_data, text_bkg_fill, sizeof(tile_data));
 }
 
 static UBYTE ui_print_update_tiles() __banked {    // declared __banked because it is called from nonbanked print_render()
     set_bkg_data(current_tile, 1, tile_data);
     if (current_offset > 7) {
         memcpy(tile_data, tile_data + 16, 16);
-        memset(tile_data + 16, (text_color) ? FILL_W : FILL_B, 16);
+        memset(tile_data + 16, text_bkg_fill, 16);
         current_offset -= 8;
         current_tile++;
         if (current_offset) set_bkg_data(current_tile, 1, tile_data);
@@ -145,8 +141,6 @@ static UBYTE ui_print_update_tiles() __banked {    // declared __banked because 
     return FALSE;
 }
 
-static UBYTE current_mask;
-static UBYTE current_rotate;
 static void ui_print_shift_char(void * dest, const void * src) __nonbanked __naked {
     dest; src;
 __asm

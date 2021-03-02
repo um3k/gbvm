@@ -11,6 +11,9 @@
 #define MENU_CANCEL_B 2
 
 #define TEXT_BUFFER_START 0xCCU
+#define TEXT_BKG_FILL_W 0x00u
+#define TEXT_BKG_FILL_B 0xffu
+
 #define AVATAR_WIDTH 2
 #define SELECTOR_WIDTH 1
 #define AVATAR_TILE_SIZE 4
@@ -51,7 +54,7 @@ extern UBYTE text_out_speed;
 extern UBYTE text_draw_speed;
 extern UBYTE text_ff_joypad;
 extern UBYTE text_ff;
-extern UBYTE text_color;
+extern UBYTE text_bkg_fill;
 
 extern unsigned char ui_text_data[80];
 
