@@ -47,7 +47,7 @@ _script_s3_init::
 
 2$:
         VM_LOAD_TEXT            0
-        .asciz "\020No save found!\nPress A"
+        .asciz "\001\002No save found!\nPress A"
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/

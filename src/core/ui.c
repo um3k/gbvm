@@ -64,11 +64,13 @@ static UBYTE ui_line_no;
 static UBYTE ui_current_tile;
 static UBYTE vwf_current_offset;
 static UBYTE vwf_tile_data[16 * 2];
-static UBYTE vwf_current_mask;
-static UBYTE vwf_current_rotate;
-static UBYTE vwf_inverse_map;
+UBYTE vwf_current_mask;
+UBYTE vwf_current_rotate;
+UBYTE vwf_inverse_map;
 
 far_ptr_t font_image_ptr;
+
+extern const UBYTE ui_time_masks[];
 
 void ui_init() __banked {
     font_image_ptr              = ui_fonts[0];
@@ -128,100 +130,7 @@ static void ui_print_reset(UBYTE tile) {
     memset(vwf_tile_data, text_bkg_fill, sizeof(vwf_tile_data));
 }
 
-static void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked __naked {
-    dest; src; bank;
-__asm
-        ldhl sp, #6
-        
-        ldh a, (__current_bank)
-        push af
-        ld a, (hl-)
-        ldh (__current_bank), a
-        ld  (#0x2000), a
-
-        ld a, (hl-)
-        ld d, a
-        ld a, (hl-)
-        ld e, a 
-        ld a, (hl-)
-        ld l, (hl)
-        ld h, a 
-
-        ld a, #8
-3$:
-        push af
-
-        ld a, (de)
-        ld c, a
-        ld a, (_vwf_inverse_map)
-        xor c
-        ld c, a
-        inc de
-        ld a, (de)
-        ld b, a
-        ld a, (_vwf_inverse_map)
-        xor b
-        ld b, a
-
-        inc de
-
-        ld a, (_vwf_current_rotate)
-        sla a
-        jr z, 1$
-        jr c, 4$
-        srl a
-        srl a
-        jr nc, 6$
-        srl c
-        srl b
-6$:
-        or a
-        jr z, 1$
-2$:
-        srl c
-        srl b
-        srl c
-        srl b
-        dec a
-        jr nz, 2$
-        jr 1$
-4$:
-        srl a
-        srl a
-        jr nc, 7$
-        sla c
-        sla b
-7$:     or a
-        jr z, 1$
-5$:
-        sla c
-        sla b
-        sla c
-        sla b
-        dec a
-        jr nz, 5$
-1$:
-        ld a, (_vwf_current_mask)
-        and (hl)
-        or c
-        ld (hl+), a
-
-        ld a, (_vwf_current_mask)
-        and (hl)
-        or b
-        ld (hl+), a
-
-        pop af
-        dec a
-        jr nz, 3$
-
-        pop af
-        ldh (__current_bank),a
-        ld  (#0x2000), a
-
-        ret
-__endasm;
-}
+void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked;
 
 static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, const unsigned char ch) {
     font_desc_t font_desc;
@@ -260,8 +169,6 @@ static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, co
         return TRUE;
     }
 }
-
-static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f}; 
 
 static void ui_draw_text_buffer_char() {
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
@@ -303,7 +210,7 @@ static void ui_draw_text_buffer_char() {
             text_drawn = TRUE;
             return;
         case 0x01:
-            current_text_speed = time_masks[*++ui_text_ptr] & 0x1fu;
+            current_text_speed = ui_time_masks[*++ui_text_ptr] & 0x1fu;
             break;
         case 0x02:
             font_image_ptr = ui_fonts[*++ui_text_ptr - 0x01u];
@@ -331,7 +238,7 @@ static void ui_draw_text_buffer_char() {
 void ui_update() __nonbanked {
     UBYTE interval, is_moving = FALSE;
 
-    if (game_time & time_masks[win_speed]) return;
+    if (game_time & ui_time_masks[win_speed]) return;
 
     interval = (win_speed == 1) ? 2 : 1;
 
