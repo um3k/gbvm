@@ -4,8 +4,8 @@
 
 #include "ui.h"
 #include "game_time.h"
+#include "data/data_bootstrap.h"
 #include "data/frame_image.h"
-#include "data/vwf_font.h"
 #include "data/cursor_image.h"
 #include "bankdata.h"
 #include "scroll.h"
@@ -68,9 +68,11 @@ static UBYTE vwf_current_mask;
 static UBYTE vwf_current_rotate;
 static UBYTE vwf_inverse_map;
 
-far_ptr_t font_image_ptr = TO_FAR_PTR_T(vwf_font);
+far_ptr_t font_image_ptr;
 
 void ui_init() __banked {
+    font_image_ptr              = ui_fonts[0];
+
     text_in_speed               = 1;
     text_out_speed              = 1;
     text_draw_speed             = 1;
@@ -259,6 +261,8 @@ static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, co
     }
 }
 
+static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07, 0x0f, 0x1f}; 
+
 static void ui_draw_text_buffer_char() {
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
@@ -298,34 +302,22 @@ static void ui_draw_text_buffer_char() {
             ui_text_ptr = 0; 
             text_drawn = TRUE;
             return;
+        case 0x01:
+            current_text_speed = time_masks[*++ui_text_ptr] & 0x1fu;
+            break;
+        case 0x02:
+            font_image_ptr = ui_fonts[*++ui_text_ptr - 0x01u];
+            break;
         case '\n':
             ui_line_no++;
-            if (menu_enabled && (menu_layout == MENU_LAYOUT_2_COLUMN) && (ui_line_no == 4)) {
+            if (menu_enabled && (menu_layout == MENU_LAYOUT_2_COLUMN) && (ui_line_no == 4u)) {
                 ui_dest_base = GetWinAddr() + 32 + 1 + 9;
                 ui_dest_ptr = ui_dest_base;
             } else {
                 ui_dest_ptr = ui_dest_base += 32;
             }
-            if (vwf_current_offset) ui_print_reset(ui_current_tile + 1);
+            if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break; 
-        case 0x10:
-            current_text_speed = 0;
-            break;
-        case 0x11:
-            current_text_speed = 1;
-            break;
-        case 0x12:
-            current_text_speed = 3;
-            break;
-        case 0x13:
-            current_text_speed = 7;
-            break;
-        case 0x14:
-            current_text_speed = 0x0f;
-            break;
-        case 0x15:
-            current_text_speed = 0x1f;
-            break;
         default:
             if (ui_print_render(font_image_ptr.ptr, font_image_ptr.bank, *ui_text_ptr)) {
                 SetTile(ui_dest_ptr++, ui_current_tile - 1);
@@ -335,8 +327,6 @@ static void ui_draw_text_buffer_char() {
     }
     ui_text_ptr++;
 }
-
-static const UBYTE time_masks[] = {0x00, 0x00, 0x00, 0x01, 0x03, 0x07}; 
 
 void ui_update() __nonbanked {
     UBYTE interval, is_moving = FALSE;

@@ -16,6 +16,8 @@ extern const far_ptr_t start_player_palette;
 extern const UBYTE start_player_move_speed;
 extern const UBYTE start_player_anim_tick;
 
+extern const far_ptr_t ui_fonts[];
+
 // Engine fields
 extern WORD plat_min_vel;
 extern WORD plat_walk_vel;

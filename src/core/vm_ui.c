@@ -50,7 +50,17 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
                 case 't':
                     idx = *((INT16 *)args);
                     if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
-                    *d++ = (unsigned char)idx + 0x10u;
+                    *d++ = 0x01u;
+                    *d++ = (unsigned char)idx + 0x02u;
+                    s++;
+                    args += 2u;
+                    continue;
+                // font index from variable
+                case 'f':
+                    idx = *((INT16 *)args);
+                    if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
+                    *d++ = 0x02u;
+                    *d++ = (unsigned char)idx + 0x01u;
                     s++;
                     args += 2u;
                     continue;

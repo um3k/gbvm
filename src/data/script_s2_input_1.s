@@ -54,7 +54,7 @@ _script_s2_input1::
 
         VM_LOAD_TEXT            6
             .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0
-            .asciz "x1=%d y1=%d x2=%d y2=%d\nChebyshev:%d\nManhattan:%d\nWe still have little tiles left"
+            .asciz "x1=%d y1=%d x2=%d y2=%d\nChebyshev:\002\002%d\n\002\001Manhattan:\002\002%d\n\002\001This is \002\002BOLD\002\001\nNormal"
         VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/

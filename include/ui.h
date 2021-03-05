@@ -13,7 +13,7 @@
 #define TEXT_BUFFER_START 0xCCU
 #define TEXT_BKG_FILL_W 0x00u
 #define TEXT_BKG_FILL_B 0xffu
-#define TEXT_MAX_LENGTH 160
+#define TEXT_MAX_LENGTH 220
 
 #define AVATAR_WIDTH 2
 #define SELECTOR_WIDTH 1
