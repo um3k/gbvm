@@ -215,6 +215,10 @@ static void ui_draw_text_buffer_char() {
         case 0x02:
             font_image_ptr = ui_fonts[*++ui_text_ptr - 0x01u];
             break;
+        case 0x03:
+            ui_dest_ptr = ui_dest_base = GetWinAddr() + *++ui_text_ptr * 32 + *++ui_text_ptr;
+            if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
+            break; 
         case '\n':
             ui_line_no++;
             if (menu_enabled && (menu_layout == MENU_LAYOUT_2_COLUMN) && (ui_line_no == 4u)) {
