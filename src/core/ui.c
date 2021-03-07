@@ -170,7 +170,7 @@ static UBYTE ui_print_render(const font_desc_t * font, const UBYTE font_bank, co
     }
 }
 
-static void ui_draw_text_buffer_char() {
+static void ui_draw_text_buffer_char() __banked {
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
     if ((!text_ff) && (text_wait != 0)) {
@@ -240,20 +240,19 @@ static void ui_draw_text_buffer_char() {
 }
 
 void ui_update() __nonbanked {
-    UBYTE interval, is_moving = FALSE;
+    UBYTE is_moving = FALSE;
 
     if (game_time & ui_time_masks[win_speed]) return;
 
-    interval = (win_speed == 1) ? 2 : 1;
-
     // y should always move first
     if (win_pos_y != win_dest_pos_y) {
+        UBYTE interval = (win_speed == 1) ? 2 : 1;
         // move window up/down
         if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
         is_moving = TRUE;
     }
-
     if (win_pos_x != win_dest_pos_x) {
+        UBYTE interval = (win_speed == 1) ? 2 : 1;
         // move window left/right
         if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
         is_moving = TRUE;
