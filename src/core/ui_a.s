@@ -37,12 +37,12 @@ _ui_print_shift_char::
         xor c
         ld c, a
         inc de
+		
         ld a, (de)
         ld b, a
         ld a, (_vwf_inverse_map)
         xor b
         ld b, a
-
         inc de
 
         ld a, (_vwf_current_rotate)
