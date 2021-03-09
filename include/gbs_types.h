@@ -137,7 +137,8 @@ typedef struct font_desc_t {
 
 typedef struct scene_stack_item_t {
     far_ptr_t scene;
-    // other fields here
+    upoint16_t pos;
+    direction_e dir;
 } scene_stack_item_t;
 
 #endif
