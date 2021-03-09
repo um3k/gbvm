@@ -135,4 +135,9 @@ typedef struct font_desc_t {
     const UBYTE * bitmaps;
 } font_desc_t;
 
+typedef struct scene_stack_item_t {
+    far_ptr_t scene;
+    // other fields here
+} scene_stack_item_t;
+
 #endif
