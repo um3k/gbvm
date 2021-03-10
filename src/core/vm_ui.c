@@ -7,6 +7,7 @@
 #include "ui.h"
 #include "input.h"
 #include "gbs_types.h"
+#include "bankdata.h"
 
 #define VM_ARG_TEXT_IN_SPEED -1
 #define VM_ARG_TEXT_OUT_SPEED -2
@@ -186,5 +187,6 @@ void vm_load_cursor(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked {
 
 void vm_set_font(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * offset) __banked {
     THIS;
-    font_image_ptr.bank = bank; font_image_ptr.ptr = offset;
+    vwf_current_font_bank = bank;
+    MemcpyBanked(&vwf_current_font_desc, offset, sizeof(font_desc_t), bank);
 }
