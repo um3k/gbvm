@@ -7,6 +7,7 @@
 #include <rand.h>
 
 #include "vm.h"
+#include "math.h"
 
 // instructions global registry
 extern const SCRIPT_CMD script_cmds[];
@@ -179,7 +180,7 @@ void vm_if(SCRIPT_CTX * THIS, UBYTE condition, INT16 idxA, INT16 idxB, UBYTE * p
     INT16 A, B;
     if (idxA < 0) A = *(THIS->stack_ptr + idxA); else A = script_memory[idxA];
     if (idxB < 0) B = *(THIS->stack_ptr + idxB); else B = script_memory[idxB];
-    UBYTE res = 0;
+    UBYTE res = FALSE;
     switch (condition) {
         case VM_OP_EQ: res = (A == B); break;
         case VM_OP_LT: res = (A <  B); break;
@@ -197,7 +198,7 @@ void vm_if(SCRIPT_CTX * THIS, UBYTE condition, INT16 idxA, INT16 idxB, UBYTE * p
 void vm_if_const(SCRIPT_CTX * THIS, UBYTE condition, INT16 idxA, INT16 B, UBYTE * pc, UBYTE n) __banked {
     INT16 A;
     if (idxA < 0) A = *(THIS->stack_ptr + idxA); else A = script_memory[idxA];
-    UBYTE res = 0;
+    UBYTE res = FALSE;
     switch (condition) {
         case VM_OP_EQ: res = (A == B); break;
         case VM_OP_LT: res = (A <  B); break;
@@ -294,6 +295,7 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 case VM_OP_NE:  *A = (*A  !=  *B); break;
                 case VM_OP_AND: *A = ((bool)(*A)  &&  (bool)(*B)); break;
                 case VM_OP_OR:  *A = ((bool)(*A)  ||  (bool)(*B)); break;
+                case VM_OP_NOT: *B = !(*B); continue;
                 // bit
                 case '&': *A = *A  &  *B; break;
                 case '|': *A = *A  |  *B; break;
@@ -304,6 +306,7 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
                 // unary
                 case '@': *B = abs(*B); continue;
                 case '~': *B = ~(*B);   continue;
+                case 'Q': *B = isqrt((UWORD)*B); continue;
                 // terminator
                 default:
                     SWITCH_ROM_MBC1(_save);         // restore bank

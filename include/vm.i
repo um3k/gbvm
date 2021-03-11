@@ -148,37 +148,47 @@ OP_VM_PUSH_VALUE   = 0x11
 .endm
 
 ; similar to pop
-OP_VM_RESERVE    = 0x12
+OP_VM_RESERVE      = 0x12
 .macro VM_RESERVE ARG0
         .db OP_VM_RESERVE, #<ARG0
 .endm
 
 ; assignes a value on VM stack or a global to a value on VM stack ar a global 
-OP_VM_SET        = 0x13
+OP_VM_SET         = 0x13
 .macro VM_SET IDXA, IDXB
         .db OP_VM_SET, #>IDXB, #<IDXB, #>IDXA, #<IDXA
 .endm
 
 ; assignes a value on VM stack or a global to immediate
-OP_VM_SET_CONST  = 0x14
+OP_VM_SET_CONST   = 0x14
 .macro VM_SET_CONST IDX, VAL
         .db OP_VM_SET_CONST, #>VAL, #<VAL, #>IDX, #<IDX
 .endm
 
 ; rpn calculator, returns result on VM stack
-OP_VM_RPN        = 0x15
-.ADD             = '+'
-.SUB             = '-'
-.MUL             = '*'
-.DIV             = '/'
-.MOD             = '%'
-.B_AND           = '&'
-.B_OR            = '|'
-.B_XOR           = '^'
-.B_NOT           = '~' 
-.ABS             = '@'
-.MIN             = 'm'
-.MAX             = 'M'
+OP_VM_RPN          = 0x15
+.ADD               = '+'
+.SUB               = '-'
+.MUL               = '*'
+.DIV               = '/'
+.MOD               = '%'
+.B_AND             = '&'
+.B_OR              = '|'
+.B_XOR             = '^'
+.B_NOT             = '~' 
+.ABS               = '@'
+.MIN               = 'm'
+.MAX               = 'M'
+.ISQRT             = 'Q'
+;.EQ                = 1
+;.LT                = 2
+;.LTE               = 3
+;.GT                = 4
+;.GTE               = 5
+;.NE                = 6
+;.AND               = 7
+;.OR                = 8
+.NOT               = 9
 .macro VM_RPN
         .db OP_VM_RPN
 .endm
