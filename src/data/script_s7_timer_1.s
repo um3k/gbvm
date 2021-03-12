@@ -9,7 +9,6 @@ ___bank_script_s7_timer1 = 255
 .globl ___bank_tileset_7_1, _tileset_7_1
 
 _script_s7_timer1::
-
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
