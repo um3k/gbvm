@@ -33,6 +33,4 @@ extern WORD plat_max_fall_vel;
 extern UBYTE topdown_grid;
 extern UBYTE fade_style;
 
-void bootstrap_init() __banked;
-
 #endif
