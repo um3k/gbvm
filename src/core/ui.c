@@ -118,12 +118,7 @@ static void ui_print_reset(UBYTE tile) {
 void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked;
 
 static UBYTE ui_print_render(const unsigned char ch) {
-    UBYTE letter;
-    if (!(vwf_current_font_desc.attr & FONT_NO_RECODE)) {
-        letter = ReadBankedUBYTE(vwf_current_font_desc.recode_table + (ch & ((vwf_current_font_desc.attr & RECODE_7BIT) ? 0x7fu : 0xffu)), vwf_current_font_bank);
-    } else {
-        letter = ch;
-    }
+    UBYTE letter = (vwf_current_font_desc.attr & FONT_RECODE) ? ReadBankedUBYTE(vwf_current_font_desc.recode_table + (ch & vwf_current_font_desc.mask), vwf_current_font_bank) : ch;
     const UBYTE * bitmap = vwf_current_font_desc.bitmaps + letter * 16u;
     if (vwf_current_font_desc.attr & FONT_VWF) {
         vwf_inverse_map = (vwf_current_font_desc.attr & FONT_VWF_1BIT) ? text_bkg_fill : 0;

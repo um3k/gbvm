@@ -221,7 +221,8 @@ static const UBYTE font_bold_bitmaps[] = {
 
 const void __at(255) __bank_vwf_font_bold;
 const font_desc_t vwf_font_bold = {
-    RECODE_7BIT | FONT_VWF | FONT_VWF_1BIT, 
+    FONT_RECODE | FONT_VWF | FONT_VWF_1BIT, 
+    FONT_RECODE_SIZE_7BIT,
     font_bold_table,
     font_bold_widths,
     font_bold_bitmaps

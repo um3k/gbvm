@@ -125,13 +125,14 @@ typedef struct projectile_t
     struct projectile_t *next;
 } projectile_t;
 
-#define RECODE_7BIT 1
-#define FONT_VWF 2
-#define FONT_VWF_1BIT 4
-#define FONT_NO_RECODE 8
+#define FONT_RECODE     1
+#define FONT_VWF        2
+#define FONT_VWF_1BIT   4
+
+#define FONT_RECODE_SIZE_7BIT 0x7fu
 
 typedef struct font_desc_t {
-    UBYTE attr;
+    UBYTE attr, mask;
     const UBYTE * recode_table;
     const UBYTE * widths;
     const UBYTE * bitmaps;
