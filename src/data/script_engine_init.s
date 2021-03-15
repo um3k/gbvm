@@ -1,6 +1,7 @@
 .include "vm.i"
 .include "macro.i"
 
+; define constants in rom bank 0
 .area _CODE
 
 _start_scene_x:: 
@@ -21,6 +22,7 @@ _ui_fonts::
         IMPORT_FAR_PTR_DATA _vwf_font
         IMPORT_FAR_PTR_DATA _vwf_font_bold
 
+; define engine init VM routine which will be packed into some bank
 .area _CODE_255
 
 ___bank_script_engine_init = 255
@@ -33,16 +35,16 @@ ___bank_script_engine_init = 255
 _script_engine_init::
         ; platformer fields 
         VM_SET_CONST_INT16      _plat_min_vel, 304
-        VM_SET_CONST_INT16      _plat_walk_vel, 6400;
-        VM_SET_CONST_INT16      _plat_climb_vel, 4000;
-        VM_SET_CONST_INT16      _plat_run_vel, 10496;
-        VM_SET_CONST_INT16      _plat_walk_acc, 152;
-        VM_SET_CONST_INT16      _plat_run_acc, 228;
-        VM_SET_CONST_INT16      _plat_dec, 208;
-        VM_SET_CONST_INT16      _plat_jump_vel, 16384;
-        VM_SET_CONST_INT16      _plat_grav, 1792;
-        VM_SET_CONST_INT16      _plat_hold_grav, 512;
-        VM_SET_CONST_INT16      _plat_max_fall_vel, 20000;
+        VM_SET_CONST_INT16      _plat_walk_vel, 6400
+        VM_SET_CONST_INT16      _plat_climb_vel, 4000
+        VM_SET_CONST_INT16      _plat_run_vel, 10496
+        VM_SET_CONST_INT16      _plat_walk_acc, 152
+        VM_SET_CONST_INT16      _plat_run_acc, 228
+        VM_SET_CONST_INT16      _plat_dec, 208
+        VM_SET_CONST_INT16      _plat_jump_vel, 16384
+        VM_SET_CONST_INT16      _plat_grav, 1792
+        VM_SET_CONST_INT16      _plat_hold_grav, 512
+        VM_SET_CONST_INT16      _plat_max_fall_vel, 20000
         
         ; topdown fields
         VM_SET_CONST_INT8       _topdown_grid, 8
