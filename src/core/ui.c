@@ -39,8 +39,7 @@ UBYTE text_line_count;
 UBYTE avatar_enabled;
 
 UBYTE menu_enabled;
-UBYTE menu_index;
-UBYTE menu_item_count;
+UBYTE menu_layout;
 
 UBYTE text_in_speed;
 UBYTE text_out_speed;
@@ -48,9 +47,6 @@ UBYTE text_draw_speed;
 UBYTE text_ff_joypad;
 UBYTE text_ff; 
 UBYTE text_bkg_fill;
-UBYTE menu_layout;
-UBYTE menu_cancel_on_last_option;
-UBYTE menu_cancel_on_b;
 
 unsigned char ui_text_data[TEXT_MAX_LENGTH];
 
@@ -83,8 +79,6 @@ void ui_init() __banked {
     text_ff_joypad              = 1;
     text_bkg_fill               = TEXT_BKG_FILL_W;
     menu_layout                 = MENU_LAYOUT_1_COLUMN;
-    menu_cancel_on_last_option  = 0;
-    menu_cancel_on_b            = 0;
 
     ui_text_ptr                 = 0;
     ui_dest_ptr                 = 0;
@@ -271,27 +265,14 @@ void ui_update() __nonbanked {
     } while (((text_ff) || (current_text_speed == 0)) && (!text_drawn));
 }
 
-static void ui_draw_menu_cursor() {
-    UBYTE x = (avatar_enabled) ? 3 : 1;
-    if (menu_layout == MENU_LAYOUT_2_COLUMN) {
-        UBYTE height = MIN(4, menu_item_count);
-        fill_win_rect(x, 1, 1, height, ui_bg_tile);
-        fill_win_rect(9, 1, 1, height, ui_bg_tile);
-        if (menu_index >= 4) x = 9;
-        set_win_tile_xy(x, (menu_index%4) + 1, ui_cursor_tile);
-    } else {
-        fill_win_rect(x, 1, 1, menu_item_count, ui_bg_tile);
-        set_win_tile_xy(x, menu_index + 1, ui_cursor_tile);
-    }
-}
-
-UBYTE ui_run_menu() __banked {
-    // no menu items
-    if (menu_item_count == 0) return 0;
-    // run menu
-    menu_index = 0;
-    ui_draw_menu_cursor();
-    while (1) {
+UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE count) __banked {
+    menu_item_t current_menu_item;
+    UBYTE current_index = 0, next_index = 0;
+    // copy first menu item
+    MemcpyBanked(&current_menu_item, start_item, sizeof(menu_item_t), bank);
+    // draw menu cursor
+    set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_cursor_tile);
+    while (TRUE) {
         input_update();
         ui_update();
         
@@ -304,30 +285,33 @@ UBYTE ui_run_menu() __banked {
         wait_vbl_done();
 
         if (INPUT_UP_PRESSED) {
-            if (menu_index != 0) menu_index--;
+            next_index = current_menu_item.iU;
         } else if (INPUT_DOWN_PRESSED) {
-            if (menu_index != menu_item_count - 1) menu_index++;
+            next_index = current_menu_item.iD;
         } else if (INPUT_LEFT_PRESSED) {
-            if (menu_layout == MENU_LAYOUT_2_COLUMN) {
-                menu_index = MAX(menu_index - 4, 0);
-            } else {
-                menu_index = 0;
-            }
+            next_index = current_menu_item.iL;
         } else if (INPUT_RIGHT_PRESSED) {
-            if (menu_layout == MENU_LAYOUT_2_COLUMN) {
-                menu_index = MIN(menu_index + 4, menu_item_count - 1);
-            } else {
-                menu_index = menu_item_count - 1;
-            }
+            next_index = current_menu_item.iR;
         } else if (INPUT_A_PRESSED) {
-            return ((menu_cancel_on_last_option) && (menu_index == menu_item_count - 1)) ? 0 : menu_index + 1;
-        } else if ((INPUT_B_PRESSED) && (menu_cancel_on_b))  {
-            return 0;
+            return ((current_index == count) && (options & MENU_CANCEL_LAST)) ? 0u : current_index;
+        } else if ((INPUT_B_PRESSED) && (options & MENU_CANCEL_B))  {
+            return 0u;
         } else {
             continue;
         }
 
-        ui_draw_menu_cursor();
+        if (!next_index) continue;
+
+        // update current index
+        current_index = next_index--;
+        // erase old cursor
+        set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_bg_tile);
+        // read menu data
+        MemcpyBanked(&current_menu_item, start_item + next_index, sizeof(menu_item_t), bank);
+        // put new cursor
+        set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_cursor_tile);
+        // reset next index
+        next_index = 0;
     };
 }
 

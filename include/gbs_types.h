@@ -142,4 +142,9 @@ typedef struct scene_stack_item_t {
     direction_e dir;
 } scene_stack_item_t;
 
+typedef struct menu_item_t {
+    UBYTE X, Y;
+    UBYTE iL, iR, iU, iD;
+} menu_item_t;
+
 #endif

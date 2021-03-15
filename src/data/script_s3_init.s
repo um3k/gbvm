@@ -21,7 +21,11 @@ _script_s3_init::
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
-        VM_CHOICE               VAR_S3_TITLESCREEN_NEWGAME, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/
+        
+        VM_CHOICE               VAR_S3_TITLESCREEN_NEWGAME, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/, 2
+            .MENUITEM   1,1, 0,0,0,2
+            .MENUITEM   1,2, 0,0,1,0
+
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         ; If Variable True

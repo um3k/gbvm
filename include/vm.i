@@ -473,8 +473,11 @@ OP_VM_CHOICE            = 0x48
 .UI_MENU_STANDARD       = 0
 .UI_MENU_LAST_0         = 1
 .UI_MENU_CANCEL_B       = 2
-.macro VM_CHOICE IDX, OPTIONS
-        .db OP_VM_CHOICE, #<OPTIONS, #>IDX, #<IDX
+.macro VM_CHOICE IDX, OPTIONS, COUNT
+        .db OP_VM_CHOICE, #<COUNT, #<OPTIONS, #>IDX, #<IDX
+.endm
+.macro .MENUITEM X, Y, iL, iR, iU, iD
+        .db #<X, #<Y, #<iL, #<iR, #<iU, #<iD
 .endm
 
 OP_VM_LOAD_FRAME        = 0x49
