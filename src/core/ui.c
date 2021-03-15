@@ -38,9 +38,6 @@ UBYTE text_line_count;
 
 UBYTE avatar_enabled;
 
-UBYTE menu_enabled;
-UBYTE menu_layout;
-
 UBYTE text_in_speed;
 UBYTE text_out_speed;
 UBYTE text_draw_speed;
@@ -54,9 +51,6 @@ unsigned char ui_text_data[TEXT_MAX_LENGTH];
 static UBYTE * ui_text_ptr;
 static UBYTE * ui_dest_ptr;
 static UBYTE * ui_dest_base;
-static UBYTE ui_text_width;
-static UBYTE ui_width_left;
-static UBYTE ui_line_no;
 static UBYTE ui_current_tile;
 static UBYTE vwf_current_offset;
 static UBYTE vwf_tile_data[16 * 2];
@@ -78,19 +72,14 @@ void ui_init() __banked {
     text_draw_speed             = 1;
     text_ff_joypad              = 1;
     text_bkg_fill               = TEXT_BKG_FILL_W;
-    menu_layout                 = MENU_LAYOUT_1_COLUMN;
 
     ui_text_ptr                 = 0;
     ui_dest_ptr                 = 0;
     ui_dest_base                = 0;
-    ui_text_width               = 0;
-    ui_width_left               = 0;
-    ui_line_no                  = 0;
 
     ui_set_pos(0, MENU_CLOSED_Y);
 
     avatar_enabled              = 0;
-    menu_enabled                = 0;
     win_speed                   = 1;
     text_drawn                  = TRUE;
     text_draw_speed             = 1;
@@ -173,26 +162,14 @@ static void ui_draw_text_buffer_char() __banked {
 
     if (ui_text_ptr == 0) {
         // reset to first line
-        ui_line_no = 0;
         // current char pointer
         ui_text_ptr = ui_text_data;
         // VRAM destination
         ui_dest_base = GetWinAddr() + 32 + 1; // current width of window in tiles
-        // text width
-        ui_text_width = 18;
         // with and initial pos correction
-        if (avatar_enabled) { 
-            ui_text_width -= AVATAR_WIDTH;
-            ui_dest_base += AVATAR_WIDTH;
-        }
-        if (menu_enabled) {
-            ui_text_width -= SELECTOR_WIDTH;
-            ui_dest_base += SELECTOR_WIDTH;
-        }
+        if (avatar_enabled) ui_dest_base += AVATAR_WIDTH;
         // initialize current pointer with corrected base value
         ui_dest_ptr = ui_dest_base;
-        // character counter
-        ui_width_left = ui_text_width;
         // tileno destination
         ui_print_reset(((avatar_enabled) ? (UBYTE)(TEXT_BUFFER_START + 4) : TEXT_BUFFER_START));
     }
@@ -211,17 +188,11 @@ static void ui_draw_text_buffer_char() __banked {
             MemcpyBanked(&vwf_current_font_desc, ui_fonts[*ui_text_ptr - 0x01u].ptr, sizeof(font_desc_t), ui_fonts[*ui_text_ptr - 0x01u].bank);
             break;
         case 0x03:
-            ui_dest_ptr = ui_dest_base = GetWinAddr() + *++ui_text_ptr * 32 + *++ui_text_ptr;
+            ui_dest_ptr = ui_dest_base = GetWinAddr() + *++ui_text_ptr + *++ui_text_ptr * 32;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break; 
         case '\n':
-            ui_line_no++;
-            if (menu_enabled && (menu_layout == MENU_LAYOUT_2_COLUMN) && (ui_line_no == 4u)) {
-                ui_dest_base = GetWinAddr() + 32 + 1 + 9;
-                ui_dest_ptr = ui_dest_base;
-            } else {
-                ui_dest_ptr = ui_dest_base += 32;
-            }
+            ui_dest_ptr = ui_dest_base += 32;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break; 
         default:

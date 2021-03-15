@@ -89,8 +89,6 @@ void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar
     current_text_speed = text_draw_speed;
     
     avatar_enabled = (avatar != 0);
-    menu_enabled = (options & MENU_ENABLE);
-    menu_layout = (options & MENU_LAYOUT) >> 1;
 
     INT8 width = 20 - (win_dest_pos_x >> 3);
     if (width > 2) {

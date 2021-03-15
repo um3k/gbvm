@@ -17,9 +17,9 @@ _script_s3_init::
 
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
-        .asciz "\001\002New Game\nContinue"
+        .asciz "\003\002\001\001\002New Game\nContinue"
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
-        VM_DISPLAY_TEXT         0, 0, .UI_ENABLE_MENU_ONECOL
+        VM_DISPLAY_TEXT         0, 0, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         
         VM_CHOICE               VAR_S3_TITLESCREEN_NEWGAME, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/, 2

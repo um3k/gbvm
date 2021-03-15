@@ -54,9 +54,6 @@ extern UBYTE text_bkg_fill;
 
 // --- obsolete ---------------
 extern UBYTE avatar_enabled;
-
-extern UBYTE menu_enabled;
-extern UBYTE menu_layout;
 // ----------------------------
 
 extern unsigned char ui_text_data[TEXT_MAX_LENGTH];
