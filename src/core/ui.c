@@ -155,7 +155,7 @@ UBYTE ui_print_render(const unsigned char ch) {
 void ui_draw_text_buffer_char() __banked {
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
-    if ((!text_ff) && (text_wait != 0)) {
+    if ((!text_ff) && (text_wait)) {
         text_wait--;
         return;
     }
@@ -185,13 +185,13 @@ void ui_draw_text_buffer_char() __banked {
             break;
         case 0x02: {
             // set current font
-            const far_ptr_t * font = ui_fonts + (*(++ui_text_ptr) - 1);
+            const far_ptr_t * font = ui_fonts + (*(++ui_text_ptr) - 1u);
             MemcpyBanked(&vwf_current_font_desc, font->ptr, sizeof(font_desc_t), vwf_current_font_bank = font->bank);
             break;
         }
         case 0x03:
             // gotoxy 
-            ui_dest_ptr = ui_dest_base = GetWinAddr() + (*++ui_text_ptr - 1) + (*++ui_text_ptr - 1) * 32;
+            ui_dest_ptr = ui_dest_base = GetWinAddr() + (*++ui_text_ptr - 1u) + (*++ui_text_ptr - 1u) * 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break;
         case 0x04: {
@@ -200,12 +200,12 @@ void ui_draw_text_buffer_char() __banked {
             if (dx > 0) dx--;
             BYTE dy = (BYTE)(*++ui_text_ptr);
             if (dy > 0) dy--;
-            ui_dest_base = ui_dest_ptr += dx + dy * 32;
+            ui_dest_base = ui_dest_ptr += dx + dy * 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break;
         }
         case '\n':
-            ui_dest_ptr = ui_dest_base += 32;
+            ui_dest_ptr = ui_dest_base += 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break;
         case 0x05:
@@ -213,7 +213,7 @@ void ui_draw_text_buffer_char() __banked {
             ui_text_ptr++; 
         default:
             if (ui_print_render(*ui_text_ptr)) {
-                SetTile(ui_dest_ptr++, ui_current_tile - 1);
+                SetTile(ui_dest_ptr++, ui_current_tile - 1u);
             }
             if (vwf_current_offset) SetTile(ui_dest_ptr, ui_current_tile);
             break;
@@ -228,13 +228,13 @@ void ui_update() __nonbanked {
 
     // y should always move first
     if (win_pos_y != win_dest_pos_y) {
-        UBYTE interval = (win_speed == 1) ? 2 : 1;
+        UBYTE interval = (win_speed == 1u) ? 2u : 1u;
         // move window up/down
         if (win_pos_y < win_dest_pos_y) win_pos_y += interval; else win_pos_y -= interval;
         is_moving = TRUE;
     }
     if (win_pos_x != win_dest_pos_x) {
-        UBYTE interval = (win_speed == 1) ? 2 : 1;
+        UBYTE interval = (win_speed == 1u) ? 2u : 1u;
         // move window left/right
         if (win_pos_x < win_dest_pos_x) win_pos_x += interval; else win_pos_x -= interval;
         is_moving = TRUE;
@@ -254,7 +254,7 @@ void ui_update() __nonbanked {
 
 UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE count) __banked {
     menu_item_t current_menu_item;
-    UBYTE current_index = 1, next_index = 0;
+    UBYTE current_index = 1u, next_index = 0u;
     // copy first menu item
     MemcpyBanked(&current_menu_item, start_item, sizeof(menu_item_t), bank);
     // draw menu cursor
@@ -294,7 +294,7 @@ UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE cou
         // erase old cursor
         set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_bg_tile);
         // read menu data
-        MemcpyBanked(&current_menu_item, start_item + next_index - 1, sizeof(menu_item_t), bank);
+        MemcpyBanked(&current_menu_item, start_item + next_index - 1u, sizeof(menu_item_t), bank);
         // put new cursor
         set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_cursor_tile);
         // reset next index
@@ -305,18 +305,18 @@ UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE cou
 void ui_run_modal(UBYTE wait_flags) __banked {
     UBYTE fail;
     do {
-        fail = 0;
+        fail = FALSE;
     
         if (wait_flags & UI_WAIT_WINDOW)
-            if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) fail = 1;
+            if ((win_pos_x != win_dest_pos_x) || (win_pos_y != win_dest_pos_y)) fail = TRUE;
         if (wait_flags & UI_WAIT_TEXT)
-            if (!text_drawn) fail = 1;
+            if (!text_drawn) fail = TRUE;
         if (wait_flags & UI_WAIT_BTN_A)
-            if (!INPUT_A_PRESSED) fail = 1;
+            if (!INPUT_A_PRESSED) fail = TRUE;
         if (wait_flags & UI_WAIT_BTN_B)
-            if (!INPUT_B_PRESSED) fail = 1;
+            if (!INPUT_B_PRESSED) fail = TRUE;
         if (wait_flags & UI_WAIT_BTN_ANY)
-            if (!INPUT_ANY_PRESSED) fail = 1;
+            if (!INPUT_ANY_PRESSED) fail = TRUE;
 
         if (!fail) return;
         
