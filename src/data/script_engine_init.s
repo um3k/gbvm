@@ -21,6 +21,7 @@ _start_player_anim_tick::
 _ui_fonts:: 
         IMPORT_FAR_PTR_DATA _vwf_font
         IMPORT_FAR_PTR_DATA _vwf_font_bold
+        IMPORT_FAR_PTR_DATA _vwf_font_avatars
 
 ; define engine init VM routine which will be packed into some bank
 .area _CODE_255

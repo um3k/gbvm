@@ -109,7 +109,7 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
     fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
 }
 
-static void ui_print_reset(UBYTE tile) {
+void ui_print_reset(UBYTE tile) {
     ui_current_tile = tile;
     vwf_current_offset = 0;
     memset(vwf_tile_data, text_bkg_fill, sizeof(vwf_tile_data));
@@ -117,11 +117,11 @@ static void ui_print_reset(UBYTE tile) {
 
 void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked;
 
-static UBYTE ui_print_render(const unsigned char ch) {
+UBYTE ui_print_render(const unsigned char ch) {
     UBYTE letter = (vwf_current_font_desc.attr & FONT_RECODE) ? ReadBankedUBYTE(vwf_current_font_desc.recode_table + (ch & vwf_current_font_desc.mask), vwf_current_font_bank) : ch;
     const UBYTE * bitmap = vwf_current_font_desc.bitmaps + letter * 16u;
     if (vwf_current_font_desc.attr & FONT_VWF) {
-        vwf_inverse_map = (vwf_current_font_desc.attr & FONT_VWF_1BIT) ? text_bkg_fill : 0;
+        vwf_inverse_map = (vwf_current_font_desc.attr & FONT_VWF_1BIT) ? text_bkg_fill : 0u;
         UBYTE width = ReadBankedUBYTE(vwf_current_font_desc.widths + letter, vwf_current_font_bank);
         UBYTE dx = (8u - vwf_current_offset);
         vwf_current_mask = (0xffu << dx) | (0xffu >> (vwf_current_offset + width));
@@ -147,12 +147,12 @@ static UBYTE ui_print_render(const unsigned char ch) {
         return FALSE;
     } else {
         SetBankedBkgData(ui_current_tile++, 1, bitmap, vwf_current_font_bank);
-        vwf_current_offset = 0;
+        vwf_current_offset = 0u;
         return TRUE;
     }
 }
 
-static void ui_draw_text_buffer_char() __banked {
+void ui_draw_text_buffer_char() __banked {
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
     if ((!text_ff) && (text_wait != 0)) {
@@ -165,7 +165,7 @@ static void ui_draw_text_buffer_char() __banked {
         // current char pointer
         ui_text_ptr = ui_text_data;
         // VRAM destination
-        ui_dest_base = GetWinAddr() + 32 + 1; // current width of window in tiles
+        ui_dest_base = GetWinAddr() + 32 + 1; // gotoxy(1,1)
         // with and initial pos correction
         if (avatar_enabled) ui_dest_base += AVATAR_WIDTH;
         // initialize current pointer with corrected base value
@@ -180,21 +180,37 @@ static void ui_draw_text_buffer_char() __banked {
             text_drawn = TRUE;
             return;
         case 0x01:
+            // set text speed
             current_text_speed = ui_time_masks[*++ui_text_ptr] & 0x1fu;
             break;
-        case 0x02:
-            //font_image_ptr = ui_fonts[*++ui_text_ptr - 0x01u];
-            ++ui_text_ptr;
-            MemcpyBanked(&vwf_current_font_desc, ui_fonts[*ui_text_ptr - 0x01u].ptr, sizeof(font_desc_t), ui_fonts[*ui_text_ptr - 0x01u].bank);
+        case 0x02: {
+            // set current font
+            const far_ptr_t * font = ui_fonts + (*(++ui_text_ptr) - 1);
+            MemcpyBanked(&vwf_current_font_desc, font->ptr, sizeof(font_desc_t), vwf_current_font_bank = font->bank);
             break;
+        }
         case 0x03:
-            ui_dest_ptr = ui_dest_base = GetWinAddr() + *++ui_text_ptr + *++ui_text_ptr * 32;
+            // gotoxy 
+            ui_dest_ptr = ui_dest_base = GetWinAddr() + (*++ui_text_ptr - 1) + (*++ui_text_ptr - 1) * 32;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
-            break; 
+            break;
+        case 0x04: {
+            // relative gotoxy
+            BYTE dx = (BYTE)(*++ui_text_ptr);
+            if (dx > 0) dx--;
+            BYTE dy = (BYTE)(*++ui_text_ptr);
+            if (dy > 0) dy--;
+            ui_dest_base = ui_dest_ptr += dx + dy * 32;
+            if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
+            break;
+        }
         case '\n':
             ui_dest_ptr = ui_dest_base += 32;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
-            break; 
+            break;
+        case 0x05:
+            // escape symbol
+            ui_text_ptr++; 
         default:
             if (ui_print_render(*ui_text_ptr)) {
                 SetTile(ui_dest_ptr++, ui_current_tile - 1);
@@ -238,7 +254,7 @@ void ui_update() __nonbanked {
 
 UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE count) __banked {
     menu_item_t current_menu_item;
-    UBYTE current_index = 0, next_index = 0;
+    UBYTE current_index = 1, next_index = 0;
     // copy first menu item
     MemcpyBanked(&current_menu_item, start_item, sizeof(menu_item_t), bank);
     // draw menu cursor
@@ -274,11 +290,11 @@ UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE cou
         if (!next_index) continue;
 
         // update current index
-        current_index = next_index--;
+        current_index = next_index;
         // erase old cursor
         set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_bg_tile);
         // read menu data
-        MemcpyBanked(&current_menu_item, start_item + next_index, sizeof(menu_item_t), bank);
+        MemcpyBanked(&current_menu_item, start_item + next_index - 1, sizeof(menu_item_t), bank);
         // put new cursor
         set_win_tile_xy(current_menu_item.X, current_menu_item.Y, ui_cursor_tile);
         // reset next index
