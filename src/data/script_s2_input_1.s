@@ -59,6 +59,18 @@ _script_s2_input1::
         VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
+        VM_LOAD_TEXT            0
+            .asciz "\001\001\002\00302\n13\001\003\004\002\377\002\001Hi, this is KOT speaking!\nWhere is SLON?\003\022\005\001\001\002\00346\n57\003\006\005\001\003\002\001Sorry, i have no idea\nwhat are you talking\nabout!"
+        VM_DISPLAY_TEXT         0, 0, 0
+;        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
+        VM_LOAD_TEXT            0
+            .asciz "\002\004Hello, world!"
+        VM_DISPLAY_TEXT         0, 0, 0
+;        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/
 
