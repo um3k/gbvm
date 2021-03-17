@@ -490,8 +490,8 @@ OP_VM_LOAD_CURSOR       = 0x4A
 .endm
 
 OP_VM_SET_FONT          = 0x4B
-.macro VM_SET_FONT BANK, ADDR
-        .db OP_VM_SET_FONT, #>ADDR, #<ADDR, #<BANK
+.macro VM_SET_FONT FONT_INDEX
+        .db OP_VM_SET_FONT, #<FONT_INDEX
 .endm
 
 ; --- GAMEBOY ------------------------------------------

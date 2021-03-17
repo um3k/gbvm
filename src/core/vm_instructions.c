@@ -92,7 +92,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_choice,                 4}, // 0x48
     {vm_load_frame,             3}, // 0x49
     {vm_load_cursor,            3}, // 0x4A
-    {vm_set_font,               3}, // 0x4B
+    {vm_set_font,               1}, // 0x4B
     {0, 0},
     {0, 0},
     {0, 0},

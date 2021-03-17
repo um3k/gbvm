@@ -57,11 +57,13 @@ UBYTE vwf_inverse_map;
 
 font_desc_t vwf_current_font_desc;
 UBYTE vwf_current_font_bank;
+UBYTE vwf_current_font_idx;
 
 extern const UBYTE ui_time_masks[];
 
 void ui_init() __banked {
-    vwf_current_font_bank = ui_fonts[0].bank;
+    vwf_current_font_idx        = 0;
+    vwf_current_font_bank       = ui_fonts[0].bank;
     MemcpyBanked(&vwf_current_font_desc, ui_fonts[0].ptr, sizeof(font_desc_t), vwf_current_font_bank);
 
     text_in_speed               = 1;
@@ -149,6 +151,8 @@ UBYTE ui_print_render(const unsigned char ch) {
 }
 
 void ui_draw_text_buffer_char() __banked {
+    static UBYTE current_font_idx;
+
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
     if ((!text_ff) && (text_wait)) {
@@ -157,6 +161,8 @@ void ui_draw_text_buffer_char() __banked {
     }
 
     if (ui_text_ptr == 0) {
+        // record the current font index
+        current_font_idx = vwf_current_font_idx;
         // reset to first line
         // current char pointer
         ui_text_ptr = ui_text_data;
@@ -170,17 +176,23 @@ void ui_draw_text_buffer_char() __banked {
     }
 
     switch (*ui_text_ptr) {
-        case 0x00:
+        case 0x00: {
             ui_text_ptr = 0; 
             text_drawn = TRUE;
+            if (vwf_current_font_idx != current_font_idx) {
+                const far_ptr_t * font = ui_fonts + vwf_current_font_idx;
+                MemcpyBanked(&vwf_current_font_desc, font->ptr, sizeof(font_desc_t), vwf_current_font_bank = font->bank);
+            }
             return;
+        }
         case 0x01:
             // set text speed
             current_text_speed = ui_time_masks[*++ui_text_ptr] & 0x1fu;
             break;
         case 0x02: {
             // set current font
-            const far_ptr_t * font = ui_fonts + (*(++ui_text_ptr) - 1u);
+            current_font_idx = *(++ui_text_ptr) - 1u;
+            const far_ptr_t * font = ui_fonts + current_font_idx;
             MemcpyBanked(&vwf_current_font_desc, font->ptr, sizeof(font_desc_t), vwf_current_font_bank = font->bank);
             break;
         }
