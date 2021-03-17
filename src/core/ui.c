@@ -211,6 +211,10 @@ void ui_draw_text_buffer_char() __banked {
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break;
         }
+        case 0x06:
+            if ((joy & *++ui_text_ptr) && (joy && !last_joy)) break;
+            ui_text_ptr--;
+            return;
         case '\n':
             ui_dest_ptr = ui_dest_base += 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
