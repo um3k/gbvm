@@ -6,8 +6,6 @@
 #include "gbs_types.h"
 #include "bankdata.h"
 
-#define MENU_ENABLE 1
-#define MENU_LAYOUT 2
 #define MENU_CANCEL_LAST 1
 #define MENU_CANCEL_B 2
 
@@ -16,9 +14,6 @@
 #define TEXT_BKG_FILL_B 0xffu
 #define TEXT_MAX_LENGTH 220
 
-#define AVATAR_WIDTH 2
-#define SELECTOR_WIDTH 1
-#define AVATAR_TILE_SIZE 4
 #define MENU_OPEN_Y 112
 #define WIN_LEFT_X 7
 #define MENU_CLOSED_Y (MAXWNDPOSY + 1U)
