@@ -27,7 +27,6 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
     unsigned char * d = ui_text_data; 
     INT16 idx;
 
-    text_line_count = 1;
     while (*s) {
         if (*s == '%') {
             idx = *args;
@@ -42,7 +41,6 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
                 // char from variable
                 case 'c':
                     *d++ = (unsigned char)idx;
-                    if ((unsigned char)idx == '\n') text_line_count++;
                     s++;
                     args++;
                     continue;
@@ -68,9 +66,7 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
             }
 
         }
-        *d = *s++;
-        if (*d == '\n') text_line_count++;
-        *d++;
+        *d++ = *s++;
     }
     *d = 0, s++;
 
@@ -79,24 +75,12 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
 }
 
 // start displaying text
-void vm_display_text(SCRIPT_CTX * THIS, UBYTE avatar_bank, spritesheet_t *avatar, UBYTE options) __banked {
+void vm_display_text(SCRIPT_CTX * THIS) __banked {
     THIS;
 
     INPUT_RESET;
-    text_drawn = FALSE;
-    text_wait  = FALSE;
-    text_ff    = FALSE;
+    text_drawn = text_wait = text_ff = FALSE;
     current_text_speed = text_draw_speed;
-    
-    avatar_enabled = (avatar != 0);
-
-    INT8 width = 20 - (win_dest_pos_x >> 3);
-    if (width > 2) {
-        ui_draw_frame(0, 0, width - 1, text_line_count);
-        if (avatar_enabled) {
-            ui_draw_avatar(avatar, avatar_bank);
-        }
-    }
 }
 
 // set position of overlayed window
@@ -147,16 +131,20 @@ void vm_overlay_move_to(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, BYTE speed)
 }
 
 // clears overlay window
-void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE color) __banked {
+void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UBYTE color, UBYTE options) __banked {
     THIS;
     text_bkg_fill = (color) ? TEXT_BKG_FILL_W : TEXT_BKG_FILL_B;
-    fill_win_rect(0, 0, 20, 18, ((color) ? ui_while_tile : ui_black_tile));
+    if (options & UI_DRAW_FRAME) {
+        ui_draw_frame(x, y, w, h);
+    } else {
+        fill_win_rect(x, y, w, h, ((color) ? ui_while_tile : ui_black_tile));
+    }
 }
 
 // shows overlay
-void vm_overlay_show(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE color) __banked {
+void vm_overlay_show(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, UBYTE color, UBYTE options) __banked {
     THIS;
-    vm_overlay_clear(THIS, color);
+    if ((pos_x < 20u) && (pos_y < 18u)) vm_overlay_clear(THIS, 0, 0, 20u - pos_x, 18u - pos_y, color, options);
     ui_set_pos(pos_x << 3, pos_y << 3);
 }
 

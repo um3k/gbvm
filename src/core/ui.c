@@ -34,9 +34,6 @@ UBYTE win_speed;
 UBYTE text_drawn;
 UBYTE current_text_speed;
 UBYTE text_wait;
-UBYTE text_line_count;
-
-UBYTE avatar_enabled;
 
 UBYTE text_in_speed;
 UBYTE text_out_speed;
@@ -79,7 +76,6 @@ void ui_init() __banked {
 
     ui_set_pos(0, MENU_CLOSED_Y);
 
-    avatar_enabled              = 0;
     win_speed                   = 1;
     text_drawn                  = TRUE;
     text_draw_speed             = 1;
@@ -98,15 +94,15 @@ void ui_load_tiles() __banked {
 }
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
-    set_win_tile_xy (x,         y,                                 ui_frame_tl_tiles);
-    fill_win_rect   (x + 1,     y,              width - 1, 1,      ui_frame_t_tiles );   // top
-    set_win_tile_xy (x + width, y,                                 ui_frame_tr_tiles);
-    fill_win_rect   (x,         y + 1,          1,         height, ui_frame_l_tiles );   // left
-    fill_win_rect   (x + width, y + 1,          1,         height, ui_frame_r_tiles );   // right
-    set_win_tile_xy (x,         y + height + 1,                    ui_frame_bl_tiles);
-    fill_win_rect   (x + 1,     y + height + 1, width - 1, 1,      ui_frame_b_tiles );   // bottom
-    set_win_tile_xy (x + width, y + height + 1,                    ui_frame_br_tiles);
-    fill_win_rect   (x + 1,     y + 1,          width - 1, height, ui_frame_bg_tiles);  // background
+    set_win_tile_xy (x,               y,                                         ui_frame_tl_tiles);
+    fill_win_rect   (x + 1u,          y,               width - 2u, 1u,           ui_frame_t_tiles );   // top
+    set_win_tile_xy (x + width - 1u,  y,                                         ui_frame_tr_tiles);
+    fill_win_rect   (x,               y + 1u,          1u,         height - 2u,  ui_frame_l_tiles );   // left
+    fill_win_rect   (x + width - 1u,  y + 1u,          1u,         height - 2u,  ui_frame_r_tiles );   // right
+    set_win_tile_xy (x,               y + height - 1u,                           ui_frame_bl_tiles);
+    fill_win_rect   (x + 1u,          y + height - 1u, width - 2u, 1u,           ui_frame_b_tiles );   // bottom
+    set_win_tile_xy (x + width - 1u,  y + height - 1u,                           ui_frame_br_tiles);
+    fill_win_rect   (x + 1u,          y + 1u,          width - 2u, height - 2u,  ui_frame_bg_tiles);  // background
 }
 
 void ui_print_reset(UBYTE tile) {
@@ -167,11 +163,10 @@ void ui_draw_text_buffer_char() __banked {
         // VRAM destination
         ui_dest_base = GetWinAddr() + 32 + 1; // gotoxy(1,1)
         // with and initial pos correction
-        if (avatar_enabled) ui_dest_base += AVATAR_WIDTH;
         // initialize current pointer with corrected base value
         ui_dest_ptr = ui_dest_base;
         // tileno destination
-        ui_print_reset(((avatar_enabled) ? (UBYTE)(TEXT_BUFFER_START + 4) : TEXT_BUFFER_START));
+        ui_print_reset(TEXT_BUFFER_START);
     }
 
     switch (*ui_text_ptr) {

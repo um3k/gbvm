@@ -15,8 +15,9 @@ _script_s0a5_interact::
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Game was saved!\nIt is now safe to\nturn off game boy."
+        VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
-        VM_DISPLAY_TEXT         0, 0, 0
+        VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/

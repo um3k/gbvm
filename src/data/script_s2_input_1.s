@@ -16,10 +16,11 @@ _script_s2_input1::
         
         VM_LOAD_TEXT            4
             .dw .ARG0, .ARG1, .ARG2, .ARG3
-            .asciz "DAY:%d TIME: %d:%d:%d"
+            .asciz "\002\001DAY:%d TIME: %d:%d:%d"
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0
         VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED
-        VM_DISPLAY_TEXT         0, 0, 0
-        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
         VM_SET_CONST            .ARG5, 0
@@ -55,20 +56,20 @@ _script_s2_input1::
         VM_LOAD_TEXT            6
             .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0
             .asciz "\001\001\002\00302\n13\001\003\004\001\377\002\001x1=%d y1=%d\nx2=%d y2=%d\n\004\376\001Chebyshev:\002\002%d\n\002\001Manhattan:\002\002%d\n\002\001This is \002\002BOLD\002\001\nOk"
-        VM_DISPLAY_TEXT         0, 0, 0
-        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
+        VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
+        VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
         VM_LOAD_TEXT            0
             .asciz "\001\001\002\00302\n13\001\003\004\002\377\002\001Hi, this is KOT speaking!\nWhere is SLON?\003\022\005\001\001\002\00346\n57\003\006\005\001\003\002\001Sorry, i have no idea\nwhat are you talking\nabout!"
-        VM_DISPLAY_TEXT         0, 0, 0
-;        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
+        VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
+        VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
         VM_LOAD_TEXT            0
             .asciz "\002\004Hello, world!"
-        VM_DISPLAY_TEXT         0, 0, 0
-;        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_WHITE
+        VM_OVERLAY_CLEAR        0, 0, 20, 3, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
+        VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED

@@ -18,8 +18,9 @@ _script_s3_init::
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
         .asciz "\003\003\002\001\002New Game\nContinue"
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
-        VM_DISPLAY_TEXT         0, 0, 0
+        VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
         
         VM_CHOICE               VAR_S3_TITLESCREEN_NEWGAME, ^/(.UI_MENU_LAST_0 | .UI_MENU_CANCEL_B)/, 2
@@ -52,8 +53,9 @@ _script_s3_init::
 2$:
         VM_LOAD_TEXT            0
         .asciz "\001\002No save found!\nPress A"
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
-        VM_DISPLAY_TEXT         0, 0, 0
+        VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
