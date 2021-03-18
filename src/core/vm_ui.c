@@ -52,49 +52,43 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
                 // variable value of fixed width, zero padded
                 case 'D': 
                     d += itoa_fmt(idx, d, *++s - '0');
-                    s++;
-                    args++;
-                    continue;
+                    break;
                 // variable value
                 case 'd':
                     d += itoa_fmt(idx, d, 0);
-                    s++;
-                    args++;
-                    continue;
+                    break;
                 // char from variable
                 case 'c':
                     *d++ = (unsigned char)idx;
-                    s++;
-                    args++;
-                    continue;
+                    break;
                 // text tempo from variable
                 case 't':
                     *d++ = 0x01u;
                     *d++ = (unsigned char)idx + 0x02u;
-                    s++;
-                    args++;
-                    continue;
+                    break;
                 // font index from variable
                 case 'f':
                     *d++ = 0x02u;
                     *d++ = (unsigned char)idx + 0x01u;
-                    s++;
-                    args++;
-                    continue;
+                    break;
                 // excape % symbol
                 case '%':
-                    break;
+                    s++;
                 default:
                     s--;
+                    *d++ = *s++;
+                    continue;
             }
-
+        } else {
+            *d++ = *s++;
+            continue;
         }
-        *d++ = *s++;
+        s++; args++;
     }
-    *d = 0, s++;
+    *d = 0;
 
     SWITCH_ROM_MBC1(_save);
-    THIS->PC = s;
+    THIS->PC = s + 1;
 }
 
 // start displaying text
