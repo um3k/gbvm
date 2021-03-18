@@ -151,7 +151,7 @@ UBYTE ui_print_render(const unsigned char ch) {
 }
 
 void ui_draw_text_buffer_char() __banked {
-    static UBYTE current_font_idx;
+    static UBYTE current_font_idx, current_text_bkg_fill;
 
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
@@ -161,8 +161,9 @@ void ui_draw_text_buffer_char() __banked {
     }
 
     if (ui_text_ptr == 0) {
-        // record the current font index
+        // save font and color global properties
         current_font_idx = vwf_current_font_idx;
+        current_text_bkg_fill = text_bkg_fill;
         // reset to first line
         // current char pointer
         ui_text_ptr = ui_text_data;
@@ -183,6 +184,7 @@ void ui_draw_text_buffer_char() __banked {
                 const far_ptr_t * font = ui_fonts + vwf_current_font_idx;
                 MemcpyBanked(&vwf_current_font_desc, font->ptr, sizeof(font_desc_t), vwf_current_font_bank = font->bank);
             }
+            text_bkg_fill = current_text_bkg_fill;
             return;
         }
         case 0x01:
@@ -212,9 +214,14 @@ void ui_draw_text_buffer_char() __banked {
             break;
         }
         case 0x06:
+            // wait for key press (parameter is a mask)
             if ((joy & *++ui_text_ptr) && (joy && !last_joy)) break;
             ui_text_ptr--;
             return;
+        case 0x07:
+            // set text color
+            text_bkg_fill = (*++ui_text_ptr & 1u) ? TEXT_BKG_FILL_W : TEXT_BKG_FILL_B;
+            break;
         case '\n':
             ui_dest_ptr = ui_dest_base += 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
@@ -222,6 +229,7 @@ void ui_draw_text_buffer_char() __banked {
         case 0x05:
             // escape symbol
             ui_text_ptr++; 
+            // fall down to default
         default:
             if (ui_print_render(*ui_text_ptr)) {
                 SetTile(ui_dest_ptr++, ui_current_tile - 1u);
@@ -256,7 +264,7 @@ void ui_update() __nonbanked {
     // all drawn - nothing to do
     if (text_drawn) return;
     // too fast - wait
-    if ((!INPUT_A_OR_B_PRESSED) && game_time & current_text_speed) return;
+    if ((!INPUT_A_OR_B_PRESSED) && (game_time & current_text_speed)) return;
     // render next char
     do {
         ui_draw_text_buffer_char();
