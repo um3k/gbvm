@@ -15,6 +15,23 @@
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 
+static UBYTE itoa_fmt(INT16 v, UBYTE * d, UBYTE dlen) __banked {
+    if (dlen) {
+        UBYTE buf[7];
+        UBYTE *ss = buf;
+        UBYTE len = strlen(itoa(v, buf));
+        UBYTE res_len = (len > dlen) ? len : dlen;
+        if (*ss == '-') *d++ = *ss++, len--, dlen--;
+        if (dlen > len) {
+            for (UBYTE i = dlen - len; i != 0; i--) *d++ = '0';
+        }
+        for (UBYTE i = 0; i != len; i++) *d++ = *ss++;
+        return res_len;
+    } else {
+        return strlen(itoa(v, d));
+    }
+}
+
 // renders UI text into buffer
 void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonbanked {
     dummy0; dummy1; // suppress warnings
@@ -32,9 +49,15 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
             idx = *args;
             if (idx < 0) idx = *(THIS->stack_ptr + idx); else idx = script_memory[idx];
             switch (*++s) {
+                // variable value of fixed width, zero padded
+                case 'D': 
+                    d += itoa_fmt(idx, d, *++s - '0');
+                    s++;
+                    args++;
+                    continue;
                 // variable value
                 case 'd':
-                    d += strlen(itoa(idx, d));
+                    d += itoa_fmt(idx, d, 0);
                     s++;
                     args++;
                     continue;

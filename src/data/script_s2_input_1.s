@@ -16,7 +16,7 @@ _script_s2_input1::
         
         VM_LOAD_TEXT            4
             .dw .ARG0, .ARG1, .ARG2, .ARG3
-            .asciz "\002\001DAY:%d TIME: %d:%d:%d"
+            .asciz "\002\001DAY:%D3 TIME: %D2:%D2:%D2"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0
         VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
