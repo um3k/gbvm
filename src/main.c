@@ -151,6 +151,7 @@ void process_VM() {
                     }
                     LYC_REG = 0u;
                 }
+                if (!hide_sprites) SHOW_SPRITES;    // show sprites back if we switched LCD ISR while sprites were hidden 
 
                 actor_set_anim_idle(&PLAYER);
                 state_init();

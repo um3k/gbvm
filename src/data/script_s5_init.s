@@ -9,6 +9,7 @@
 ___bank_script_s5_init = 255
 .globl ___bank_script_s5_init
 .globl ___bank_script_s5_timer1, _script_s5_timer1 
+.globl ___bank_music_track_105__Data, _music_track_105__Data
 
 ACTOR = -4
 
@@ -60,6 +61,3 @@ _script_s5_init::
 
         ; Stop Script
         VM_STOP
-
-___bank_TESTFN01 = 1
-.globl ___bank_TESTFN01

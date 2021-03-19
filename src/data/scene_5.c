@@ -34,6 +34,7 @@ const struct scene_t scene_5 = {
   .n_actors = 4,
   .n_triggers = 2,
   .n_sprites = 3,
+  .n_projectiles = 0,
   .actors = TO_FAR_PTR_T(scene_5_actors),
   .triggers = TO_FAR_PTR_T(scene_5_triggers),
   .sprites = TO_FAR_PTR_T(scene_5_sprites),
