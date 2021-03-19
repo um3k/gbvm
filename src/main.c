@@ -153,7 +153,7 @@ void process_VM() {
                 }
                 if (!hide_sprites) SHOW_SPRITES;    // show sprites back if we switched LCD ISR while sprites were hidden 
 
-                actor_set_anim_idle(&PLAYER);
+                player_init();
                 state_init();
                 toggle_shadow_OAM();
                 camera_update();
