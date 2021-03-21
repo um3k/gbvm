@@ -23,6 +23,12 @@ const struct actor_t scene_1_actors[] = {
       .x = 56 * 16,
       .y = 208 * 16,
     },
+    .bounds = {
+        .left = 0,
+        .right = 16,
+        .top = -16,
+        .bottom = 0
+    },
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_6),
     .palette = 0,
@@ -41,6 +47,12 @@ const struct actor_t scene_1_actors[] = {
     .pos = {
       .x = 192 * 16,
       .y = 152 * 16,
+    },
+    .bounds = {
+        .left = 0,
+        .right = 16,
+        .top = -16,
+        .bottom = 0
     },
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_1),
@@ -61,6 +73,12 @@ const struct actor_t scene_1_actors[] = {
       .x = 184 * 16,
       .y = 224 * 16,
     },
+    .bounds = {
+        .left = 0,
+        .right = 16,
+        .top = -16,
+        .bottom = 0
+    },
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
     .palette = 0,
@@ -79,6 +97,12 @@ const struct actor_t scene_1_actors[] = {
     .pos = {
       .x = 168 * 16,
       .y = 224 * 16,
+    },
+    .bounds = {
+        .left = 0,
+        .right = 16,
+        .top = -16,
+        .bottom = 0
     },
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
@@ -99,6 +123,12 @@ const struct actor_t scene_1_actors[] = {
       .x = 152 * 16,
       .y = 224 * 16,
     },
+    .bounds = {
+        .left = 0,
+        .right = 16,
+        .top = -16,
+        .bottom = 0
+    },    
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
     .palette = 0,
@@ -118,6 +148,12 @@ const struct actor_t scene_1_actors[] = {
       .x = 88 * 16,
       .y = 104 * 16,
     },
+    .bounds = {
+        .left = 0,
+        .right = 16,
+        .top = -16,
+        .bottom = 0
+    },    
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_8),
     .palette = 0,
