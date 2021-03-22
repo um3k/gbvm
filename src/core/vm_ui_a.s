@@ -11,9 +11,12 @@ __itoa_fmt_len::
 
     .area   _CODE_2
 
+.globl b_itoa_fmt
+b_itoa_fmt = 2
+
 _itoa_fmt::
     push    BC
-    ldhl    SP, #4
+    ldhl    SP, #8
     ld      A, (HL+)
     ld      E, A
     ld      A, (HL+)

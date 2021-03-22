@@ -228,9 +228,11 @@ void ui_draw_text_buffer_char() __banked {
             text_bkg_fill = (*++ui_text_ptr & 1u) ? TEXT_BKG_FILL_W : TEXT_BKG_FILL_B;
             break;
         case 0x08:
+            // text direction (left-to-right or right-to-left)
             vwf_direction = (*++ui_text_ptr & 1u) ? UI_PRINT_LEFTTORIGHT : UI_PRINT_RIGHTTOLEFT;
             break;
         case '\n':
+            // carriage return
             ui_dest_ptr = ui_dest_base += 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
             break;

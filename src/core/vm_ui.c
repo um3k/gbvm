@@ -16,9 +16,9 @@
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 
 extern UBYTE _itoa_fmt_len;
-UBYTE itoa_fmt(INT16 v, UBYTE * d) __preserves_regs(b, c);
+UBYTE itoa_fmt(INT16 v, UBYTE * d) __banked __preserves_regs(b, c);
 
-UBYTE itoa_format(INT16 v, UBYTE * d, UBYTE dlen) __banked {
+inline UBYTE itoa_format(INT16 v, UBYTE * d, UBYTE dlen) {
     _itoa_fmt_len = dlen;
     UBYTE len = itoa_fmt(v, d);
     if (vwf_direction != UI_PRINT_LEFTTORIGHT) reverse(d);
