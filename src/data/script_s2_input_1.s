@@ -16,7 +16,7 @@ _script_s2_input1::
         
         VM_LOAD_TEXT            4
             .dw .ARG0, .ARG1, .ARG2, .ARG3
-            .asciz "\002\001DAY:%D3 TIME: %D2:%D2:%D2"
+            .asciz "\002\001DAY:%D8 TIME: %D2:%D2:%D2"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0
         VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
@@ -69,9 +69,11 @@ _script_s2_input1::
 
         VM_LOAD_TEXT            0
             .asciz "\002\004Hello, world!"
-        VM_OVERLAY_CLEAR        0, 0, 20, 3, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
+        VM_OVERLAY_CLEAR        0, 0, 20, 3, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+        VM_SET_PRINT_DIR        .UI_PRINT_LEFTTORIGHT
 
         VM_LOAD_TEXT            0
             .asciz "\002\005\302 \355\356\342\356\351 \342\345\360\361\350\350 GBStudio \354\356\346\355\356\n\341\363\344\345\362 \357\350\361\340\362\374 \362\356\353\374\352\356 \357\356-\360\363\361\361\352\350\n\n\321\353\340\342\340 \321\313\316\315\323."

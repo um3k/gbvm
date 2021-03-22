@@ -54,6 +54,7 @@ static UBYTE vwf_tile_data[16 * 2];
 UBYTE vwf_current_mask;
 UBYTE vwf_current_rotate;
 UBYTE vwf_inverse_map;
+UBYTE vwf_direction;
 
 font_desc_t vwf_current_font_desc;
 UBYTE vwf_current_font_bank;
@@ -62,6 +63,7 @@ UBYTE vwf_current_font_idx;
 extern const UBYTE ui_time_masks[];
 
 void ui_init() __banked {
+    vwf_direction               = UI_PRINT_LEFTTORIGHT;
     vwf_current_font_idx        = 0;
     vwf_current_font_bank       = ui_fonts[0].bank;
     MemcpyBanked(&vwf_current_font_desc, ui_fonts[0].ptr, sizeof(font_desc_t), vwf_current_font_bank);
@@ -151,7 +153,7 @@ UBYTE ui_print_render(const unsigned char ch) {
 }
 
 void ui_draw_text_buffer_char() __banked {
-    static UBYTE current_font_idx, current_text_bkg_fill;
+    static UBYTE current_font_idx, current_text_bkg_fill, current_vwf_direction;
 
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
@@ -164,11 +166,13 @@ void ui_draw_text_buffer_char() __banked {
         // save font and color global properties
         current_font_idx = vwf_current_font_idx;
         current_text_bkg_fill = text_bkg_fill;
+        current_vwf_direction = vwf_direction;
         // reset to first line
         // current char pointer
         ui_text_ptr = ui_text_data;
         // VRAM destination
         ui_dest_base = GetWinAddr() + 32 + 1; // gotoxy(1,1)
+        if (vwf_direction == UI_PRINT_RIGHTTOLEFT) ui_dest_base += 17;
         // with and initial pos correction
         // initialize current pointer with corrected base value
         ui_dest_ptr = ui_dest_base;
@@ -185,6 +189,7 @@ void ui_draw_text_buffer_char() __banked {
                 MemcpyBanked(&vwf_current_font_desc, font->ptr, sizeof(font_desc_t), vwf_current_font_bank = font->bank);
             }
             text_bkg_fill = current_text_bkg_fill;
+            vwf_direction = current_vwf_direction;
             return;
         }
         case 0x01:
@@ -222,6 +227,9 @@ void ui_draw_text_buffer_char() __banked {
             // set text color
             text_bkg_fill = (*++ui_text_ptr & 1u) ? TEXT_BKG_FILL_W : TEXT_BKG_FILL_B;
             break;
+        case 0x08:
+            vwf_direction = (*++ui_text_ptr & 1u) ? UI_PRINT_LEFTTORIGHT : UI_PRINT_RIGHTTOLEFT;
+            break;
         case '\n':
             ui_dest_ptr = ui_dest_base += 32u;
             if (vwf_current_offset) ui_print_reset(ui_current_tile + 1u);
@@ -232,7 +240,8 @@ void ui_draw_text_buffer_char() __banked {
             // fall down to default
         default:
             if (ui_print_render(*ui_text_ptr)) {
-                SetTile(ui_dest_ptr++, ui_current_tile - 1u);
+                SetTile(ui_dest_ptr, ui_current_tile - 1u);
+                if (vwf_direction == UI_PRINT_LEFTTORIGHT)  ui_dest_ptr++; else ui_dest_ptr--;
             }
             if (vwf_current_offset) SetTile(ui_dest_ptr, ui_current_tile);
             break;

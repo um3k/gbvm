@@ -499,6 +499,13 @@ OP_VM_SET_FONT          = 0x4B
         .db OP_VM_SET_FONT, #<FONT_INDEX
 .endm
 
+OP_VM_SET_PRINT_DIR     = 0x4C
+.UI_PRINT_LEFTTORIGHT   = 0
+.UI_PRINT_RIGHTTOLEFT   = 1
+.macro VM_SET_PRINT_DIR DIRECTION
+        .db OP_VM_SET_PRINT_DIR, #<DIRECTION
+.endm
+
 ; --- GAMEBOY ------------------------------------------
 
 OP_VM_SHOW_SPRITES      = 0x50

@@ -15,21 +15,14 @@
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 
-static UBYTE itoa_fmt(INT16 v, UBYTE * d, UBYTE dlen) __banked {
-    if (dlen) {
-        UBYTE buf[7];
-        UBYTE *ss = buf;
-        UBYTE len = strlen(itoa(v, buf));
-        UBYTE res_len = (len > dlen) ? len : dlen;
-        if (*ss == '-') *d++ = *ss++, len--, dlen--;
-        if (dlen > len) {
-            for (UBYTE i = dlen - len; i != 0; i--) *d++ = '0';
-        }
-        for (UBYTE i = 0; i != len; i++) *d++ = *ss++;
-        return res_len;
-    } else {
-        return strlen(itoa(v, d));
-    }
+extern UBYTE _itoa_fmt_len;
+UBYTE itoa_fmt(INT16 v, UBYTE * d) __preserves_regs(b, c);
+
+UBYTE itoa_format(INT16 v, UBYTE * d, UBYTE dlen) __banked {
+    _itoa_fmt_len = dlen;
+    UBYTE len = itoa_fmt(v, d);
+    if (vwf_direction != UI_PRINT_LEFTTORIGHT) reverse(d);
+    return len;
 }
 
 // renders UI text into buffer
@@ -51,11 +44,11 @@ void vm_load_text(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __
             switch (*++s) {
                 // variable value of fixed width, zero padded
                 case 'D': 
-                    d += itoa_fmt(idx, d, *++s - '0');
+                    d += itoa_format(idx, d, *++s - '0');
                     break;
                 // variable value
                 case 'd':
-                    d += itoa_fmt(idx, d, 0);
+                    d += itoa_format(idx, d, 0);
                     break;
                 // char from variable
                 case 'c':
@@ -185,4 +178,9 @@ void vm_set_font(SCRIPT_CTX * THIS, UBYTE font_index) __banked {
     THIS;
     vwf_current_font_bank = ui_fonts[font_index].bank;
     MemcpyBanked(&vwf_current_font_desc, ui_fonts[font_index].ptr, sizeof(font_desc_t), vwf_current_font_bank);
+}
+
+void vm_set_print_dir(SCRIPT_CTX * THIS, UBYTE print_dir) __banked {
+    THIS;
+    vwf_direction = print_dir & 1;
 }
