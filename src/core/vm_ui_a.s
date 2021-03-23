@@ -6,8 +6,6 @@ __itoa_fmt_len::
     .ds 0x01
 .itoa_fmt_buf::
     .ds 0x03
-.itoa_fmt_sign::
-    .ds 0x01
 
     .area   _CODE_2
 

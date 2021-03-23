@@ -116,6 +116,8 @@ void ui_print_reset(UBYTE tile) {
 }
 
 void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked;
+UWORD ui_print_make_mask_lr(UBYTE width, UBYTE ofs);
+UWORD ui_print_make_mask_rl(UBYTE width, UBYTE ofs);
 
 UBYTE ui_print_render(const unsigned char ch) {
     UBYTE letter = (vwf_current_font_desc.attr & FONT_RECODE) ? ReadBankedUBYTE(vwf_current_font_desc.recode_table + (ch & vwf_current_font_desc.mask), vwf_current_font_bank) : ch;
@@ -123,15 +125,29 @@ UBYTE ui_print_render(const unsigned char ch) {
     if (vwf_current_font_desc.attr & FONT_VWF) {
         vwf_inverse_map = (vwf_current_font_desc.attr & FONT_VWF_1BIT) ? text_bkg_fill : 0u;
         UBYTE width = ReadBankedUBYTE(vwf_current_font_desc.widths + letter, vwf_current_font_bank);
-        UBYTE dx = (8u - vwf_current_offset);
-        vwf_current_mask = (0xffu << dx) | (0xffu >> (vwf_current_offset + width));
+        if (vwf_direction == UI_PRINT_LEFTTORIGHT) {
+            vwf_current_rotate = vwf_current_offset;
+            UWORD masks = ui_print_make_mask_lr(width, vwf_current_offset);
+            vwf_current_mask = (UBYTE)masks;
+            ui_print_shift_char(vwf_tile_data, bitmap, vwf_current_font_bank);
 
-        vwf_current_rotate = vwf_current_offset;
-        ui_print_shift_char(vwf_tile_data, bitmap, vwf_current_font_bank);
-        if ((UBYTE)(vwf_current_offset + width) > 8u) {
-            vwf_current_rotate = dx | 0x80u;
-            vwf_current_mask = 0xffu >> (width - dx);
-            ui_print_shift_char(vwf_tile_data + 16u, bitmap, vwf_current_font_bank);
+            if ((UBYTE)(vwf_current_offset + width) > 8u) {
+                vwf_current_rotate = (8u - vwf_current_offset) | 0x80u;
+                vwf_current_mask = (UBYTE)(masks >> 8u);
+                ui_print_shift_char(vwf_tile_data + 16u, bitmap, vwf_current_font_bank);
+            }
+        } else {
+            UBYTE dx = (8u - vwf_current_offset);      
+            vwf_current_rotate =  (width < dx) ? (dx - width) : (width - dx) | 0x80u;
+            UWORD masks = ui_print_make_mask_rl(width, vwf_current_offset);
+            vwf_current_mask = (UBYTE)masks;
+            ui_print_shift_char(vwf_tile_data, bitmap, vwf_current_font_bank);
+
+            if ((UBYTE)(vwf_current_offset + width) > 8u) {
+                vwf_current_rotate = 16u - (UBYTE)(vwf_current_offset + width);
+                vwf_current_mask = (UBYTE)(masks >> 8u);
+                ui_print_shift_char(vwf_tile_data + 16u, bitmap, vwf_current_font_bank);
+            }
         }
         vwf_current_offset += width;
 
