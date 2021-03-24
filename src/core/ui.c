@@ -235,6 +235,16 @@ void ui_draw_text_buffer_char() __banked {
             break;
         }
         case 0x06:
+            // if fast forward
+            if (text_ff) {
+                ++ui_text_ptr; 
+                break;
+            }
+            // if high speed then ckeck for input 
+            if (current_text_speed == 0) {
+                wait_vbl_done();
+                input_update();
+            }
             // wait for key press (parameter is a mask)
             if ((joy & *++ui_text_ptr) && (joy && !last_joy)) break;
             ui_text_ptr--;
