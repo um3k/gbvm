@@ -73,6 +73,13 @@ _script_s2_input1::
         VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
+        VM_LOAD_TEXT            0
+            .asciz "\002\006\371\354\345\355 \362\345\354\355"
+        VM_OVERLAY_CLEAR        0, 0, 20, 3, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
         VM_SET_PRINT_DIR        .UI_PRINT_LEFTTORIGHT
 
         VM_LOAD_TEXT            0
