@@ -651,6 +651,9 @@ OP_VM_CAMERA_SET_POS     = 0x71
         .db OP_VM_CAMERA_SET_POS, #>IDX, #<IDX
 .endm
 
+.CAMERA_SHAKE_X          = 1
+.CAMERA_SHAKE_Y          = 2
+
 ; --- RTC ----------------------------------
 
 OP_VM_RTC_LATCH          = 0x78

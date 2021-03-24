@@ -8,6 +8,7 @@
 #include "data/frame_image.h"
 #include "data/cursor_image.h"
 #include "bankdata.h"
+#include "camera.h"
 #include "scroll.h"
 #include "input.h"
 #include "math.h"
@@ -324,6 +325,8 @@ UBYTE ui_run_menu(menu_item_t * start_item, UBYTE bank, UBYTE options, UBYTE cou
         ui_update();
         
         toggle_shadow_OAM();
+        camera_update();
+        scroll_update();
         actors_update();
         projectiles_render();
         activate_shadow_OAM();
@@ -383,6 +386,8 @@ void ui_run_modal(UBYTE wait_flags) __banked {
         ui_update();
 
         toggle_shadow_OAM();
+        camera_update();
+        scroll_update();
         actors_update();
         projectiles_render();
         activate_shadow_OAM();

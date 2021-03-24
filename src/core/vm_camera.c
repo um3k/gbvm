@@ -61,3 +61,22 @@ void vm_camera_set_pos(SCRIPT_CTX * THIS, INT16 idx) __banked {
     scroll_update();
     return;
 }
+
+// VM_INVOKE handler
+UBYTE camera_shake_frames(void * THIS, UBYTE start, UWORD * stack_frame) __banked {
+    // we allocate one local variable (just write ahead of VM stack pointer, we have no interrupts, our local variables won't get spoiled)
+    if (start) *((SCRIPT_CTX *)THIS)->stack_ptr = stack_frame[0];
+    // check wait condition
+    if (stack_frame[0]--) { 
+        if (stack_frame[1] & 1) {
+            scroll_offset_x = (INT16)(sys_time & 0x5) * 2 - 5;
+        }
+        if (stack_frame[1] & 2) {
+            scroll_offset_y = (INT16)(sys_time & 0xA) - 5;
+        }
+        ((SCRIPT_CTX *)THIS)->waitable = TRUE; 
+        return FALSE;
+    }
+    scroll_offset_x = scroll_offset_y = 0; 
+    return TRUE;
+}
