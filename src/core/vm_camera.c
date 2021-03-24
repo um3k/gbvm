@@ -1,6 +1,7 @@
 #pragma bank 2
 
 #include "vm.h"
+#include "vm_camera.h"
 
 #include "camera.h"
 #include "scroll.h"
@@ -68,10 +69,10 @@ UBYTE camera_shake_frames(void * THIS, UBYTE start, UWORD * stack_frame) __banke
     if (start) *((SCRIPT_CTX *)THIS)->stack_ptr = stack_frame[0];
     // check wait condition
     if ((*((SCRIPT_CTX *)THIS)->stack_ptr)--) { 
-        if (stack_frame[1] & 1) {
+        if (stack_frame[1] & CAMERA_SHAKE_X) {
             scroll_offset_x = (INT16)(sys_time & 0x5) * 2 - 5;
         }
-        if (stack_frame[1] & 2) {
+        if (stack_frame[1] & CAMERA_SHAKE_Y) {
             scroll_offset_y = (INT16)(sys_time & 0xA) - 5;
         }
         ((SCRIPT_CTX *)THIS)->waitable = TRUE; 
