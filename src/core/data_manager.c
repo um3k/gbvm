@@ -90,41 +90,27 @@ void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t * res_
 }
 
 #ifdef CGB
-void load_palette(const UBYTE *palette, UBYTE bank) __banked {
-  if (palette_update_mask == 0x3F) {
-    MemcpyBanked(BkgPalette, palette, 48, bank);
-  } else {
-    if (palette_update_mask & 0x1) {
-      MemcpyBanked(BkgPalette, palette, 8, bank);
+void load_palette(const UWORD * palette, UBYTE bank) __banked {
+    if (palette_update_mask == 0x3f) {
+        MemcpyBanked(BkgPalette, palette, sizeof(BkgPalette), bank);
+        return;
     }
-    if (palette_update_mask & 0x2) {
-      MemcpyBanked(BkgPalette + 4, palette + 8, 8, bank);
+    const UWORD * dest = BkgPalette;
+    for (UBYTE i = palette_update_mask; (i); i >>= 1, dest += 4, palette += 4) {
+        if (i & 1) MemcpyBanked(dest, palette, 8, bank); 
     }
-    if (palette_update_mask & 0x4) {
-      MemcpyBanked(BkgPalette + 8, palette + 16, 8, bank);
-    }
-    if (palette_update_mask & 0x8) {
-      MemcpyBanked(BkgPalette + 12, palette + 24, 8, bank);
-    }    
-    if (palette_update_mask & 0x10) {
-      MemcpyBanked(BkgPalette + 16, palette + 32, 8, bank);
-    }    
-    if (palette_update_mask & 0x20) {
-      MemcpyBanked(BkgPalette + 20, palette + 40, 8, bank);
-    }            
-  }
 }
 
-void load_ui_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
-  MemcpyBanked(BkgPalette + UI_PALETTE_OFFSET, data_ptr, 8, bank);
+void load_ui_palette(const UWORD * data_ptr, UBYTE bank) __banked {
+    MemcpyBanked(BkgPalette + UI_PALETTE_OFFSET, data_ptr, 8, bank);
 }
 
-void load_sprite_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
-  MemcpyBanked(SprPalette, data_ptr, 56, bank);
+void load_sprite_palette(const UWORD * data_ptr, UBYTE bank) __banked {
+    MemcpyBanked(SprPalette, data_ptr, 56, bank);
 }
 
-void load_player_palette(const UBYTE *data_ptr, UBYTE bank) __banked {
-  MemcpyBanked(SprPalette + PLAYER_PALETTE_OFFSET, data_ptr, 8, bank);
+void load_player_palette(const UWORD * data_ptr, UBYTE bank) __banked {
+    MemcpyBanked(SprPalette + PLAYER_PALETTE_OFFSET, data_ptr, 8, bank);
 }
 #endif
 
@@ -137,7 +123,7 @@ UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_
     return count;
 }
 
-UBYTE load_scene(const scene_t* scene, UBYTE bank, UBYTE init_data) __banked {
+UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
     UBYTE i, tile_allocation_hiwater;
     scene_t scn;
 
