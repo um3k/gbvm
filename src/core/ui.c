@@ -25,8 +25,6 @@
 #define ui_frame_r_tiles  0xC5u
 #define ui_frame_bg_tiles 0xC4u
 
-const unsigned char avatar_tiles[4] = {TEXT_BUFFER_START, TEXT_BUFFER_START + 2U, TEXT_BUFFER_START + 1U, TEXT_BUFFER_START + 3U};
-
 UBYTE win_pos_x, win_dest_pos_x;
 UBYTE win_pos_y, win_dest_pos_y;
 UBYTE win_speed;
