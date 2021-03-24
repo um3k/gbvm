@@ -169,7 +169,7 @@ UBYTE ui_print_render(const unsigned char ch) {
 }
 
 void ui_draw_text_buffer_char() __banked {
-    static UBYTE current_font_idx, current_text_bkg_fill, current_vwf_direction;
+    static UBYTE current_font_idx, current_text_bkg_fill, current_vwf_direction, current_text_ff_joypad;
 
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
@@ -183,6 +183,7 @@ void ui_draw_text_buffer_char() __banked {
         current_font_idx = vwf_current_font_idx;
         current_text_bkg_fill = text_bkg_fill;
         current_vwf_direction = vwf_direction;
+        current_text_ff_joypad = text_ff_joypad;
         // reset to first line
         // current char pointer
         ui_text_ptr = ui_text_data;
@@ -206,6 +207,7 @@ void ui_draw_text_buffer_char() __banked {
             }
             text_bkg_fill = current_text_bkg_fill;
             vwf_direction = current_vwf_direction;
+            text_ff_joypad = current_text_ff_joypad;
             return;
         }
         case 0x01:
@@ -235,9 +237,15 @@ void ui_draw_text_buffer_char() __banked {
             break;
         }
         case 0x06:
-            // if fast forward
+            // wait for input cancels fast forward
             if (text_ff) {
-                ++ui_text_ptr; 
+                text_ff = FALSE;
+                text_ff_joypad = FALSE;
+                INPUT_RESET;
+            }
+            // wait for key press (parameter is a mask)
+            if ((joy & ~last_joy) & *++ui_text_ptr) {
+                text_ff_joypad = current_text_ff_joypad;
                 break;
             }
             // if high speed then ckeck for input 
@@ -245,8 +253,6 @@ void ui_draw_text_buffer_char() __banked {
                 wait_vbl_done();
                 input_update();
             }
-            // wait for key press (parameter is a mask)
-            if ((joy & *++ui_text_ptr) && (joy && !last_joy)) break;
             ui_text_ptr--;
             return;
         case 0x07:
