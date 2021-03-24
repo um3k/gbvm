@@ -24,6 +24,7 @@ _ui_fonts::
         IMPORT_FAR_PTR_DATA _vwf_font_avatars
         IMPORT_FAR_PTR_DATA _font_0
         IMPORT_FAR_PTR_DATA _font_ru
+        IMPORT_FAR_PTR_DATA _font_he
 
 ; define engine init VM routine which will be packed into some bank
 .area _CODE_255
