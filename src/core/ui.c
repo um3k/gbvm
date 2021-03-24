@@ -243,15 +243,15 @@ void ui_draw_text_buffer_char() __banked {
                 text_ff_joypad = FALSE;
                 INPUT_RESET;
             }
+            // if high speed then skip waiting
+            if (current_text_speed == 0) {
+                ui_text_ptr++;
+                break;
+            } 
             // wait for key press (parameter is a mask)
             if ((joy & ~last_joy) & *++ui_text_ptr) {
                 text_ff_joypad = current_text_ff_joypad;
                 break;
-            }
-            // if high speed then ckeck for input 
-            if (current_text_speed == 0) {
-                wait_vbl_done();
-                input_update();
             }
             ui_text_ptr--;
             return;
