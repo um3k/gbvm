@@ -25,46 +25,122 @@ static FADE_DIRECTION fade_direction;
 
 #ifdef CGB
 
-inline UWORD UpdateColorBlack(UINT8 i, UWORD col) {
-    return RGB2((PAL_RED(col) >> 5 - i),  (PAL_GREEN(col) >> 5 - i), (PAL_BLUE(col) >> 5 - i));
+void CGBFadeToWhiteStep(UWORD *pal, UBYTE reg, UBYTE step) __naked {
+    pal; reg; step;
+__asm
+        ldhl sp, #5
+        ld a, (hl-)
+        ld b, a
+
+        ld a, (hl-)
+        ld c, a
+        ld a, #0x80
+        ldh (c), a
+        inc c
+
+        ld a, (hl-)
+        ld l, (hl)
+        ld h, a
+
+        ld de, #0x0000
+        ld a, b
+        or a
+        jr z, 2$
+0$:
+        sla e
+        rl d
+        set 0, e
+        set 5, e
+        set 2, d
+        dec b
+        jr nz, 0$
+2$:
+        ld b, #(8 * 4)
+1$:
+        ldh a, (_STAT_REG)
+        and #0x02
+        jr nz, 1$
+        ld a, (hl+)
+        or e
+        ldh (c), a
+
+3$:
+        ldh a, (_STAT_REG)
+        and #0x02
+        jr nz, 3$
+        ld a, (hl+)
+        or d
+        ldh (c), a
+
+        dec b
+        jr nz, 1$
+
+        ret   
+__endasm;
 }
 
-static void ApplyPaletteChangeColor(UBYTE index) {
-    if (index == FADED_IN_FRAME) {
-        set_bkg_palette(0, 8, BkgPalette);
-        set_sprite_palette(0, 8, SprPalette);
-        return;
-    }
+void CGBFadeToBlackStep(UWORD *pal, UBYTE reg, UBYTE step) __naked {
+    pal; reg; step;
+__asm
+        ldhl sp, #5
+        ld a, (hl-)
+        ld b, a
 
-    index = FADED_OUT_FRAME - index;
+        ld a, (hl-)
+        ld c, a
+        ld a, #0x80
+        ldh (c), a
+        inc c
 
-    UINT8 c;
-    UWORD paletteWhite;
-    UWORD* col;
-    UWORD tmp[32];
+        ld a, (hl-)
+        ld l, (hl)
+        ld h, a
+
+        ld de, #0x7fff
+        ld a, b
+        or a
+        jr z, 2$
+0$:
+        res 4, e
+        res 1, d
+        srl d
+        rr e
+        res 4, e
+        res 1, d
+        dec b
+        jr nz, 0$
+2$:
+        ld b, #(8 * 4)
+1$:
+        ldh a, (_STAT_REG)
+        and #0x02
+        jr nz, 1$
+        ld a, (hl+)
+        and e
+        ldh (c), a
+
+3$:
+        ldh a, (_STAT_REG)
+        and #0x02
+        jr nz, 3$
+        ld a, (hl+)
+        and d
+        ldh (c), a
+
+        dec b
+        jr nz, 1$
+
+        ret   
+__endasm;
+}
+
+void ApplyPaletteChangeColor(UBYTE index) {
     if (fade_style) {
-        col = BkgPalette;
-        for (c = 0; c != 32; ++c, ++col) {
-            tmp[c] = UpdateColorBlack(index, *col);
-        }
-        set_bkg_palette(0, 1, tmp);
-        col = SprPalette;
-        for (c = 0; c != 32; c++, ++col) {
-            tmp[c] = UpdateColorBlack(index, *col);
-        }
-        set_sprite_palette(0, 8, tmp);
+        CGBFadeToBlackStep(BkgPalette, (UBYTE)(&BCPS_REG), index);
+        CGBFadeToBlackStep(SprPalette, (UBYTE)(&OCPS_REG), index);
     } else {
-        col = BkgPalette; 
-        paletteWhite = RGB2((0x1F >> index), (0x1F >> index), (0x1F >> index));
-        for (c = 0; c != 32; ++c, ++col) {
-            tmp[c] = (UWORD)*col | paletteWhite;
-        }
-        set_bkg_palette(0, 8, tmp);
-        col = SprPalette;
-        for (c = 0; c != 32; ++c, ++col) {
-            tmp[c] = (UWORD)*col | paletteWhite;
-        }
-        set_sprite_palette(0, 8, tmp);
+        CGBFadeToWhiteStep(BkgPalette, (UBYTE)(&BCPS_REG), index);
+        CGBFadeToWhiteStep(SprPalette, (UBYTE)(&OCPS_REG), index);
     }
 }
 #endif

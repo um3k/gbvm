@@ -30,4 +30,8 @@ extern UBYTE palette_update_mask;
 
 void palette_init() __banked;
 
+#ifdef CGB
+void CGBZeroPalette(UBYTE reg) __banked;
+#endif
+
 #endif
