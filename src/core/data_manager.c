@@ -95,9 +95,11 @@ void load_palette(const UWORD * palette, UBYTE bank) __banked {
         MemcpyBanked(BkgPalette, palette, sizeof(BkgPalette), bank);
         return;
     }
-    const UWORD * dest = BkgPalette;
-    for (UBYTE i = palette_update_mask; (i); i >>= 1, dest += 4, palette += 4) {
-        if (i & 1) MemcpyBanked(dest, palette, 8, bank); 
+    UWORD * dest = BkgPalette;
+    for (UBYTE i = palette_update_mask; (i); i >>= 1, dest += 4) {
+        if ((i & 1) == 0) continue;
+        MemcpyBanked(dest, palette, 8, bank);
+        palette += 4; 
     }
 }
 

@@ -5,9 +5,15 @@ ___bank_script_s2_input1    = 255
 .globl ___bank_script_s2_input1
 
 _script_s2_input1::
+        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
+            .DMG_PAL    3,2,1,0
+
         VM_PUSH_CONST           10
         VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X | .CAMERA_SHAKE_Y)/
         VM_INVOKE       b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
+
+        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
+            .DMG_PAL    0,1,2,3
 
         VM_RESERVE              6
 
