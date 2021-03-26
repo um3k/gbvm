@@ -11,9 +11,6 @@
 #include "math.h"
 #include "fade_manager.h"
 #include "parallax.h"
-#ifdef CGB
-    #include "palette.h"
-#endif
 
 // put submap of a large map to screen
 void set_bkg_submap(UINT8 x, UINT8 y, UINT8 w, UINT8 h, const unsigned char *map, UINT8 map_w);
@@ -180,9 +177,10 @@ void scroll_render_rows(INT16 scroll_x, INT16 scroll_y, BYTE row_offset, BYTE n_
         // Immediately set all palettes black while screen renders.
 #ifdef CGB
         if (_cpu == CGB_TYPE) {
-            memset(BkgPaletteBuffer, RGB_BLACK, sizeof(BkgPaletteBuffer));
-            set_bkg_palette(0, 8, BkgPaletteBuffer);
-            set_sprite_palette(0, 8, BkgPaletteBuffer);
+            UWORD tmp[32];
+            memset(tmp, RGB_BLACK, sizeof(tmp));
+            set_bkg_palette(0, 8,tmp);
+            set_sprite_palette(0, 8, tmp);
         } else
 #endif
         OBP0_REG = 0xFF, BGP_REG = 0xFF;

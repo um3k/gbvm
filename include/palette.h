@@ -26,8 +26,8 @@
 extern UWORD SprPalette[32];
 extern UWORD BkgPalette[32];
 
-extern UWORD SprPaletteBuffer[32];
-extern UWORD BkgPaletteBuffer[32];
+//extern UWORD SprPaletteBuffer[32];
+//extern UWORD BkgPaletteBuffer[32];
 
 extern UBYTE palette_update_mask;
 
