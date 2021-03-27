@@ -15,6 +15,7 @@ REL_OBJS_LOCAL = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 REL_OBJS       = $(REL_OBJS_LOCAL:$(TOP)$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 CFLAGS += -Idata/include -Wa-Idata/include -I..
+EMUFLAGS += $(EMU_FORCE_DMG)
 
 $(OBJDIR)/%.o:	data/src/data/$(MUSIC_DRIVER)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<	
@@ -33,5 +34,5 @@ $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 
 test: directories $(ROM_BUILD_DIR)/rom.gb test.json
 	@echo "Running tests..."
-	@$(EMU) -set "DebugSrcBrk=1" -hf -stateonexit -screenonexit ./capture.bmp -rom $(ROM_BUILD_DIR)/rom.gb
+	@$(EMU) $(EMUFLAGS) -rom $(ROM_BUILD_DIR)/rom.gb
 	@$(TEST_CHK) test.json $(ROM_BUILD_DIR)/rom.noi $(ROM_BUILD_DIR)/rom.sna capture.bmp

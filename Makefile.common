@@ -29,6 +29,17 @@ LFLAGS = -Wl-yt$(CART_MBC) $(LFLAGS_NBANKS) -Wl-klib -Wl-l$(TOP)lib/hUGEDriver.l
 
 PACKFLAGS = -b 4 -f 255 -e rel -c
 
+EMUFLAGS = \
+	-set "Color0=E8E8E8" \
+	-set "Color1=A0A0A0" \
+	-set "Color2=585858" \
+	-set "Color3=101010" \
+	-set "DebugSrcBrk=1" \
+	-hf -stateonexit \
+	-screenonexit ./capture.bmp
+
+EMU_FORCE_DMG = -set "SystemMode=0"
+
 #--- del ----
 CFLAGS += -DSGB
 LFLAGS += -Wm-ys
