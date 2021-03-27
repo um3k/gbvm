@@ -3,12 +3,12 @@ TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 GBDK = $(TOP)../gbdk
 GBDKLIB = $(GBDK)/lib/small/asxxxx
 CC = $(GBDK)/bin/lcc
-TEST_DIR = ./test
+TEST_DIR = $(TOP)test
 TEST_FW	= $(TEST_DIR)/framework
 EXAMPLES_DIR = ./examples
 EMU	= $(TOP)../bgb/bgb
 GBSPACK = $(TOP)../gbspack/gbspack
-TEST_CHK = python $(TEST_FW)/unit_checker.py
+TEST_CHK = python $(CURDIR)/$(TEST_FW)/unit_checker.py
 
 CART_SIZE = 16
 #CART_MBC = 0x1B
@@ -122,27 +122,25 @@ $(OBJDIR)/%.o:	$(TOP)src/%.c
 $(OBJDIR)/%.o:	$(TOP)src/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/test_main.o: test/framework/test_main.c
+$(OBJDIR)/test_main.o: $(TOP)test/framework/test_main.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(REL_OBJS):	$(OBJS)
+$(REL_OBJDIR)/.rel:	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)
 	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
 	$(eval LFLAGS += -Wl-g__start_save=$(shell expr $(CART_SIZE) - 4 ))
+	touch $(REL_OBJDIR)/.rel
 
-$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
+$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJDIR)/.rel
 	$(CC) $(LFLAGS) -o $@ $(REL_OBJS)
 
 clean:
 	@echo "CLEANUP..."
 	rm -rf $(OBJDIR)
 	rm -rf $(ROM_BUILD_DIR)
-	rm -f $(TEST_DIR)/*.noi
-	rm -f $(TEST_DIR)/*.map
-	rm -f $(TEST_DIR)/*.gb
-	rm -f $(TEST_DIR)/*.sna
-	rm -f $(TEST_DIR)/*.bmp	
+	rm -f $(TEST_DIR)/*/capture.bmp	
+	rm -rf $(TEST_DIR)/*/obj
+	rm -rf $(TEST_DIR)/*/build
 	rm -rf $(EXAMPLES_DIR)/*/obj
 	rm -rf $(EXAMPLES_DIR)/*/build
 
@@ -150,14 +148,3 @@ rom: directories $(TARGET)
 
 symbols:
 	python $(TOP)utils/noi2sym.py $(patsubst %.gb,%.noi,$(TARGET)) >$(patsubst %.gb,%.sym,$(TARGET))
-
-test: directories $(OBJS) $(OBJDIR)/test_main.o $(TEST_DIR)/*.json
-	@echo "Running tests..."
-	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
-	@for file in $(patsubst %.json,%,$(filter %.json,$^))  ; do \
-		echo "$${file}"; \
-		$(CC) $(CFLAGS) -c -o $(OBJDIR)/$${file/test\//}.o $${file}.c; \
-		$(CC) $(LFLAGS) -o $${file}.gb $(filter-out $(REL_OBJDIR)/main.rel, $(REL_OBJS)) $(OBJDIR)/test_main.o $(OBJDIR)/$${file/test\//}.o; \
-		$(EMU) -set "DebugSrcBrk=1" -hf -stateonexit -screenonexit ./$${file}.bmp -rom $${file}.gb; \
-		$(TEST_CHK) $${file}.json $${file}.noi $${file}.sna $${file}.bmp ; \
-	done

@@ -20,7 +20,7 @@ def get_rule_desc(config_file):
         return config_file
 
 def CHECKSCREEN(file_name):
-    image_one = Image.open(os.path.dirname(sys.argv[0]) + "/../" + file_name).convert('RGB')
+    image_one = Image.open(file_name).convert('RGB')
     image_two = Image.open(sys.argv[4]).convert('RGB')
 
     diff = ImageChops.difference(image_one, image_two)

@@ -1,6 +1,0 @@
-{
-  "description": "display pinned actor in top left of screen",
-  "rules": [
-    "CHECKSCREEN('test4.png')"
-  ]
-}
