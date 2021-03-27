@@ -18,9 +18,7 @@ const struct scene_t scene_0 = {
     .background = TO_FAR_PTR_T(background_0),
     .collisions = TO_FAR_PTR_T(scene_0_collisions),
     .player_sprite = TO_FAR_PTR_T(spritesheet_0),
-    .n_actors = 2,
+    .n_actors = 0,
     .n_triggers = 0,
-    .n_sprites = 2,
-    .actors = TO_FAR_PTR_T(scene_0_actors),
-    .sprites = TO_FAR_PTR_T(scene_0_sprites)
+    .n_sprites = 0,
 };
