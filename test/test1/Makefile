@@ -4,14 +4,15 @@ ADATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.s)))
 CDATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.c)))
 MDATA = $(foreach dir,data/src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
 
-OBJS = $(filter-out $(OBJDIR)/main.o, $(ENGINE_OBJS)) \
+OBJS = $(filter-out $(TOP)$(OBJDIR)/main.o, $(ENGINE_OBJS)) \
 	$(ADATA:%.s=$(OBJDIR)/%.o) \
 	$(CDATA:%.c=$(OBJDIR)/%.o) \
 	$(MDATA:%.c=$(OBJDIR)/%.o) \
-	$(OBJDIR)/test_main.o \
+	$(TOP)$(OBJDIR)/test_main.o \
 	$(OBJDIR)/test.o
 	
-REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
+REL_OBJS_LOCAL = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
+REL_OBJS       = $(REL_OBJS_LOCAL:$(TOP)$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 CFLAGS += -Idata/include -Wa-Idata/include -I..
 

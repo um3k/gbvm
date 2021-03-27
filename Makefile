@@ -11,7 +11,8 @@ OBJS = $(ENGINE_OBJS) \
 	$(CDATA:%.c=$(OBJDIR)/%.o) \
 	$(MDATA:%.c=$(OBJDIR)/%.o)
 	
-REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
+REL_OBJS_LOCAL = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
+REL_OBJS       = $(REL_OBJS_LOCAL:$(TOP)$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 $(OBJDIR)/%.o:	src/data/$(MUSIC_DRIVER)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<	
