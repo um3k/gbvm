@@ -4,14 +4,10 @@
 
 #include <string.h>
 
-UBYTE palette_update_mask;
-
-UWORD SprPalette[32];
-UWORD BkgPalette[32];
+palette_entry_t SprPalette[8];
+palette_entry_t BkgPalette[8];
 
 void palette_init() __banked {
-    palette_update_mask = 0x3F;
-
     #ifdef CGB
         if (_cpu == CGB_TYPE) {
             memset(BkgPalette, 0, sizeof(BkgPalette));
@@ -19,8 +15,8 @@ void palette_init() __banked {
             return;
         }
     #endif
-    BkgPalette[0] = SprPalette[4] = 0xE4u; 
-    SprPalette[0] = 0xD2u;
+    BkgPalette[0].c0 = SprPalette[1].c0 = 0xE4u; 
+    SprPalette[0].c0 = 0xD2u;
 }
 
 #ifdef CGB

@@ -149,4 +149,13 @@ typedef struct menu_item_t {
     UBYTE iL, iR, iU, iD;
 } menu_item_t;
 
+typedef struct palette_entry_t { 
+    UWORD c0, c1, c2, c3;
+} palette_entry_t;
+
+typedef struct palette_t {
+    UBYTE mask;
+    palette_entry_t palette[];
+} palette_t;
+
 #endif

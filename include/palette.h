@@ -2,6 +2,7 @@
 #define PALETTE_H
 
 #include <gb/gb.h>
+#include "gbs_types.h"
 
 // For DMG
 #define PAL_DEF(C3, C2, C1, C0) ((C0 << 4 << 2) | (C1 << 4) | (C2 << 2) | C3)
@@ -20,13 +21,9 @@
 #define PAL_BLUE(C) (((C) >> 10) & 0x1F)
 
 #define PLAYER_PALETTE 0x7
-#define PLAYER_PALETTE_OFFSET 0x1C
-#define UI_PALETTE_OFFSET 0x1C
 
-extern UWORD SprPalette[32];
-extern UWORD BkgPalette[32];
-
-extern UBYTE palette_update_mask;
+extern palette_entry_t SprPalette[8];
+extern palette_entry_t BkgPalette[8];
 
 void palette_init() __banked;
 
