@@ -13,9 +13,15 @@ const struct actor_t scene_6_actors[] = {
     // Actor 1,
     .pos = {
       .x = 48 * 16,
-      .y = 112 * 16,
+      .y = 104 * 16,
     },
     .dir = DIR_DOWN,
+    .bounds = {
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .palette = 0,
     .move_speed = 1,
@@ -31,9 +37,15 @@ const struct actor_t scene_6_actors[] = {
     // Actor 2,
     .pos = {
       .x = 96 * 16,
-      .y = 112 * 16,
+      .y = 104 * 16,
     },
     .dir = DIR_DOWN,
+    .bounds = {
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },    
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .palette = 0,
     .move_speed = 1,

@@ -3,12 +3,12 @@ TOP := $(dir $(lastword $(MAKEFILE_LIST)))
 GBDK = $(TOP)../gbdk
 GBDKLIB = $(GBDK)/lib/small/asxxxx
 CC = $(GBDK)/bin/lcc
-TEST_DIR = ./test
+TEST_DIR = $(TOP)test
 TEST_FW	= $(TEST_DIR)/framework
 EXAMPLES_DIR = ./examples
 EMU	= $(TOP)../bgb/bgb
 GBSPACK = $(TOP)../gbspack/gbspack
-TEST_CHK = python $(TEST_FW)/unit_checker.py
+TEST_CHK = python $(CURDIR)/$(TEST_FW)/unit_checker.py
 
 CART_SIZE = 16
 #CART_MBC = 0x1B
@@ -29,6 +29,17 @@ LFLAGS = -Wl-yt$(CART_MBC) $(LFLAGS_NBANKS) -Wl-klib -Wl-l$(TOP)lib/hUGEDriver.l
 
 PACKFLAGS = -b 4 -f 255 -e rel -c
 
+EMUFLAGS = \
+	-set "Color0=E8E8E8" \
+	-set "Color1=A0A0A0" \
+	-set "Color2=585858" \
+	-set "Color3=101010" \
+	-set "DebugSrcBrk=1" \
+	-hf -stateonexit \
+	-screenonexit ./capture.bmp
+
+EMU_FORCE_DMG = -set "SystemMode=0"
+
 #--- del ----
 CFLAGS += -DSGB
 LFLAGS += -Wm-ys
@@ -44,13 +55,13 @@ CSTATES = $(foreach dir,$(TOP)src/states,$(notdir $(wildcard $(dir)/*.c)))
 ASTATES = $(foreach dir,$(TOP)src/states,$(notdir $(wildcard $(dir)/*.s))) 
 MDRVR = $(foreach dir,$(TOP)src/core/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.s)))
 
-ENGINE_OBJS = $(CSRC:%.c=$(OBJDIR)/%.o) \
-	$(ASRC:%.s=$(OBJDIR)/%.o) \
-	$(ACORE:%.s=$(OBJDIR)/%.o) \
-	$(CCORE:%.c=$(OBJDIR)/%.o) \
-	$(MDRVR:%.s=$(OBJDIR)/%.o) \
-	$(CSTATES:%.c=$(OBJDIR)/%.o) \
-	$(ASTATES:%.s=$(OBJDIR)/%.o)
+ENGINE_OBJS = $(CSRC:%.c=$(TOP)$(OBJDIR)/%.o) \
+	$(ASRC:%.s=$(TOP)$(OBJDIR)/%.o) \
+	$(ACORE:%.s=$(TOP)$(OBJDIR)/%.o) \
+	$(CCORE:%.c=$(TOP)$(OBJDIR)/%.o) \
+	$(MDRVR:%.s=$(TOP)$(OBJDIR)/%.o) \
+	$(CSTATES:%.c=$(TOP)$(OBJDIR)/%.o) \
+	$(ASTATES:%.s=$(TOP)$(OBJDIR)/%.o)
 
 OBJS = $(ENGINE_OBJS)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
@@ -97,52 +108,51 @@ $(ROM_BUILD_DIR):
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
+	mkdir -p $(TOP)$(OBJDIR)
 
 $(REL_OBJDIR):
 	mkdir -p $(REL_OBJDIR)
 
-$(OBJDIR)/%.o:	$(TOP)src/core/%.c
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:	$(TOP)src/core/%.s
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:	$(TOP)src/core/$(MUSIC_DRIVER)/%.s
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/$(MUSIC_DRIVER)/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:	$(TOP)src/states/%.c
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/states/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:	$(TOP)src/states/%.s
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/states/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:	$(TOP)src/%.c
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/%.o:	$(TOP)src/%.s
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(OBJDIR)/test_main.o: test/framework/test_main.c
+$(TOP)$(OBJDIR)/test_main.o: $(TOP)test/framework/test_main.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(REL_OBJS):	$(OBJS)
+$(REL_OBJDIR)/.rel:	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)
 	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
 	$(eval LFLAGS += -Wl-g__start_save=$(shell expr $(CART_SIZE) - 4 ))
+	touch $(REL_OBJDIR)/.rel
 
-$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
+$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJDIR)/.rel
 	$(CC) $(LFLAGS) -o $@ $(REL_OBJS)
 
 clean:
 	@echo "CLEANUP..."
 	rm -rf $(OBJDIR)
 	rm -rf $(ROM_BUILD_DIR)
-	rm -f $(TEST_DIR)/*.noi
-	rm -f $(TEST_DIR)/*.map
-	rm -f $(TEST_DIR)/*.gb
-	rm -f $(TEST_DIR)/*.sna
-	rm -f $(TEST_DIR)/*.bmp	
+	rm -f $(TEST_DIR)/*/capture.bmp	
+	rm -rf $(TEST_DIR)/*/obj
+	rm -rf $(TEST_DIR)/*/build
 	rm -rf $(EXAMPLES_DIR)/*/obj
 	rm -rf $(EXAMPLES_DIR)/*/build
 
@@ -150,14 +160,3 @@ rom: directories $(TARGET)
 
 symbols:
 	python $(TOP)utils/noi2sym.py $(patsubst %.gb,%.noi,$(TARGET)) >$(patsubst %.gb,%.sym,$(TARGET))
-
-test: directories $(OBJS) $(OBJDIR)/test_main.o $(TEST_DIR)/*.json
-	@echo "Running tests..."
-	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
-	@for file in $(patsubst %.json,%,$(filter %.json,$^))  ; do \
-		echo "$${file}"; \
-		$(CC) $(CFLAGS) -c -o $(OBJDIR)/$${file/test\//}.o $${file}.c; \
-		$(CC) $(LFLAGS) -o $${file}.gb $(filter-out $(REL_OBJDIR)/main.rel, $(REL_OBJS)) $(OBJDIR)/test_main.o $(OBJDIR)/$${file/test\//}.o; \
-		$(EMU) -set "DebugSrcBrk=1" -hf -stateonexit -screenonexit ./$${file}.bmp -rom $${file}.gb; \
-		$(TEST_CHK) $${file}.json $${file}.noi $${file}.sna $${file}.bmp ; \
-	done

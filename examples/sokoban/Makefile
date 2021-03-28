@@ -9,7 +9,8 @@ OBJS = $(ENGINE_OBJS) \
 	$(CDATA:%.c=$(OBJDIR)/%.o) \
 	$(MDATA:%.c=$(OBJDIR)/%.o)
 	
-REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
+REL_OBJS_LOCAL = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
+REL_OBJS       = $(REL_OBJS_LOCAL:$(TOP)$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 CFLAGS += -Idata/include -Wa-Idata/include
 
@@ -22,5 +23,5 @@ $(OBJDIR)/%.o:	data/src/data/%.c
 $(OBJDIR)/%.o:	data/src/data/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<	
 
-$(REL_OBJS):			$(OBJS)
+$(REL_OBJDIR)/.rel:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)

@@ -288,10 +288,10 @@ void load_player() __banked {
     PLAYER.pinned = FALSE;    
     PLAYER.collision_group = 0;
     PLAYER.collision_enabled = TRUE;
-    PLAYER.bounds.left = 4;
-    PLAYER.bounds.right = 12;
+    PLAYER.bounds.left = 0;
+    PLAYER.bounds.right = 15;
     PLAYER.bounds.top = -8;
-    PLAYER.bounds.bottom = -1;
+    PLAYER.bounds.bottom = 7;
 }
 
 void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked {

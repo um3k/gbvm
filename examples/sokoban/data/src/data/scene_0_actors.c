@@ -16,13 +16,13 @@ const struct actor_t scene_0_actors[] = {
         // Box,
         .pos = {
             .x = 80 * 16,
-            .y = 48 * 16
+            .y = 40 * 16
         },
         .bounds = {
             .left = 0,
-            .bottom = 0,
-            .right = 16,
-            .top = -16
+            .bottom = 7,
+            .right = 15,
+            .top = -8
         },
         .dir = DIR_DOWN,
         .sprite = TO_FAR_PTR_T(spritesheet_1),
@@ -38,13 +38,13 @@ const struct actor_t scene_0_actors[] = {
         // Box,
         .pos = {
             .x = 80 * 16,
-            .y = 96 * 16
+            .y = 88 * 16
         },
         .bounds = {
             .left = 0,
-            .bottom = 0,
-            .right = 16,
-            .top = -16
+            .bottom = 7,
+            .right = 15,
+            .top = -8
         },
         .dir = DIR_DOWN,
         .sprite = TO_FAR_PTR_T(spritesheet_1),

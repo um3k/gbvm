@@ -22,3 +22,6 @@ __pycache__
 *.gb
 /examples/*/obj
 /examples/*/build
+/test/*/obj
+/test/*/build
+/test/*/*.bmp

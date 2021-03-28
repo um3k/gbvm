@@ -21,14 +21,14 @@ const struct actor_t scene_1_actors[] = {
     // Sign Post,
     .pos = {
       .x = 56 * 16,
-      .y = 208 * 16,
+      .y = 200 * 16,
     },
     .bounds = {
-        .left = 0,
-        .right = 16,
-        .top = -16,
-        .bottom = 0
-    },
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_6),
     .palette = 0,
@@ -46,14 +46,14 @@ const struct actor_t scene_1_actors[] = {
     // Ice Block,
     .pos = {
       .x = 192 * 16,
-      .y = 152 * 16,
+      .y = 144 * 16,
     },
     .bounds = {
-        .left = 0,
-        .right = 16,
-        .top = -16,
-        .bottom = 0
-    },
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_1),
     .palette = 0,
@@ -71,14 +71,14 @@ const struct actor_t scene_1_actors[] = {
     // Rock 3,
     .pos = {
       .x = 184 * 16,
-      .y = 224 * 16,
+      .y = 216 * 16,
     },
     .bounds = {
-        .left = 0,
-        .right = 16,
-        .top = -16,
-        .bottom = 0
-    },
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
     .palette = 0,
@@ -96,14 +96,14 @@ const struct actor_t scene_1_actors[] = {
     // Rock 2,
     .pos = {
       .x = 168 * 16,
-      .y = 224 * 16,
+      .y = 216 * 16,
     },
     .bounds = {
-        .left = 0,
-        .right = 16,
-        .top = -16,
-        .bottom = 0
-    },
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
     .palette = 0,
@@ -121,14 +121,14 @@ const struct actor_t scene_1_actors[] = {
     // Rock 1,
     .pos = {
       .x = 152 * 16,
-      .y = 224 * 16,
+      .y = 216 * 16,
     },
     .bounds = {
-        .left = 0,
-        .right = 16,
-        .top = -16,
-        .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_7),
     .palette = 0,
@@ -146,14 +146,14 @@ const struct actor_t scene_1_actors[] = {
     // Hidden Stairs,
     .pos = {
       .x = 88 * 16,
-      .y = 104 * 16,
+      .y = 96 * 16,
     },
     .bounds = {
-        .left = 0,
-        .right = 16,
-        .top = -16,
-        .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_8),
     .palette = 0,

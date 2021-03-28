@@ -18,14 +18,14 @@ const struct actor_t scene_0_actors[] = {
     // Actor 1,
     .pos = {
       .x = 32 * 16,
-      .y = 56 * 16,
+      .y = 48 * 16,
     },
     .bounds = {
-      .left = 2,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_2),
     .palette = 1,
@@ -39,14 +39,14 @@ const struct actor_t scene_0_actors[] = {
     // Fire,
     .pos = {    
       .x = 32 * 16,
-      .y = 40 * 16,
+      .y = 32 * 16,
     },
     .bounds = {
-      .left = 2,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_3),
     .palette = 0,
@@ -60,14 +60,14 @@ const struct actor_t scene_0_actors[] = {
     // Sage,
     .pos = {
       .x = 72 * 16,
-      .y = 64 * 16,
+      .y = 56 * 16,
     },
     .bounds = {
-      .left = 2,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_4),
     .palette = 1,
@@ -82,13 +82,13 @@ const struct actor_t scene_0_actors[] = {
     // Actor 4,
     .pos = {    
       .x = 112 * 16,
-      .y = 56 * 16,
+      .y = 48 * 16,
     },
     .bounds = {
-      .left = 2,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
     },    
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_2),
@@ -103,14 +103,14 @@ const struct actor_t scene_0_actors[] = {
     // Fire,
     .pos = {
       .x = 112 * 16,
-      .y = 40 * 16,
+      .y = 32 * 16,
     },
     .bounds = {
-      .left = 2,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_3),
     .palette = 0,
@@ -124,14 +124,14 @@ const struct actor_t scene_0_actors[] = {
     // Savepoint,
     .pos = {
       .x = 104 * 16,
-      .y = 96 * 16,
+      .y = 88 * 16,
     },
     .bounds = {
-      .left = 2,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },    
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .dir = DIR_DOWN,
     .sprite = TO_FAR_PTR_T(spritesheet_5),
     .palette = 0,

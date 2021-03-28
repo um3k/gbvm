@@ -19,10 +19,10 @@ const struct actor_t scene_9_actors[] = {
     },
     .dir = DIR_DOWN,
     .bounds = {
-      .left = 2,
-      .right = 14,
-      .top = -14,
-      .bottom = 0
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
     },
     .sprite = TO_FAR_PTR_T(spritesheet_0),
     .palette = 0,
