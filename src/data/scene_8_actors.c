@@ -14,14 +14,14 @@ const struct actor_t scene_8_actors[] = {
     // Actor 1,
     .pos = {
       .x = 216 * 16,
-      .y = 128 * 16,
+      .y = 120 * 16,
     },
     .dir = DIR_DOWN,
     .bounds = {
-      .left = 2,
-      .right = 14,
-      .top = -14,
-      .bottom = 0
+      .left = 0,
+      .bottom = 7,
+      .right = 15,
+      .top = -8
     },
     .sprite = TO_FAR_PTR_T(spritesheet_1),
     .palette = 0,

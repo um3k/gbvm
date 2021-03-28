@@ -8,6 +8,7 @@
 #include "data/spritesheet_0.h"
 #include "data/scene_0_actors.h"
 #include "data/scene_0_sprites.h"
+#include "data/script_s0_init.h"
 
 const void __at(255) __bank_scene_0;
 
@@ -22,5 +23,6 @@ const struct scene_t scene_0 = {
     .n_triggers = 0,
     .n_sprites = 1,
     .actors = TO_FAR_PTR_T(scene_0_actors),
-    .sprites = TO_FAR_PTR_T(scene_0_sprites)
+    .sprites = TO_FAR_PTR_T(scene_0_sprites),
+    .script_init = TO_FAR_PTR_T(script_s0_init)
 };

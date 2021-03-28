@@ -7,7 +7,7 @@
 _start_scene_x:: 
         .dw 2304
 _start_scene_y:: 
-        .dw 2176 
+        .dw 1920 
 _start_scene_dir:: 
         .db .DIR_DOWN
 _start_scene::

@@ -38,7 +38,7 @@ const struct actor_t scene_0_actors[] = {
         // Actor 2,
         .pos = {
             .x = 16 * 16,
-            .y = 24 * 16
+            .y = 8 * 16
         },
         .bounds = {
             .left = 0,

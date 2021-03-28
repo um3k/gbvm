@@ -11,7 +11,7 @@
 const void __at(255) __bank_scene_5_actors;
 
 #define elephant_x 180
-#define elephant_y 112
+#define elephant_y 104
 
 const struct actor_t scene_5_actors[] = {
   {
@@ -24,10 +24,10 @@ const struct actor_t scene_5_actors[] = {
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .bounds = {
       .left = 0,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .palette = 0,
     .move_speed = 1,
     .anim_tick = 7,
@@ -48,10 +48,10 @@ const struct actor_t scene_5_actors[] = {
     .sprite = TO_FAR_PTR_T(spritesheet_9),
     .bounds = {
       .left = 0,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },  
     .palette = 0,
     .move_speed = 1,
     .anim_tick = 7,
@@ -72,9 +72,9 @@ const struct actor_t scene_5_actors[] = {
     .sprite = TO_FAR_PTR_T(spritesheet_10),
     .bounds = {
       .left = 0,
-      .right = 56,
-      .top = -40,
-      .bottom = 0
+      .right = 55,
+      .top = -32,
+      .bottom = 7
     },
     .palette = 0,
     .move_speed = 1,
@@ -96,10 +96,10 @@ const struct actor_t scene_5_actors[] = {
     .sprite = TO_FAR_PTR_T(spritesheet_11),
     .bounds = {
       .left = 0,
-      .right = 16,
-      .top = -16,
-      .bottom = 0
-    },    
+      .bottom = 7,
+      .right = 15,
+      .top = -8
+    },   
     .palette = 0,
     .move_speed = 1,
     .anim_tick = 15,

@@ -59,7 +59,6 @@ void step_VM() {
     switch (script_runner_update()) {
         case RUNNER_DONE:
         case RUNNER_IDLE: {                
-            input_update();
             if (INPUT_SOFT_RESTART) {
                 // kill all threads (in case something is wrong and all contexts occupied) 
                 script_runner_init(FALSE);
@@ -214,6 +213,9 @@ void test_b() __banked {
 
     // execute VM
     for(i = 0; i != 60; i++) {
+        joy = J_DOWN;
+        last_joy = 0;
+        recent_joy = J_DOWN;        
         step_VM();
     }
 }
