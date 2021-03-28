@@ -19,8 +19,8 @@ void palette_init() __banked {
             return;
         }
     #endif
-    BkgPalette[0] = SprPalette[0] = 0xE4u; 
-    SprPalette[4] = 0xE0u;
+    BkgPalette[0] = SprPalette[4] = 0xE4u; 
+    SprPalette[0] = 0xD2u;
 }
 
 #ifdef CGB
