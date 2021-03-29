@@ -151,7 +151,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_rtc_start,              1}, // 0x7B
     // color instrunctions section
     {vm_load_palette,           2}, // 0x7C
-    {0, 0},
+    {vm_set_sgb_attributes,     6}, // 0x7D
     {0, 0},
     {0, 0},
 

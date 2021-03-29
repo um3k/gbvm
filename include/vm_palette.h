@@ -11,5 +11,6 @@
 #define PALETTE_SPRITE 4
 
 void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked;
+void vm_set_sgb_attributes(SCRIPT_CTX * THIS, UBYTE x1, UBYTE y1, UBYTE x2, UBYTE y2, UBYTE control, UBYTE palettes) __banked;
 
 #endif

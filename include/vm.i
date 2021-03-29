@@ -708,6 +708,14 @@ OP_VM_LOAD_PALETTE       = 0x7C
         .db OP_VM_LOAD_PALETTE, #<OPTIONS, #<MASK
 .endm
 
+OP_VM_SET_SGB_ATTRIBUTES = 0x7D
+.SGB_CTL_INSIDE          = 1
+.SGB_CTL_BORDER          = 2
+.SGB_CTL_OUTSIDE         = 4
+.macro VM_SET_SGB_ATTRIBUTES X1,Y1 X2,Y2 CTL,PAL 
+        .db OP_VM_SET_SGB_ATTRIBUTES, #<PAL, #<CTL, #<Y2, #<X2, #<Y1, #<X1
+.endm
+
 ; --- PROJECTILES ---------------------------------
 
 OP_VM_PROJECTILE_LAUNCH  = 0x80
