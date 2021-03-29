@@ -50,6 +50,7 @@ void load_init() __banked {
 }
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
+    if ((!bank) || (!tiles)) return;    
     UWORD ntiles = ReadBankedUWORD(&(tiles->n_tiles), bank);
     UBYTE bkg_tiles, sprite_tiles;
     if (ntiles > 256) {
@@ -75,6 +76,13 @@ void load_image(const background_t* background, UBYTE bank) __banked {
     scroll_y_max = image_height - ((UINT16)SCREENHEIGHT);
 
     load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
+#ifdef CGB
+    if (_cpu == CGB_TYPE) {
+        VBK_REG = 1;
+        load_tiles(bkg.cgb_tileset.ptr, bkg.cgb_tileset.bank);
+        VBK_REG = 0;
+    }
+#endif
 }
 
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
@@ -271,9 +279,6 @@ void load_player() __banked {
     PLAYER.pos.x = start_scene_x;
     PLAYER.pos.y = start_scene_y;
     PLAYER.dir = start_scene_dir;
-#ifdef CGB
-    PLAYER.palette = PLAYER_PALETTE;
-#endif
     PLAYER.move_speed = start_player_move_speed;
     PLAYER.anim_tick = start_player_anim_tick;
     PLAYER.frame = 0;

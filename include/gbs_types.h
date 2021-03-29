@@ -49,7 +49,6 @@ typedef struct actor_t
   UINT8 frame_end;
   UINT8 anim_tick;
   UINT8 move_speed;
-  UINT8 palette;
   UINT8 animation;
   animation_t animations[8];
   far_ptr_t sprite;
@@ -87,6 +86,7 @@ typedef struct scene_t {
 typedef struct background_t {
     UINT8 width, height;
     far_ptr_t tileset;
+    far_ptr_t cgb_tileset;
     UINT8 tiles[];
 } background_t;
 
