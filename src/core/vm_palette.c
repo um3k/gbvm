@@ -10,6 +10,9 @@
 
 void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
     UBYTE bank = THIS->bank;
+    #ifdef SGB
+        UBYTE sgb_changes = SGB_PALETTES_NONE;
+    #endif
     const palette_entry_t * sour = (const palette_entry_t *)THIS->PC;
     palette_entry_t * dest = (options & PALETTE_BKG) ? BkgPalette : SprPalette;
     for (UBYTE i = mask, nb = 0; (i != 0); dest++, nb++, i >>= 1) {
@@ -25,7 +28,10 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
                 }
             #endif
             #ifdef SGB
-                // TODO: check and apply SGB palettes here
+                if (options & PALETTE_BKG) {
+                    if ((nb == 4) || (nb == 5)) sgb_changes |= SGB_PALETTES_01;
+                    if ((nb == 6) || (nb == 7)) sgb_changes |= SGB_PALETTES_23;
+                }
             #endif
             if (options & PALETTE_BKG) {
                 if (nb == 0) BGP_REG = (UBYTE)dest->c0;
@@ -43,5 +49,8 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
         } 
         sour++; 
     }
+    #ifdef SGB
+        if (sgb_changes) SGBTransferPalettes(sgb_changes);
+    #endif
     THIS->PC = (UBYTE *)sour;
 }

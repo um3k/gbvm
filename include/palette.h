@@ -13,4 +13,11 @@ void palette_init() __banked;
 void CGBZeroPalette(UBYTE reg) __banked;
 #endif
 
+#ifdef SGB
+#define SGB_PALETTES_NONE 0
+#define SGB_PALETTES_01 1
+#define SGB_PALETTES_23 2
+void SGBTransferPalettes(UBYTE palettes) __banked;
+#endif
+
 #endif

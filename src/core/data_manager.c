@@ -87,7 +87,7 @@ void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t * res_
     MemcpyBanked(res_animations, sprite->animations, sizeof(sprite->animations), bank);
 }
 
-void do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE bank) __banked {
+UBYTE do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE bank) __banked {
     UBYTE mask = ReadBankedUBYTE(&palette->mask, bank);
     palette_entry_t * sour = palette->palette; 
     for (UBYTE i = mask; (i); i >>= 1, dest++) {
@@ -95,10 +95,17 @@ void do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE ba
         MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
         sour++; 
     }
+    return mask;
 }
 
 inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
-    do_load_palette(BkgPalette, palette, bank);
+    UBYTE mask = do_load_palette(BkgPalette, palette, bank);
+    #ifdef SGB
+        UBYTE sgb_palettes = SGB_PALETTES_NONE;
+        if (mask & 0b00110000) sgb_palettes |= SGB_PALETTES_01;
+        if (mask & 0b11000000) sgb_palettes |= SGB_PALETTES_23;
+        SGBTransferPalettes(sgb_palettes);
+    #endif
 }
 
 inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {

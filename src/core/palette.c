@@ -2,6 +2,9 @@
 
 #include "palette.h"
 
+#ifdef SGB
+    #include <gb/sgb.h>
+#endif
 #include <string.h>
 
 palette_entry_t SprPalette[8];
@@ -42,5 +45,31 @@ __asm
 
         ret   
 __endasm;
+}
+#endif
+
+#ifdef SGB
+typedef struct sgb_pal_packet_t {
+    UBYTE cmd;
+    UWORD palettes[7];
+} sgb_pal_packet_t;
+
+void SGBTransferPalettes(UBYTE palettes) __banked {
+    sgb_pal_packet_t data;
+    data.cmd = (SGB_PAL_01 << 3) | 1;
+    if (palettes & SGB_PALETTES_01) {
+        data.cmd = (SGB_PAL_01 << 3) | 1;
+        memcpy(data.palettes, &BkgPalette[4], sizeof(palette_entry_t));
+        memcpy(&data.palettes[4], &BkgPalette[5].c1, sizeof(palette_entry_t) - sizeof(UWORD));
+        sgb_transfer_nowait((void *)&data);
+    }
+    if (palettes & SGB_PALETTES_23) {
+        if (palettes & SGB_PALETTES_01) wait_vbl_done();
+        data.cmd = (SGB_PAL_23 << 3) | 1;
+        memcpy(data.palettes, &BkgPalette[6], sizeof(palette_entry_t));
+        memcpy(&data.palettes[4], &BkgPalette[7].c1, sizeof(palette_entry_t) - sizeof(UWORD));
+        sgb_transfer_nowait((void *)&data);
+    }
+    wait_vbl_done();
 }
 #endif
