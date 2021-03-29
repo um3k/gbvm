@@ -1,0 +1,6 @@
+{
+  "description": "script ctx reuse waitable",
+  "rules": [
+    "CHECKSCREEN('test3.png')"
+  ]
+}

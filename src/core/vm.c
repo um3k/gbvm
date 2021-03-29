@@ -634,6 +634,8 @@ SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, 
         tmp->lock_count = 0;
         // clear flags
         tmp->flags = 0;
+        // Clear update fn
+        tmp->update_fn_bank = 0;
         // add context to active list
         tmp->next = first_ctx, first_ctx = tmp;
         // push threadlocals
