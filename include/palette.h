@@ -4,8 +4,6 @@
 #include <gb/gb.h>
 #include "gbs_types.h"
 
-#define PLAYER_PALETTE 0x7
-
 extern palette_entry_t SprPalette[8];
 extern palette_entry_t BkgPalette[8];
 

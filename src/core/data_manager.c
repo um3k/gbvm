@@ -105,10 +105,6 @@ inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {
     do_load_palette(SprPalette, palette, bank);
 }
 
-inline void load_player_palette(const palette_t * palette, UBYTE bank) {
-    MemcpyBanked(SprPalette + PLAYER_PALETTE, &(palette->palette), sizeof(palette_entry_t), bank);
-}
-
 UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {
     far_ptr_t v;
     for (UBYTE i = 0; i < count; i++, list++) {
@@ -147,10 +143,6 @@ UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
 
     load_bkg_palette(scn.palette.ptr, scn.palette.bank);
     load_sprite_palette(scn.sprite_palette.ptr, scn.sprite_palette.bank);
-#ifdef CGB
-    // do we need a dedicated player palette pointer in scene_t?
-    load_player_palette(start_player_palette.ptr, start_player_palette.bank);
-#endif
 
     // Copy parallax settings
     memcpy(&parallax_rows, &scn.parallax_rows, sizeof(parallax_rows));
