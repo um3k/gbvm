@@ -12,8 +12,6 @@ _start_scene_dir::
         .db .DIR_RIGHT
 _start_scene::
         IMPORT_FAR_PTR_DATA _scene_7
-_start_player_palette:: 
-        IMPORT_FAR_PTR_DATA _palette_0
 _start_player_move_speed:: 
         .db 16
 _start_player_anim_tick:: 

@@ -1,9 +1,8 @@
 #pragma bank 3
 
+#include <gb/gb.h>
 #ifdef CGB
-    #include <gb/gb.h>
     #include <gb/cgb.h>
-    #include <string.h>
 #endif
 
 #include "fade_manager.h"
@@ -25,7 +24,7 @@ static FADE_DIRECTION fade_direction;
 
 #ifdef CGB
 
-void CGBFadeToWhiteStep(UWORD *pal, UBYTE reg, UBYTE step) __naked {
+void CGBFadeToWhiteStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) __naked {
     pal; reg; step;
 __asm
         ldhl sp, #5
@@ -79,7 +78,7 @@ __asm
 __endasm;
 }
 
-void CGBFadeToBlackStep(UWORD *pal, UBYTE reg, UBYTE step) __naked {
+void CGBFadeToBlackStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) __naked {
     pal; reg; step;
 __asm
         ldhl sp, #5
@@ -223,13 +222,13 @@ __endasm;
 void ApplyPaletteChangeDMG(UBYTE index) {
     if (index > 4) index = 4;
     if (!fade_style) {
-        BGP_REG = DMGFadeToWhiteStep((UBYTE)BkgPalette[0], index); 
-        OBP0_REG = DMGFadeToWhiteStep((UBYTE)SprPalette[0], index); 
-        OBP1_REG = DMGFadeToWhiteStep((UBYTE)SprPalette[4], index); 
+        BGP_REG = DMGFadeToWhiteStep((UBYTE)BkgPalette[0].c0, index); 
+        OBP0_REG = DMGFadeToWhiteStep((UBYTE)SprPalette[0].c0, index); 
+        OBP1_REG = DMGFadeToWhiteStep((UBYTE)SprPalette[1].c0, index); 
     } else {
-        BGP_REG = DMGFadeToBlackStep((UBYTE)BkgPalette[0], index); 
-        OBP0_REG = DMGFadeToBlackStep((UBYTE)SprPalette[0], index); 
-        OBP1_REG = DMGFadeToBlackStep((UBYTE)SprPalette[4], index); 
+        BGP_REG = DMGFadeToBlackStep((UBYTE)BkgPalette[0].c0, index); 
+        OBP0_REG = DMGFadeToBlackStep((UBYTE)SprPalette[0].c0, index); 
+        OBP1_REG = DMGFadeToBlackStep((UBYTE)SprPalette[1].c0, index); 
     }
 }
 

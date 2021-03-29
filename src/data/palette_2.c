@@ -6,11 +6,9 @@
 
 const void __at(255) __bank_palette_2;
 
-const unsigned char palette_2[] = {
-  191, 103, 91, 38, 181, 16, 129, 36,
-  252, 83, 47, 31, 41, 14, 129, 36,
-  127, 87, 188, 62, 111, 69, 129, 36,
-  87, 107, 27, 110, 16, 80, 129, 36,
-  255, 95, 50, 103, 169, 61, 129, 36,
-  127, 91, 15, 63, 45, 34, 129, 36
+const palette_t palette_2 = {
+    0x01,
+    {
+        DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK)
+    }
 };

@@ -188,9 +188,6 @@ void main() {
 
     LCDC_REG = 0x67;
 
-    BGP_REG = OBP0_REG = 0xE4u;
-    OBP1_REG = 0xE0u;
-
     WX_REG = MINWNDPOSX;
     WY_REG = MENU_CLOSED_Y;
 

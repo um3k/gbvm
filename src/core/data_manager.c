@@ -11,9 +11,7 @@
 #include "trigger.h"
 #include "camera.h"
 #include "ui.h"
-#ifdef CGB
-    #include "palette.h"
-#endif
+#include "palette.h"
 #include "data/spritesheet_none.h"
 #include "data/data_bootstrap.h"
 
@@ -89,32 +87,23 @@ void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t * res_
     MemcpyBanked(res_animations, sprite->animations, sizeof(sprite->animations), bank);
 }
 
-#ifdef CGB
-void load_palette(const UWORD * palette, UBYTE bank) __banked {
-    if (palette_update_mask == 0x3f) {
-        MemcpyBanked(BkgPalette, palette, sizeof(BkgPalette), bank);
-        return;
-    }
-    UWORD * dest = BkgPalette;
-    for (UBYTE i = palette_update_mask; (i); i >>= 1, dest += 4) {
+void do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE bank) __banked {
+    UBYTE mask = ReadBankedUBYTE(&palette->mask, bank);
+    palette_entry_t * sour = palette->palette; 
+    for (UBYTE i = mask; (i); i >>= 1, dest++) {
         if ((i & 1) == 0) continue;
-        MemcpyBanked(dest, palette, 8, bank);
-        palette += 4; 
+        MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
+        sour++; 
     }
 }
 
-void load_ui_palette(const UWORD * data_ptr, UBYTE bank) __banked {
-    MemcpyBanked(BkgPalette + UI_PALETTE_OFFSET, data_ptr, 8, bank);
+inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
+    do_load_palette(BkgPalette, palette, bank);
 }
 
-void load_sprite_palette(const UWORD * data_ptr, UBYTE bank) __banked {
-    MemcpyBanked(SprPalette, data_ptr, 56, bank);
+inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {
+    do_load_palette(SprPalette, palette, bank);
 }
-
-void load_player_palette(const UWORD * data_ptr, UBYTE bank) __banked {
-    MemcpyBanked(SprPalette + PLAYER_PALETTE_OFFSET, data_ptr, 8, bank);
-}
-#endif
 
 UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {
     far_ptr_t v;
@@ -151,11 +140,9 @@ UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
 
     // Load background + tiles
     load_image(scn.background.ptr, scn.background.bank);
-#ifdef CGB
-    load_palette(scn.palette.ptr, scn.palette.bank);
+
+    load_bkg_palette(scn.palette.ptr, scn.palette.bank);
     load_sprite_palette(scn.sprite_palette.ptr, scn.sprite_palette.bank);
-    load_player_palette(start_player_palette.ptr, start_player_palette.bank);
-#endif
 
     // Copy parallax settings
     memcpy(&parallax_rows, &scn.parallax_rows, sizeof(parallax_rows));
