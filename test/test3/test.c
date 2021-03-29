@@ -212,11 +212,14 @@ void test_b() __banked {
     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
 
     // execute VM
-    for(i = 0; i != 85; i++) {
+    for(i = 0; i != 90; i++) {
         joy = J_UP;
         last_joy = 0;
         recent_joy = J_UP;        
         step_VM();
+        if (i > 83 && fade_timer == 0) {
+            break;
+        }
     }
 }
 
