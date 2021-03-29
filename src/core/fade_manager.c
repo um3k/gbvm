@@ -1,9 +1,8 @@
 #pragma bank 3
 
+#include <gb/gb.h>
 #ifdef CGB
-    #include <gb/gb.h>
     #include <gb/cgb.h>
-    #include <string.h>
 #endif
 
 #include "fade_manager.h"

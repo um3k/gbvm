@@ -6,6 +6,6 @@
 #include "gbs_types.h"
 
 extern const void __bank_palette_1;
-extern const unsigned char palette_1;
+extern const palette_t palette_1;
 
 #endif
