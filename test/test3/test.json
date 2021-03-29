@@ -1,0 +1,6 @@
+{
+  "description": "coordinate system",
+  "rules": [
+    "CHECKSCREEN('test3.png')"
+  ]
+}
