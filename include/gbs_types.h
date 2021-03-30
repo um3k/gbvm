@@ -74,7 +74,9 @@ typedef struct scene_t {
     scene_type_e type;
     UINT8 n_actors, n_triggers, n_projectiles, n_sprites;
     far_ptr_t player_sprite;
-    far_ptr_t background, collisions, colors, palette, sprite_palette;
+    far_ptr_t background, collisions; 
+    far_ptr_t colors;               // TODO: remove 
+    far_ptr_t palette, sprite_palette;
     far_ptr_t script_init, script_p_hit1, script_p_hit2, script_p_hit3;
     far_ptr_t sprites;
     far_ptr_t actors;
@@ -87,7 +89,9 @@ typedef struct background_t {
     UINT8 width, height;
     far_ptr_t tileset;
     far_ptr_t cgb_tileset;
-    UINT8 tiles[];
+    far_ptr_t tilemap;              // far pointer to array of bytes with map
+    far_ptr_t cgb_tilemap_attr;     // far pointer to array of bytes with CGB attributes (may be NULL)
+    UINT8 tiles[];                  // TODO: remove
 } background_t;
 
 typedef struct tileset_t {
@@ -96,11 +100,13 @@ typedef struct tileset_t {
 } tileset_t;
 
 typedef struct spritesheet_t {
-    UINT8 n_tiles;
+    UINT8 n_tiles;                  // TODO: remove
     UINT8 n_metasprites;
     metasprite_t * const *metasprites;
     animation_t animations[8];
-    UINT8 tiles[];
+    far_ptr_t tileset;              // far pointer to sprite tileset
+    far_ptr_t cgb_tileset;          // far pointer to additional CGB tileset (may be NULL)
+    UINT8 tiles[];                  // TODO: remove
 } spritesheet_t;
 
 typedef struct projectile_def_t
