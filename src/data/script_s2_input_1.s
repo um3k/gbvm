@@ -4,6 +4,8 @@
 ___bank_script_s2_input1    = 255
 .globl ___bank_script_s2_input1
 
+.area _CODE_255
+
 _script_s2_input1::
         VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
             .DMG_PAL    3,2,1,0
@@ -15,7 +17,8 @@ _script_s2_input1::
         VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
             .DMG_PAL    0,1,2,3
 
-        VM_SET_SGB_ATTRIBUTES   5,5, 10,10, ^/(.SGB_CTL_INSIDE | .SGB_CTL_BORDER | .SGB_CTL_OUTSIDE)/, ^/((0x01 << 4) | (0x02 << 2) | 0x03)/
+        VM_SGB_TRANSFER   
+            .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet
 
         VM_RESERVE              6
 

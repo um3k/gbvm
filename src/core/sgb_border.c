@@ -13,7 +13,7 @@
 #define SGB_SCR_FREEZE 1
 #define SGB_SCR_UNFREEZE 0
 
-#define SGB_TRANSFER(A,B) map_buf[0]=(A),map_buf[1]=(B),sgb_transfer(map_buf) 
+#define SGB_TRANSFER(A,B) map_buf[0]=(A),map_buf[1]=(B),sgb_transfer(map_buf)
 
 void transfer_tiles(unsigned char * data, size_t size, UBYTE bank) {
     UBYTE ntiles;

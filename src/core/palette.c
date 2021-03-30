@@ -61,13 +61,13 @@ void SGBTransferPalettes(UBYTE palettes) __banked {
         data.cmd = (SGB_PAL_01 << 3) | 1;
         memcpy(data.palettes, &BkgPalette[4], sizeof(palette_entry_t));
         memcpy(&data.palettes[4], &BkgPalette[5].c1, sizeof(palette_entry_t) - sizeof(UWORD));
-        sgb_transfer_nowait((void *)&data);
+        sgb_transfer((void *)&data);
     }
     if (palettes & SGB_PALETTES_23) {
         data.cmd = (SGB_PAL_23 << 3) | 1;
         memcpy(data.palettes, &BkgPalette[6], sizeof(palette_entry_t));
         memcpy(&data.palettes[4], &BkgPalette[7].c1, sizeof(palette_entry_t) - sizeof(UWORD));
-        sgb_transfer_nowait((void *)&data);
+        sgb_transfer((void *)&data);
     }
 }
 #endif

@@ -1,7 +1,6 @@
 #pragma bank 2
 
 #include <gb/cgb.h>
-#include <gb/sgb.h>
 
 #include "gbs_types.h"
 #include "vm_palette.h"
@@ -54,16 +53,4 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
         if (sgb_changes) SGBTransferPalettes(sgb_changes);
     #endif
     THIS->PC = (UBYTE *)sour;
-}
-
-typedef struct sgb_attr_packet_t {
-    UBYTE cmd, nsets;
-    UBYTE ctl, pals;
-    UBYTE X1, Y1, X2, Y2;
-} sgb_attr_packet_t;
-
-void vm_set_sgb_attributes(SCRIPT_CTX * THIS, UBYTE x1, UBYTE y1, UBYTE x2, UBYTE y2, UBYTE control, UBYTE palettes) __banked {
-    THIS;
-    sgb_attr_packet_t pkt = {(SGB_ATTR_BLK << 3) | 1, 1, control, palettes, x1, y1, x2, y2};
-    sgb_transfer_nowait((void *)&pkt);
 }
