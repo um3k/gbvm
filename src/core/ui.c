@@ -49,7 +49,7 @@ static UBYTE * ui_dest_ptr;
 static UBYTE * ui_dest_base;
 static UBYTE ui_current_tile;
 static UBYTE vwf_current_offset;
-static UBYTE vwf_tile_data[16 * 2];
+UBYTE vwf_tile_data[16 * 2];
 UBYTE vwf_current_mask;
 UBYTE vwf_current_rotate;
 UBYTE vwf_inverse_map;
@@ -148,6 +148,7 @@ void ui_print_reset(UBYTE tile) {
 void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked;
 UWORD ui_print_make_mask_lr(UBYTE width, UBYTE ofs);
 UWORD ui_print_make_mask_rl(UBYTE width, UBYTE ofs);
+void ui_swap_tiles();
 
 UBYTE ui_print_render(const unsigned char ch) {
     UBYTE letter = (vwf_current_font_desc.attr & FONT_RECODE) ? ReadBankedUBYTE(vwf_current_font_desc.recode_table + (ch & vwf_current_font_desc.mask), vwf_current_font_bank) : ch;
@@ -183,8 +184,7 @@ UBYTE ui_print_render(const unsigned char ch) {
 
         ui_load_wram_tile(vwf_tile_data);
         if (vwf_current_offset > 7u) {
-            memcpy(vwf_tile_data, vwf_tile_data + 16u, 16);
-            memset(vwf_tile_data + 16u, text_bkg_fill, 16);
+            ui_swap_tiles();
             vwf_current_offset -= 8u;
             ui_current_tile++;
             if (vwf_current_offset) ui_load_wram_tile(vwf_tile_data);

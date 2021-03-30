@@ -55,6 +55,7 @@ extern unsigned char ui_text_data[TEXT_MAX_LENGTH];
 extern UBYTE vwf_direction;
 extern font_desc_t vwf_current_font_desc;
 extern UBYTE vwf_current_font_bank;
+extern UBYTE vwf_tile_data[];
 
 void ui_init() __banked;
 void ui_update() __nonbanked;  // critical path, __nonbanked for speed
