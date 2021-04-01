@@ -223,13 +223,13 @@ __endasm;
 void ApplyPaletteChangeDMG(UBYTE index) {
     if (index > 4) index = 4;
     if (!fade_style) {
-        BGP_REG = DMGFadeToWhiteStep((UBYTE)BkgPalette[0].c0, index); 
-        OBP0_REG = DMGFadeToWhiteStep((UBYTE)SprPalette[0].c0, index); 
-        OBP1_REG = DMGFadeToWhiteStep((UBYTE)SprPalette[1].c0, index); 
+        BGP_REG = DMGFadeToWhiteStep(DMG_palette[0], index); 
+        OBP0_REG = DMGFadeToWhiteStep(DMG_palette[1], index); 
+        OBP1_REG = DMGFadeToWhiteStep(DMG_palette[2], index); 
     } else {
-        BGP_REG = DMGFadeToBlackStep((UBYTE)BkgPalette[0].c0, index); 
-        OBP0_REG = DMGFadeToBlackStep((UBYTE)SprPalette[0].c0, index); 
-        OBP1_REG = DMGFadeToBlackStep((UBYTE)SprPalette[1].c0, index); 
+        BGP_REG = DMGFadeToBlackStep(DMG_palette[0], index); 
+        OBP0_REG = DMGFadeToBlackStep(DMG_palette[1], index); 
+        OBP1_REG = DMGFadeToBlackStep(DMG_palette[2], index); 
     }
 }
 

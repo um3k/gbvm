@@ -9,6 +9,7 @@
 
 #include "system.h"
 
+UBYTE DMG_palette[3];
 palette_entry_t SprPalette[8];
 palette_entry_t BkgPalette[8];
 
@@ -20,8 +21,8 @@ void palette_init() __banked {
         return;
     }
 #endif
-    BkgPalette[0].c0 = SprPalette[1].c0 = DMG_PALETTE(3, 2, 1, 0); 
-    SprPalette[0].c0 = DMG_PALETTE(3, 1, 0, 2);
+    DMG_palette[0] = DMG_palette[2] = DMG_PALETTE(3, 2, 1, 0);
+    DMG_palette[1] = DMG_PALETTE(3, 1, 0, 2);
 }
 
 #ifdef CGB
