@@ -2,6 +2,7 @@
 #include <string.h>
 #include <rand.h>
 
+#include "system.h"
 #include "interrupts.h"
 #include "bankdata.h"
 #include "game_time.h"
@@ -167,13 +168,9 @@ void process_VM() {
     }
 }
 
-UBYTE _is_SGB;
-
 void main() {
 #ifdef CGB
-    if (_cpu == CGB_TYPE) {
-        cpu_fast();
-    }
+    if (_cpu == CGB_TYPE) cpu_fast();
 #endif
 
     memset(shadow_OAM2, 0, sizeof(shadow_OAM2));
@@ -187,6 +184,8 @@ void main() {
 #else
     _is_SGB = FALSE;
 #endif
+    // both CGB + SGB modes at once are not supported
+    _is_CGB = ((!_is_SGB) && (_cpu == CGB_TYPE) && (*(UBYTE *)0x0143 & 0x80));
 
     display_off();
     palette_init();

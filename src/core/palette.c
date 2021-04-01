@@ -7,17 +7,19 @@
 #endif
 #include <string.h>
 
+#include "system.h"
+
 palette_entry_t SprPalette[8];
 palette_entry_t BkgPalette[8];
 
 void palette_init() __banked {
-    #ifdef CGB
-        if (_cpu == CGB_TYPE) {
-            memset(BkgPalette, 0, sizeof(BkgPalette));
-            memset(SprPalette, 0, sizeof(SprPalette));
-            return;
-        }
-    #endif
+#ifdef CGB
+    if (_is_CGB) {
+        memset(BkgPalette, 0, sizeof(BkgPalette));
+        memset(SprPalette, 0, sizeof(SprPalette));
+        return;
+    }
+#endif
     BkgPalette[0].c0 = SprPalette[1].c0 = DMG_PALETTE(3, 2, 1, 0); 
     SprPalette[0].c0 = DMG_PALETTE(3, 1, 0, 2);
 }

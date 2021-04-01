@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "system.h"
 #include "vm.h"
 #include "data_manager.h"
 #include "linked_list.h"
@@ -77,7 +78,7 @@ void load_image(const background_t* background, UBYTE bank) __banked {
 
     load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
 #ifdef CGB
-    if (_cpu == CGB_TYPE) {
+    if (_is_CGB) {
         VBK_REG = 1;
         load_tiles(bkg.cgb_tileset.ptr, bkg.cgb_tileset.bank);
         VBK_REG = 0;
@@ -108,21 +109,23 @@ UBYTE do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE b
 
 inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
     UBYTE mask = do_load_palette(BkgPalette, palette, bank);
-    if (_cpu != CGB_TYPE) {
+    if (!_is_CGB) {
         UWORD data = ReadBankedUWORD(palette->palette, bank);
         if (mask & 1) BkgPalette[0].c0 = data;
     }
-    #ifdef SGB
+#ifdef SGB
+    if (_is_SGB) {
         UBYTE sgb_palettes = SGB_PALETTES_NONE;
         if (mask & 0b00110000) sgb_palettes |= SGB_PALETTES_01;
         if (mask & 0b11000000) sgb_palettes |= SGB_PALETTES_23;
         SGBTransferPalettes(sgb_palettes);
-    #endif
+    }
+#endif
 }
 
 inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {
     UBYTE mask = do_load_palette(SprPalette, palette, bank);
-    if (_cpu != CGB_TYPE) {
+    if (!_is_CGB) {
         UWORD data = ReadBankedUWORD(palette->palette, bank);
         if (mask & 1) SprPalette[0].c0 = (UBYTE)data;
         if (mask & 2) SprPalette[1].c0 = (UBYTE)(data >> 8);

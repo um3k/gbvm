@@ -2,6 +2,7 @@
 
 #include <gb/cgb.h>
 
+#include "system.h"
 #include "gbs_types.h"
 #include "vm_palette.h"
 
@@ -20,7 +21,7 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
         MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
         if (options & PALETTE_COMMIT) {
             #ifdef CGB
-                if (_cpu == CGB_TYPE) { 
+                if (_is_CGB) { 
                     if (options & PALETTE_BKG) set_bkg_palette(nb, 1, (void *)dest);
                     if (options & PALETTE_SPRITE) set_sprite_palette(nb, 1, (void *)dest); 
                     sour++;
@@ -50,7 +51,7 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
         sour++; 
     }
     #ifdef SGB
-        if (sgb_changes) SGBTransferPalettes(sgb_changes);
+        if ((sgb_changes) && (_is_SGB)) SGBTransferPalettes(sgb_changes);
     #endif
     THIS->PC = (UBYTE *)sour;
 }
