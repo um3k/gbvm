@@ -5,6 +5,7 @@
 #include <string.h>
 #include <rand.h>
 
+#include "system.h"
 #include "interrupts.h"
 #include "bankdata.h"
 #include "game_time.h"
@@ -174,6 +175,10 @@ void test_b() __banked {
     UBYTE i;
     memset(shadow_OAM2, 0, sizeof(shadow_OAM2));
     data_init();
+
+    _is_SGB = FALSE;
+    _is_CGB = FALSE;
+
     display_off();
     palette_init();
 
