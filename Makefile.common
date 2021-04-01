@@ -9,6 +9,7 @@ EXAMPLES_DIR = ./examples
 EMU	= $(TOP)../bgb/bgb
 GBSPACK = $(TOP)../gbspack/gbspack
 TEST_CHK = python $(CURDIR)/$(TEST_FW)/unit_checker.py
+GBS_CLI = node $(TOP)../gb-studio/out/cli/gb-studio-cli.js
 
 CART_SIZE = 16
 #CART_MBC = 0x1B

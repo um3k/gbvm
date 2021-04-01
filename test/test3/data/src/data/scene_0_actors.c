@@ -24,7 +24,6 @@ const struct actor_t scene_0_actors[] = {
         },
         .dir = DIR_DOWN,
         .sprite = TO_FAR_PTR_T(spritesheet_1),
-        .palette = 0,
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,
