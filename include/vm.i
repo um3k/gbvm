@@ -325,11 +325,18 @@ OP_VM_SET_INDIRECT    = 0x28
 .macro VM_SET_INDIRECT IDXA, IDXB
         .db OP_VM_SET_INDIRECT, #>IDXB, #<IDXB, #>IDXA, #<IDXA
 .endm
+
 ; assignes a value on VM stack or a global to a value on VM stack ar a global indirectly
 OP_VM_GET_INDIRECT    = 0x29
 .macro VM_GET_INDIRECT IDXA, IDXB
         .db OP_VM_GET_INDIRECT, #>IDXB, #<IDXB, #>IDXA, #<IDXA
 .endm
+
+OP_VM_TEST_TERMINATE  = 0x2A
+.macro VM_TEST_TERMINATE
+        .db OP_VM_TEST_TERMINATE
+.endm
+
 
 ; --- engine-specific instructions ------------------------------------------
 

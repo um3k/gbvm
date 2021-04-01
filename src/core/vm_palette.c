@@ -18,7 +18,31 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
     palette_entry_t * dest = (options & PALETTE_BKG) ? BkgPalette : SprPalette;
     for (UBYTE i = mask, nb = 0; (i != 0); dest++, nb++, i >>= 1) {
         if ((i & 1) == 0) continue;
-        MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
+        if ((_is_CGB) || (nb > 1)) {
+            MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
+        } else {
+            UBYTE DMGPal;
+            switch (nb) {
+                case 0: 
+                    DMGPal = ReadBankedUBYTE((void *)sour, bank);
+                    if (options & PALETTE_BKG) {
+                        DMG_palette[0] = DMGPal;
+                        if (options & PALETTE_COMMIT) BGP_REG = DMGPal;
+                    }
+                    if (options & PALETTE_SPRITE) {
+                        DMG_palette[1] = DMGPal;
+                        if (options & PALETTE_COMMIT) OBP0_REG = DMGPal;
+                    }
+                    break;
+                case 1:
+                    if (options & PALETTE_SPRITE) {
+                        DMGPal = ReadBankedUBYTE((void *)sour, bank);
+                        DMG_palette[2] = DMGPal;
+                        if (options & PALETTE_COMMIT) OBP1_REG = DMGPal;
+                    }
+                    break;
+            }
+        }
         if (options & PALETTE_COMMIT) {
             #ifdef CGB
                 if (_is_CGB) { 
@@ -34,19 +58,6 @@ void vm_load_palette(SCRIPT_CTX * THIS, UBYTE mask, UBYTE options) __banked {
                     if ((nb == 6) || (nb == 7)) sgb_changes |= SGB_PALETTES_23;
                 }
             #endif
-            if (options & PALETTE_BKG) {
-                if (nb == 0) BGP_REG = (UBYTE)dest->c0;
-            }
-            if (options & PALETTE_SPRITE) {
-                switch (nb) {
-                    case 0:
-                        OBP0_REG = (UBYTE)dest->c0;
-                        break;
-                    case 1:
-                        OBP1_REG = (UBYTE)dest->c0;
-                        break;
-                }
-            } 
         } 
         sour++; 
     }

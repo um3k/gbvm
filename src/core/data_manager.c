@@ -109,10 +109,7 @@ UBYTE do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE b
 
 inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
     UBYTE mask = do_load_palette(BkgPalette, palette, bank);
-    if (!_is_CGB) {
-        UWORD data = ReadBankedUWORD(palette->palette, bank);
-        if (mask & 1) BkgPalette[0].c0 = data;
-    }
+    DMG_palette[0] = ReadBankedUBYTE(palette->palette, bank);
 #ifdef SGB
     if (_is_SGB) {
         UBYTE sgb_palettes = SGB_PALETTES_NONE;
@@ -124,12 +121,10 @@ inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
 }
 
 inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {
-    UBYTE mask = do_load_palette(SprPalette, palette, bank);
-    if (!_is_CGB) {
-        UWORD data = ReadBankedUWORD(palette->palette, bank);
-        if (mask & 1) SprPalette[0].c0 = (UBYTE)data;
-        if (mask & 2) SprPalette[1].c0 = (UBYTE)(data >> 8);
-    }
+    do_load_palette(SprPalette, palette, bank);
+    UWORD data = ReadBankedUWORD(palette->palette, bank);
+    DMG_palette[1] = (UBYTE)data;
+    DMG_palette[2] = (UBYTE)(data >> 8);
 }
 
 UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {

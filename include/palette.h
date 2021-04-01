@@ -4,6 +4,7 @@
 #include <gb/gb.h>
 #include "gbs_types.h"
 
+extern UBYTE DMG_palette[3];
 extern palette_entry_t SprPalette[8];
 extern palette_entry_t BkgPalette[8];
 

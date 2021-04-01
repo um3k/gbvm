@@ -1,5 +1,5 @@
-#ifndef SYSTEM_H_INCLUDE
-#define SYSTEM_H_INCLUDE
+#ifndef _SYSTEM_H_INCLUDE
+#define _SYSTEM_H_INCLUDE
 
 #include <gb/gb.h>
 
