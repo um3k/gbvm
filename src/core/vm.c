@@ -365,6 +365,13 @@ void vm_debug(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS, UBYTE nargs) __nonb
     THIS->PC = s;
 }
 
+void vm_test_terminate(SCRIPT_CTX * THIS) __banked {
+    THIS;
+__asm
+        ld b, b
+__endasm;
+}
+
 // puts context into a waitable state
 void vm_idle(SCRIPT_CTX * THIS) __banked {
     THIS->waitable = TRUE;
