@@ -25,3 +25,7 @@ $(OBJDIR)/%.o:	data/src/data/%.s
 
 $(REL_OBJDIR)/.rel:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
+
+.PHONY: data
+data:
+	$(GBS_CLI) export -d sokoban.gbsproj data
