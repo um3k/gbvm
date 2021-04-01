@@ -5,6 +5,7 @@
     #include <gb/cgb.h>
 #endif
 
+#include "system.h"
 #include "fade_manager.h"
 #include "palette.h"
 
@@ -239,7 +240,7 @@ void fade_init() __banked {
     fade_black = 0;
     fade_style = 0;
 #ifdef CGB
-    if (_cpu == CGB_TYPE) {
+    if (_is_CGB) {
         ApplyPaletteChangeColor(fade_timer);
         return;
     }
@@ -256,7 +257,7 @@ void fade_in() __banked {
     fade_running = TRUE;
     fade_timer = FADED_OUT_FRAME;
 #ifdef CGB
-    if (_cpu == CGB_TYPE) {
+    if (_is_CGB) {
         ApplyPaletteChangeColor(FADED_OUT_FRAME);
         return;
     }
@@ -273,7 +274,7 @@ void fade_out() __banked {
     fade_running = TRUE;
     fade_timer = FADED_IN_FRAME;
 #ifdef CGB
-    if (_cpu == CGB_TYPE) {
+    if (_is_CGB) {
         ApplyPaletteChangeColor(fade_timer);
         return;
     }
@@ -292,7 +293,7 @@ void fade_update() __banked {
                 if (fade_timer == FADED_OUT_FRAME) fade_running = FALSE;
             }
 #ifdef CGB
-            if (_cpu == CGB_TYPE) {
+            if (_is_CGB) {
                 ApplyPaletteChangeColor(fade_timer);
                 return;
             }
@@ -304,7 +305,7 @@ void fade_update() __banked {
 
 void fade_applypalettechange() __banked {
 #ifdef CGB
-    if (_cpu == CGB_TYPE) {
+    if (_is_CGB) {
         ApplyPaletteChangeColor(fade_timer);
         return;
     }

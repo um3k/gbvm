@@ -2,6 +2,7 @@
 
 #include <string.h>
 
+#include "system.h"
 #include "ui.h"
 #include "game_time.h"
 #include "data/data_bootstrap.h"
@@ -113,7 +114,7 @@ inline void ui_load_tile(const UBYTE * tiledata, UBYTE bank) {
     if (ui_current_tile > (TEXT_BUFFER_LEN - 1)) {
         no = ui_current_tile - TEXT_BUFFER_LEN + TEXT_BUFFER_START_BANK1;
 #ifdef CGB
-        if (_cpu == CGB_TYPE) VBK_REG = 1;
+        if (_is_CGB) VBK_REG = 1;
 #endif
     } else {
         no = ui_current_tile + TEXT_BUFFER_START; 
@@ -128,7 +129,7 @@ inline void ui_load_wram_tile(const UBYTE * tiledata) {
     if (ui_current_tile > (TEXT_BUFFER_LEN - 1)) {
         no = ui_current_tile - TEXT_BUFFER_LEN + TEXT_BUFFER_START_BANK1;
 #ifdef CGB
-        if (_cpu == CGB_TYPE) VBK_REG = 1;
+        if (_is_CGB) VBK_REG = 1;
 #endif
     } else {
         no = ui_current_tile + TEXT_BUFFER_START; 
@@ -204,7 +205,7 @@ inline void ui_set_tile(UBYTE * addr, UBYTE current_tile) {
     if (current_tile > (TEXT_BUFFER_LEN - 1)) {
         no = current_tile - TEXT_BUFFER_LEN + TEXT_BUFFER_START_BANK1;
 #ifdef CGB
-        if (_cpu == CGB_TYPE) {
+        if (_is_CGB) {
             VBK_REG = 1;
             SetTile(addr, (UI_PALETTE & 0x07u) | 0x08u);
             VBK_REG = 0;
@@ -212,7 +213,7 @@ inline void ui_set_tile(UBYTE * addr, UBYTE current_tile) {
 #endif
     } else {
 #ifdef CGB
-        if (_cpu == CGB_TYPE) {
+        if (_is_CGB) {
             VBK_REG = 1;
             SetTile(addr, UI_PALETTE & 0x07u);
             VBK_REG = 0;

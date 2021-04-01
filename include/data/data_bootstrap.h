@@ -8,9 +8,6 @@
 #define TMP_VAR_1 -1
 #define TMP_VAR_2 -1
 
-// System fields
-extern UBYTE _is_SGB;
-
 // Start scene 
 extern const INT16 start_scene_x;
 extern const INT16 start_scene_y;
