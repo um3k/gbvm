@@ -6,6 +6,7 @@
 #include "data/background_0.h"
 #include "data/scene_0_collisions.h"
 #include "data/spritesheet_0.h"
+#include "data/palette_0.h"
 #include "data/scene_0_actors.h"
 #include "data/scene_0_sprites.h"
 #include "data/script_s0_init.h"
@@ -19,6 +20,8 @@ const struct scene_t scene_0 = {
     .background = TO_FAR_PTR_T(background_0),
     .collisions = TO_FAR_PTR_T(scene_0_collisions),
     .player_sprite = TO_FAR_PTR_T(spritesheet_0),
+    .palette = TO_FAR_PTR_T(palette_0),
+    .sprite_palette = TO_FAR_PTR_T(palette_0),
     .n_actors = 5,
     .n_triggers = 0,
     .n_sprites = 1,
