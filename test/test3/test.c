@@ -58,7 +58,8 @@ void engine_reset() {
 void step_VM() {
     switch (script_runner_update()) {
         case RUNNER_DONE:
-        case RUNNER_IDLE: {                
+        case RUNNER_IDLE: {          
+            input_update();      
             if (INPUT_SOFT_RESTART) {
                 // kill all threads (in case something is wrong and all contexts occupied) 
                 script_runner_init(FALSE);
@@ -212,10 +213,7 @@ void test_b() __banked {
     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
 
     // execute VM
-    for(i = 0; i != 90; i++) {
-        joy = J_UP;
-        last_joy = 0;
-        recent_joy = J_UP;        
+    for(i = 0; i != 255; i++) {
         step_VM();
         if (i > 83 && fade_timer == 0) {
             break;
