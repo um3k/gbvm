@@ -50,6 +50,7 @@ void load_init() __banked {
 }
 
 void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
+    if ((!bank) || (!tiles)) return;    
     UWORD ntiles = ReadBankedUWORD(&(tiles->n_tiles), bank);
     UBYTE bkg_tiles, sprite_tiles;
     if (ntiles > 256) {
@@ -75,6 +76,13 @@ void load_image(const background_t* background, UBYTE bank) __banked {
     scroll_y_max = image_height - ((UINT16)SCREENHEIGHT);
 
     load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
+#ifdef CGB
+    if (_cpu == CGB_TYPE) {
+        VBK_REG = 1;
+        load_tiles(bkg.cgb_tileset.ptr, bkg.cgb_tileset.bank);
+        VBK_REG = 0;
+    }
+#endif
 }
 
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
@@ -87,22 +95,38 @@ void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t * res_
     MemcpyBanked(res_animations, sprite->animations, sizeof(sprite->animations), bank);
 }
 
-void do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE bank) __banked {
+UBYTE do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE bank) __banked {
     UBYTE mask = ReadBankedUBYTE(&palette->mask, bank);
-    palette_entry_t * sour = palette->palette; 
+    palette_entry_t * sour = palette->cgb_palette; 
     for (UBYTE i = mask; (i); i >>= 1, dest++) {
         if ((i & 1) == 0) continue;
         MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
         sour++; 
     }
+    return mask;
 }
 
 inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
-    do_load_palette(BkgPalette, palette, bank);
+    UBYTE mask = do_load_palette(BkgPalette, palette, bank);
+    if (_cpu != CGB_TYPE) {
+        UWORD data = ReadBankedUWORD(palette->palette, bank);
+        if (mask & 1) BkgPalette[0].c0 = data;
+    }
+    #ifdef SGB
+        UBYTE sgb_palettes = SGB_PALETTES_NONE;
+        if (mask & 0b00110000) sgb_palettes |= SGB_PALETTES_01;
+        if (mask & 0b11000000) sgb_palettes |= SGB_PALETTES_23;
+        SGBTransferPalettes(sgb_palettes);
+    #endif
 }
 
 inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {
-    do_load_palette(SprPalette, palette, bank);
+    UBYTE mask = do_load_palette(SprPalette, palette, bank);
+    if (_cpu != CGB_TYPE) {
+        UWORD data = ReadBankedUWORD(palette->palette, bank);
+        if (mask & 1) SprPalette[0].c0 = (UBYTE)data;
+        if (mask & 2) SprPalette[1].c0 = (UBYTE)(data >> 8);
+    }
 }
 
 UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {
@@ -264,9 +288,6 @@ void load_player() __banked {
     PLAYER.pos.x = start_scene_x;
     PLAYER.pos.y = start_scene_y;
     PLAYER.dir = start_scene_dir;
-#ifdef CGB
-    PLAYER.palette = PLAYER_PALETTE;
-#endif
     PLAYER.move_speed = start_player_move_speed;
     PLAYER.anim_tick = start_player_anim_tick;
     PLAYER.frame = 0;

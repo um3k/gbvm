@@ -8,6 +8,10 @@
 #define TMP_VAR_1 -1
 #define TMP_VAR_2 -1
 
+// System fields
+extern UBYTE _is_SGB;
+
+// Start scene 
 extern const INT16 start_scene_x;
 extern const INT16 start_scene_y;
 extern const direction_e start_scene_dir;
@@ -15,6 +19,7 @@ extern const far_ptr_t start_scene;
 extern const UBYTE start_player_move_speed;
 extern const UBYTE start_player_anim_tick;
 
+// Fonts
 extern const far_ptr_t ui_fonts[];
 
 // Engine fields

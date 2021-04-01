@@ -23,7 +23,6 @@ const struct actor_t scene_6_actors[] = {
       .top = -8
     },
     .sprite = TO_FAR_PTR_T(spritesheet_9),
-    .palette = 0,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,
@@ -47,7 +46,6 @@ const struct actor_t scene_6_actors[] = {
       .top = -8
     },    
     .sprite = TO_FAR_PTR_T(spritesheet_9),
-    .palette = 0,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,

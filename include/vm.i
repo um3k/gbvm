@@ -529,8 +529,12 @@ OP_VM_INPUT_ATTACH      = 0x53
 .endm
 
 OP_VM_INPUT_GET         = 0x54
-.macro VM_INPUT_GET IDX
-        .db OP_VM_INPUT_GET, #>IDX, #<IDX
+.JOY0                   = 0
+.JOY1                   = 1
+.JOY2                   = 3
+.JOY3                   = 4
+.macro VM_INPUT_GET IDX, JOYID
+        .db OP_VM_INPUT_GET, #<JOYID, #>IDX, #<IDX
 .endm
 
 OP_VM_CONTEXT_PREPARE   = 0x55
@@ -706,6 +710,13 @@ OP_VM_LOAD_PALETTE       = 0x7C
 
 .macro VM_LOAD_PALETTE MASK, OPTIONS
         .db OP_VM_LOAD_PALETTE, #<OPTIONS, #<MASK
+.endm
+
+; --- SGB -----------------------------------------
+
+OP_VM_SGB_TRANSFER       = 0x7E
+.macro VM_SGB_TRANSFER 
+        .db OP_VM_SGB_TRANSFER
 .endm
 
 ; --- PROJECTILES ---------------------------------

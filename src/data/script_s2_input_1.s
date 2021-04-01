@@ -4,6 +4,10 @@
 ___bank_script_s2_input1    = 255
 .globl ___bank_script_s2_input1
 
+.globl __is_SGB
+
+.area _CODE_255
+
 _script_s2_input1::
         VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
             .DMG_PAL    3,2,1,0
@@ -16,6 +20,12 @@ _script_s2_input1::
             .DMG_PAL    0,1,2,3
 
         VM_RESERVE              6
+
+        VM_GET_INT8             .ARG0, __is_SGB 
+        VM_IF_CONST     .EQ     .ARG0, 0, 1$, 0 
+        VM_SGB_TRANSFER   
+            .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet
+1$:
 
         VM_RTC_START            .RTC_START
         VM_RTC_LATCH
@@ -65,7 +75,7 @@ _script_s2_input1::
 
         VM_LOAD_TEXT            6
             .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0
-            .asciz "\001\001\002\00302\n13\001\003\004\001\377\002\001x1=%d y1=%d\nx2=%d y2=%d\n\004\376\001Chebyshev:\002\002%d\n\002\001Manhattan:\002\002%d\n\002\001\007\002This\007\001 is \002\002BOLD\002\001\nOk"
+            .asciz "\001\001\002\00302\n13\001\003\004\001\377\002\001x1=%d y1=%d\nx2=%d y2=%d\n\004\376\001Chebyshev:\002\002%d\n\002\001Manhattan:\002\002%d\n\002\001\007\002This\007\001 is \002\002BOLD\002\001\nOk!"
         VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/

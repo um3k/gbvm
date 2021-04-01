@@ -28,7 +28,6 @@ const struct actor_t scene_5_actors[] = {
       .right = 15,
       .top = -8
     },  
-    .palette = 0,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,
@@ -52,7 +51,6 @@ const struct actor_t scene_5_actors[] = {
       .right = 15,
       .top = -8
     },  
-    .palette = 0,
     .move_speed = 1,
     .anim_tick = 7,
     .frame = 0,
@@ -76,7 +74,6 @@ const struct actor_t scene_5_actors[] = {
       .top = -32,
       .bottom = 7
     },
-    .palette = 0,
     .move_speed = 1,
     .anim_tick = 15,
     .frame = 0,
@@ -100,7 +97,6 @@ const struct actor_t scene_5_actors[] = {
       .right = 15,
       .top = -8
     },   
-    .palette = 0,
     .move_speed = 1,
     .anim_tick = 15,
     .frame = 0,

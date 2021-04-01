@@ -167,6 +167,8 @@ void process_VM() {
     }
 }
 
+UBYTE _is_SGB;
+
 void main() {
 #ifdef CGB
     if (_cpu == CGB_TYPE) {
@@ -178,9 +180,12 @@ void main() {
 
     data_init();
 #ifdef SGB
-    set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
-                   SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 
-                   SGB_border_pal, SIZE(SGB_border_pal), BANK(SGB_border_pal));
+    _is_SGB = sgb_check();
+    if (_is_SGB) set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
+                                SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 
+                                SGB_border_pal, SIZE(SGB_border_pal), BANK(SGB_border_pal));
+#else
+    _is_SGB = FALSE;
 #endif
 
     display_off();
