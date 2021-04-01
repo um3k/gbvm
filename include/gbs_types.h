@@ -159,8 +159,7 @@ typedef struct menu_item_t {
 #define DMG_DARK_GRAY 0x02
 #define DMG_LITE_GRAY 0x01
 #define DMG_WHITE 0x00
-#define DMG_PAL(C0, C1, C2, C3) ((UBYTE)((((C3) & 0x03) << 6) | (((C2) & 0x03) << 4) | (((C1) & 0x03) << 2) | ((C0) & 0x03)))
-#define DMG_PALETTE(C0, C1, C2, C3) {DMG_PAL(C0, C1, C2, C3), 0, 0, 0}
+#define DMG_PALETTE(C0, C1, C2, C3) ((UBYTE)((((C3) & 0x03) << 6) | (((C2) & 0x03) << 4) | (((C1) & 0x03) << 2) | ((C0) & 0x03)))
 
 #define CGB_PALETTE(C0, C1, C2, C3) {C0, C1, C2, C3}
 #define CGB_COLOR(R, G, B) ((UWORD)(((R) & 0x1f) | (((G) & 0x1f) << 5) | (((B) & 0x1f) << 10)))
@@ -171,7 +170,8 @@ typedef struct palette_entry_t {
 
 typedef struct palette_t {
     UBYTE mask;
-    palette_entry_t palette[];
+    UBYTE palette[2];
+    palette_entry_t cgb_palette[];
 } palette_t;
 
 #endif

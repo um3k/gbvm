@@ -97,7 +97,7 @@ void load_animations(const spritesheet_t *sprite, UBYTE bank, animation_t * res_
 
 UBYTE do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE bank) __banked {
     UBYTE mask = ReadBankedUBYTE(&palette->mask, bank);
-    palette_entry_t * sour = palette->palette; 
+    palette_entry_t * sour = palette->cgb_palette; 
     for (UBYTE i = mask; (i); i >>= 1, dest++) {
         if ((i & 1) == 0) continue;
         MemcpyBanked(dest, sour, sizeof(palette_entry_t), bank);
@@ -108,6 +108,10 @@ UBYTE do_load_palette(palette_entry_t * dest, const palette_t * palette, UBYTE b
 
 inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
     UBYTE mask = do_load_palette(BkgPalette, palette, bank);
+    if (_cpu != CGB_TYPE) {
+        UWORD data = ReadBankedUWORD(palette->palette, bank);
+        if (mask & 1) BkgPalette[0].c0 = data;
+    }
     #ifdef SGB
         UBYTE sgb_palettes = SGB_PALETTES_NONE;
         if (mask & 0b00110000) sgb_palettes |= SGB_PALETTES_01;
@@ -117,7 +121,12 @@ inline void load_bkg_palette(const palette_t * palette, UBYTE bank) {
 }
 
 inline void load_sprite_palette(const palette_t * palette, UBYTE bank) {
-    do_load_palette(SprPalette, palette, bank);
+    UBYTE mask = do_load_palette(SprPalette, palette, bank);
+    if (_cpu != CGB_TYPE) {
+        UWORD data = ReadBankedUWORD(palette->palette, bank);
+        if (mask & 1) SprPalette[0].c0 = (UBYTE)data;
+        if (mask & 2) SprPalette[1].c0 = (UBYTE)(data >> 8);
+    }
 }
 
 UBYTE get_farptr_index(const far_ptr_t * list, UBYTE bank, UBYTE count, far_ptr_t * item) {

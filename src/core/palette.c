@@ -18,8 +18,8 @@ void palette_init() __banked {
             return;
         }
     #endif
-    BkgPalette[0].c0 = SprPalette[1].c0 = DMG_PAL(3, 2, 1, 0); 
-    SprPalette[0].c0 = DMG_PAL(3, 1, 0, 2);
+    BkgPalette[0].c0 = SprPalette[1].c0 = DMG_PALETTE(3, 2, 1, 0); 
+    SprPalette[0].c0 = DMG_PALETTE(3, 1, 0, 2);
 }
 
 #ifdef CGB
