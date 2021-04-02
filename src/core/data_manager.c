@@ -325,8 +325,4 @@ void load_emote(const spritesheet_t *sprite, UBYTE bank) __banked {
     far_ptr_t data; 
     ReadBankedFarPtr(&data, (void *)&sprite->tileset, bank);
     SetBankedSpriteData(EMOTE_SPRITE, EMOTE_SPRITE_SIZE, ((tileset_t *)data.ptr)->tiles, data.bank);
-    set_sprite_prop(0, 0);
-    set_sprite_prop(1, 0);
-    set_sprite_tile(0, EMOTE_SPRITE);
-    set_sprite_tile(1, EMOTE_SPRITE + 2);
 }
