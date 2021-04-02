@@ -94,19 +94,19 @@ void load_background(const background_t* background, UBYTE bank) __banked {
 #endif
 }
 
-inline UBYTE load_sprite_tileset(UBYTE base_tile, tileset_t * tileset, UBYTE bank) {
+inline UBYTE load_sprite_tileset(UBYTE base_tile, const tileset_t * tileset, UBYTE bank) {
     UBYTE n_tiles = ReadBankedUBYTE(&(tileset->n_tiles), bank);
     SetBankedSpriteData(base_tile, n_tiles, tileset->tiles, bank);
     return n_tiles;
 }
 
-UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
+UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t * sprite, UBYTE bank) __banked {
     far_ptr_t data; 
-    ReadBankedFarPtr(&data, &(sprite->tileset), bank);
+    ReadBankedFarPtr(&data, &sprite->tileset, bank);
     UBYTE n_tiles = load_sprite_tileset(sprite_offset, data.ptr, data.bank);
 #ifdef CGB
     if (_is_CGB) {
-        ReadBankedFarPtr(&data, &(sprite->cgb_tileset), bank);
+        ReadBankedFarPtr(&data, &sprite->cgb_tileset, bank);
         if (data.ptr) {
             VBK_REG = 1;
             UBYTE n_cgb_tiles = load_sprite_tileset(sprite_offset, data.ptr, data.bank);
