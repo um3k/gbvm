@@ -185,11 +185,12 @@ void core_run() __banked {
     if (_is_SGB) set_sgb_border(SGB_border_chr, SIZE(SGB_border_chr), BANK(SGB_border_chr),
                                 SGB_border_map, SIZE(SGB_border_map), BANK(SGB_border_map), 
                                 SGB_border_pal, SIZE(SGB_border_pal), BANK(SGB_border_pal));
-#else
-    _is_SGB = FALSE;
-#endif
     // both CGB + SGB modes at once are not supported
     _is_CGB = ((!_is_SGB) && (_cpu == CGB_TYPE) && (*(UBYTE *)0x0143 & 0x80));
+#else
+    _is_SGB = FALSE;
+    _is_CGB = ((_cpu == CGB_TYPE) && (*(UBYTE *)0x0143 & 0x80));
+#endif
 
     display_off();
     palette_init();
