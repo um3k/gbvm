@@ -41,11 +41,6 @@ EMUFLAGS = \
 
 EMU_FORCE_DMG = -set "SystemMode=0"
 
-#--- del ----
-CFLAGS += -DSGB
-LFLAGS += -Wm-ys
-#------------
-
 TARGET = $(ROM_BUILD_DIR)/rom.gb
 
 ASRC = $(foreach dir,$(TOP)src,$(notdir $(wildcard $(dir)/*.s))) 
