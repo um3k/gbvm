@@ -27,12 +27,12 @@ $(OBJDIR)/%.o:	data/src/data/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<	
 
 $(OBJDIR)/%.o:	test.c
-	$(CC) $(CFLAGS) -c -o $@ $<	
+	$(CC) $(CFLAGS) -I../framework -c -o $@ $<	
 
 $(REL_OBJDIR)/.rel:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 
 test: directories $(ROM_BUILD_DIR)/rom.gb test.json
 	@echo "Running tests..."
-	@$(EMU) $(EMUFLAGS) -rom $(ROM_BUILD_DIR)/rom.gb
+	@$(EMU) $(EMUFLAGS) -demoplay recording.dem -rom $(ROM_BUILD_DIR)/rom.gb
 	@$(TEST_CHK) test.json $(ROM_BUILD_DIR)/rom.noi $(ROM_BUILD_DIR)/rom.sna capture.bmp
