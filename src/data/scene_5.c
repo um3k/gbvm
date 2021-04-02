@@ -22,7 +22,6 @@ const struct scene_t scene_5 = {
   .type = SCENE_TYPE_PLATFORM,
   .background = TO_FAR_PTR_T(background_5),
   .collisions = TO_FAR_PTR_T(scene_5_collisions),
-  .colors = TO_FAR_PTR_T(scene_5_colors),
   .palette = TO_FAR_PTR_T(palette_2),
   .sprite_palette = TO_FAR_PTR_T(palette_4),
   .player_sprite = TO_FAR_PTR_T(spritesheet_12),    

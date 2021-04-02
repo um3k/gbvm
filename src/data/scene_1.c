@@ -22,7 +22,6 @@ const struct scene_t scene_1 = {
   .type = SCENE_TYPE_TOPDOWN,
   .background = TO_FAR_PTR_T(background_4),
   .collisions = TO_FAR_PTR_T(scene_1_collisions),
-  .colors = TO_FAR_PTR_T(scene_1_colors),
   .palette = TO_FAR_PTR_T(palette_2),
   .sprite_palette = TO_FAR_PTR_T(palette_0),
   .player_sprite = TO_FAR_PTR_T(spritesheet_0),

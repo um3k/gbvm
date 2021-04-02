@@ -51,7 +51,6 @@ const metasprite_t * const spritesheet_2_metasprites[] = {
 };
 
 const struct spritesheet_t spritesheet_2 = {
-  .n_tiles = 4,
   .n_metasprites = 6,
   .metasprites = spritesheet_2_metasprites,  
   .tileset = TO_FAR_PTR_T(spritesheet_2_tiles),
