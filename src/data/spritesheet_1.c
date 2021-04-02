@@ -3,6 +3,7 @@
 // SpriteSheet: ice
 
 #include "gbs_types.h"
+#include "data/spritesheet_1_tiles.h"
 
 const void __at(255) __bank_spritesheet_1;
 
@@ -53,8 +54,6 @@ const struct spritesheet_t spritesheet_1 = {
   .n_tiles = 4,
   .n_metasprites = 6,
   .metasprites = spritesheet_1_metasprites,
-  .tiles = {
-    127,127,255,128,255,128,252,130,217,164,178,201,229,146,202,165,148,202,169,148,211,168,166,209,205,162,154,196,127,255,0,127,
-    254,254,255,1,255,1,167,81,79,161,159,65,55,137,111,17,215,33,167,73,79,145,159,33,55,73,111,145,254,255,0,254
-  }
+  .tileset = TO_FAR_PTR_T(spritesheet_1_tiles),
+  .cgb_tileset = { NULL, NULL },
 };
