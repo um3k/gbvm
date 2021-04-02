@@ -5,7 +5,6 @@
 #include "gbs_types.h"
 #include "data/background_0.h"
 #include "data/scene_0_collisions.h"
-#include "data/scene_0_colors.h"
 #include "data/palette_0.h"
 #include "data/palette_1.h"
 #include "data/spritesheet_0.h"
@@ -20,7 +19,6 @@ const struct scene_t scene_0 = {
     .type = SCENE_TYPE_TOPDOWN,
     .background = TO_FAR_PTR_T(background_0),
     .collisions = TO_FAR_PTR_T(scene_0_collisions),
-    .colors = TO_FAR_PTR_T(scene_0_colors),
     .palette = TO_FAR_PTR_T(palette_0),
     .sprite_palette = TO_FAR_PTR_T(palette_1),
     .player_sprite = TO_FAR_PTR_T(spritesheet_0),
