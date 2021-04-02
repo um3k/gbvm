@@ -6,7 +6,6 @@
 #include "data/background_7.h"
 #include "data/spritesheet_0.h"
 #include "data/scene_3_collisions.h"
-#include "data/scene_3_colors.h"
 #include "data/palette_2.h"
 #include "data/palette_4.h"
 #include "data/script_s7_init.h"
@@ -19,7 +18,6 @@ const struct scene_t scene_7 = {
   .type = SCENE_TYPE_LOGO,
   .background = TO_FAR_PTR_T(background_7),
   .collisions = TO_FAR_PTR_T(scene_3_collisions),
-  .colors = TO_FAR_PTR_T(scene_3_colors),
   .palette = TO_FAR_PTR_T(palette_2),
   .sprite_palette = TO_FAR_PTR_T(palette_4),
   .player_sprite = TO_FAR_PTR_T(spritesheet_0),  
