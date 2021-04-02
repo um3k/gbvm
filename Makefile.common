@@ -85,7 +85,7 @@ color:
 super:
 	$(eval CFLAGS += -DSGB)
 	$(eval LFLAGS += -Wm-ys)
-	@echo "COLOR mode ON"
+	@echo "SUPER mode ON"
 
 profile:
 	$(eval CFLAGS += -Wf--profile)
