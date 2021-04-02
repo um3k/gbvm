@@ -22,12 +22,16 @@
 #define EMOTE_SPRITE_SIZE       4
 
 far_ptr_t current_scene;
+
 UBYTE image_bank;
-UBYTE image_attr_bank;
-UBYTE collision_bank;
 unsigned char* image_ptr;
+
+UBYTE image_attr_bank;
 unsigned char* image_attr_ptr;
+
+UBYTE collision_bank;
 unsigned char* collision_ptr;
+
 UBYTE image_tile_width;
 UBYTE image_tile_height;
 UINT16 image_width;
@@ -50,7 +54,7 @@ void load_init() __banked {
     scene_stack_ptr = scene_stack;
 }
 
-void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
+void load_bkg_tileset(const tileset_t* tiles, UBYTE bank) __banked {
     if ((!bank) || (!tiles)) return;    
     UWORD ntiles = ReadBankedUWORD(&(tiles->n_tiles), bank);
     UBYTE bkg_tiles, sprite_tiles;
@@ -63,12 +67,16 @@ void load_tiles(const tileset_t* tiles, UBYTE bank) __banked {
     if (sprite_tiles) SetBankedSpriteData(0, sprite_tiles, tiles->tiles + (256 * 16), bank);
 }
 
-void load_image(const background_t* background, UBYTE bank) __banked {
+void load_background(const background_t* background, UBYTE bank) __banked {
     background_t bkg;
     MemcpyBanked(&bkg, background, sizeof(bkg), bank);
 
-    image_bank = bank;
-    image_ptr = background->tiles;
+    image_bank = bkg.tilemap.bank;
+    image_ptr = bkg.tilemap.ptr;
+
+    image_attr_bank = bkg.cgb_tilemap_attr.bank;
+    image_attr_ptr = bkg.cgb_tilemap_attr.ptr;
+
     image_tile_width = bkg.width;
     image_tile_height = bkg.height;
     image_width = image_tile_width * 8;
@@ -76,19 +84,37 @@ void load_image(const background_t* background, UBYTE bank) __banked {
     image_height = image_tile_height * 8;
     scroll_y_max = image_height - ((UINT16)SCREENHEIGHT);
 
-    load_tiles(bkg.tileset.ptr, bkg.tileset.bank);
+    load_bkg_tileset(bkg.tileset.ptr, bkg.tileset.bank);
 #ifdef CGB
-    if (_is_CGB) {
+    if ((_is_CGB) && (bkg.cgb_tileset.ptr)) {
         VBK_REG = 1;
-        load_tiles(bkg.cgb_tileset.ptr, bkg.cgb_tileset.bank);
+        load_bkg_tileset(bkg.cgb_tileset.ptr, bkg.cgb_tileset.bank);
         VBK_REG = 0;
     }
 #endif
 }
 
+inline UBYTE load_sprite_tileset(UBYTE base_tile, tileset_t * tileset, UBYTE bank) {
+    UBYTE n_tiles = ReadBankedUBYTE(&(tileset->n_tiles), bank);
+    SetBankedSpriteData(base_tile, n_tiles, tileset->tiles, bank);
+    return n_tiles;
+}
+
 UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t *sprite, UBYTE bank) __banked {
-    UBYTE n_tiles = ReadBankedUBYTE(&(sprite->n_tiles), bank);
-    SetBankedSpriteData(sprite_offset, n_tiles, sprite->tiles, bank);
+    far_ptr_t data; 
+    ReadBankedFarPtr(&data, &(sprite->tileset), bank);
+    UBYTE n_tiles = load_sprite_tileset(sprite_offset, data.ptr, data.bank);
+#ifdef CGB
+    if (_is_CGB) {
+        ReadBankedFarPtr(&data, &(sprite->cgb_tileset), bank);
+        if (data.ptr) {
+            VBK_REG = 1;
+            UBYTE n_cgb_tiles = load_sprite_tileset(sprite_offset, data.ptr, data.bank);
+            VBK_REG = 0;
+            if (n_cgb_tiles > n_tiles) return n_cgb_tiles;
+        }
+    }
+#endif
     return n_tiles;
 }
 
@@ -157,11 +183,8 @@ UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
     collision_bank = scn.collisions.bank;
     collision_ptr = scn.collisions.ptr;
 
-    image_attr_bank = scn.colors.bank;
-    image_attr_ptr = scn.colors.ptr;
-
     // Load background + tiles
-    load_image(scn.background.ptr, scn.background.bank);
+    load_background(scn.background.ptr, scn.background.bank);
 
     load_bkg_palette(scn.palette.ptr, scn.palette.bank);
     load_sprite_palette(scn.sprite_palette.ptr, scn.sprite_palette.bank);
