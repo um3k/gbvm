@@ -73,25 +73,5 @@ _script_s0a5_interact::
         VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
         VM_ACTOR_MOVE_TO        ACTOR
 
-        ; Actor Set Active
-        VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
-
-        ; If Actor At Position
-        VM_ACTOR_GET_POS        ACTOR
-        VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    0
-            .R_OPERATOR .EQ
-            .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    0
-            .R_OPERATOR .EQ
-            .R_OPERATOR .AND
-            .R_STOP
-        VM_IF_CONST .EQ         .ARG0, 0, 5$, 1
-        VM_JUMP                 6$
-5$:
-6$:
-
         ; Stop Script
         VM_STOP

@@ -934,30 +934,6 @@
                             }
                         },
                         {
-                            "id": "9bd92923-af05-4de0-85e7-f46b729a8c22",
-                            "command": "EVENT_IF_ACTOR_AT_POSITION",
-                            "args": {
-                                "actorId": "$self$",
-                                "x": 0,
-                                "y": 0,
-                                "__collapseElse": false
-                            },
-                            "children": {
-                                "true": [
-                                    {
-                                        "id": "92dd6ae8-195a-4d94-a2b2-6edf3bd18efc",
-                                        "command": "EVENT_END"
-                                    }
-                                ],
-                                "false": [
-                                    {
-                                        "id": "181b753e-4751-4c7c-9397-a955d0533fb2",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
-                            }
-                        },
-                        {
                             "id": "cc37340e-6abf-464e-b983-c5a1230685c6",
                             "command": "EVENT_END"
                         }
