@@ -32,6 +32,10 @@ $(OBJDIR)/%.o:	test.c
 $(REL_OBJDIR)/.rel:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 
+.PHONY: data
+data:
+	$(GBS_CLI) export -d project/test.gbsproj data
+
 test: directories $(ROM_BUILD_DIR)/rom.gb test.json
 	@echo "Running tests..."
 	@$(EMU) $(EMUFLAGS) -demoplay recording.dem -rom $(ROM_BUILD_DIR)/rom.gb
