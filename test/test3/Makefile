@@ -27,10 +27,14 @@ $(OBJDIR)/%.o:	data/src/data/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<	
 
 $(OBJDIR)/%.o:	test.c
-	$(CC) $(CFLAGS) -c -o $@ $<	
+	$(CC) $(CFLAGS) -I../framework -c -o $@ $<	
 
 $(REL_OBJDIR)/.rel:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
+
+.PHONY: data
+data:
+	$(GBS_CLI) export -d project/test.gbsproj data
 
 test: directories $(ROM_BUILD_DIR)/rom.gb test.json
 	@echo "Running tests..."

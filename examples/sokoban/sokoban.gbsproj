@@ -774,7 +774,7 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "id": "89e7d40c-87ce-4f9a-9925-ef9c0711e9c7",
-                    "x": 10,
+                    "x": 8,
                     "y": 5
                 },
                 {
@@ -808,8 +808,178 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "id": "a8d5aa72-0bab-42f2-b465-2a0cdf6c49bf",
+                    "x": 4,
+                    "y": 13
+                },
+                {
+                    "name": "Box",
+                    "frame": 0,
+                    "animate": false,
+                    "spriteSheetId": "f78876b6-d8d6-4d47-8a9b-5ef1bebd01fe",
+                    "spriteType": "static",
+                    "direction": "down",
+                    "moveSpeed": 1,
+                    "animSpeed": 3,
+                    "paletteId": "",
+                    "isPinned": false,
+                    "collisionGroup": "",
+                    "script": [
+                        {
+                            "id": "345792b9-0666-483a-b004-933c9ab4aa68",
+                            "command": "EVENT_ACTOR_PUSH",
+                            "args": {
+                                "continue": false
+                            }
+                        },
+                        {
+                            "id": "ff652988-df07-4c00-a8bc-e36e8cd5e4c3",
+                            "command": "EVENT_END"
+                        }
+                    ],
+                    "startScript": [],
+                    "updateScript": [],
+                    "hit1Script": [],
+                    "hit2Script": [],
+                    "hit3Script": [],
+                    "id": "d06c71ca-5634-4401-b631-3ebfbc1ad43d",
                     "x": 10,
-                    "y": 11
+                    "y": 7
+                },
+                {
+                    "name": "Box",
+                    "frame": 0,
+                    "animate": false,
+                    "spriteSheetId": "f78876b6-d8d6-4d47-8a9b-5ef1bebd01fe",
+                    "spriteType": "static",
+                    "direction": "down",
+                    "moveSpeed": 1,
+                    "animSpeed": 3,
+                    "paletteId": "",
+                    "isPinned": false,
+                    "collisionGroup": "",
+                    "script": [
+                        {
+                            "id": "4e7b3edd-f956-4f48-a24b-9f071904e292",
+                            "command": "EVENT_ACTOR_PUSH",
+                            "args": {
+                                "continue": false
+                            }
+                        },
+                        {
+                            "id": "638a5743-7799-40df-8b37-abbc4bf4f4e6",
+                            "command": "EVENT_END"
+                        }
+                    ],
+                    "startScript": [],
+                    "updateScript": [],
+                    "hit1Script": [],
+                    "hit2Script": [],
+                    "hit3Script": [],
+                    "id": "d5a69e90-e79f-44f4-8dcd-844ddb07ad00",
+                    "x": 10,
+                    "y": 9
+                },
+                {
+                    "name": "Box",
+                    "frame": 0,
+                    "animate": false,
+                    "spriteSheetId": "f78876b6-d8d6-4d47-8a9b-5ef1bebd01fe",
+                    "spriteType": "static",
+                    "direction": "down",
+                    "moveSpeed": 1,
+                    "animSpeed": 3,
+                    "paletteId": "",
+                    "isPinned": false,
+                    "collisionGroup": "",
+                    "script": [
+                        {
+                            "id": "1721de85-fd3b-4367-a64f-463389e40ced",
+                            "command": "EVENT_ACTOR_PUSH",
+                            "args": {
+                                "continue": false
+                            }
+                        },
+                        {
+                            "id": "ce9f8c83-d27c-4e71-b495-f65ae480656d",
+                            "command": "EVENT_END"
+                        }
+                    ],
+                    "startScript": [],
+                    "updateScript": [],
+                    "hit1Script": [],
+                    "hit2Script": [],
+                    "hit3Script": [],
+                    "id": "efc27c34-b69e-4205-9c40-bd527314c2ba",
+                    "x": 8,
+                    "y": 13
+                },
+                {
+                    "name": "Box",
+                    "frame": 0,
+                    "animate": false,
+                    "spriteSheetId": "f78876b6-d8d6-4d47-8a9b-5ef1bebd01fe",
+                    "spriteType": "static",
+                    "direction": "down",
+                    "moveSpeed": 1,
+                    "animSpeed": 3,
+                    "paletteId": "",
+                    "isPinned": false,
+                    "collisionGroup": "",
+                    "script": [
+                        {
+                            "id": "10f95dab-315e-4df9-8adf-5122542ca78d",
+                            "command": "EVENT_ACTOR_PUSH",
+                            "args": {
+                                "continue": false
+                            }
+                        },
+                        {
+                            "id": "cc37340e-6abf-464e-b983-c5a1230685c6",
+                            "command": "EVENT_END"
+                        }
+                    ],
+                    "startScript": [],
+                    "updateScript": [],
+                    "hit1Script": [],
+                    "hit2Script": [],
+                    "hit3Script": [],
+                    "id": "20026dd9-cde4-43d0-b918-fd2e82339135",
+                    "x": 10,
+                    "y": 13
+                },
+                {
+                    "name": "Box",
+                    "frame": 0,
+                    "animate": false,
+                    "spriteSheetId": "f78876b6-d8d6-4d47-8a9b-5ef1bebd01fe",
+                    "spriteType": "static",
+                    "direction": "down",
+                    "moveSpeed": 1,
+                    "animSpeed": 3,
+                    "paletteId": "",
+                    "isPinned": false,
+                    "collisionGroup": "",
+                    "script": [
+                        {
+                            "id": "d1023ec3-092b-4861-bd23-a66a18a396de",
+                            "command": "EVENT_ACTOR_PUSH",
+                            "args": {
+                                "continue": false
+                            }
+                        },
+                        {
+                            "id": "6d252004-a20c-4aa6-87cd-7b1d78ef6cf9",
+                            "command": "EVENT_END"
+                        }
+                    ],
+                    "startScript": [],
+                    "updateScript": [],
+                    "hit1Script": [],
+                    "hit2Script": [],
+                    "hit3Script": [],
+                    "id": "ee45fa84-5add-4d8b-9bfa-eb57513c793d",
+                    "x": 12,
+                    "y": 13
                 }
             ],
             "triggers": []

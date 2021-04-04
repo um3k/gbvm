@@ -6,10 +6,9 @@
 
 const void __at(255) __bank_palette_0;
 
-const palette_t palette_0 = {
-    .mask = 0x03,
+const struct palette_t palette_0 = {
+    .mask = 0xFF,
     .palette = {
         DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK),
-        DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK)
     }
 };

@@ -32,7 +32,7 @@ _script_s0_init::
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 256
-        VM_SET_CONST            ^/(ACTOR + 2)/, 896
+        VM_SET_CONST            ^/(ACTOR + 2)/, 768
         VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL | .ACTOR_ATTR_H_FIRST)/
         VM_ACTOR_MOVE_TO        ACTOR
 
