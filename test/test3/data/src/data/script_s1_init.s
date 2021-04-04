@@ -31,5 +31,7 @@ _script_s1_init::
         ; Fade In
         VM_FADE_IN              1
 
+        VM_RAISE                EXCEPTION_TERMINATE, 0
+
         ; Stop Script
         VM_STOP

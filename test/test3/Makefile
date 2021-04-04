@@ -27,7 +27,7 @@ $(OBJDIR)/%.o:	data/src/data/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<	
 
 $(OBJDIR)/%.o:	test.c
-	$(CC) $(CFLAGS) -c -o $@ $<	
+	$(CC) $(CFLAGS) -I../framework -c -o $@ $<	
 
 $(REL_OBJDIR)/.rel:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
