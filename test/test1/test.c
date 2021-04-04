@@ -4,6 +4,8 @@
 
 #include "framework/test_main.h"
 
+void core_reset_hook() {}
+
 void test() {
     printf("hello, world!");
     strcpy(result, "PASSED"); 
