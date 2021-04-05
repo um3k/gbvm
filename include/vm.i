@@ -332,6 +332,11 @@ OP_VM_TEST_TERMINATE  = 0x2A
         .db OP_VM_TEST_TERMINATE, #<FLAGS
 .endm
 
+OP_VM_POLL_LOADED     = 0x2B
+.macro VM_POLL_LOADED IDX
+        .db OP_VM_POLL_LOADED, #>IDX, #<IDX
+.endm
+
 
 ; --- engine-specific instructions ------------------------------------------
 

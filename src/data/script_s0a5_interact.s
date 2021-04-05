@@ -12,6 +12,13 @@ _script_s0a5_interact::
 
         VM_LOCK
 
+        VM_RAISE                EXCEPTION_SAVE, 1
+            .SAVE_SLOT 0
+
+        VM_PUSH_CONST           0    
+        VM_POLL_LOADED          .ARG0
+        VM_IF_CONST     .EQ     .ARG0, 1, 1$, 1
+
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Game was saved!\nIt is now safe to\nturn off game boy."
@@ -22,8 +29,6 @@ _script_s0a5_interact::
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
-        VM_RAISE                EXCEPTION_SAVE, 1
-            .SAVE_SLOT 0
-
+1$:
         ; Stop Script
         VM_STOP
