@@ -58,7 +58,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_set_indirect,           4}, // 0x28
     {vm_get_indirect,           4}, // 0x29
     {vm_test_terminate,         1}, // 0x2A
-    {0, 0},
+    {vm_poll_loaded,            2}, // 0x2B
     {vm_sin_scale,              5}, // 0x2C 
     {vm_cos_scale,              5}, // 0x2D
     {0, 0},
