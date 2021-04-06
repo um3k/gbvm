@@ -28,7 +28,7 @@ _script_s0_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; If Variable True
-        VM_IF_CONST .EQ         VAR_S0_IS_MASTER, 1, 1$, 0
+        VM_IF_CONST .EQ         VAR_S0_IS_MASTER, 0, 1$, 0
         VM_SIO_SET_MODE         .SIO_MODE_SLAVE
         VM_JUMP                 2$
 1$:
