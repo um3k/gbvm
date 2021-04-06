@@ -439,7 +439,7 @@ void vm_get_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked {
     *A = *B;
 }
 // returns "loaded" flag and reset it 
-void vm_poll_loaded(SCRIPT_CTX * THIS, INT16 idx, UWORD value) __banked {
+void vm_poll_loaded(SCRIPT_CTX * THIS, INT16 idx) __banked {
     UWORD * A;
     if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
     *A = vm_loaded_state;

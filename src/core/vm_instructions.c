@@ -11,6 +11,7 @@
 #include "vm_scene.h"
 #include "vm_palette.h"
 #include "vm_sgb.h"
+#include "vm_sio.h"
 
 // here we define all VM instructions: their handlers and parameter lengths in bytes
 // this array must be nonbanked as well as STEP_VM()
@@ -131,8 +132,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_scene_pop,              0}, // 0x69
     {0, 0},
     {0, 0},
-    {0, 0},
-    {0, 0},
+    {vm_sio_set_mode,           1}, // 0x6C
+    {vm_sio_exchange,           5}, // 0x6D
     {0, 0},
     {0, 0},
 
