@@ -1189,6 +1189,22 @@
                     }
                 },
                 {
+                    "id": "4adf0916-e9bb-4600-8f21-aef1b0ee4f1c",
+                    "command": "EVENT_FADE_IN",
+                    "args": {
+                        "speed": "1",
+                        "__collapse": false
+                    }
+                },
+                {
+                    "id": "af458312-f928-4f8d-9b64-944edb212cce",
+                    "command": "EVENT_GBVM_SCRIPT",
+                    "args": {
+                        "script": "VM_TEST_TERMINATE\t.TEST_WAIT_VBL",
+                        "__collapse": false
+                    }
+                },
+                {
                     "id": "961c7ef8-5a69-4368-aaed-cdfe6aa63467",
                     "command": "EVENT_END"
                 }
