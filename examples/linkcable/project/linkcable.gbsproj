@@ -14,6 +14,13 @@
             "collisions": [],
             "script": [
                 {
+                    "id": "4f795c18-a712-4b7e-93f0-bea97b7cf0c2",
+                    "command": "EVENT_FADE_IN",
+                    "args": {
+                        "speed": "2"
+                    }
+                },
+                {
                     "id": "63c4cbb5-79f7-46fe-b556-f81563364b52",
                     "command": "EVENT_CHOICE",
                     "args": {
@@ -39,51 +46,6 @@
                                 }
                             },
                             {
-                                "id": "dae29baa-b7ac-4fcb-8da6-c6e189c2ebc0",
-                                "command": "EVENT_GROUP",
-                                "args": {
-                                    "__collapse": false,
-                                    "__label": "Host Turn"
-                                },
-                                "children": {
-                                    "true": [
-                                        {
-                                            "id": "f245a498-9082-413d-b1c0-89dede3c4cd1",
-                                            "command": "EVENT_CHOICE",
-                                            "args": {
-                                                "variable": "L1",
-                                                "trueText": "1",
-                                                "falseText": "0"
-                                            }
-                                        },
-                                        {
-                                            "id": "7d8a6dd8-4b63-4238-9b06-d8f29ad5f625",
-                                            "command": "EVENT_LINK_TRANSFER",
-                                            "args": {
-                                                "sendVariable": "L1",
-                                                "receiveVariable": "L2",
-                                                "size": 1,
-                                                "__collapse": false
-                                            }
-                                        },
-                                        {
-                                            "id": "7d688d1e-4a30-4fe1-a901-03d72988a8c8",
-                                            "command": "EVENT_TEXT",
-                                            "args": {
-                                                "text": [
-                                                    "HOST GOT:\nMINE=$L1$\nTHEIRS=$L2$"
-                                                ],
-                                                "avatarId": ""
-                                            }
-                                        },
-                                        {
-                                            "id": "cabbb781-9d51-4d03-8a8c-f64c2f7ebb8b",
-                                            "command": "EVENT_END"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
                                 "id": "dbc40c48-9f11-481d-80ea-2673355d086d",
                                 "command": "EVENT_END"
                             }
@@ -95,55 +57,39 @@
                                 "args": {}
                             },
                             {
-                                "id": "7bcd164d-9b86-44ef-bf75-666686b68e61",
-                                "command": "EVENT_GROUP",
-                                "args": {
-                                    "__collapse": false,
-                                    "__label": "Client Turn"
-                                },
-                                "children": {
-                                    "true": [
-                                        {
-                                            "id": "7e551200-7a92-47ff-baf8-1d0d76d92258",
-                                            "command": "EVENT_CHOICE",
-                                            "args": {
-                                                "variable": "L1",
-                                                "trueText": "1",
-                                                "falseText": "0"
-                                            }
-                                        },
-                                        {
-                                            "id": "75690b1e-0df4-4c06-850c-9d18fdfdda1f",
-                                            "command": "EVENT_LINK_TRANSFER",
-                                            "args": {
-                                                "sendVariable": "L1",
-                                                "receiveVariable": "L2",
-                                                "size": 1,
-                                                "__collapse": false
-                                            }
-                                        },
-                                        {
-                                            "id": "7553d371-c239-4b88-8416-06a62cfbc8d3",
-                                            "command": "EVENT_TEXT",
-                                            "args": {
-                                                "text": [
-                                                    "CLIENT GOT:\nMINE=$L1$\nTHEIRS=$L2$"
-                                                ],
-                                                "avatarId": ""
-                                            }
-                                        },
-                                        {
-                                            "id": "538abebd-1489-43a0-b146-741d72e169c9",
-                                            "command": "EVENT_END"
-                                        }
-                                    ]
-                                }
-                            },
-                            {
                                 "id": "2e346df3-b062-4adf-a2de-4e45b08e7eba",
                                 "command": "EVENT_END"
                             }
                         ]
+                    }
+                },
+                {
+                    "id": "7e551200-7a92-47ff-baf8-1d0d76d92258",
+                    "command": "EVENT_CHOICE",
+                    "args": {
+                        "variable": "L1",
+                        "trueText": "1",
+                        "falseText": "0"
+                    }
+                },
+                {
+                    "id": "75690b1e-0df4-4c06-850c-9d18fdfdda1f",
+                    "command": "EVENT_LINK_TRANSFER",
+                    "args": {
+                        "sendVariable": "L1",
+                        "receiveVariable": "L2",
+                        "size": 1,
+                        "__collapse": false
+                    }
+                },
+                {
+                    "id": "7553d371-c239-4b88-8416-06a62cfbc8d3",
+                    "command": "EVENT_TEXT",
+                    "args": {
+                        "text": [
+                            "CLIENT GOT:\nMINE=$L1$\nTHEIRS=$L2$"
+                        ],
+                        "avatarId": ""
                     }
                 },
                 {
