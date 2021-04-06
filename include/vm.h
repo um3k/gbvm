@@ -123,7 +123,7 @@ void vm_raise(SCRIPT_CTX * THIS, UBYTE code, UBYTE size) __banked;
 void vm_set_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked;
 void vm_get_indirect(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB) __banked;
 void vm_test_terminate(SCRIPT_CTX * THIS, UBYTE flags) __banked;
-void vm_poll_loaded(SCRIPT_CTX * THIS, INT16 idx, UWORD value) __banked;
+void vm_poll_loaded(SCRIPT_CTX * THIS, INT16 idx) __banked;
 
 // return zero if script end
 // bank with VM code must be active
