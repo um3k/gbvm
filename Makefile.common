@@ -62,7 +62,7 @@ ENGINE_OBJS = $(CSRC:%.c=$(TOP)$(OBJDIR)/%.o) \
 OBJS = $(ENGINE_OBJS)
 REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
-all: directories $(TARGET) symbols
+all: settings directories $(TARGET) symbols
 
 .PHONY: clean release debug color super profile test directories
 .SECONDARY: $(OBJS) 
@@ -144,6 +144,7 @@ $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJDIR)/.rel
 
 clean:
 	@echo "CLEANUP..."
+	rm -rf $(TOP)$(OBJDIR)
 	rm -rf $(OBJDIR)
 	rm -rf $(ROM_BUILD_DIR)
 	rm -f $(TEST_DIR)/*/capture.bmp	

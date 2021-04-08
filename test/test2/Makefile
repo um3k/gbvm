@@ -1,4 +1,5 @@
 include ../../Makefile.common
+include ./Makefile.build
 
 ADATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.s)))
 CDATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.c)))
