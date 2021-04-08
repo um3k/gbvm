@@ -3,7 +3,7 @@ include ./Makefile.build
 
 ADATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.s)))
 CDATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.c)))
-MDATA = $(foreach dir,data/src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
+MDATA = $(foreach dir,data/src/data/music,$(notdir $(wildcard $(dir)/*.c)))
 
 OBJS = $(ENGINE_OBJS) \
 	$(ADATA:%.s=$(OBJDIR)/%.o) \
@@ -15,7 +15,7 @@ REL_OBJS       = $(REL_OBJS_LOCAL:$(TOP)$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 CFLAGS := -Idata/include -Wa-Idata/include $(CFLAGS)
 
-$(OBJDIR)/%.o:	data/src/data/$(MUSIC_DRIVER)/%.c
+$(OBJDIR)/%.o:	data/src/data/music/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<	
 
 $(OBJDIR)/%.o:	data/src/data/%.c
