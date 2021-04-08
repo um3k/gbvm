@@ -22,8 +22,8 @@ UBYTE link_packet_sent;
 
 void on_SIO_receive(UBYTE data) __nonbanked {
     if (link_packet_len) {
-        *link_packet_ptr++ = data;
         link_packet_len--;
+        *link_packet_ptr++ = data;
         if (link_packet_len == 0) {
             link_packet_ptr = link_packet;
             link_packet_received = TRUE;
@@ -31,8 +31,8 @@ void on_SIO_receive(UBYTE data) __nonbanked {
             SIO_receive();
         }
     } else {
-        link_packet_ptr = link_packet;
         link_packet_len = data;
+        link_packet_ptr = link_packet;
         SIO_receive();
     }
 }
