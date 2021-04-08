@@ -11,9 +11,6 @@ GBSPACK = $(TOP)../gbspack/gbspack
 TEST_CHK = python $(CURDIR)/$(TEST_FW)/unit_checker.py
 GBS_CLI = node $(TOP)../gb-studio/out/cli/gb-studio-cli.js
 
-CART_SIZE = 16
-CART_MBC = 0x1B
-MUSIC_DRIVER = HUGE_TRACKER
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
@@ -47,13 +44,11 @@ ACORE = $(foreach dir,$(TOP)src/core,$(notdir $(wildcard $(dir)/*.s)))
 CCORE = $(foreach dir,$(TOP)src/core,$(notdir $(wildcard $(dir)/*.c))) 
 CSTATES = $(foreach dir,$(TOP)src/states,$(notdir $(wildcard $(dir)/*.c))) 
 ASTATES = $(foreach dir,$(TOP)src/states,$(notdir $(wildcard $(dir)/*.s))) 
-MDRVR = $(foreach dir,$(TOP)src/core/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.s)))
 
 ENGINE_OBJS = $(CSRC:%.c=$(TOP)$(OBJDIR)/%.o) \
 	$(ASRC:%.s=$(TOP)$(OBJDIR)/%.o) \
 	$(ACORE:%.s=$(TOP)$(OBJDIR)/%.o) \
 	$(CCORE:%.c=$(TOP)$(OBJDIR)/%.o) \
-	$(MDRVR:%.s=$(TOP)$(OBJDIR)/%.o) \
 	$(CSTATES:%.c=$(TOP)$(OBJDIR)/%.o) \
 	$(ASTATES:%.s=$(TOP)$(OBJDIR)/%.o)
 
@@ -106,13 +101,14 @@ MBC5:
 	@echo "Using MBC5"
 
 hUGE:
-	$(eval MUSIC_DRIVER := HUGE_TRACKER)
+	$(eval MUSIC_DRIVER = HUGE_TRACKER)
 	$(eval CFLAGS += -DHUGE_TRACKER)
 	$(eval LFLAGS += -Wl-l$(TOP)lib/hUGEDriver.lib)
 	@echo "Enable hUGETracker"
 GBT:
-	$(eval MUSIC_DRIVER := GBT_PLAYER)
+	$(eval MUSIC_DRIVER = GBT_PLAYER)
 	$(eval CFLAGS += -DGBT_PLAYER)
+	$(eval LFLAGS += -Wl-l$(TOP)lib/gbt_player.lib)
 	@echo "Enable GBTPlayer"
 
 directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
