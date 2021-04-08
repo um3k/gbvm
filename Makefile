@@ -30,3 +30,13 @@ test:
 		$(MAKE) -C $$test test; \
 		echo ""; \
 	done
+
+clean:
+	@echo "CLEANUP..."
+	rm -rf $(OBJDIR)
+	rm -rf $(ROM_BUILD_DIR)
+	rm -f $(TEST_DIR)/*/capture.bmp	
+	rm -rf $(TEST_DIR)/*/obj
+	rm -rf $(TEST_DIR)/*/build
+	rm -rf $(EXAMPLES_DIR)/*/obj
+	rm -rf $(EXAMPLES_DIR)/*/build
