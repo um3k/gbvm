@@ -12,15 +12,13 @@ TEST_CHK = python $(CURDIR)/$(TEST_FW)/unit_checker.py
 GBS_CLI = node $(TOP)../gb-studio/out/cli/gb-studio-cli.js
 
 CART_SIZE = 16
-#CART_MBC = 0x1B
-CART_MBC = 0x10
+CART_MBC = 0x1B
+MUSIC_DRIVER = HUGE_TRACKER
 
 ROM_BUILD_DIR = build
 OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
-#MUSIC_DRIVER = GBT_PLAYER
-MUSIC_DRIVER = HUGE_TRACKER
 
 CFLAGS = -I$(TOP)include -Wa-I$(TOP)include -Wa-I$(GBDKLIB) -D$(MUSIC_DRIVER)
 
@@ -64,7 +62,7 @@ REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 all: settings directories $(TARGET) symbols
 
-.PHONY: clean release debug color super profile test directories
+.PHONY: clean release debug color super profile test directories MBC3 MBC5 hUGE GBT
 .SECONDARY: $(OBJS) 
 
 release:
@@ -96,6 +94,20 @@ batteryless:
 	$(eval BATTERYLESS = 1)
 	$(eval CFLAGS += -DBATTERYLESS)
 	@echo "BETTERYLESS SAVE ON"
+
+MBC3:
+	$(eval CART_MBC = 0x10)
+	@echo "Using MBC3"
+MBC5:
+	$(eval CART_MBC = 0x1B)
+	@echo "Using MBC5"
+
+hUGE:
+	$(eval MUSIC_DRIVER = HUGE_TRACKER)
+	@echo "Enable hUGETracker"
+GBT:
+	$(eval MUSIC_DRIVER = GBT_PLAYER)
+	@echo "Enable GBTPlayer"
 
 directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
 
