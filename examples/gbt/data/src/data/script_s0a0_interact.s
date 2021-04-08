@@ -1,0 +1,33 @@
+.include "vm.i"
+.include "data/game_globals.i"
+
+.area _CODE_255
+
+
+
+___bank_script_s0a0_interact = 255
+.globl ___bank_script_s0a0_interact
+
+_script_s0a0_interact::
+        VM_LOCK
+
+        ; If Variable True
+        VM_IF_CONST .EQ         VAR_S0A0_IS_PLAYING, 1, 1$, 0
+        ; Music Play
+        VM_MUSIC_PLAY           ___bank_music_track_0__Data, _music_track_0__Data, .MUSIC_LOOP
+
+        ; Variable Set To True
+        VM_SET_CONST            VAR_S0A0_IS_PLAYING, 1
+
+        VM_JUMP                 2$
+1$:
+        ; Music Stop
+        VM_MUSIC_STOP
+
+        ; Variable Set To False
+        VM_SET_CONST            VAR_S0A0_IS_PLAYING, 0
+
+2$:
+
+        ; Stop Script
+        VM_STOP
