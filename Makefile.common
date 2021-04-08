@@ -20,11 +20,11 @@ OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
 
-CFLAGS = -I$(TOP)include -Wa-I$(TOP)include -Wa-I$(GBDKLIB) -D$(MUSIC_DRIVER)
+CFLAGS = -I$(TOP)include -Wa-I$(TOP)include -Wa-I$(GBDKLIB)
 
 LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4 -Wl-j -Wl-m -Wl-w
 
-LFLAGS = -Wl-yt$(CART_MBC) $(LFLAGS_NBANKS) -Wl-klib -Wl-l$(TOP)lib/hUGEDriver.lib -Wl-g_shadow_OAM2=0xDF00 -Wl-g.STACK=0xDF00 -Wi-e
+LFLAGS = -Wl-yt$(CART_MBC) $(LFLAGS_NBANKS) -Wl-klib -Wl-g_shadow_OAM2=0xDF00 -Wl-g.STACK=0xDF00 -Wi-e
 
 PACKFLAGS = -b 4 -f 255 -e rel -c
 
@@ -106,10 +106,13 @@ MBC5:
 	@echo "Using MBC5"
 
 hUGE:
-	$(eval MUSIC_DRIVER = HUGE_TRACKER)
+	$(eval MUSIC_DRIVER := HUGE_TRACKER)
+	$(eval CFLAGS += -DHUGE_TRACKER)
+	$(eval LFLAGS += -Wl-l$(TOP)lib/hUGEDriver.lib)
 	@echo "Enable hUGETracker"
 GBT:
-	$(eval MUSIC_DRIVER = GBT_PLAYER)
+	$(eval MUSIC_DRIVER := GBT_PLAYER)
+	$(eval CFLAGS += -DGBT_PLAYER)
 	@echo "Enable GBTPlayer"
 
 directories: $(ROM_BUILD_DIR) $(OBJDIR) $(REL_OBJDIR)
@@ -130,7 +133,7 @@ $(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/%.c
 $(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/$(MUSIC_DRIVER)/%.s
+$(TOP)$(OBJDIR)/%.o:	$(TOP)src/core/GBT_PLAYER/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(TOP)$(OBJDIR)/%.o:	$(TOP)src/states/%.c

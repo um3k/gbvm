@@ -1,7 +1,7 @@
 include ../../Makefile.common
 include ./Makefile.build
 
-# MUSIC_DRIVER := GBT_PLAYER
+MUSIC_DRIVER := GBT_PLAYER
 ADATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.s)))
 CDATA = $(foreach dir,data/src/data,$(notdir $(wildcard $(dir)/*.c)))
 MDATA = $(foreach dir,data/src/data/$(MUSIC_DRIVER),$(notdir $(wildcard $(dir)/*.c)))
