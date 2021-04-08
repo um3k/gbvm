@@ -62,7 +62,7 @@ REL_OBJS = $(OBJS:$(OBJDIR)/%.o=$(REL_OBJDIR)/%.rel)
 
 all: settings directories $(TARGET) symbols
 
-.PHONY: clean release debug color super profile test directories MBC3 MBC5 hUGE GBT
+.PHONY: directories clean release debug profile DMG CGB SGB MBC3 MBC5 hUGE GBT test
 .SECONDARY: $(OBJS) 
 
 release:
@@ -75,19 +75,22 @@ debug:
 	$(eval LFLAGS += -Wf--debug -Wl-m -Wl-w -Wl-y)
 	@echo "DEBUG mode ON"
 
-color:
-	$(eval CFLAGS += -DCGB)
-	$(eval LFLAGS += -Wm-yC)
-	@echo "COLOR mode ON"
-
-super:
-	$(eval CFLAGS += -DSGB)
-	$(eval LFLAGS += -Wm-ys)
-	@echo "SUPER mode ON"
-
 profile:
 	$(eval CFLAGS += -Wf--profile)
 	@echo "PROFILE mode ON"
+
+DMG:
+	@echo "DMG mode ON"
+
+CGB:
+	$(eval CFLAGS += -DCGB)
+	$(eval LFLAGS += -Wm-yC)
+	@echo "CGB mode ON"
+
+SGB:
+	$(eval CFLAGS += -DSGB)
+	$(eval LFLAGS += -Wm-ys)
+	@echo "SGB mode ON"
 
 batteryless:
 	$(eval PACKFLAGS += -a 4)
