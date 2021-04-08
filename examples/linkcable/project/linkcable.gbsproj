@@ -64,32 +64,45 @@
                     }
                 },
                 {
-                    "id": "7e551200-7a92-47ff-baf8-1d0d76d92258",
-                    "command": "EVENT_CHOICE",
-                    "args": {
-                        "variable": "L1",
-                        "trueText": "1",
-                        "falseText": "0"
-                    }
-                },
-                {
-                    "id": "75690b1e-0df4-4c06-850c-9d18fdfdda1f",
-                    "command": "EVENT_LINK_TRANSFER",
-                    "args": {
-                        "sendVariable": "L1",
-                        "receiveVariable": "L2",
-                        "size": 1,
-                        "__collapse": false
-                    }
-                },
-                {
-                    "id": "7553d371-c239-4b88-8416-06a62cfbc8d3",
-                    "command": "EVENT_TEXT",
-                    "args": {
-                        "text": [
-                            "CLIENT GOT:\nMINE=$L1$\nTHEIRS=$L2$"
-                        ],
-                        "avatarId": ""
+                    "id": "f5986cbd-1bd3-432a-bc4c-aab6b700efec",
+                    "command": "EVENT_LOOP",
+                    "args": {},
+                    "children": {
+                        "true": [
+                            {
+                                "id": "7e551200-7a92-47ff-baf8-1d0d76d92258",
+                                "command": "EVENT_CHOICE",
+                                "args": {
+                                    "variable": "L1",
+                                    "trueText": "1",
+                                    "falseText": "0"
+                                }
+                            },
+                            {
+                                "id": "75690b1e-0df4-4c06-850c-9d18fdfdda1f",
+                                "command": "EVENT_LINK_TRANSFER",
+                                "args": {
+                                    "sendVariable": "L1",
+                                    "receiveVariable": "L2",
+                                    "size": 1,
+                                    "__collapse": false
+                                }
+                            },
+                            {
+                                "id": "7553d371-c239-4b88-8416-06a62cfbc8d3",
+                                "command": "EVENT_TEXT",
+                                "args": {
+                                    "text": [
+                                        "MINE=$L1$\nTHEIRS=$L2$"
+                                    ],
+                                    "avatarId": ""
+                                }
+                            },
+                            {
+                                "id": "1cca50b5-08eb-4456-aa75-979f212c09eb",
+                                "command": "EVENT_END"
+                            }
+                        ]
                     }
                 },
                 {
@@ -884,7 +897,7 @@
     "variables": [
         {
             "id": "c860944a-2fd8-4d44-94e6-2480b4463283__L0",
-            "name": "Is Master"
+            "name": "Is Host"
         },
         {
             "id": "c860944a-2fd8-4d44-94e6-2480b4463283__L1",
