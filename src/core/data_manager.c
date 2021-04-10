@@ -221,7 +221,7 @@ UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
         far_ptr_t tmp_ptr;
         for (i = 0; i != sprites_len; i++) {
             if (i == MAX_SCENE_SPRITES) break;
-            ReadBankedFarPtr(&tmp_ptr, (void *)scene_sprite_ptrs, scn.sprites.bank);
+            ReadBankedFarPtr(&tmp_ptr, (UBYTE *)scene_sprite_ptrs, scn.sprites.bank);
             base_tiles[i] = tile_allocation_hiwater;
             tile_allocation_hiwater += load_sprite(tile_allocation_hiwater, tmp_ptr.ptr, tmp_ptr.bank);
             scene_sprite_ptrs++;
