@@ -158,6 +158,6 @@ const struct actor_t scene_1_actors[] = {
     .frame_end = 0,
     .pinned = FALSE,
     .collision_group = COLLISION_GROUP_NONE,
-    .collision_enabled = TRUE
+    .collision_enabled = FALSE
   }
 };
