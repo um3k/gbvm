@@ -3,9 +3,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "system.h"
 #include "vm.h"
 #include "ui.h"
 #include "input.h"
+#include "scroll.h"
 #include "gbs_types.h"
 #include "bankdata.h"
 #include "data/data_bootstrap.h"
@@ -17,6 +19,8 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 
 extern UBYTE _itoa_fmt_len;
 UBYTE itoa_fmt(INT16 v, UBYTE * d) __banked __preserves_regs(b, c);
+
+void scroll_rect(UBYTE * base_addr, UBYTE w, UBYTE h, UBYTE fill) __preserves_regs(b, c);
 
 inline UBYTE itoa_format(INT16 v, UBYTE * d, UBYTE dlen) {
     _itoa_fmt_len = dlen;
@@ -147,6 +151,13 @@ void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UBY
     if (options & UI_DRAW_FRAME) {
         ui_draw_frame(x, y, w, h);
     } else {
+#ifdef CGB
+        if (_is_CGB) {
+            VBK_REG = 1;
+            fill_win_rect(x, y, w, h, (UI_PALETTE & 0x07u));        
+            VBK_REG = 0;
+        }
+#endif    
         fill_win_rect(x, y, w, h, ((color) ? ui_while_tile : ui_black_tile));
     }
 }
@@ -183,4 +194,18 @@ void vm_set_font(SCRIPT_CTX * THIS, UBYTE font_index) __banked {
 void vm_set_print_dir(SCRIPT_CTX * THIS, UBYTE print_dir) __banked {
     THIS;
     vwf_direction = print_dir & 1;
+}
+
+void vm_overlay_scroll(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UBYTE color) __banked {
+    THIS;
+    UBYTE * base_addr = GetWinAddr() + (y << 5) + x;
+    scroll_rect(base_addr, w, h, ((color) ? ui_while_tile : ui_black_tile));
+#ifdef CGB
+    if (_is_CGB) {
+        VBK_REG = 1;
+        scroll_rect(base_addr, w, h, (UI_PALETTE & 0x07u));
+        VBK_REG = 0;
+    }
+#endif
+
 }

@@ -107,7 +107,26 @@ _script_s2_input1::
         VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
- 
+
+
+        VM_OVERLAY_SCROLL       1, 1, 18, 5, .UI_COLOR_WHITE
+        VM_LOAD_TEXT            0
+            .asciz "\003\002\006New line 1"
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
+        VM_OVERLAY_SCROLL       1, 1, 18, 5, .UI_COLOR_WHITE
+        VM_LOAD_TEXT            0
+            .asciz "\003\002\006Some other line of text"
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
+        VM_OVERLAY_SCROLL       1, 1, 18, 5, .UI_COLOR_WHITE
+        VM_LOAD_TEXT            0
+            .asciz "\003\002\006One more line of text"
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
+
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/
 

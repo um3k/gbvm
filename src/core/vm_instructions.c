@@ -97,7 +97,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_load_cursor,            3}, // 0x4A
     {vm_set_font,               1}, // 0x4B
     {vm_set_print_dir,          1}, // 0x4C
-    {0, 0},
+    {vm_overlay_scroll,         5}, // 0x4D
     {0, 0},
     {0, 0},
 
