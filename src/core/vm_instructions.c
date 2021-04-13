@@ -79,9 +79,9 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_actor_get_pos,          2}, // 0x3A
     {vm_actor_set_hidden,       3}, // 0x3B
     {vm_actor_get_dir,          4}, // 0x3C
-    {0, 0},
-    {0, 0},
-    {0, 0},
+    {vm_actor_set_anim_tick,    3}, // 0x3D
+    {vm_actor_set_move_speed,   3}, // 0x3E
+    {vm_actor_set_coll_enabled, 3}, // 0x3F
 
     // user interface instructions section
     {vm_load_text,              1}, // 0x40
