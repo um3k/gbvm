@@ -111,7 +111,7 @@ _script_s2_input1::
 
         VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ 
         VM_LOAD_TEXT            0
-            .asciz "Terminal mode\nLoading text...\nText loaded!\nOne more line.\rLet's see if text scrolls...\rYes, td does!\rLet's type something else\rI don't know what...\rhello, world!\rI think that is enough."
+            .asciz "\001\005Terminal mode\nLoading text...\nText loaded!\nLet's see how this text scrolls...\rOne more line...\rYes, it does!\rLet's type something else...\rI don't know what...\rHello, world!\rI think that is\r\002\002ENOUGH\002\001."
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
