@@ -63,6 +63,10 @@ font_desc_t vwf_current_font_desc;
 UBYTE vwf_current_font_bank;
 UBYTE vwf_current_font_idx;
 
+UBYTE * text_scroll_addr;
+UBYTE text_scroll_width, text_scroll_height;
+UBYTE text_scroll_fill;
+
 extern const UBYTE ui_time_masks[];
 
 void ui_init() __banked {
@@ -93,6 +97,11 @@ void ui_init() __banked {
     win_speed                   = 1;
     text_drawn                  = TRUE;
     text_draw_speed             = 1;
+
+    text_scroll_addr            = GetWinAddr();
+    text_scroll_width           = 20; 
+    text_scroll_height          = 8;
+    text_scroll_fill            = ui_while_tile;
 
     ui_load_tiles();
 }
@@ -329,6 +338,19 @@ void ui_draw_text_buffer_char() __banked {
         case 0x08:
             // text direction (left-to-right or right-to-left)
             vwf_direction = (*++ui_text_ptr & 1u) ? UI_PRINT_LEFTTORIGHT : UI_PRINT_RIGHTTOLEFT;
+            break;
+        case '\r':
+            // line feed
+            scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, text_scroll_fill);
+#ifdef CGB
+            if (_is_CGB) {
+                VBK_REG = 1;
+                scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, (UI_PALETTE & 0x07u));
+                VBK_REG = 0;
+            }
+#endif
+            ui_dest_ptr = ui_dest_base;
+            if (vwf_current_offset) ui_print_reset();
             break;
         case '\n':
             // carriage return

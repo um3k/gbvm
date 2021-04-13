@@ -96,7 +96,7 @@ _script_s2_input1::
 
         VM_LOAD_TEXT            0
             .asciz "\002\006\343\342 \361\367\370\357 \371\350 \341\351\355\n\356\340\345\353\346\341 \345\354\364\372\362 \356\366\340 \347\341\370\344"
-        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
@@ -109,21 +109,9 @@ _script_s2_input1::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
 
-        VM_OVERLAY_SCROLL       1, 1, 18, 5, .UI_COLOR_WHITE
+        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ 
         VM_LOAD_TEXT            0
-            .asciz "\003\002\006New line 1"
-        VM_DISPLAY_TEXT
-        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
-
-        VM_OVERLAY_SCROLL       1, 1, 18, 5, .UI_COLOR_WHITE
-        VM_LOAD_TEXT            0
-            .asciz "\003\002\006Some other line of text"
-        VM_DISPLAY_TEXT
-        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
-
-        VM_OVERLAY_SCROLL       1, 1, 18, 5, .UI_COLOR_WHITE
-        VM_LOAD_TEXT            0
-            .asciz "\003\002\006One more line of text"
+            .asciz "Terminal mode\nLoading text...\nText loaded!\nOne more line.\rLet's see if text scrolls...\rYes, td does!\rLet's type something else\rI don't know what...\rhello, world!\rI think that is enough."
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 

@@ -471,6 +471,7 @@ OP_VM_OVERLAY_SHOW      = 0x46
 .UI_COLOR_BLACK         = 0
 .UI_COLOR_WHITE         = 1
 .UI_DRAW_FRAME          = 1
+.UI_AUTO_SCROLL         = 2
 .macro VM_OVERLAY_SHOW X, Y, COLOR, OPTIONS
         .db OP_VM_OVERLAY_SHOW, #<OPTIONS, #<COLOR, #<Y, #<X
 .endm
@@ -516,6 +517,11 @@ OP_VM_SET_PRINT_DIR     = 0x4C
 OP_VM_OVERLAY_SCROLL    = 0x4D
 .macro VM_OVERLAY_SCROLL X, Y, W, H, COLOR
         .db OP_VM_OVERLAY_SCROLL, #<COLOR, #<H, #<W, #<Y, #<X 
+.endm
+
+OP_VM_OVERLAY_SET_SCROLL = 0x4E
+.macro VM_OVERLAY_SET_SCROLL X, Y, W, H, COLOR
+        .db OP_VM_OVERLAY_SET_SCROLL, #<COLOR, #<H, #<W, #<Y, #<X 
 .endm
 
 ; --- GAMEBOY ------------------------------------------

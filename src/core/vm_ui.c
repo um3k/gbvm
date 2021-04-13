@@ -20,8 +20,6 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked;
 extern UBYTE _itoa_fmt_len;
 UBYTE itoa_fmt(INT16 v, UBYTE * d) __banked __preserves_regs(b, c);
 
-void scroll_rect(UBYTE * base_addr, UBYTE w, UBYTE h, UBYTE fill) __preserves_regs(b, c);
-
 inline UBYTE itoa_format(INT16 v, UBYTE * d, UBYTE dlen) {
     _itoa_fmt_len = dlen;
     UBYTE len = itoa_fmt(v, d);
@@ -144,12 +142,21 @@ void vm_overlay_move_to(SCRIPT_CTX * THIS, UBYTE pos_x, UBYTE pos_y, BYTE speed)
     ui_move_to(pos_x << 3, pos_y << 3, speed);
 }
 
+// set autoscroll parameters
+void vm_overlay_set_scroll(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UBYTE color) __banked {
+    THIS;
+    text_scroll_addr = GetWinAddr() + (y << 5) + x;
+    text_scroll_width = w; text_scroll_height = h;
+    text_scroll_fill = (color) ? ui_while_tile : ui_black_tile;
+}
+
 // clears overlay window
 void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UBYTE color, UBYTE options) __banked {
     THIS;
     text_bkg_fill = (color) ? TEXT_BKG_FILL_W : TEXT_BKG_FILL_B;
     if (options & UI_DRAW_FRAME) {
         ui_draw_frame(x, y, w, h);
+        if (options & UI_AUTOSCROLL) vm_overlay_set_scroll(THIS, x + 1, y + 1, w - 2, h - 2, color);
     } else {
 #ifdef CGB
         if (_is_CGB) {
@@ -159,6 +166,7 @@ void vm_overlay_clear(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UBY
         }
 #endif    
         fill_win_rect(x, y, w, h, ((color) ? ui_while_tile : ui_black_tile));
+        if (options & UI_AUTOSCROLL) vm_overlay_set_scroll(THIS, x, y, w, h, color);
     }
 }
 
@@ -207,5 +215,4 @@ void vm_overlay_scroll(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE w, UBYTE h, UB
         VBK_REG = 0;
     }
 #endif
-
 }
