@@ -425,6 +425,21 @@ OP_VM_ACTOR_GET_DIR     = 0x3C
         .db OP_VM_ACTOR_GET_DIR, #>DEST, #<DEST, #>IDX, #<IDX
 .endm
 
+OP_VM_ACTOR_SET_ANIM_TICK     = 0x3D
+.macro VM_ACTOR_SET_ANIM_TICK ACTOR, TICK
+        .db OP_VM_ACTOR_SET_ANIM_TICK, #<TICK, #>ACTOR, #<ACTOR
+.endm
+
+OP_VM_ACTOR_SET_MOVE_SPEED     = 0x3E
+.macro VM_ACTOR_SET_MOVE_SPEED ACTOR, SPEED
+        .db OP_VM_ACTOR_SET_MOVE_SPEED, #<SPEED, #>ACTOR, #<ACTOR
+.endm
+
+OP_VM_ACTOR_SET_COLL_ENABLED     = 0x3F
+.macro VM_ACTOR_SET_COLL_ENABLED ACTOR, ENABLED
+        .db OP_VM_ACTOR_SET_COLL_ENABLED, #<ENABLED, #>ACTOR, #<ACTOR
+.endm
+
 ; --- UI ------------------------------------------
 
 OP_VM_LOAD_TEXT         = 0x40
