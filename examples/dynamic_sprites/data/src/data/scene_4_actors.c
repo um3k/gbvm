@@ -165,6 +165,7 @@ const struct actor_t scene_4_actors[] = {
         .move_speed = 16,
         .anim_tick = 3,
         .pinned = FALSE,
+        .exclusive_sprite = TRUE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s4a6_interact)

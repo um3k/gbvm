@@ -18,7 +18,7 @@ _script_s4a4_interact::
         VM_PUSH_CONST           0
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            ACTOR, 7
         VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Spritesheet
