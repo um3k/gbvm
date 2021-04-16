@@ -24,7 +24,7 @@ _script_s0a2_interact::
 
         ; Emote
         VM_PUSH_CONST           3
-        VM_ACTOR_EMOTE          .ARG0, ___bank_spritesheet_1, _spritesheet_1
+        VM_ACTOR_EMOTE          .ARG0, ___bank_emote_1, _emote_1
         VM_POP                  1
 
         ; Text Dialogue

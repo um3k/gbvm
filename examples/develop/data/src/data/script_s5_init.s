@@ -39,7 +39,7 @@ _script_s5_init::
 
         ; Emote
         ; VM_SET_CONST            ACTOR, 0
-        ; VM_ACTOR_EMOTE          ACTOR, ___bank_spritesheet_1, _spritesheet_1
+        ; VM_ACTOR_EMOTE          ACTOR, ___bank_emote_1, _emote_1
 
         ; VM_ACTOR_MOVE_TO        ACTOR
         
