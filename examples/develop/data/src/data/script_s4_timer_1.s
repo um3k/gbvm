@@ -21,7 +21,7 @@ _script_s4_timer1::
 2$:
         VM_SET_CONST            VAR_S4_FLOWER_STATE, 5
 3$:
-        VM_PUSH_CONST           1
-        VM_REPLACE_TILE         0xA7, ___bank_tileset_6, _tileset_6, VAR_S4_FLOWER_STATE, .ARG0
+        VM_PUSH_CONST           0xA7
+        VM_REPLACE_TILE         .ARG0, ___bank_tileset_6, _tileset_6, VAR_S4_FLOWER_STATE, 1
         VM_POP                  1
         VM_STOP
