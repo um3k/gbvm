@@ -354,17 +354,12 @@ OP_VM_COS_SCALE         = 0x2D
 
 ; --- LOAD/SAVE --------------------------------------
 
-OP_VM_SAVE_PEEK         = 0x2E
-.macro VM_SAVE_PEEK RES, DEST, SOUR, COUNT, SLOT
-        .db OP_VM_SAVE_PEEK, #<SLOT, #<COUNT, #>SOUR, #<SOUR, #>DEST, #<DEST, #>RES, #<RES
-.endm
-
 .macro .SAVE_SLOT SLOT
         .db #<SLOT
 .endm
-OP_VM_DATA_IS_SAVED     = 0x2F
-.macro VM_DATA_IS_SAVED IDX, SLOT
-        .db OP_VM_DATA_IS_SAVED, #<SLOT, #>IDX, #<IDX 
+OP_VM_SAVE_PEEK         = 0x2E
+.macro VM_SAVE_PEEK RES, DEST, SOUR, COUNT, SLOT
+        .db OP_VM_SAVE_PEEK, #<SLOT, #<COUNT, #>SOUR, #<SOUR, #>DEST, #<DEST, #>RES, #<RES
 .endm
 
 ; --- ACTOR ------------------------------------------
