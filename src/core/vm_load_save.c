@@ -5,6 +5,7 @@
 #include "load_save.h"
 
 void vm_save_clear(SCRIPT_CTX * THIS, UBYTE slot) __banked {
+    THIS;
     data_clear(slot);
 }
 
