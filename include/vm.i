@@ -711,6 +711,12 @@ OP_VM_WAVE_PLAY         = 0x66
         .db OP_VM_WAVE_PLAY, #>SIZE, #<SIZE, #>ADDR, #<ADDR, #<BANK, #<FRAMES
 .endm
 
+; Sets music playback position
+OP_VM_MUSIC_SETPOS      = 0x67
+.macro VM_MUSIC_SETPOS PATTERN, ROW
+        .db OP_VM_MUSIC_SETPOS, #<ROW, #<PATTERN
+.endm
+
 ; --- SCENES -------------------------------
 
 OP_VM_SCENE_PUSH        = 0x68
