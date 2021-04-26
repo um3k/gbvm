@@ -257,6 +257,13 @@ void vm_rpn(UWORD dummy0, UWORD dummy1, SCRIPT_CTX * THIS) __nonbanked {
         INT8 op = *(THIS->PC++);
         if (op < 0) {
             switch (op) {
+                // indirect reference
+                case -4:
+                    idx = *((INT16 *)(THIS->PC)); 
+                    idx = *((idx < 0) ? ARGS + idx : script_memory + idx);
+                    *(THIS->stack_ptr) = *((idx < 0) ? ARGS + idx : script_memory + idx);
+                    THIS->PC += 2;
+                    break;
                 // reference
                 case -3:
                     idx = *((INT16 *)(THIS->PC)); 
