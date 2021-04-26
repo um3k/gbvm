@@ -135,6 +135,12 @@ OP_VM_IF           = 0x0F
         .db OP_VM_IF, #<N, #>LABEL, #<LABEL, #>IDXB, #<IDXB, #>IDXA, #<IDXA, #<CONDITION
 .endm
 
+; pushes a value on VM stack or a global indirectly from an index in the variable on VM stack or in a global onto VM stack
+OP_VM_PUSH_VALUE_IND = 0x10
+.macro VM_PUSH_VALUE_IND ARG0
+        .db OP_VM_PUSH_VALUE_IND, #>ARG0, #<ARG0
+.endm
+
 ; pushes a value on VM stack or a global onto VM stack
 OP_VM_PUSH_VALUE   = 0x11
 .macro VM_PUSH_VALUE ARG0

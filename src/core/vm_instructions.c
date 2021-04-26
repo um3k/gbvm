@@ -33,8 +33,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_invoke,                 6}, // 0x0D
     {vm_beginthread,            6}, // 0x0E
     {vm_if,                     8}, // 0x0F
-    {0, 0}, 
-    {vm_pushvalue,              2}, // 0x11
+    {vm_push_value_ind,         2}, // 0x11 
+    {vm_push_value,             2}, // 0x11
     {vm_reserve,                1}, // 0x12
     {vm_set,                    4}, // 0x13
     {vm_set_const,              4}, // 0x14
