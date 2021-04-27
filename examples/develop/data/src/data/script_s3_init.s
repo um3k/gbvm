@@ -17,7 +17,7 @@ _script_s3_init::
 
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
-        .asciz "\003\003\002\001\002New Game\nContinue"
+            .asciz "\003\003\002\001\002New Game\nContinue"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
