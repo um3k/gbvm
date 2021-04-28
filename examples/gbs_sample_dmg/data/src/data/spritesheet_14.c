@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: ice
+// SpriteSheet: dog
   
 #include "gbs_types.h"
 #include "data/tileset_16.h"
