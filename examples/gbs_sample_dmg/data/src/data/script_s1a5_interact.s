@@ -35,8 +35,6 @@ _script_s1a5_interact::
         VM_POLL_LOADED          .ARG0
         VM_IF_CONST .EQ         .ARG0, 1, 3$, 1
 
-3$:
-
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Game progress has\nbeen saved."
@@ -56,6 +54,8 @@ _script_s1a5_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
+3$:
 
 2$:
 

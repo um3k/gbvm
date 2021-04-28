@@ -1887,24 +1887,24 @@
                                         "children": {
                                             "true": [
                                                 {
+                                                    "id": "b3e842cf-3a49-411b-a588-28e7811dddd8",
+                                                    "command": "EVENT_TEXT",
+                                                    "args": {
+                                                        "text": "Game progress has\nbeen saved."
+                                                    }
+                                                },
+                                                {
+                                                    "id": "4720e024-f89f-410e-8534-f67fbff8e673",
+                                                    "command": "EVENT_TEXT",
+                                                    "args": {
+                                                        "text": "It is now safe to\nturn off your\nsystem."
+                                                    }
+                                                },
+                                                {
                                                     "id": "04cc1c40-2319-4b1c-98b0-3fc5c128d84c",
                                                     "command": "EVENT_END"
                                                 }
                                             ]
-                                        }
-                                    },
-                                    {
-                                        "id": "b3e842cf-3a49-411b-a588-28e7811dddd8",
-                                        "command": "EVENT_TEXT",
-                                        "args": {
-                                            "text": "Game progress has\nbeen saved."
-                                        }
-                                    },
-                                    {
-                                        "id": "4720e024-f89f-410e-8534-f67fbff8e673",
-                                        "command": "EVENT_TEXT",
-                                        "args": {
-                                            "text": "It is now safe to\nturn off your\nsystem."
                                         }
                                     },
                                     {
