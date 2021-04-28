@@ -12,7 +12,7 @@ _script_s0a0_interact::
         VM_LOCK
 
         ; If Variable True
-        VM_IF_CONST .EQ         VAR_S0A0_IS_PLAYING, 1, 1$, 0
+        VM_IF_CONST .GT         VAR_S0A0_IS_PLAYING, 0, 1$, 0
         ; Music Play
         VM_MUSIC_PLAY           ___bank_music_track_0__Data, _music_track_0__Data, .MUSIC_LOOP
 

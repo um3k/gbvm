@@ -1,6 +1,8 @@
 .include "vm.i"
 .include "data/game_globals.i"
 
+.globl b_wait_frames, _wait_frames
+
 .area _CODE_255
 
 
@@ -10,6 +12,10 @@ ___bank_script_s0_init = 255
 
 _script_s0_init::
         VM_LOCK
+
+        ; Wait 1 Frame
+        VM_PUSH_CONST           1
+        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         ; Fade In
         VM_FADE_IN              2
@@ -28,7 +34,7 @@ _script_s0_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; If Variable True
-        VM_IF_CONST .EQ         VAR_S0_IS_HOST, 1, 1$, 0
+        VM_IF_CONST .GT         VAR_S0_IS_HOST, 0, 1$, 0
         VM_SIO_SET_MODE         .SIO_MODE_MASTER
         VM_JUMP                 2$
 1$:

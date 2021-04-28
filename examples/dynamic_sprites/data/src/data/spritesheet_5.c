@@ -7,8 +7,8 @@
 const void __at(255) __bank_spritesheet_5;
 
 const metasprite_t spritesheet_5_metasprite_0[]  = {
-  { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
-{metasprite_end}
+    { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
+    {metasprite_end}
 };
 
 const metasprite_t * const spritesheet_5_metasprites[] = {
@@ -51,6 +51,12 @@ const struct spritesheet_t spritesheet_5 = {
             .start = 0,
             .end = 0
         }
+    },
+    .bounds = {
+        .left = 0,
+        .bottom = 7,
+        .right = 15,
+        .top = -8
     },
     .tileset = TO_FAR_PTR_T(tileset_6),
     .cgb_tileset = { NULL, NULL }

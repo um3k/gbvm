@@ -8,7 +8,6 @@
 #include "data/palette_0.h"
 #include "data/palette_1.h"
 #include "data/spritesheet_0.h"
-#include "data/scene_1_sprites.h"
 
 const void __at(255) __bank_scene_1;
 
@@ -23,6 +22,5 @@ const struct scene_t scene_1 = {
     .player_sprite = TO_FAR_PTR_T(spritesheet_0),
     .n_actors = 0,
     .n_triggers = 0,
-    .n_sprites = 1,
-    .sprites = TO_FAR_PTR_T(scene_1_sprites)
+    .n_sprites = 0
 };

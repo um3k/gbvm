@@ -39,6 +39,12 @@ const struct spritesheet_t spritesheet_3 = {
     { .start = 0, .end = 1 }, // top
     { .start = 0, .end = 1 }, // left
   },  
+  .bounds = {
+    .left = 0,
+    .bottom = 7,
+    .right = 15,
+    .top = -8
+  },
   .tileset = TO_FAR_PTR_T(spritesheet_3_tiles),
   .cgb_tileset = { NULL, NULL },
 };
