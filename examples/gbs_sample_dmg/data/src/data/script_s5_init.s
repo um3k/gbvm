@@ -35,10 +35,6 @@ _script_s5_init::
         ; Wait For Input
         VM_INPUT_WAIT           240
 
-        ; Input Script Attach
-        VM_CONTEXT_PREPARE      1, ___bank_script_input_0, _script_input_0
-        VM_INPUT_ATTACH         128, 1
-
 1$:
         ; Text Multiple Choice
         VM_LOAD_TEXT            0

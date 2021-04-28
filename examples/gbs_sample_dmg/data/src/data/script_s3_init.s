@@ -20,5 +20,8 @@ _script_s3_init::
         ; Fade In
         VM_FADE_IN              1
 
+        ; Call Script: Initialize Menu
+        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+
         ; Stop Script
         VM_STOP
