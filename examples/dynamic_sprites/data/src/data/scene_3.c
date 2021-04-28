@@ -24,7 +24,7 @@ const struct scene_t scene_3 = {
     .player_sprite = TO_FAR_PTR_T(spritesheet_7),
     .n_actors = 2,
     .n_triggers = 0,
-    .n_sprites = 3,
+    .n_sprites = 2,
     .actors = TO_FAR_PTR_T(scene_3_actors),
     .sprites = TO_FAR_PTR_T(scene_3_sprites)
 };

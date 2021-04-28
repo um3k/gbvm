@@ -52,7 +52,13 @@ const metasprite_t * const spritesheet_7_metasprites[] = {
 
 const struct spritesheet_t spritesheet_7 = {
   .n_metasprites = 6,
-  .metasprites = spritesheet_7_metasprites,   
+  .metasprites = spritesheet_7_metasprites,
+  .bounds = {
+    .left = 0,
+    .bottom = 7,
+    .right = 15,
+    .top = -8
+  },
   .tileset = TO_FAR_PTR_T(spritesheet_7_tiles),
   .cgb_tileset = { NULL, NULL },
 };

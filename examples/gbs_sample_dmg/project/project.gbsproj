@@ -8631,7 +8631,9 @@
                 }
             ],
             "animationType": "multi_movement",
-            "flipLeft": true
+            "flipLeft": true,
+            "boundsHeight": 8,
+            "boundsWidth": 16
         },
         {
             "id": "a0442b6a-634f-44da-9962-77938e3ed839",

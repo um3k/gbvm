@@ -156,7 +156,7 @@ _script_s0t1_interact::
 2$:
 
         ; Call Script: Update Input Fields
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+        VM_CALL_FAR             ___bank_script_custom_1, _script_custom_1
 
         ; Stop Script
         VM_STOP
