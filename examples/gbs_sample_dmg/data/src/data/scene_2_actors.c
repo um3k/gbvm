@@ -4,9 +4,9 @@
 // Actors
 
 #include "gbs_types.h"
-#include "data/spritesheet_11.h"
-#include "data/script_s2a0_interact.h"
 #include "data/spritesheet_12.h"
+#include "data/script_s2a0_interact.h"
+#include "data/spritesheet_13.h"
 #include "data/script_s2a1_interact.h"
 #include "data/spritesheet_2.h"
 #include "data/script_s2a2_interact.h"
@@ -31,7 +31,7 @@ const struct actor_t scene_2_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_11),
+        .sprite = TO_FAR_PTR_T(spritesheet_12),
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -52,7 +52,7 @@ const struct actor_t scene_2_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_12),
+        .sprite = TO_FAR_PTR_T(spritesheet_13),
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,

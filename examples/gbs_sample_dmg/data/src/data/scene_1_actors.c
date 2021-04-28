@@ -12,6 +12,7 @@
 #include "data/spritesheet_8.h"
 #include "data/spritesheet_10.h"
 #include "data/script_s1a5_interact.h"
+#include "data/spritesheet_11.h"
 
 const void __at(255) __bank_scene_1_actors;
 
@@ -137,5 +138,25 @@ const struct actor_t scene_1_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s1a5_interact)
+    },
+    {
+        // Actor 7,
+        .pos = {
+            .x = 32 * 16,
+            .y = 88 * 16
+        },
+        .bounds = {
+            .left = 0,
+            .bottom = 7,
+            .right = 15,
+            .top = -8
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(spritesheet_11),
+        .move_speed = 16,
+        .anim_tick = 3,
+        .pinned = FALSE,
+        .collision_group = COLLISION_GROUP_NONE,
+        .collision_enabled = TRUE
     }
 };

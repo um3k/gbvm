@@ -5,13 +5,26 @@
 
 .area _CODE_255
 
-
+ACTOR = -4
 
 ___bank_script_s1_init = 255
 .globl ___bank_script_s1_init
 
 _script_s1_init::
         VM_LOCK
+
+        ; Local Actor
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+        VM_PUSH_CONST           0
+
+        ; Actor Set Active
+        VM_SET_CONST            ACTOR, 7
+        VM_ACTOR_ACTIVATE       ACTOR
+
+        ; Actor Set Collisions
+        VM_ACTOR_SET_COLL_ENABLED ACTOR, 0
 
         ; Wait 1 Frame
         VM_PUSH_CONST           1

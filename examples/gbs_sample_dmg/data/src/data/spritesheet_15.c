@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: checkbox
+// SpriteSheet: ice
   
 #include "gbs_types.h"
 #include "data/tileset_17.h"
@@ -7,27 +7,16 @@
 const void __at(255) __bank_spritesheet_15;
 
 const metasprite_t spritesheet_15_metasprite_0[]  = {
-    { 0, 0, 2, 0 },
-    {metasprite_end}
-};
-
-const metasprite_t spritesheet_15_metasprite_1[]  = {
-    {metasprite_end}
-};
-
-const metasprite_t spritesheet_15_metasprite_2[]  = {
-    { 0, 0, 0, 0 },
+    { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
     {metasprite_end}
 };
 
 const metasprite_t * const spritesheet_15_metasprites[] = {
-    spritesheet_15_metasprite_0,
-    spritesheet_15_metasprite_1,
-    spritesheet_15_metasprite_2
+    spritesheet_15_metasprite_0
 };
 
 const struct spritesheet_t spritesheet_15 = {
-    .n_metasprites = 3,
+    .n_metasprites = 1,
     .metasprites = spritesheet_15_metasprites,
     .animations = {
         {
@@ -35,32 +24,32 @@ const struct spritesheet_t spritesheet_15 = {
             .end = 0
         },
         {
-            .start = 1,
-            .end = 1
-        },
-        {
-            .start = 2,
-            .end = 2
-        },
-        {
-            .start = 1,
-            .end = 1
+            .start = 0,
+            .end = 0
         },
         {
             .start = 0,
             .end = 0
         },
         {
-            .start = 1,
-            .end = 1
+            .start = 0,
+            .end = 0
         },
         {
-            .start = 2,
-            .end = 2
+            .start = 0,
+            .end = 0
         },
         {
-            .start = 1,
-            .end = 1
+            .start = 0,
+            .end = 0
+        },
+        {
+            .start = 0,
+            .end = 0
+        },
+        {
+            .start = 0,
+            .end = 0
         }
     },
     .bounds = {

@@ -6,7 +6,7 @@
 #include "gbs_types.h"
 #include "data/spritesheet_2.h"
 #include "data/script_s6a0_interact.h"
-#include "data/spritesheet_14.h"
+#include "data/spritesheet_15.h"
 #include "data/script_s6a1_interact.h"
 #include "data/spritesheet_1.h"
 #include "data/script_s6a2_interact.h"
@@ -52,7 +52,7 @@ const struct actor_t scene_6_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_14),
+        .sprite = TO_FAR_PTR_T(spritesheet_15),
         .move_speed = 32,
         .anim_tick = 15,
         .pinned = FALSE,

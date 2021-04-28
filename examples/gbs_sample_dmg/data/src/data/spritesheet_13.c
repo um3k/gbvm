@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: dog
+// SpriteSheet: radio
   
 #include "gbs_types.h"
 #include "data/tileset_15.h"
