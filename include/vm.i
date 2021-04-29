@@ -354,6 +354,15 @@ OP_VM_POLL_LOADED     = 0x2B
         .db OP_VM_POLL_LOADED, #>IDX, #<IDX
 .endm
 
+OP_VM_MEMSET          = 0x76
+.macro VM_MEMSET DEST, VALUE, COUNT
+        .db OP_VM_MEMSET, #>COUNT, #<COUNT, #>VALUE, #<VALUE, #>DEST, #<DEST
+.endm
+
+OP_VM_MEMCPY          = 0x77
+.macro VM_MEMCPY DEST, SOUR, COUNT
+        .db OP_VM_MEMCPY, #>COUNT, #<COUNT, #>SOUR, #<SOUR, #>DEST, #<DEST
+.endm
 
 ; --- engine-specific instructions ------------------------------------------
 
