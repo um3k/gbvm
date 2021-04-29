@@ -739,6 +739,16 @@ OP_VM_SCENE_POP         = 0x69
         .db OP_VM_SCENE_POP
 .endm
 
+OP_VM_SCENE_POP_ALL     = 0x6A
+.macro VM_SCENE_POP_ALL
+        .db OP_VM_SCENE_POP_ALL
+.endm
+
+OP_VM_SCENE_STACK_RESET = 0x6B
+.macro VM_SCENE_STACK_RESET
+        .db OP_VM_SCENE_STACK_RESET
+.endm
+
 ; --- SIO ----------------------------------
 
 OP_VM_SIO_SET_MODE      = 0x6C

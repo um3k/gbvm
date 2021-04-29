@@ -133,8 +133,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_music_setpos,           2}, // 0x67
     {vm_scene_push,             0}, // 0x68
     {vm_scene_pop,              0}, // 0x69
-    {0, 0},
-    {0, 0},
+    {vm_scene_pop_all,          0}, // 0x6A
+    {vm_scene_stack_reset,      0}, // 0x6B
     {vm_sio_set_mode,           1}, // 0x6C
     {vm_sio_exchange,           5}, // 0x6D
     {0, 0},
