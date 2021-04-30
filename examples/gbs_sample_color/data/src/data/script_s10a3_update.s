@@ -13,7 +13,7 @@ ___bank_script_s10a3_update = 255
 _script_s10a3_update::
 1$:
         ; Call Script: Turnip Movement
-        VM_PUSH_CONST           0 ; Actor .ARG2
+        VM_PUSH_CONST           4 ; Actor .ARG2
         VM_CALL_FAR             ___bank_script_custom_10, _script_custom_10
         VM_POP                  1
 

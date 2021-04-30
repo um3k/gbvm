@@ -28,6 +28,8 @@ _script_custom_3::
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Sound Play Crash
+        VM_SOUND_PLAY           30, 4, 0x01, 0xF2, 0x13, 0x80, 0x00
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
         VM_ACTOR_ACTIVATE       ACTOR

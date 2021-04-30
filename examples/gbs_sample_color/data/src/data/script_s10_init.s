@@ -27,19 +27,19 @@ _script_s10_init::
         VM_FADE_IN              1
 
         ; Call Script: Turnip Init
-        VM_PUSH_CONST           0 ; Actor .ARG3
+        VM_PUSH_CONST           2 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED ; Variable .ARG2
         VM_CALL_FAR             ___bank_script_custom_8, _script_custom_8
         VM_POP                  2
 
         ; Call Script: Turnip Init
-        VM_PUSH_CONST           0 ; Actor .ARG3
+        VM_PUSH_CONST           4 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED_1 ; Variable .ARG2
         VM_CALL_FAR             ___bank_script_custom_8, _script_custom_8
         VM_POP                  2
 
         ; Call Script: Turnip Init
-        VM_PUSH_CONST           0 ; Actor .ARG3
+        VM_PUSH_CONST           5 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED_2 ; Variable .ARG2
         VM_CALL_FAR             ___bank_script_custom_8, _script_custom_8
         VM_POP                  2

@@ -13,7 +13,7 @@ ___bank_script_s7a13_update = 255
 _script_s7a13_update::
 1$:
         ; Call Script: Enemy Ship Movement Diagonal Bottom To Top
-        VM_PUSH_CONST           0 ; Actor .ARG2
+        VM_PUSH_CONST           14 ; Actor .ARG2
         VM_CALL_FAR             ___bank_script_custom_7, _script_custom_7
         VM_POP                  1
 
