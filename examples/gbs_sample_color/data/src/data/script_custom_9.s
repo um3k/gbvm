@@ -1,7 +1,7 @@
 .include "vm.i"
 .include "data/game_globals.i"
 
-.globl b_wait_frames, _wait_frames, b_camera_shake_frames, _camera_shake_frames
+.globl _pl_vel_y, b_wait_frames, _wait_frames, b_camera_shake_frames, _camera_shake_frames
 
 .area _CODE_255
 
@@ -58,12 +58,18 @@ _script_custom_9::
         VM_SET                  ACTOR, ^/(.ARG4 - 4)/
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Actor Stop Update Script
+        VM_ACTOR_TERMINATE_UPDATE ACTOR
+
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG4 - 4)/
         VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Spritesheet
         VM_ACTOR_SET_SPRITESHEET ACTOR, ___bank_spritesheet_6, _spritesheet_6
+
+        ; Player Bounce
+        VM_SET_CONST_INT16      _pl_vel_y, -8192
 
         ; Wait N Frames
         VM_PUSH_CONST           30
