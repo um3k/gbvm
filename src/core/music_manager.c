@@ -298,7 +298,7 @@ __asm
 __endasm;
 }
 
-void sound_play(UBYTE frames, UBYTE channel, UBYTE bank, UBYTE * data) __banked {
+void sound_play(UBYTE frames, UBYTE channel, UBYTE bank, const UBYTE * data) __banked {
     if (tone_frames) return;                        // exit if sound is already playing.
     if (frames == 0) return;                        // exit if length in frames is zero
     if ((channel == 0) || (channel > 4)) return;    // exit if channel is out of bounds
