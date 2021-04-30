@@ -102,7 +102,7 @@ const struct spritesheet_t spritesheet_7 = {
         .left = 0,
         .bottom = 7,
         .right = 15,
-        .top = -8
+        .top = 0
     },
     .tileset = TO_FAR_PTR_T(tileset_11),
     .cgb_tileset = { NULL, NULL }
