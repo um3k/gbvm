@@ -252,9 +252,9 @@ __asm
 __endasm;
 }
 
-const UINT8 FX_REG_SIZES[]  = {5, 4, 5, 4};
-const UINT8 FX_ADDR_LO[]    = {0x10, 0x16, 0x1a, 0x20};
-const UINT8 channel_masks[] = {0x0e, 0x0d, 0x0b, 0x07};
+const UINT8 FX_REG_SIZES[]  = {0, 5, 4, 5, 4};
+const UINT8 FX_ADDR_LO[]    = {0, 0x10, 0x16, 0x1a, 0x20};
+const UINT8 channel_masks[] = {0, 0x0e, 0x0d, 0x0b, 0x07};
 
 void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
     if (tone_frames) return;                        // exit if sound is already playing.
@@ -265,14 +265,51 @@ void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
     tone_frames = frames;
 }
 
-void sound_play(UBYTE frames, UBYTE channel, UBYTE * data) __banked {
+static void sound_load_regs(UBYTE reg, UBYTE len, UBYTE bank, const UBYTE * data) __nonbanked __naked {
+__asm
+        ldhl sp, #2
+        ld a, (hl+)
+        ld c, a
+        ld a, (hl+)
+        ld b, a
+
+        ldh a, (__current_bank)
+        ld e, a
+        ld a, (hl+)
+        ldh (__current_bank), a
+        ld (0x2000), a
+
+        ld a, (hl+)
+        ld h, (hl)
+        ld l, a
+1$:
+        ld a, (hl+)
+        ldh (c), a
+        inc c
+        dec b
+        jr nz, 1$
+
+        ld a, e
+        ldh (__current_bank), a
+        ld (0x2000), a
+
+        ret
+__endasm;
+}
+
+void sound_play(UBYTE frames, UBYTE channel, UBYTE bank, UBYTE * data) __banked {
     if (tone_frames) return;                        // exit if sound is already playing.
     if (frames == 0) return;                        // exit if length in frames is zero
     if ((channel == 0) || (channel > 4)) return;    // exit if channel is out of bounds
-    UBYTE ch = channel - 1;
-    music_mute(channel_mask & channel_masks[ch]);
-    UBYTE * reg = (UBYTE *)0xFF00 + FX_ADDR_LO[ch];
-    for (UBYTE i = FX_REG_SIZES[ch], *p = data; i != 0; i--) *reg++ = *p++;
+    
+    // mute music on SFX channel
+    music_mute(channel_mask & channel_masks[channel]);
+    
+    // load waveform
+    if (channel == 3) sound_load_regs(0x30, 0x10, bank, data + 5);
+    // set sound registers
+    sound_load_regs(FX_ADDR_LO[channel], FX_REG_SIZES[channel], bank, data);
+
     sound_channel = channel;
     tone_frames = frames;
 }
