@@ -483,6 +483,11 @@ OP_VM_ACTOR_SET_COLL_ENABLED     = 0x3F
         .db OP_VM_ACTOR_SET_COLL_ENABLED, #<ENABLED, #>ACTOR, #<ACTOR
 .endm
 
+OP_VM_ACTOR_TERMINATE_UPDATE  = 0x74
+.macro VM_ACTOR_TERMINATE_UPDATE ACTOR
+        .db OP_VM_ACTOR_TERMINATE_UPDATE, #>ACTOR, #<ACTOR
+.endm
+
 ; --- UI ------------------------------------------
 
 OP_VM_LOAD_TEXT         = 0x40

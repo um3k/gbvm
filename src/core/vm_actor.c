@@ -133,6 +133,17 @@ void vm_actor_deactivate(SCRIPT_CTX * THIS, INT16 idx) __banked {
     deactivate_actor(actors + *n_actor);
 }
 
+void vm_actor_terminate_update(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    actor_t *actor;
+
+    act_set_pos_t * params = VM_REF_TO_PTR(idx);
+    actor = actors + (UBYTE)(params->ID);
+
+    if ((actor->hscript_update & SCRIPT_TERMINATED) == 0) {
+        script_terminate(actor->hscript_update);
+    }
+}
+
 void vm_actor_set_dir(SCRIPT_CTX * THIS, INT16 idx, direction_e dir) __banked {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
     actor_set_dir(actors + *n_actor, dir, FALSE);
