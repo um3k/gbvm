@@ -78,7 +78,7 @@ void music_events_update() __nonbanked {
         }
         script_event_t * event = &music_events[data & 0x03];
         if (!event->script_addr) return;
-        if ((event->handle == 0) || ((event->handle & 0x8000) != 0))
+        if ((event->handle == 0) || ((event->handle & SCRIPT_TERMINATED) != 0))
             script_execute(event->script_bank, event->script_addr, &event->handle, 1, (UWORD)(data >> 4));
     }
 }
@@ -266,6 +266,7 @@ void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
 }
 
 static void sound_load_regs(UBYTE reg, UBYTE len, UBYTE bank, const UBYTE * data) __nonbanked __naked {
+    reg; len; bank; data;
 __asm
         ldhl sp, #2
         ld a, (hl+)
