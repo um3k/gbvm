@@ -35686,7 +35686,7 @@
                                     "type": "number",
                                     "value": 13
                                 },
-                                "moveType": "horizontal",
+                                "moveType": "vertical",
                                 "useCollisions": false
                             }
                         },
