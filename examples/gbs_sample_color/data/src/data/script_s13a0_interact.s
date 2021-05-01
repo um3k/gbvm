@@ -23,6 +23,10 @@ _script_s13a0_interact::
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
+
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Wow! Found\nGOLD COIN."

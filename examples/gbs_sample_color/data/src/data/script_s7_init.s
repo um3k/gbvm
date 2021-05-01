@@ -19,15 +19,15 @@ _script_s7_init::
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
 
+        ; Call Script: Init Weapons
+        VM_CALL_FAR             ___bank_script_custom_1, _script_custom_1
+
         ; Wait 1 Frame
         VM_PUSH_CONST           1
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         ; Fade In
         VM_FADE_IN              1
-
-        ; Call Script: Init Weapons
-        VM_CALL_FAR             ___bank_script_custom_1, _script_custom_1
 
         ; Player Set Spritesheet
         VM_SET_CONST            ACTOR, 0
