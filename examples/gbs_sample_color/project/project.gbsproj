@@ -13549,7 +13549,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "0c012ab6-1b6a-4192-8ac1-c566d648611e",
@@ -13612,7 +13612,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "5b3bcaec-31f7-4821-8490-2fc512a88afc",
@@ -13675,7 +13675,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "62417b48-06e3-4395-9e91-4166defd9765",
@@ -13738,7 +13738,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "72f30c75-77aa-4487-8e3a-cad9bca0665b",
@@ -13801,7 +13801,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "6e810dd2-7258-4c03-a573-cbbce4312451",
@@ -13864,7 +13864,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "c8c328f3-21cc-4040-88cf-f5fc43d39943",
@@ -28194,7 +28194,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "e7ce5cda-d434-4ebc-b7c5-12576f0ba89d",
@@ -28258,7 +28258,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "165c5137-d0ac-431d-a5dd-0e38dfde5246",
@@ -28322,7 +28322,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "2cda0c48-69ae-4039-9599-e9864bd6bfcc",
@@ -28386,7 +28386,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "d3ae2c77-af49-4613-a1b1-194d7562186d",
@@ -28450,7 +28450,7 @@
                     "movementType": "faceInteraction",
                     "direction": "down",
                     "moveSpeed": 1,
-                    "animSpeed": 15,
+                    "animSpeed": 255,
                     "script": [
                         {
                             "id": "38cd162c-1ba8-4243-a1b8-2ccb77c6d0f3",

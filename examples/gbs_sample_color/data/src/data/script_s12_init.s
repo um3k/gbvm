@@ -24,18 +24,18 @@ _script_s12_init::
         VM_ACTOR_SET_HIDDEN     ACTOR, 1
         VM_ACTOR_DEACTIVATE     ACTOR
 
+        ; Call Script: Init Menu
+        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+
+        ; Music Play
+        VM_MUSIC_PLAY           ___bank_music_track_4__Data, _music_track_4__Data, .MUSIC_LOOP
+
         ; Wait 1 Frame
         VM_PUSH_CONST           1
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         ; Fade In
         VM_FADE_IN              1
-
-        ; Call Script: Init Menu
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
-
-        ; Music Play
-        VM_MUSIC_PLAY           ___bank_music_track_4__Data, _music_track_4__Data, .MUSIC_LOOP
 
         ; Stop Script
         VM_STOP

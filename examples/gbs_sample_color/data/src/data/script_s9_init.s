@@ -27,6 +27,10 @@ _script_s9_init::
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
+
 2$:
 
         ; If Variable True
@@ -36,6 +40,10 @@ _script_s9_init::
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
         VM_ACTOR_ACTIVATE       ACTOR
+
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
 
 4$:
 
@@ -47,6 +55,10 @@ _script_s9_init::
         VM_SET_CONST            ACTOR, 3
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
+
 6$:
 
         ; If Variable True
@@ -57,6 +69,10 @@ _script_s9_init::
         VM_SET_CONST            ACTOR, 4
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
+
 8$:
 
         ; If Variable True
@@ -66,6 +82,10 @@ _script_s9_init::
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 5
         VM_ACTOR_ACTIVATE       ACTOR
+
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
 
 10$:
 

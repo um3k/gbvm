@@ -19,13 +19,6 @@ _script_s10_init::
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
-
-        ; Fade In
-        VM_FADE_IN              1
-
         ; Call Script: Turnip Init
         VM_PUSH_CONST           2 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED ; Variable .ARG2
@@ -52,6 +45,13 @@ _script_s10_init::
 
         ; Variable Set To Value
         VM_SET_CONST            VAR_TURNIP_COUNTER, 3
+
+        ; Wait 1 Frame
+        VM_PUSH_CONST           1
+        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+
+        ; Fade In
+        VM_FADE_IN              1
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2

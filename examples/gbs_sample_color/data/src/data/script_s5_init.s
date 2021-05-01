@@ -37,13 +37,6 @@ _script_s5_init::
 
 2$:
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
-
-        ; Fade In
-        VM_FADE_IN              1
-
         ; Call Script: Init Menu
         VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
 
@@ -64,6 +57,13 @@ _script_s5_init::
         VM_ACTOR_SET_POS        ACTOR
 
 4$:
+
+        ; Wait 1 Frame
+        VM_PUSH_CONST           1
+        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+
+        ; Fade In
+        VM_FADE_IN              1
 
         ; Stop Script
         VM_STOP

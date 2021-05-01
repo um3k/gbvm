@@ -57,6 +57,10 @@ _script_s12t1_interact::
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_ACTIVATE       ACTOR
 
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
+
         ; Wait N Frames
         VM_PUSH_CONST           6
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
@@ -64,6 +68,10 @@ _script_s12t1_interact::
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
         VM_ACTOR_ACTIVATE       ACTOR
+
+        ; Actor Set Animation Frame
+        VM_SET_CONST            ^/(ACTOR + 1)/, 2
+        VM_ACTOR_SET_ANIM_FRAME ACTOR
 
         ; Wait N Frames
         VM_PUSH_CONST           6
