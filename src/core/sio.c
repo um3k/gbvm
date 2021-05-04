@@ -49,9 +49,10 @@ UBYTE SIO_update() __nonbanked {
     if (link_byte_sent) {
         if (link_packet_snd_len) {
             link_byte_sent = FALSE;
-            SIO_send_byte(*link_packet_snd_ptr++);
             link_packet_snd_len--;
-            if (link_packet_snd_len == 0) {
+            if (link_packet_snd_len) {
+                SIO_send_byte(*link_packet_snd_ptr++);
+            } else {
                 SIO_receive();
                 link_packet_sent = TRUE;
             };
