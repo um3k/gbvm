@@ -102,7 +102,7 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_set_print_dir,          1}, // 0x4C
     {vm_overlay_scroll,         5}, // 0x4D
     {vm_overlay_set_scroll,     5}, // 0x4E
-    {0, 0},
+    {vm_overlay_set_submap,     6}, // 0x4F
 
     // gameboy features instructions section
     {vm_show_sprites,           0}, // 0x50

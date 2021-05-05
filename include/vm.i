@@ -592,6 +592,11 @@ OP_VM_OVERLAY_SET_SCROLL = 0x4E
         .db OP_VM_OVERLAY_SET_SCROLL, #<COLOR, #<H, #<W, #<Y, #<X 
 .endm
 
+OP_VM_OVERLAY_SET_SUBMAP = 0x4F
+.macro VM_OVERLAY_SET_SUBMAP X, Y, W, H, SX, SY
+        .db OP_VM_OVERLAY_SET_SUBMAP, #<SY, #<SX, #<H, #<W, #<Y, #<X 
+.endm
+
 ; --- GAMEBOY ------------------------------------------
 
 OP_VM_SHOW_SPRITES      = 0x50

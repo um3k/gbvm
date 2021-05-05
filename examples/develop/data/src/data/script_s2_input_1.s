@@ -41,6 +41,9 @@ _script_s2_input1::
         VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0
+
+        VM_OVERLAY_SET_SUBMAP   2, 2, 6, 5, 8, 4
+
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
 
         VM_SET_CONST            .ARG5, 0
