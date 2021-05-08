@@ -166,5 +166,9 @@ const SCRIPT_CMD script_cmds[] = {
 
     // projectiles instructions section
     {vm_projectile_launch,      3}, // 0x80
+    {0, 0},
+    {0, 0},
+
+    {vm_actor_get_anim_frame,   2}, // 0x83
 
 };
