@@ -21,7 +21,6 @@ _script_s0t9_interact::
         VM_IF_CONST .GT         VAR_QUEST11, 0, 1$, 0
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 8
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -39,18 +38,15 @@ _script_s0t9_interact::
 3$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 8
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 8
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 8
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 5376
@@ -60,7 +56,6 @@ _script_s0t9_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 8
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 6016

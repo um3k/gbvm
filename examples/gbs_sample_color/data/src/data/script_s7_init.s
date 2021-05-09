@@ -35,14 +35,12 @@ _script_s7_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Movement Speed
         VM_ACTOR_SET_MOVE_SPEED ACTOR, 8
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -65,7 +63,6 @@ _script_s7_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Movement Speed
         VM_ACTOR_SET_MOVE_SPEED ACTOR, 16

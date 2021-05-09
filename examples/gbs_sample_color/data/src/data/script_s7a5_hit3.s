@@ -19,7 +19,6 @@ _script_s7a5_hit3::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Spritesheet
         VM_ACTOR_SET_SPRITESHEET ACTOR, ___bank_spritesheet_4, _spritesheet_4

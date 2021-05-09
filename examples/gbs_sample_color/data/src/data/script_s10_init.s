@@ -55,7 +55,6 @@ _script_s10_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -84,7 +83,6 @@ _script_s10_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 4
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -113,7 +111,6 @@ _script_s10_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 5
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR

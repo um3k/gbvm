@@ -29,7 +29,6 @@ _script_s0t7_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR

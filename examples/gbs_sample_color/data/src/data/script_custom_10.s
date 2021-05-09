@@ -19,7 +19,6 @@ _script_custom_10::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor Relative To Actor
         VM_ACTOR_GET_POS        ACTOR
@@ -35,7 +34,6 @@ _script_custom_10::
         VM_IF_CONST .EQ         .ARG0, 0, 1$, 4
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -57,7 +55,6 @@ _script_custom_10::
 1$:
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR

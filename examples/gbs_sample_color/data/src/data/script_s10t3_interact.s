@@ -22,7 +22,6 @@ _script_s10t3_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 20352

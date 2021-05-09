@@ -31,7 +31,7 @@ _script_s10a2_interact::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "\024TURNIPS!\n"
+        .asciz "\001\006TURNIPS!\n"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
@@ -61,7 +61,6 @@ _script_s10a2_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
@@ -90,7 +89,6 @@ _script_s10a2_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Variable Set To True
         VM_SET_CONST            VAR_QUEST8, 1

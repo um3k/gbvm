@@ -20,7 +20,6 @@ _script_input_1::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Stop Script
         VM_STOP

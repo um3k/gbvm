@@ -21,7 +21,6 @@ _script_s13a0_interact::
         VM_IF_CONST .GT         VAR_QUEST10, 0, 1$, 0
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1

@@ -26,7 +26,6 @@ _script_s6_init::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
@@ -40,7 +39,6 @@ _script_s6_init::
 3$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
@@ -54,7 +52,6 @@ _script_s6_init::
 5$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
@@ -68,7 +65,6 @@ _script_s6_init::
 7$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 4
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
@@ -82,7 +78,6 @@ _script_s6_init::
 9$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 5
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
@@ -96,7 +91,6 @@ _script_s6_init::
 11$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1

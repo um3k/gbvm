@@ -20,7 +20,6 @@ _script_s12a1_update::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 1024
@@ -30,7 +29,6 @@ _script_s12a1_update::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -45,7 +43,6 @@ _script_s12a1_update::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 768
@@ -55,7 +52,6 @@ _script_s12a1_update::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -70,7 +66,6 @@ _script_s12a1_update::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 512
@@ -80,7 +75,6 @@ _script_s12a1_update::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -103,7 +97,6 @@ _script_s12a1_update::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 1024

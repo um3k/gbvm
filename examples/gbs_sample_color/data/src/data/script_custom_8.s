@@ -27,7 +27,6 @@ _script_custom_8::
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG3 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Position
         VM_SET_CONST            ^/(ACTOR + 1)/, 0

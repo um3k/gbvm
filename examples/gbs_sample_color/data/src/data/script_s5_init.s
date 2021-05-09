@@ -30,7 +30,6 @@ _script_s5_init::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Collisions
         VM_ACTOR_SET_COLL_ENABLED ACTOR, 0
@@ -49,7 +48,6 @@ _script_s5_init::
 3$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Position
         VM_SET_CONST            ^/(ACTOR + 1)/, 3072
