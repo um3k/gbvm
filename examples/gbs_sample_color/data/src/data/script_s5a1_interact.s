@@ -19,7 +19,6 @@ _script_s5a1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -37,7 +36,6 @@ _script_s5a1_interact::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Push
         VM_SET_CONST            ACTOR, 0
@@ -93,7 +91,6 @@ _script_s5a1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -127,7 +124,6 @@ _script_s5a1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Collisions
         VM_ACTOR_SET_COLL_ENABLED ACTOR, 0

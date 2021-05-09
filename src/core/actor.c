@@ -26,7 +26,7 @@
 const BYTE emote_offsets[] = {2, 1, 0, -1, -2, -3, -4, -5, -6, -5, -4, -3, -2, -1, 0};
 
 const metasprite_t emote_metasprite[]  = {
-    {0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}
+    {0, 0, 0, 7}, {0, 8, 2, 7}, {metasprite_end}
 };
 
 actor_t actors[MAX_ACTORS];
@@ -228,6 +228,10 @@ void actor_set_frames(actor_t *actor, UBYTE frame_start, UBYTE frame_end) __bank
 
 void actor_set_frame_offset(actor_t *actor, UBYTE frame_offset) __banked {
     actor->frame = actor->frame_start + (frame_offset % (actor->frame_end - actor->frame_start));
+}
+
+UBYTE actor_get_frame_offset(actor_t *actor) __banked {
+    return actor->frame - actor->frame_start;
 }
 
 void actor_set_anim_idle(actor_t *actor) __banked {

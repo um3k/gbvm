@@ -43,7 +43,6 @@ _script_s2a0_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

@@ -31,7 +31,6 @@ _script_s0a2_update::
         VM_IF_CONST .NE         VAR_TEMP_0, 1, 2$, 0
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -55,7 +54,6 @@ _script_s0a2_update::
         VM_IF_CONST .NE         VAR_TEMP_0, 2, 3$, 0
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -79,7 +77,6 @@ _script_s0a2_update::
         VM_IF_CONST .NE         VAR_TEMP_0, 3, 4$, 0
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -103,7 +100,6 @@ _script_s0a2_update::
         VM_IF_CONST .NE         VAR_TEMP_0, 4, 5$, 0
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR

@@ -31,7 +31,6 @@ _script_s0a4_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 5
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP

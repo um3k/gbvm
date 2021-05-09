@@ -19,7 +19,6 @@ _script_s0a7_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 8
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

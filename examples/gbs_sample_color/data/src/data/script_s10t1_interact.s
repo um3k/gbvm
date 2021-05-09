@@ -24,18 +24,16 @@ _script_s10t1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "\020PLEASE\023 \020HELP!!\022\nMy garden..."
+        .asciz "\001\002PLEASE\001\005 \001\002HELP!!\001\004\nMy garden..."
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT

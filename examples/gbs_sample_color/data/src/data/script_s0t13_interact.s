@@ -24,7 +24,6 @@ _script_s0t13_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 9
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -44,14 +43,12 @@ _script_s0t13_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 9
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 9
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
@@ -65,7 +62,6 @@ _script_s0t13_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -85,25 +81,21 @@ _script_s0t13_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 9
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 9
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 9
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR

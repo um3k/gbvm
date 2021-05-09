@@ -21,7 +21,6 @@ _script_s11_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Collisions
         VM_ACTOR_SET_COLL_ENABLED ACTOR, 0

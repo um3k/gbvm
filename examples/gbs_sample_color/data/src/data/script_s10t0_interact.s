@@ -21,7 +21,6 @@ _script_s10t0_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Position
         VM_SET_CONST            ^/(ACTOR + 1)/, 6656

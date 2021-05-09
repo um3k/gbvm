@@ -17,7 +17,6 @@ _script_custom_7::
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -37,7 +36,6 @@ _script_custom_7::
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -60,11 +58,9 @@ _script_custom_7::
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -84,7 +80,6 @@ _script_custom_7::
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR

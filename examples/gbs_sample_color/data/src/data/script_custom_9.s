@@ -19,7 +19,6 @@ _script_custom_9::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor Relative To Actor
         VM_ACTOR_GET_POS        ACTOR
@@ -49,21 +48,18 @@ _script_custom_9::
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG4 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Collisions
         VM_ACTOR_SET_COLL_ENABLED ACTOR, 0
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG4 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Stop Update Script
         VM_ACTOR_TERMINATE_UPDATE ACTOR
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG4 - 4)/
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Spritesheet
         VM_ACTOR_SET_SPRITESHEET ACTOR, ___bank_spritesheet_6, _spritesheet_6
@@ -84,7 +80,6 @@ _script_custom_9::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Position
         VM_SET_CONST            ^/(ACTOR + 1)/, 6656

@@ -22,7 +22,6 @@ _script_s12t1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -55,7 +54,6 @@ _script_s12t1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
@@ -67,7 +65,6 @@ _script_s12t1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 2
@@ -98,7 +95,6 @@ _script_s12t1_interact::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
@@ -125,7 +121,6 @@ _script_s12t1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Move Relative
         VM_ACTOR_GET_POS        ACTOR
@@ -145,7 +140,6 @@ _script_s12t1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
 2$:
 

@@ -39,7 +39,6 @@ _script_s5a0_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Position
         VM_SET_CONST            ^/(ACTOR + 1)/, 3072

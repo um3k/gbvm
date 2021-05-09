@@ -25,7 +25,6 @@ _script_s13_init::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Animation Frame
         VM_SET_CONST            ^/(ACTOR + 1)/, 1
