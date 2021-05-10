@@ -16,8 +16,8 @@ void remove_LCD_ISRs() __critical {
 
 void simple_LCD_isr() __nonbanked {
     if (LYC_REG == 0) {
-        SCX_REG = draw_scroll_x;
-        SCY_REG = draw_scroll_y;
+        SCX_REG = shadow_scroll_x;
+        SCY_REG = shadow_scroll_y;
         if (!hide_sprites) SHOW_SPRITES;
         if (win_pos_y) LYC_REG = win_pos_y - 1; else LYC_REG = 0;
     } else {
@@ -30,8 +30,8 @@ void simple_LCD_isr() __nonbanked {
 void fullscreen_LCD_isr() __nonbanked {
     if (LYC_REG == 0) {
         LCDC_REG &= 0b11101111;
-        SCX_REG = draw_scroll_x;
-        SCY_REG = draw_scroll_y;
+        SCX_REG = shadow_scroll_x;
+        SCY_REG = shadow_scroll_y;
         if (!hide_sprites) SHOW_SPRITES;
         LYC_REG = (9 * 8) - 1;    
     } else {

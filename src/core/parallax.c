@@ -28,7 +28,7 @@ __asm
         ld d, #0
         jr 2$
 1$:
-        ld a, (#_draw_scroll_y)
+        ld a, (#_shadow_scroll_y)
         ld d, a
 2$:
         ldh a, (#_STAT_REG)

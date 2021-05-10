@@ -30,6 +30,8 @@ INT16 scroll_x;
 INT16 scroll_y;
 INT16 draw_scroll_x;
 INT16 draw_scroll_y;
+INT16 shadow_scroll_x;
+INT16 shadow_scroll_y;
 UINT16 scroll_x_max;
 UINT16 scroll_y_max;
 BYTE scroll_offset_x;
@@ -44,6 +46,8 @@ INT16 current_col, new_col;
 void scroll_init() __banked {
     draw_scroll_x   = 0;
     draw_scroll_y   = 0;
+    shadow_scroll_x = 0;
+    shadow_scroll_y = 0;
     scroll_x_max    = 0;
     scroll_y_max    = 0;
     scroll_offset_x = 0;
@@ -98,9 +102,9 @@ UBYTE scroll_viewport(parallax_row_t * port) {
         if (port->shift == 127) {
             shift_scroll_x = 0;
         } else if (port->shift < 0) {
-            shift_scroll_x = draw_scroll_x << (-port->shift);
+            shift_scroll_x = shadow_scroll_x << (-port->shift);
         } else {
-            shift_scroll_x = draw_scroll_x >> port->shift;
+            shift_scroll_x = shadow_scroll_x >> port->shift;
         }
 
         port->scx = shift_scroll_x;
@@ -121,7 +125,7 @@ UBYTE scroll_viewport(parallax_row_t * port) {
         }     
     } else {
         // No Parallax
-        port->scx = draw_scroll_x;
+        port->scx = shadow_scroll_x;
 
         // If column is +/- 1 just render next column
         if (current_col == new_col - 1) {

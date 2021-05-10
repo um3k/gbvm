@@ -85,6 +85,8 @@ void process_VM() {
                 projectiles_update();                                   // update and render projectiles
 
                 activate_shadow_OAM();
+                shadow_scroll_x = draw_scroll_x;
+                shadow_scroll_y = draw_scroll_y;
 
                 ui_update();
                 actors_handle_player_collision();
@@ -168,6 +170,8 @@ void process_VM() {
                 actors_update();
 
                 activate_shadow_OAM();
+                shadow_scroll_x = draw_scroll_x;
+                shadow_scroll_y = draw_scroll_y;
 
                 if (fade_in) fade_in_modal();
             }
