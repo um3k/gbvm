@@ -28,7 +28,7 @@ __asm
         ld d, #0
         jr 2$
 1$:
-        ld a, (#_shadow_scroll_y)
+        ld a, (#_draw_scroll_y)
         ld d, a
 2$:
         ldh a, (#_STAT_REG)
@@ -43,9 +43,9 @@ __asm
         ldh a, (#_LYC_REG)
         or a
         jr z, 3$
-        inc hl                  ; skip shift
-        inc hl                  ; skip tile_start
-        inc hl                  ; skip tile_height
+
+        ld  de, #4
+        add  hl, de             ; skip shift, tile_start, tile_height, shadow_scx 
 
         ld d, h
         ld a, l   
