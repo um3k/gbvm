@@ -23,6 +23,9 @@ const struct scene_t scene_4 = {
   .palette = TO_FAR_PTR_T(palette_2),
   .sprite_palette = TO_FAR_PTR_T(palette_4),
   .player_sprite = TO_FAR_PTR_T(spritesheet_12),
+  .parallax_rows = {
+    PARALLAX_STEP(0, 0, 0)
+  },  
   .n_actors = 0,
   .n_triggers = 5,
   .n_sprites = 0,
