@@ -94,8 +94,8 @@ void scroll_update() __banked {
 }
 
 UBYTE scroll_viewport(parallax_row_t * port) {
-    if (scene_LCD_type == LCD_parallax) {
-        // Parallax
+    if (port->next_y) {
+        // one of upper parallax slices
         UINT16 shift_scroll_x;
         if (port->shift == 127) {
             shift_scroll_x = 0;
@@ -121,9 +121,9 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             // If column differs by more than 1 render entire viewport
             scroll_render_rows(shift_scroll_x, 0, port->start_tile, port->tile_height);
         }  
-        return !(port->next_y);   
+        return FALSE;   
     } else {
-        // No Parallax
+        // last parallax slice OR no parallax
         port->shadow_scx = draw_scroll_x;
 
         // If column is +/- 1 just render next column
@@ -143,7 +143,7 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             activate_actors_in_col(x, full_y);
         } else if (current_col != new_col) {
             // If column differs by more than 1 render entire screen
-            scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
+            scroll_render_rows(draw_scroll_x, draw_scroll_y, ((scene_LCD_type == LCD_parallax) ? port->start_tile : -SCREEN_PAD_TOP), SCREEN_TILE_REFRES_H);
             return TRUE;
         }
 
@@ -162,7 +162,7 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             activate_actors_in_row(x, y);
         } else if (current_row != new_row) {
             // If row differs by more than 1 render entire screen
-            scroll_render_rows(draw_scroll_x, draw_scroll_y, -SCREEN_PAD_TOP, SCREEN_TILE_REFRES_H);
+            scroll_render_rows(draw_scroll_x, draw_scroll_y, ((scene_LCD_type == LCD_parallax) ? port->start_tile : -SCREEN_PAD_TOP), SCREEN_TILE_REFRES_H);
             return TRUE;
         }
 
@@ -170,8 +170,9 @@ UBYTE scroll_viewport(parallax_row_t * port) {
             if (pending_h_i) scroll_load_pending_col();
             if (pending_w_i) scroll_load_pending_row();
         }
+
+        return TRUE;
     }
-    return TRUE;
 }
 
 void scroll_repaint() __banked {
