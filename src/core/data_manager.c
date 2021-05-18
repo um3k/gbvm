@@ -68,15 +68,21 @@ void load_bkg_tileset(const tileset_t* tiles, UBYTE bank) __banked {
     SetBankedBkgData(0, 128, data, bank);
     ntiles -= 128; data += 128 * 16;
 
-    // load second background chunk, align 192 tile
+    // load second background chunk
     if (ntiles < 128) {
-        ntiles = MIN(64, ntiles);
-        #ifdef ALLOC_BKG_TILES_TOWARDS_SPR
-            SetBankedBkgData(192 - ntiles, ntiles, data, bank);
-        #else
+        if (ntiles < 65) {
+            #ifdef ALLOC_BKG_TILES_TOWARDS_SPR
+                // new allocation style, align to 192-th tile
+                SetBankedBkgData(192 - ntiles, ntiles, data, bank);
+            #else
+                // old allocation style, align to 128-th tile
+                SetBankedBkgData(128, ntiles, data, bank);
+            #endif
+        } else {
+            // if greater than 64 allow overflow into UI, align to 128-th tile
             SetBankedBkgData(128, ntiles, data, bank);
-        #endif
-        return;    
+        }
+        return;
     }
     SetBankedBkgData(128, 128, data, bank);
     ntiles -= 128; data += 128 * 16; 
