@@ -14,7 +14,7 @@ _script_s1_init::
         VM_LOCK
 
         ; Call Script: Init Menu
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+        VM_CALL_FAR             ___bank_script_init_menu, _script_init_menu
 
         ; Music Play
         VM_MUSIC_PLAY           ___bank_music_track_5__Data, _music_track_5__Data, .MUSIC_LOOP

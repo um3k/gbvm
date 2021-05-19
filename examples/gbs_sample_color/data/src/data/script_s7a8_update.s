@@ -14,7 +14,7 @@ _script_s7a8_update::
 1$:
         ; Call Script: Enemy Ship Movement Diagonal
         VM_PUSH_CONST           9 ; Actor .ARG2
-        VM_CALL_FAR             ___bank_script_custom_5, _script_custom_5
+        VM_CALL_FAR             ___bank_script_enemy_ship_movement_diagonal, _script_enemy_ship_movement_diagonal
         VM_POP                  1
 
         ; Wait 1 Frame

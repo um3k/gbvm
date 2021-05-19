@@ -5,10 +5,10 @@
 
 
 
-___bank_script_custom_1 = 255
-.globl ___bank_script_custom_1
+___bank_script_init_weapons = 255
+.globl ___bank_script_init_weapons
 
-_script_custom_1::
+_script_init_weapons::
         ; Input Script Attach
         VM_CONTEXT_PREPARE      4, ___bank_script_input_1, _script_input_1
         VM_INPUT_ATTACH         16, 4

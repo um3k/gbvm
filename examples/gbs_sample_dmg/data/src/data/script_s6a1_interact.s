@@ -19,7 +19,6 @@ _script_s6a1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -37,7 +36,6 @@ _script_s6a1_interact::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Push
         VM_SET_CONST            ACTOR, 0
@@ -93,7 +91,6 @@ _script_s6a1_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; If Actor At Position
         VM_ACTOR_GET_POS        ACTOR
@@ -109,8 +106,8 @@ _script_s6a1_interact::
         VM_IF_CONST .EQ         .ARG0, 0, 7$, 1
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "Success!\n"
-        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        .asciz "Success!"
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/

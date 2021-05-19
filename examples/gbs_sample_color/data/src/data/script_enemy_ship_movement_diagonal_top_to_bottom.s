@@ -5,10 +5,10 @@
 
 ACTOR = -4
 
-___bank_script_custom_7 = 255
-.globl ___bank_script_custom_7
+___bank_script_enemy_ship_movement_diagonal_top_to_bottom = 255
+.globl ___bank_script_enemy_ship_movement_diagonal_top_to_bottom
 
-_script_custom_7::
+_script_enemy_ship_movement_diagonal_top_to_bottom::
         ; Local Actor
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
@@ -44,7 +44,7 @@ _script_custom_7::
             .R_INT16    768
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    -768
+            .R_INT16    768
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
@@ -69,7 +69,7 @@ _script_custom_7::
             .R_INT16    768
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    -768
+            .R_INT16    768
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1

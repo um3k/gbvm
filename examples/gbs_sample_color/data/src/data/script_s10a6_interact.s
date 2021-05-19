@@ -14,7 +14,7 @@ _script_s10a6_interact::
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
         .asciz "\001\001 Save Game\n Cancel"
-        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
@@ -40,7 +40,7 @@ _script_s10a6_interact::
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Game progress has\nbeen saved."
-        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
@@ -50,7 +50,7 @@ _script_s10a6_interact::
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "It is now safe to\nturn off your\nsystem."
-        VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/

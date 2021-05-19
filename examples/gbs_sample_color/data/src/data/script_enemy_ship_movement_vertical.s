@@ -5,10 +5,10 @@
 
 ACTOR = -4
 
-___bank_script_custom_4 = 255
-.globl ___bank_script_custom_4
+___bank_script_enemy_ship_movement_vertical = 255
+.globl ___bank_script_enemy_ship_movement_vertical
 
-_script_custom_4::
+_script_enemy_ship_movement_vertical::
         ; Local Actor
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0

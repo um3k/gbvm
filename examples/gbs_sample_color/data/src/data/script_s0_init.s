@@ -25,7 +25,7 @@ _script_s0_init::
         VM_ACTOR_DEACTIVATE     ACTOR
 
         ; Call Script: Init Menu
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+        VM_CALL_FAR             ___bank_script_init_menu, _script_init_menu
 
         ; Music Play
         VM_MUSIC_PLAY           ___bank_music_track_4__Data, _music_track_4__Data, .MUSIC_LOOP

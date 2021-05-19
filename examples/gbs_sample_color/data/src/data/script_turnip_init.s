@@ -5,10 +5,10 @@
 
 ACTOR = -4
 
-___bank_script_custom_8 = 255
-.globl ___bank_script_custom_8
+___bank_script_turnip_init = 255
+.globl ___bank_script_turnip_init
 
-_script_custom_8::
+_script_turnip_init::
         ; Local Actor
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0

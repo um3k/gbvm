@@ -7,10 +7,10 @@
 
 ACTOR = -4
 
-___bank_script_custom_9 = 255
-.globl ___bank_script_custom_9
+___bank_script_turnip_collisions = 255
+.globl ___bank_script_turnip_collisions
 
-_script_custom_9::
+_script_turnip_collisions::
         ; Local Actor
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0

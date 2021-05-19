@@ -19,7 +19,6 @@ _script_s0a5_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Push
         VM_SET_CONST            ACTOR, 0

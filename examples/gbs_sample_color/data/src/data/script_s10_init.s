@@ -22,23 +22,23 @@ _script_s10_init::
         ; Call Script: Turnip Init
         VM_PUSH_CONST           2 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED ; Variable .ARG2
-        VM_CALL_FAR             ___bank_script_custom_8, _script_custom_8
+        VM_CALL_FAR             ___bank_script_turnip_init, _script_turnip_init
         VM_POP                  2
 
         ; Call Script: Turnip Init
         VM_PUSH_CONST           4 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED_1 ; Variable .ARG2
-        VM_CALL_FAR             ___bank_script_custom_8, _script_custom_8
+        VM_CALL_FAR             ___bank_script_turnip_init, _script_turnip_init
         VM_POP                  2
 
         ; Call Script: Turnip Init
         VM_PUSH_CONST           5 ; Actor .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED_2 ; Variable .ARG2
-        VM_CALL_FAR             ___bank_script_custom_8, _script_custom_8
+        VM_CALL_FAR             ___bank_script_turnip_init, _script_turnip_init
         VM_POP                  2
 
         ; Call Script: Init Menu
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+        VM_CALL_FAR             ___bank_script_init_menu, _script_init_menu
 
         ; Music Play
         VM_MUSIC_PLAY           ___bank_music_track_4__Data, _music_track_4__Data, .MUSIC_LOOP

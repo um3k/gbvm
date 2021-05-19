@@ -20,7 +20,7 @@ _script_s0a6_interact::
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Check out this\nsweet duck!"
-        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, .UI_DRAW_FRAME
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
@@ -32,7 +32,6 @@ _script_s0a6_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 7
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_DOWN

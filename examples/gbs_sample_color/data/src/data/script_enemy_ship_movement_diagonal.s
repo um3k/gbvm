@@ -5,10 +5,10 @@
 
 ACTOR = -4
 
-___bank_script_custom_6 = 255
-.globl ___bank_script_custom_6
+___bank_script_enemy_ship_movement_diagonal = 255
+.globl ___bank_script_enemy_ship_movement_diagonal
 
-_script_custom_6::
+_script_enemy_ship_movement_diagonal::
         ; Local Actor
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
@@ -22,10 +22,10 @@ _script_custom_6::
         VM_ACTOR_GET_POS        ACTOR
         VM_RPN
             .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    -640
+            .R_INT16    -512
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    0
+            .R_INT16    -512
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
@@ -41,10 +41,10 @@ _script_custom_6::
         VM_ACTOR_GET_POS        ACTOR
         VM_RPN
             .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    768
+            .R_INT16    512
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    768
+            .R_INT16    512
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
@@ -66,10 +66,10 @@ _script_custom_6::
         VM_ACTOR_GET_POS        ACTOR
         VM_RPN
             .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    768
+            .R_INT16    -512
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    768
+            .R_INT16    512
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
@@ -85,10 +85,10 @@ _script_custom_6::
         VM_ACTOR_GET_POS        ACTOR
         VM_RPN
             .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    -2560
+            .R_INT16    512
             .R_OPERATOR .ADD
             .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    0
+            .R_INT16    -512
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
