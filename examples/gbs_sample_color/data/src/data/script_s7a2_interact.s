@@ -10,7 +10,7 @@ ___bank_script_s7a2_interact = 255
 
 _script_s7a2_interact::
         ; Call Script: Enemy Ship Hit Player
-        VM_CALL_FAR             ___bank_script_custom_2, _script_custom_2
+        VM_CALL_FAR             ___bank_script_enemy_ship_hit_player, _script_enemy_ship_hit_player
 
         ; Stop Script
         VM_STOP

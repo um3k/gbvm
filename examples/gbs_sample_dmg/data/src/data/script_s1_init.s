@@ -21,10 +21,12 @@ _script_s1_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 7
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Collisions
         VM_ACTOR_SET_COLL_ENABLED ACTOR, 0
+
+        ; Call Script: Initialize Menu
+        VM_CALL_FAR             ___bank_script_initialize_menu, _script_initialize_menu
 
         ; Wait 1 Frame
         VM_PUSH_CONST           1
@@ -32,9 +34,6 @@ _script_s1_init::
 
         ; Fade In
         VM_FADE_IN              1
-
-        ; Call Script: Initialize Menu
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
 
         ; Stop Script
         VM_STOP

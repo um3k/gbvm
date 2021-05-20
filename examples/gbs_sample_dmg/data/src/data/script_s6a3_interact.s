@@ -19,7 +19,6 @@ _script_s6a3_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 4
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Push
         VM_SET_CONST            ACTOR, 0

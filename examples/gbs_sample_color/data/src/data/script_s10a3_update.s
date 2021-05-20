@@ -14,7 +14,7 @@ _script_s10a3_update::
 1$:
         ; Call Script: Turnip Movement
         VM_PUSH_CONST           4 ; Actor .ARG2
-        VM_CALL_FAR             ___bank_script_custom_10, _script_custom_10
+        VM_CALL_FAR             ___bank_script_turnip_movement, _script_turnip_movement
         VM_POP                  1
 
         ; Wait 1 Frame

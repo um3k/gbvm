@@ -5,10 +5,10 @@
 
 
 
-___bank_script_custom_0 = 255
-.globl ___bank_script_custom_0
+___bank_script_init_menu = 255
+.globl ___bank_script_init_menu
 
-_script_custom_0::
+_script_init_menu::
         ; Input Script Attach
         VM_CONTEXT_PREPARE      1, ___bank_script_input_0, _script_input_0
         VM_INPUT_ATTACH         128, 1

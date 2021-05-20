@@ -13,7 +13,7 @@ _script_s10a1_interact::
         VM_PUSH_CONST           2 ; Actor .ARG4
         VM_PUSH_CONST           VAR_TURNIP_COUNTER ; Variable .ARG3
         VM_PUSH_CONST           VAR_S10A10_DEFEATED ; Variable .ARG2
-        VM_CALL_FAR             ___bank_script_custom_9, _script_custom_9
+        VM_CALL_FAR             ___bank_script_turnip_collisions, _script_turnip_collisions
         VM_POP                  3
 
         ; Stop Script

@@ -14,7 +14,7 @@ _script_s7a2_update::
 1$:
         ; Call Script: Enemy Ship Movement Vertical
         VM_PUSH_CONST           3 ; Actor .ARG2
-        VM_CALL_FAR             ___bank_script_custom_4, _script_custom_4
+        VM_CALL_FAR             ___bank_script_enemy_ship_movement_vertical, _script_enemy_ship_movement_vertical
         VM_POP                  1
 
         ; Wait 1 Frame

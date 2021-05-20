@@ -20,7 +20,7 @@ _script_s7_init::
         VM_PUSH_CONST           0
 
         ; Call Script: Init Weapons
-        VM_CALL_FAR             ___bank_script_custom_1, _script_custom_1
+        VM_CALL_FAR             ___bank_script_init_weapons, _script_init_weapons
 
         ; Wait 1 Frame
         VM_PUSH_CONST           1

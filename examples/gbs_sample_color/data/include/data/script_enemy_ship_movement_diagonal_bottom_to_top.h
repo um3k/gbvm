@@ -1,0 +1,11 @@
+#ifndef SCRIPT_ENEMY_SHIP_MOVEMENT_DIAGONAL_BOTTOM_TO_TOP_H
+#define SCRIPT_ENEMY_SHIP_MOVEMENT_DIAGONAL_BOTTOM_TO_TOP_H
+
+// Script script_enemy_ship_movement_diagonal_bottom_to_top
+
+#include "gbs_types.h"
+
+extern const void __bank_script_enemy_ship_movement_diagonal_bottom_to_top;
+extern const unsigned char script_enemy_ship_movement_diagonal_bottom_to_top[];
+
+#endif

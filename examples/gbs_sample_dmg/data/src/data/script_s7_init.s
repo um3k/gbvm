@@ -30,7 +30,6 @@ _script_s7_init::
 1$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -43,7 +42,6 @@ _script_s7_init::
 3$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 2
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -56,7 +54,6 @@ _script_s7_init::
 5$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 3
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -69,7 +66,6 @@ _script_s7_init::
 7$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 4
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -82,7 +78,6 @@ _script_s7_init::
 9$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 5
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
@@ -95,7 +90,6 @@ _script_s7_init::
 11$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 6
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Direction
         VM_ACTOR_SET_DIR        ACTOR, .DIR_UP

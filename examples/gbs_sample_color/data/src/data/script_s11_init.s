@@ -26,7 +26,7 @@ _script_s11_init::
         VM_ACTOR_SET_COLL_ENABLED ACTOR, 0
 
         ; Call Script: Init Menu
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+        VM_CALL_FAR             ___bank_script_init_menu, _script_init_menu
 
         ; Music Play
         VM_MUSIC_PLAY           ___bank_music_track_1__Data, _music_track_1__Data, .MUSIC_LOOP

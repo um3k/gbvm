@@ -7,10 +7,10 @@
 
 
 
-___bank_script_custom_2 = 255
-.globl ___bank_script_custom_2
+___bank_script_enemy_ship_hit_player = 255
+.globl ___bank_script_enemy_ship_hit_player
 
-_script_custom_2::
+_script_enemy_ship_hit_player::
         ; Camera Shake
         VM_PUSH_CONST           30
         VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X)/
