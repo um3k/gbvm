@@ -20,7 +20,7 @@ REL_OBJDIR = obj/_rel
 
 CFLAGS = -I$(TOP)include -Wa-I$(TOP)include -Wa-I$(GBDKLIB)
 
-LFLAGS_NBANKS += -Wl-yo$(CART_SIZE) -Wl-ya4
+LFLAGS_NBANKS += -Wm-yo$(CART_SIZE) -Wm-ya4
 LFLAGS_SYMBOLS = -Wl-j -Wl-m -Wl-w -Wm-yS
 
 LFLAGS = -Wl-yt$(CART_MBC) $(LFLAGS_NBANKS) $(LFLAGS_SYMBOLS) -Wl-klib -Wl-g_shadow_OAM2=0xDF00 -Wl-g.STACK=0xDF00 -Wi-e
@@ -151,8 +151,13 @@ $(REL_OBJDIR)/.rel:	$(OBJS)
 	$(eval LFLAGS += -Wl-g__start_save=$(shell expr $(CART_SIZE) - 4 ))
 	touch $(REL_OBJDIR)/.rel
 
-$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJDIR)/.rel
-	$(CC) -Wm-yn$(ROMTITLE) $(LFLAGS) -o $@ $(REL_OBJS)
+$(TOP)$(OBJDIR)/linkfile.lk:	$(REL_OBJDIR)/.rel
+	$(shell echo $(GBDKLIB)/gb/crt0.o >$@)
+	$(foreach O,$(REL_OBJS),$(shell echo $O >>$@))
+
+
+$(ROM_BUILD_DIR)/%.gb:	$(TOP)$(OBJDIR)/linkfile.lk
+	$(CC) -v $(LFLAGS) -Wm-yn$(ROMTITLE) -o $@ -Wl-f$<
 
 clean:
 	@echo "CLEANUP..."
