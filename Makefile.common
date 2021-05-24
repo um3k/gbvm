@@ -147,7 +147,10 @@ $(TOP)$(OBJDIR)/test_main.o: $(TOP)test/framework/test_main.c
 
 $(REL_OBJDIR)/linkfile.lk:	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
-	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
+
+	$(shell rm -f $(REL_OBJDIR)/packfile.pk) 
+	$(foreach O,$(OBJS),$(shell echo $O >>$(REL_OBJDIR)/packfile.pk))
+	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) -i $(REL_OBJDIR)/packfile.pk))
 
 	$(shell echo -g __start_save=$(shell expr $(CART_SIZE) - 4 ) >$@)
 	$(shell echo $(GBDKLIB)/gb/crt0.o >>$@)
