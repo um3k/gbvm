@@ -145,18 +145,16 @@ $(TOP)$(OBJDIR)/%.o:	$(TOP)src/%.s
 $(TOP)$(OBJDIR)/test_main.o: $(TOP)test/framework/test_main.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(REL_OBJDIR)/.rel:	$(OBJS)
+$(REL_OBJDIR)/linkfile.lk:	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
 	$(eval CART_SIZE=$(shell $(GBSPACK) $(PACKFLAGS) -o $(REL_OBJDIR) $(OBJS)))
 
-	$(shell echo -g __start_save=$(shell expr $(CART_SIZE) - 4 ) >$(TOP)$(OBJDIR)/linkfile.lk)
-	$(shell echo $(GBDKLIB)/gb/crt0.o >>$(TOP)$(OBJDIR)/linkfile.lk)
-	$(foreach O,$(REL_OBJS),$(shell echo $O >>$(TOP)$(OBJDIR)/linkfile.lk))
+	$(shell echo -g __start_save=$(shell expr $(CART_SIZE) - 4 ) >$@)
+	$(shell echo $(GBDKLIB)/gb/crt0.o >>$@)
+	$(foreach O,$(REL_OBJS),$(shell echo $O >>$@))
 
-	touch $(REL_OBJDIR)/.rel
-
-$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJDIR)/.rel
-	$(CC) -v $(LFLAGS) -Wm-yn$(ROMTITLE) -o $@ -Wl-f$(TOP)$(OBJDIR)/linkfile.lk
+$(ROM_BUILD_DIR)/%.gb:	$(REL_OBJDIR)/linkfile.lk
+	$(CC) -v $(LFLAGS) -Wm-yn$(ROMTITLE) -o $@ -Wl-f$<
 
 clean:
 	@echo "CLEANUP..."
