@@ -30,9 +30,12 @@ $(OBJDIR)/%.o:	test.c
 $(REL_OBJDIR)/linkfile.lk:		$(OBJS)
 $(ROM_BUILD_DIR)/%.gb:	$(REL_OBJS)
 
-.PHONY: DEMO data test
+.PHONY: DEMO data test recording.dem
 DEMO:
 	$(eval EMUFLAGS += -demoplay recording.dem)	
+
+recording.dem:
+	$(EMU) -demorec recording.dem -rom $(ROM_BUILD_DIR)/rom.gb
 
 data:
 	$(GBS_CLI) export -d project/test.gbsproj data
