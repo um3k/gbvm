@@ -53,9 +53,17 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
         if (CHK_FLAG(params->ATTR, ACTOR_ATTR_DIAGONAL)) {
             SET_FLAG(THIS->flags, MOVE_ALLOW_H | MOVE_ALLOW_V);
         } if (CHK_FLAG(params->ATTR, ACTOR_ATTR_H_FIRST)) {
-            SET_FLAG(THIS->flags, MOVE_ALLOW_H);
+            if (actor->pos.x != params->X) {
+                SET_FLAG(THIS->flags, MOVE_ALLOW_H);
+            } else {
+                SET_FLAG(THIS->flags, MOVE_ALLOW_V);
+            }            
         } else {
-            SET_FLAG(THIS->flags, MOVE_ALLOW_V);
+            if (actor->pos.y != params->Y) {
+                SET_FLAG(THIS->flags, MOVE_ALLOW_V);
+            } else {
+                SET_FLAG(THIS->flags, MOVE_ALLOW_H);
+            }
         }
 
         // Check for collisions in path
@@ -104,6 +112,14 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
         // Move actor
         point_translate_dir(&actor->pos, new_dir, actor->move_speed);
 
+        // Check for actor collision
+        if (actor_overlapping_bb(&actor->bounds, &actor->pos, actor, FALSE)) {
+            point_translate_dir(&actor->pos, FLIPPED_DIR(new_dir), actor->move_speed);   
+            THIS->flags = 0;
+            actor_set_anim_idle(actor);
+            return;
+        }
+
         // Check if overshot destination
         if (new_dir == DIR_LEFT &&  (actor->pos.x < params->X)) {
             actor->pos.x = params->X;
@@ -128,6 +144,14 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) __banked {
         
         // Move actor
         point_translate_dir(&actor->pos, new_dir, actor->move_speed);
+
+        // Check for actor collision
+        if (actor_overlapping_bb(&actor->bounds, &actor->pos, actor, FALSE)) {
+            point_translate_dir(&actor->pos, FLIPPED_DIR(new_dir), actor->move_speed);   
+            THIS->flags = 0;
+            actor_set_anim_idle(actor);
+            return;
+        }
 
         // Check if overshot destination
         if (new_dir == DIR_UP && (actor->pos.y < params->Y)) {

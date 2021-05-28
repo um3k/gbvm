@@ -1,0 +1,6 @@
+{
+  "description": "pushed actor has moved",
+  "rules": [
+    "CHECKSCREEN('test4.png')"
+  ]
+}
