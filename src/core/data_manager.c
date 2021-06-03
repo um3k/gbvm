@@ -143,9 +143,11 @@ UBYTE load_sprite(UBYTE sprite_offset, const spritesheet_t * sprite, UBYTE bank)
     return n_tiles;
 }
 
-void load_animations(const spritesheet_t *sprite, UBYTE bank, UWORD animation_set, animation_t * res_animations) __banked {
-    animation_t *addr = (animation_t *)ReadBankedUWORD((void *)&(sprite->animations), bank);
-    MemcpyBanked(res_animations, addr + animation_set, 8 * sizeof(animation_t), bank);
+void load_animations(const spritesheet_t *sprite, UBYTE bank, UWORD animation_set, animation_t * res_animations) __nonbanked {
+    UBYTE _save = _current_bank;
+    SWITCH_ROM_MBC1(bank);
+    memcpy(res_animations, &(sprite->animations + animation_set), sizeof(animation_t) * 8);
+    SWITCH_ROM_MBC1(_save);
 }
 
 void load_bounds(const spritesheet_t *sprite, UBYTE bank, bounding_box_t * res_bounds) __banked {
