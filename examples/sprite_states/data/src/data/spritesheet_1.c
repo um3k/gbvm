@@ -51,10 +51,17 @@ const struct animation_t spritesheet_1_animations[] = {
     },
 };
 
+const UWORD spritesheet_1_animations_lookup[] = {
+    0, // Default
+    0, // Surprised (not used)
+    0, // In Grass
+};
+
 const struct spritesheet_t spritesheet_1 = {
     .n_metasprites = 1,
     .metasprites = spritesheet_1_metasprites,
     .animations = spritesheet_1_animations,
+    .animations_lookup = spritesheet_1_animations_lookup,
     .bounds = {
         .left = 0,
         .bottom = 7,
