@@ -15,10 +15,13 @@ _script_s0t0_interact::
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
-        VM_PUSH_CONST           0        
+        VM_PUSH_CONST           0
 
-        ; Actor Set Animation Set
-        VM_ACTOR_SET_ANIM_SET   ACTOR, ANIM_SET_DEFAULT
+        ; Actor Set Active
+        VM_SET_CONST            ACTOR, 0
+
+        ; Actor Set Animation State
+        VM_ACTOR_SET_ANIM_SET   ACTOR, STATE_DEFAULT
 
         ; Stop Script
         VM_STOP

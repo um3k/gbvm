@@ -6,7 +6,9 @@
 
 const void __at(255) __bank_spritesheet_0;
 
-// Default
+#define SPRITE_0_STATE_DEFAULT 0
+#define SPRITE_0_STATE_IN_GRASS 8
+#define SPRITE_0_STATE_SURPRISED 16
 
 const metasprite_t spritesheet_0_metasprite_0[]  = {
     { 0, 8, 8, 0 }, { 0, -8, 10, 0 },
@@ -34,100 +36,93 @@ const metasprite_t spritesheet_0_metasprite_4[]  = {
 };
 
 const metasprite_t spritesheet_0_metasprite_5[]  = {
-    { 0, 8, 24, 0 }, { 0, -8, 24, 32 }, { 0, 8, 8, 0 }, { 0, -8, 10, 0 },
-    {metasprite_end}
-};
-
-const metasprite_t spritesheet_0_metasprite_6[]  = {
     { 0, 8, 12, 0 }, { 0, -8, 14, 0 },
     {metasprite_end}
 };
 
-const metasprite_t spritesheet_0_metasprite_7[]  = {
+const metasprite_t spritesheet_0_metasprite_6[]  = {
     { 0, 8, 16, 0 }, { 0, -8, 18, 0 },
     {metasprite_end}
 };
 
-const metasprite_t spritesheet_0_metasprite_8[]  = {
+const metasprite_t spritesheet_0_metasprite_7[]  = {
     { 0, 0, 12, 32 }, { 0, 8, 14, 32 },
     {metasprite_end}
 };
 
-// In Grass
+const metasprite_t spritesheet_0_metasprite_8[]  = {
+    { 0, 8, 28, 0 }, { 0, -8, 30, 0 }, { 0, 8, 8, 128 }, { 0, -8, 10, 128 },
+    {metasprite_end}
+};
 
 const metasprite_t spritesheet_0_metasprite_9[]  = {
-   { 0, 8, 26, 0 }, { 0, -8, 28, 0 }, { 0, 8, 8, 128 }, { 0, -8, 10, 128 },
+    { 0, 8, 24, 0 }, { 0, -8, 26, 0 }, { 0, 8, 0, 128 }, { 0, -8, 2, 128 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_10[]  = {
-   { 0, 8, 30, 0 }, { 0, -8, 32, 0 }, { 0, 8, 0, 128 }, { 0, -8, 2, 128 },
+    { 0, 0, 24, 32 }, { 0, 8, 26, 32 }, { 0, -8, 0, 160 }, { 0, 8, 2, 160 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_11[]  = {
-   { 0, 8, 34, 0 }, { 0, -8, 36, 0 },  { 0, 8, 4, 128 }, { 0, -8, 6, 128 },
+    { 0, 8, 28, 0 }, { 0, -8, 30, 0 }, { 0, 8, 20, 128 }, { 0, -8, 22, 128 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_12[]  = {
-   { 0, 8, 32, 32 }, { 0, -8, 30, 32 }, { 0, 0, 0, 160 }, { 0, 8, 2, 160 },
+    { 0, 8, 24, 0 }, { 0, -8, 26, 0 }, { 0, 8, 12, 128 }, { 0, -8, 14, 128 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_13[]  = {
-    { 0, 8, 26, 0 }, { 0, -8, 28, 0 }, { 0, 8, 20, 128 }, { 0, -8, 22, 128 },
+    { 0, 8, 32, 0 }, { 0, -8, 34, 0 }, { 0, 8, 4, 128 }, { 0, -8, 6, 128 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_14[]  = {
-   { 0, 8, 30, 0 }, { 0, -8, 32, 0 },  { 0, 8, 12, 128 }, { 0, -8, 14, 128 },
+    { 0, 8, 32, 0 }, { 0, -8, 34, 0 }, { 0, 8, 16, 128 }, { 0, -8, 18, 128 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_15[]  = {
-    { 0, 8, 34, 0 }, { 0, -8, 36, 0 },  { 0, 8, 16, 128 }, { 0, -8, 18, 128 },
+    { 0, 0, 24, 32 }, { 0, 8, 26, 32 }, { 0, -8, 12, 160 }, { 0, 8, 14, 160 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_0_metasprite_16[]  = {
-    { 0, 8, 32, 32 }, { 0, -8, 30, 32 }, { 0, 0, 12, 160 }, { 0, 8, 14, 160 },
+    { 0, 8, 36, 0 }, { 0, -8, 36, 32 }, { 0, 8, 8, 0 }, { 0, -8, 10, 0 },
     {metasprite_end}
 };
 
-
 const metasprite_t * const spritesheet_0_metasprites[] = {
-    // Default
     spritesheet_0_metasprite_0,
     spritesheet_0_metasprite_1,
     spritesheet_0_metasprite_2,
     spritesheet_0_metasprite_3,
     spritesheet_0_metasprite_0,
     spritesheet_0_metasprite_4,
-    spritesheet_0_metasprite_5,
     spritesheet_0_metasprite_1,
-    spritesheet_0_metasprite_6,
+    spritesheet_0_metasprite_5,
     spritesheet_0_metasprite_2,
-    spritesheet_0_metasprite_7,
+    spritesheet_0_metasprite_6,
     spritesheet_0_metasprite_3,
+    spritesheet_0_metasprite_7,
     spritesheet_0_metasprite_8,
-    // In Grass
     spritesheet_0_metasprite_9,
     spritesheet_0_metasprite_10,
+    spritesheet_0_metasprite_8,
     spritesheet_0_metasprite_11,
-    spritesheet_0_metasprite_12,
     spritesheet_0_metasprite_9,
+    spritesheet_0_metasprite_12,
     spritesheet_0_metasprite_13,
     spritesheet_0_metasprite_14,
     spritesheet_0_metasprite_10,
     spritesheet_0_metasprite_15,
-    spritesheet_0_metasprite_11,
-    spritesheet_0_metasprite_16,
-    spritesheet_0_metasprite_12,
+    spritesheet_0_metasprite_16
 };
 
 const struct animation_t spritesheet_0_animations[] = {
-    // Default
     {
         .start = 0,
         .end = 0
@@ -140,7 +135,7 @@ const struct animation_t spritesheet_0_animations[] = {
         .start = 2,
         .end = 2
     },
-    { 
+    {
         .start = 3,
         .end = 3
     },
@@ -149,54 +144,28 @@ const struct animation_t spritesheet_0_animations[] = {
         .end = 5
     },
     {
-        .start = 7,
-        .end = 8
+        .start = 6,
+        .end = 7
     },
     {
-        .start = 9,
-        .end = 10
+        .start = 8,
+        .end = 9
     },
     {
-        .start = 11,
+        .start = 10,
+        .end = 11
+    },
+    {
+        .start = 12,
         .end = 12
     },
-    // Surprised
-    {
-        .start = 6,
-        .end = 6
-    },
-    {
-        .start = 6,
-        .end = 6
-    },
-    {
-        .start = 6,
-        .end = 6
-    },
-    { 
-        .start = 6,
-        .end = 6
-    },
-    {
-        .start = 6,
-        .end = 6
-    },
-    {
-        .start = 6,
-        .end = 6
-    },
-    {
-        .start = 6,
-        .end = 6
-    },
-    {
-        .start = 6,
-        .end = 6
-    },
-    // In Grass
     {
         .start = 13,
         .end = 13
+    },
+    {
+        .start = 2,
+        .end = 2
     },
     {
         .start = 14,
@@ -204,10 +173,6 @@ const struct animation_t spritesheet_0_animations[] = {
     },
     {
         .start = 15,
-        .end = 15
-    },
-    { 
-        .start = 16,
         .end = 16
     },
     {
@@ -216,7 +181,7 @@ const struct animation_t spritesheet_0_animations[] = {
     },
     {
         .start = 19,
-        .end = 20 
+        .end = 20
     },
     {
         .start = 21,
@@ -224,18 +189,46 @@ const struct animation_t spritesheet_0_animations[] = {
     },
     {
         .start = 23,
-        .end = 24
+        .end = 23
     },
+    {
+        .start = 23,
+        .end = 23
+    },
+    {
+        .start = 23,
+        .end = 23
+    },
+    {
+        .start = 23,
+        .end = 23
+    },
+    {
+        .start = 23,
+        .end = 23
+    },
+    {
+        .start = 23,
+        .end = 23
+    },
+    {
+        .start = 23,
+        .end = 23
+    },
+    {
+        .start = 23,
+        .end = 23
+    }
 };
 
 const UWORD spritesheet_0_animations_lookup[] = {
-    0, // Default
-    8, // Surprised
-    16, // In Grass
+    SPRITE_0_STATE_DEFAULT,
+    SPRITE_0_STATE_IN_GRASS,
+    SPRITE_0_STATE_SURPRISED
 };
 
 const struct spritesheet_t spritesheet_0 = {
-    .n_metasprites = 13,
+    .n_metasprites = 24,
     .metasprites = spritesheet_0_metasprites,
     .animations = spritesheet_0_animations,
     .animations_lookup = spritesheet_0_animations_lookup,

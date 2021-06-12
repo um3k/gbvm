@@ -6,6 +6,10 @@
 
 const void __at(255) __bank_spritesheet_1;
 
+#define SPRITE_1_STATE_DEFAULT 0
+#define SPRITE_1_STATE_IN_GRASS 0
+#define SPRITE_1_STATE_SURPRISED 0
+
 const metasprite_t spritesheet_1_metasprite_0[]  = {
     { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
     {metasprite_end}
@@ -16,7 +20,6 @@ const metasprite_t * const spritesheet_1_metasprites[] = {
 };
 
 const struct animation_t spritesheet_1_animations[] = {
-    // Default
     {
         .start = 0,
         .end = 0
@@ -48,13 +51,11 @@ const struct animation_t spritesheet_1_animations[] = {
     {
         .start = 0,
         .end = 0
-    },
+    }
 };
 
 const UWORD spritesheet_1_animations_lookup[] = {
-    0, // Default
-    0, // Surprised (not used)
-    0, // In Grass
+    SPRITE_1_STATE_DEFAULT
 };
 
 const struct spritesheet_t spritesheet_1 = {
