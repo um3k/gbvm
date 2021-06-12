@@ -20,6 +20,9 @@ const struct scene_t scene_4 = {
     .type = SCENE_TYPE_TOPDOWN,
     .background = TO_FAR_PTR_T(background_0),
     .collisions = TO_FAR_PTR_T(scene_4_collisions),
+    .parallax_rows = {
+        PARALLAX_STEP(0,0,0)
+    },
     .palette = TO_FAR_PTR_T(palette_0),
     .sprite_palette = TO_FAR_PTR_T(palette_1),
     .player_sprite = TO_FAR_PTR_T(spritesheet_1),

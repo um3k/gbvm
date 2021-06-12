@@ -21,7 +21,6 @@ _script_s2_init::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Spritesheet
         VM_ACTOR_SET_SPRITESHEET ACTOR, ___bank_spritesheet_0, _spritesheet_0
