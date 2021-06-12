@@ -2,9 +2,11 @@
 // SpriteSheet: slon_metaspritesheet
   
 #include "gbs_types.h"
-#include "data/tileset_3.h"
+#include "data/tileset_4.h"
 
 const void __at(255) __bank_spritesheet_2;
+
+#define SPRITE_2_STATE_DEFAULT 0
 
 const metasprite_t spritesheet_2_metasprite_0[]  = {
     { -10, 32, 0, 1 }, { -6, -16, 2, 1 }, { 16, 8, 4, 1 }, { -16, 0, 6, 1 }, { -16, 0, 8, 1 }, { 32, -8, 10, 1 }, { -32, 0, 12, 1 }, { 32, -8, 14, 1 }, { -16, 0, 2, 33 }, { -16, 0, 16, 1 }, { 32, -8, 18, 1 }, { -16, 0, 20, 1 }, { -16, 0, 22, 1 }, { 16, -8, 24, 1 }, { -16, 0, 26, 1 }, { 32, -8, 28, 1 }, { -16, 0, 30, 1 }, { -16, 0, 8, 33 },
@@ -57,49 +59,56 @@ const metasprite_t * const spritesheet_2_metasprites[] = {
     spritesheet_2_metasprite_7
 };
 
+const struct animation_t spritesheet_2_animations[] = {
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    },
+    {
+        .start = 0,
+        .end = 7
+    }
+};
+
+const UWORD spritesheet_2_animations_lookup[] = {
+    SPRITE_2_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_2 = {
     .n_metasprites = 8,
     .metasprites = spritesheet_2_metasprites,
-    .animations = {
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        },
-        {
-            .start = 0,
-            .end = 7
-        }
-    },
+    .animations = spritesheet_2_animations,
+    .animations_lookup = spritesheet_2_animations_lookup,
     .bounds = {
         .left = -16,
         .bottom = 7,
         .right = 31,
         .top = -32
     },
-    .tileset = TO_FAR_PTR_T(tileset_3),
+    .tileset = TO_FAR_PTR_T(tileset_4),
     .cgb_tileset = { NULL, NULL }
 };
