@@ -2,9 +2,11 @@
 // SpriteSheet: duck
   
 #include "gbs_types.h"
-#include "data/tileset_5.h"
+#include "data/tileset_9.h"
 
 const void __at(255) __bank_spritesheet_3;
+
+#define SPRITE_3_STATE_DEFAULT 0
 
 const metasprite_t spritesheet_3_metasprite_0[]  = {
     { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
@@ -21,49 +23,56 @@ const metasprite_t * const spritesheet_3_metasprites[] = {
     spritesheet_3_metasprite_1
 };
 
+const struct animation_t spritesheet_3_animations[] = {
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    },
+    {
+        .start = 0,
+        .end = 1
+    }
+};
+
+const UWORD spritesheet_3_animations_lookup[] = {
+    SPRITE_3_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_3 = {
     .n_metasprites = 2,
     .metasprites = spritesheet_3_metasprites,
-    .animations = {
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        },
-        {
-            .start = 0,
-            .end = 1
-        }
-    },
+    .animations = spritesheet_3_animations,
+    .animations_lookup = spritesheet_3_animations_lookup,
     .bounds = {
         .left = 0,
         .bottom = 7,
         .right = 15,
         .top = -8
     },
-    .tileset = TO_FAR_PTR_T(tileset_5),
+    .tileset = TO_FAR_PTR_T(tileset_9),
     .cgb_tileset = { NULL, NULL }
 };

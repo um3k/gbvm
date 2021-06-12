@@ -3,8 +3,6 @@
 
 .area _CODE_255
 
-
-
 ___bank_script_s7a7_hit1 = 255
 .globl ___bank_script_s7a7_hit1
 

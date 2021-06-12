@@ -31,7 +31,7 @@ _script_enemy_ship_movement_diagonal_bottom_to_top::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, 0
+        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active
@@ -50,7 +50,7 @@ _script_enemy_ship_movement_diagonal_bottom_to_top::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, 0
+        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Variable Set To Value
@@ -75,7 +75,7 @@ _script_enemy_ship_movement_diagonal_bottom_to_top::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, 0
+        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active
@@ -94,7 +94,7 @@ _script_enemy_ship_movement_diagonal_bottom_to_top::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, 0
+        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
         VM_ACTOR_MOVE_TO        ACTOR
 
         VM_POP                  4

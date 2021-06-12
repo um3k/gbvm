@@ -19,7 +19,6 @@ _script_s0t0_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Store Position In Variables
         VM_ACTOR_GET_POS        ACTOR
@@ -156,7 +155,7 @@ _script_s0t0_interact::
 2$:
 
         ; Call Script: Update Input Fields
-        VM_CALL_FAR             ___bank_script_custom_1, _script_custom_1
+        VM_CALL_FAR             ___bank_script_update_input_fields, _script_update_input_fields
 
         ; Stop Script
         VM_STOP

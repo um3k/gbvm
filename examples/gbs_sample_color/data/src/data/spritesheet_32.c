@@ -2,9 +2,11 @@
 // SpriteSheet: npc005
   
 #include "gbs_types.h"
-#include "data/tileset_36.h"
+#include "data/tileset_40.h"
 
 const void __at(255) __bank_spritesheet_32;
+
+#define SPRITE_32_STATE_DEFAULT 0
 
 const metasprite_t spritesheet_32_metasprite_0[]  = {
     { 0, 8, 8, 0 }, { 0, -8, 10, 0 },
@@ -61,49 +63,56 @@ const metasprite_t * const spritesheet_32_metasprites[] = {
     spritesheet_32_metasprite_3
 };
 
+const struct animation_t spritesheet_32_animations[] = {
+    {
+        .start = 0,
+        .end = 0
+    },
+    {
+        .start = 1,
+        .end = 1
+    },
+    {
+        .start = 2,
+        .end = 2
+    },
+    {
+        .start = 3,
+        .end = 3
+    },
+    {
+        .start = 4,
+        .end = 5
+    },
+    {
+        .start = 6,
+        .end = 7
+    },
+    {
+        .start = 8,
+        .end = 9
+    },
+    {
+        .start = 10,
+        .end = 11
+    }
+};
+
+const UWORD spritesheet_32_animations_lookup[] = {
+    SPRITE_32_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_32 = {
     .n_metasprites = 12,
     .metasprites = spritesheet_32_metasprites,
-    .animations = {
-        {
-            .start = 0,
-            .end = 0
-        },
-        {
-            .start = 1,
-            .end = 1
-        },
-        {
-            .start = 2,
-            .end = 2
-        },
-        {
-            .start = 3,
-            .end = 3
-        },
-        {
-            .start = 4,
-            .end = 5
-        },
-        {
-            .start = 6,
-            .end = 7
-        },
-        {
-            .start = 8,
-            .end = 9
-        },
-        {
-            .start = 10,
-            .end = 11
-        }
-    },
+    .animations = spritesheet_32_animations,
+    .animations_lookup = spritesheet_32_animations_lookup,
     .bounds = {
         .left = 0,
         .bottom = 7,
         .right = 15,
         .top = -8
     },
-    .tileset = TO_FAR_PTR_T(tileset_36),
+    .tileset = TO_FAR_PTR_T(tileset_40),
     .cgb_tileset = { NULL, NULL }
 };

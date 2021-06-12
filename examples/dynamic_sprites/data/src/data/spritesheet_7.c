@@ -6,6 +6,8 @@
 
 const void __at(255) __bank_spritesheet_7;
 
+#define SPRITE_7_STATE_DEFAULT 0
+
 const metasprite_t spritesheet_7_metasprite_0[]  = {
     { -10, 32, 0, 0 }, { -22, -48, 2, 0 }, { 0, 40, 2, 32 }, { 0, -32, 4, 0 }, { 0, 8, 6, 0 }, { 0, 8, 8, 0 }, { 0, 8, 10, 0 }, { 16, -32, 12, 0 }, { 0, 8, 14, 0 }, { 0, 8, 16, 0 }, { 0, 8, 18, 0 }, { 0, 8, 18, 32 }, { 0, 8, 20, 0 }, { 16, -40, 22, 0 }, { 0, 16, 24, 0 }, { 0, 8, 26, 0 }, { 0, 8, 28, 0 }, { 0, 8, 30, 0 },
     {metasprite_end}
@@ -46,43 +48,50 @@ const metasprite_t * const spritesheet_7_metasprites[] = {
     spritesheet_7_metasprite_2
 };
 
+const struct animation_t spritesheet_7_animations[] = {
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    },
+    {
+        .start = 0,
+        .end = 6
+    }
+};
+
+const UWORD spritesheet_7_animations_lookup[] = {
+    SPRITE_7_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_7 = {
     .n_metasprites = 7,
     .metasprites = spritesheet_7_metasprites,
-    .animations = {
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        },
-        {
-            .start = 0,
-            .end = 6
-        }
-    },
+    .animations = spritesheet_7_animations,
+    .animations_lookup = spritesheet_7_animations_lookup,
     .bounds = {
         .left = -16,
         .bottom = 7,

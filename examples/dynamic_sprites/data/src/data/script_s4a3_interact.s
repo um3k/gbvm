@@ -19,7 +19,6 @@ _script_s4a3_interact::
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 7
-        VM_ACTOR_ACTIVATE       ACTOR
 
         ; Actor Set Spritesheet
         VM_ACTOR_SET_SPRITESHEET ACTOR, ___bank_spritesheet_2, _spritesheet_2
