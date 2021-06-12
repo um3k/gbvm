@@ -2,9 +2,11 @@
 // SpriteSheet: player
   
 #include "gbs_types.h"
-#include "data/tileset_2.h"
+#include "data/tileset_6.h"
 
 const void __at(255) __bank_spritesheet_0;
+
+#define SPRITE_0_STATE_DEFAULT 0
 
 const metasprite_t spritesheet_0_metasprite_0[]  = {
     { 0, 8, 8, 0 }, { 0, -8, 10, 0 },
@@ -61,49 +63,56 @@ const metasprite_t * const spritesheet_0_metasprites[] = {
     spritesheet_0_metasprite_3
 };
 
+const struct animation_t spritesheet_0_animations[] = {
+    {
+        .start = 0,
+        .end = 0
+    },
+    {
+        .start = 1,
+        .end = 1
+    },
+    {
+        .start = 2,
+        .end = 2
+    },
+    {
+        .start = 3,
+        .end = 3
+    },
+    {
+        .start = 4,
+        .end = 5
+    },
+    {
+        .start = 6,
+        .end = 7
+    },
+    {
+        .start = 8,
+        .end = 9
+    },
+    {
+        .start = 10,
+        .end = 11
+    }
+};
+
+const UWORD spritesheet_0_animations_lookup[] = {
+    SPRITE_0_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_0 = {
     .n_metasprites = 12,
     .metasprites = spritesheet_0_metasprites,
-    .animations = {
-        {
-            .start = 0,
-            .end = 0
-        },
-        {
-            .start = 1,
-            .end = 1
-        },
-        {
-            .start = 2,
-            .end = 2
-        },
-        {
-            .start = 3,
-            .end = 3
-        },
-        {
-            .start = 4,
-            .end = 5
-        },
-        {
-            .start = 6,
-            .end = 7
-        },
-        {
-            .start = 8,
-            .end = 9
-        },
-        {
-            .start = 10,
-            .end = 11
-        }
-    },
+    .animations = spritesheet_0_animations,
+    .animations_lookup = spritesheet_0_animations_lookup,
     .bounds = {
         .left = 0,
         .bottom = 7,
         .right = 15,
         .top = 0
     },
-    .tileset = TO_FAR_PTR_T(tileset_2),
+    .tileset = TO_FAR_PTR_T(tileset_6),
     .cgb_tileset = { NULL, NULL }
 };
