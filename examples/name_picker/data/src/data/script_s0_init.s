@@ -5,8 +5,6 @@
 
 .area _CODE_255
 
-
-
 ___bank_script_s0_init = 255
 .globl ___bank_script_s0_init
 
@@ -46,7 +44,7 @@ _script_s0_init::
         VM_SET_CONST            VAR_STRING_4_, 1
 
         ; Call Script: Update Input Fields
-        VM_CALL_FAR             ___bank_script_custom_1, _script_custom_1
+        VM_CALL_FAR             ___bank_script_update_input_fields, _script_update_input_fields
 
         ; Stop Script
         VM_STOP

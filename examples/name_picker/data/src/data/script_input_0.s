@@ -5,8 +5,6 @@
 
 .area _CODE_255
 
-
-
 ___bank_script_input_0 = 255
 .globl ___bank_script_input_0
 
@@ -33,7 +31,7 @@ _script_input_0::
         ; If Variable .GT Variable
         VM_IF .GT               VAR_TEMP_0, VAR_STRING_INDEX, 4$, 0
         ; Call Script: Update Input Fields
-        VM_CALL_FAR             ___bank_script_custom_0, _script_custom_0
+        VM_CALL_FAR             ___bank_script_update_input_fields, _script_update_input_fields
 
         VM_JUMP                 OUT$
         VM_JUMP                 5$
