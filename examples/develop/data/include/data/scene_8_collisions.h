@@ -1,7 +1,7 @@
-#ifndef SCENE_7_COLLISIONS_H
-#define SCENE_7_COLLISIONS_H
+#ifndef SCENE_8_COLLISIONS_H
+#define SCENE_8_COLLISIONS_H
 
-// Scene: Mine
+// Scene: Parallax
 // Collisions
 
 #include "gbs_types.h"

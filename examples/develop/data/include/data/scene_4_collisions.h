@@ -1,7 +1,7 @@
 #ifndef SCENE_4_COLLISIONS_H
 #define SCENE_4_COLLISIONS_H
 
-// Scene: Platform Scene
+// Scene: Player's House
 // Collisions
 
 #include "gbs_types.h"

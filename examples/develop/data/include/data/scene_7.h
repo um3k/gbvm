@@ -1,7 +1,7 @@
 #ifndef SCENE_7_H
 #define SCENE_7_H
 
-// Scene: Title Screen
+// Scene: Outside
 
 #include "gbs_types.h"
 

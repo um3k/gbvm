@@ -1,7 +1,7 @@
 #ifndef SCENE_3_COLLISIONS_H
 #define SCENE_3_COLLISIONS_H
 
-// Scene: Title Screen
+// Scene: Underground
 // Collisions
 
 #include "gbs_types.h"

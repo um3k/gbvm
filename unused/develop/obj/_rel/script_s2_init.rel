@@ -1,0 +1,31 @@
+XL3
+H 2 areas D global symbols
+S ___bank_script_s2_init Def00000B
+S b_wait_frames Ref000000
+S ___bank_spritesheet_1 Ref000000
+S .__.ABS. Def000000
+S _spritesheet_1 Ref000000
+S ___bank_script_s2_timer1 Ref000000
+S ___bank_script_s2_timer2 Ref000000
+S _script_s2_timer1 Ref000000
+S _script_s2_timer2 Ref000000
+S ___bank_script_s2_input1 Ref000000
+S _wait_frames Ref000000
+S _script_s2_input1 Ref000000
+A _CODE size 0 flags 0 addr 0
+A _CODE_11 size 33 flags 0 addr 0
+S _script_s2_init Def000000
+T 00 00 00
+R 00 00 01 00
+T 00 00 00 25 01 00 00 01 01 00 01 01 00 01 00 03
+R 00 00 01 00
+T 0D 00 00 14 00 01 FF FC 32 03 FF FC 01 00 01 0D
+R 00 00 01 00
+T 1A 00 00 FF FF 01 00 00 00 00 00 00 00 00 00 56
+R 00 00 01 00 8B 06 0A 00 0B 09 0A 00 0B 0C 01 00
+T 21 00 00 01 55 00 00 00 00 00 00 00 00 00 01 53
+R 00 00 01 00 8B 05 0B 00 0B 08 0B 00 0B 0B 09 00
+T 28 00 00 01 40 58 00 00 00 00 00 00 00 00 00 01
+R 00 00 01 00 8B 06 08 00 0B 09 08 00 0B 0C 06 00
+T 2F 00 00 59 02 01 00
+R 00 00 01 00

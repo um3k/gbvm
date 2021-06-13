@@ -37,6 +37,7 @@ ___bank_script_engine_init = 255
 .globl _plat_grav
 .globl _plat_hold_grav
 .globl _plat_max_fall_vel
+.globl _shooter_scroll_speed
 .globl _topdown_grid
 .globl _fade_style
 
@@ -52,6 +53,7 @@ _script_engine_init::
         VM_SET_CONST_INT16      _plat_grav, 1792
         VM_SET_CONST_INT16      _plat_hold_grav, 512
         VM_SET_CONST_INT16      _plat_max_fall_vel, 20000
+        VM_SET_CONST_INT16      _shooter_scroll_speed, 16
         VM_SET_CONST_INT16      _topdown_grid, 8
         VM_SET_CONST_INT16      _fade_style, 0
 

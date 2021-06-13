@@ -4,4 +4,4 @@ include ../Makefile.project
 
 .PHONY: data
 data:
-	$(GBS_CLI) export -d project/linkcable.gbsproj data
+	$(GBS_CLI) export -d project/project.gbsproj data

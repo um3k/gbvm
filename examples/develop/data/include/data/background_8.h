@@ -1,7 +1,7 @@
 #ifndef BACKGROUND_8_H
 #define BACKGROUND_8_H
 
-// Background: 7
+// Background: 8
 
 #include "gbs_types.h"
 

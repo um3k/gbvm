@@ -1,0 +1,55 @@
+XL3
+H A areas 15 global symbols
+M scene_1
+O -mgbz80
+S _scene_1_triggers Ref000000
+S ___bank_script_s1_init Ref000000
+S _script_s1_init Ref000000
+S ___bank_background_4 Ref000000
+S _background_4 Ref000000
+S ___bank_scene_1_collisions Ref000000
+S ___bank_palette_0 Ref000000
+S ___bank_spritesheet_0 Ref000000
+S ___bank_palette_2 Ref000000
+S _scene_1_collisions Ref000000
+S _palette_0 Ref000000
+S _spritesheet_0 Ref000000
+S .__.ABS. Def000000
+S ___bank_scene_1_sprites Ref000000
+S _palette_2 Ref000000
+S ___bank_scene_1_actors Ref000000
+S _scene_1_sprites Ref000000
+S _scene_1_actors Ref000000
+S ___bank_scene_1 Def00000B
+S ___bank_scene_1_triggers Ref000000
+A _CODE size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_11 size 40 flags 0 addr 0
+S _scene_1 Def000000
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 20 20 00 06 02 00 04 00 00 00 00 00
+R 00 00 07 00 0B 0A 07 00 02 0D 0B 00
+T 0A 00 00 00 00 00 00 00 00 00 00
+R 00 00 07 00 0B 03 03 00 02 06 04 00 0B 08 05 00
+T 0E 00 00 00 00 00 00 00 00 00
+R 00 00 07 00 02 03 09 00 0B 05 08 00 02 08 0E 00
+T 13 00 00 00 00 00 00 00 00 00 00
+R 00 00 07 00 0B 03 06 00 02 06 0A 00 0B 08 01 00
+T 17 00 00 00 00 00 00 00 00 00 00 00 00 00
+R 00 00 07 00 02 03 02 00
+T 22 00 00 00 00 00 00 00 00 00 00
+R 00 00 07 00 0B 03 0D 00 02 06 10 00 0B 08 0F 00
+T 26 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+R 00 00 07 00 02 03 11 00 0B 05 13 00 02 08 00 00
+T 31 00 00 00 14 00 00 00 00 00 00 00 00 00 00 00
+R 00 00 07 00
+T 3E 00 00 00 00
+R 00 00 07 00

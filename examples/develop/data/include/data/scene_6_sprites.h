@@ -1,7 +1,7 @@
 #ifndef SCENE_6_SPRITES_H
 #define SCENE_6_SPRITES_H
 
-// Scene: Dancefloor
+// Scene: Deeper Underground
 // Sprites
 
 #include "gbs_types.h"

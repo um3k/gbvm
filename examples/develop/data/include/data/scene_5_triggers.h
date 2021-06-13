@@ -1,7 +1,7 @@
 #ifndef SCENE_5_TRIGGERS_H
 #define SCENE_5_TRIGGERS_H
 
-// Scene: Parallax Test
+// Scene: Platform
 // Triggers
 
 #include "gbs_types.h"

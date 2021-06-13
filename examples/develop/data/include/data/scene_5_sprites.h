@@ -1,7 +1,7 @@
 #ifndef SCENE_5_SPRITES_H
 #define SCENE_5_SPRITES_H
 
-// Scene: Parallax Test
+// Scene: Platform
 // Sprites
 
 #include "gbs_types.h"

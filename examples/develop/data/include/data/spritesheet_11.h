@@ -1,7 +1,7 @@
 #ifndef SPRITESHEET_11_H
 #define SPRITESHEET_11_H
 
-// SpriteSheet: 1
+// SpriteSheet: 11
 
 #include "gbs_types.h"
 

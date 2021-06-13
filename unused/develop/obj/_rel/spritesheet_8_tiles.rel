@@ -1,0 +1,31 @@
+XL3
+H A areas 3 global symbols
+M spritesheet_8_tiles
+O -mgbz80
+S .__.ABS. Def000000
+S ___bank_spritesheet_8_tiles Def00000B
+A _CODE size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_11 size 42 flags 0 addr 0
+S _spritesheet_8_tiles Def000000
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 04 00 00 00 00 00 3F 3F 38 3F 3D 3E 3F
+R 00 00 07 00
+T 0D 00 00 3F 37 38 3B 3C 3F 3F 1F 20 2F 30 2F 30
+R 00 00 07 00
+T 1A 00 00 3F 3F 00 3F 00 00 00 00 00 00 00 00 FC
+R 00 00 07 00
+T 27 00 00 FC 1C FC BC 7C FC FC EC 1C DC 3C FC FC
+R 00 00 07 00
+T 34 00 00 F8 04 F4 0C F4 0C FC FC 00 FC 00 00 00
+R 00 00 07 00
+T 41 00 00 00
+R 00 00 07 00

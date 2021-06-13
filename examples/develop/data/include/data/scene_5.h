@@ -1,7 +1,7 @@
 #ifndef SCENE_5_H
 #define SCENE_5_H
 
-// Scene: Parallax Scene
+// Scene: Platform
 
 #include "gbs_types.h"
 

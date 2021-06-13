@@ -1,0 +1,230 @@
+XL3
+H 9 areas 81 global symbols
+M vm_instructions
+O -mgbz80
+S _vm_actor_replace_tile Ref000000
+S _vm_set_font Ref000000
+S _vm_overlay_show Ref000000
+S _vm_actor_set_dir Ref000000
+S _vm_get_int8 Ref000000
+S _vm_actor_terminate_update Ref000000
+S _vm_timer_reset Ref000000
+S _vm_set_const_int16 Ref000000
+S _vm_set_uint8 Ref000000
+S _vm_ret_far Ref000000
+S _vm_sound_mastervol Ref000000
+S _vm_rand Ref000000
+S _vm_actor_get_anim_frame Ref000000
+S _vm_rtc_get Ref000000
+S _vm_overlay_clear Ref000000
+S _vm_test_terminate Ref000000
+S _vm_replace_tile Ref000000
+S _vm_actor_get_pos Ref000000
+S _vm_lock Ref000000
+S _vm_show_sprites Ref000000
+S _vm_choice Ref000000
+S _vm_cos_scale Ref000000
+S _vm_sio_exchange Ref000000
+S _vm_scene_push Ref000000
+S _vm_load_palette Ref000000
+S _vm_actor_set_bounds Ref000000
+S _vm_set_int8 Ref000000
+S _vm_timer_prepare Ref000000
+S _vm_overlay_scroll Ref000000
+S _vm_join Ref000000
+S _vm_actor_move_to Ref000000
+S _vm_sin_scale Ref000000
+S _vm_get_indirect Ref000000
+S _vm_actor_set_anim_frame Ref000000
+S _vm_actor_set_anim_set Ref000000
+S _vm_save_peek Ref000000
+S _vm_rtc_set Ref000000
+S _vm_rtc_latch Ref000000
+S _vm_set_const_int8 Ref000000
+S _vm_call_far Ref000000
+S _vm_actor_set_pos Ref000000
+S _vm_music_play Ref000000
+S _vm_set_print_dir Ref000000
+S _vm_poll Ref000000
+S _vm_actor_set_coll_enabled Ref000000
+S _vm_input_detach Ref000000
+S _vm_replace_tile_xy Ref000000
+S _vm_sio_set_mode Ref000000
+S _vm_loop Ref000000
+S _vm_music_mute Ref000000
+S _vm_overlay_hide Ref000000
+S _vm_scene_pop Ref000000
+S _vm_reserve Ref000000
+S _vm_push_value Ref000000
+S _vm_jump Ref000000
+S _vm_set_indirect Ref000000
+S _vm_beginthread Ref000000
+S .__.ABS. Def000000
+S _vm_sound_play Ref000000
+S _vm_call_rel Ref000000
+S _vm_overlay_setpos Ref000000
+S _vm_poll_loaded Ref000000
+S _vm_sgb_transfer Ref000000
+S _vm_push Ref000000
+S _vm_camera_move_to Ref000000
+S _vm_hide_sprites Ref000000
+S _vm_input_attach Ref000000
+S _vm_input_wait Ref000000
+S _vm_load_text Ref000000
+S _vm_camera_set_pos Ref000000
+S _vm_scene_stack_reset Ref000000
+S _vm_timer_stop Ref000000
+S _vm_music_routine Ref000000
+S _vm_music_stop Ref000000
+S _vm_set_sprite_mode Ref000000
+S _vm_fade_in Ref000000
+S _vm_rumble Ref000000
+S _vm_fade_out Ref000000
+S _vm_wave_play Ref000000
+S _vm_actor_set_anim Ref000000
+S _vm_actor_activate Ref000000
+S _vm_randomize Ref000000
+S _vm_terminate Ref000000
+S _vm_load_frame Ref000000
+S _vm_actor_set_move_speed Ref000000
+S _vm_projectile_launch Ref000000
+S _vm_memcpy Ref000000
+S _vm_memset Ref000000
+S _vm_ret Ref000000
+S _vm_timer_set Ref000000
+S _vm_unlock Ref000000
+S _vm_set Ref000000
+S _vm_invoke Ref000000
+S _vm_systime Ref000000
+S _vm_input_get Ref000000
+S _vm_actor_set_hidden Ref000000
+S _vm_if Ref000000
+S _vm_pop Ref000000
+S _vm_rpn Ref000000
+S _vm_get_int16 Ref000000
+S _vm_actor_set_anim_tick Ref000000
+S _vm_actor_emote Ref000000
+S _vm_actor_deactivate Ref000000
+S _vm_set_const Ref000000
+S _vm_context_prepare Ref000000
+S _vm_actor_set_spritesheet Ref000000
+S _vm_scene_pop_all Ref000000
+S _vm_overlay_set_submap Ref000000
+S _vm_raise Ref000000
+S _vm_save_clear Ref000000
+S _vm_if_const Ref000000
+S _vm_rtc_start Ref000000
+S _vm_overlay_wait Ref000000
+S _vm_actor_get_dir Ref000000
+S _vm_push_value_ind Ref000000
+S _vm_get_uint8 Ref000000
+S _vm_overlay_move_to Ref000000
+S _vm_display_text Ref000000
+S _vm_overlay_set_scroll Ref000000
+S _vm_loop_rel Ref000000
+S _vm_call Ref000000
+S _vm_get_tile_xy Ref000000
+S _vm_load_cursor Ref000000
+S _vm_set_int16 Ref000000
+S _vm_music_setpos Ref000000
+S _vm_get_tlocal Ref000000
+S _vm_idle Ref000000
+S _vm_jump_rel Ref000000
+A _CODE size 18C flags 0 addr 0
+S _script_cmds Def000000
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 00 00
+T 00 00 00 00 00 02 00 00 01 00 00 01
+R 00 00 00 00 02 03 3F 00 02 06 61 00 02 09 3B 00
+T 09 00 00 00 00 02 00 00 01 00 00 04
+R 00 00 00 00 02 03 78 00 02 06 58 00 02 09 77 00
+T 12 00 00 00 00 05 00 00 01 00 00 02
+R 00 00 00 00 02 03 30 00 02 06 7F 00 02 09 36 00
+T 1B 00 00 00 00 03 00 00 01 00 00 02
+R 00 00 00 00 02 03 27 00 02 06 09 00 02 09 5D 00
+T 24 00 00 00 00 06 00 00 06 00 00 08
+R 00 00 00 00 02 03 5C 00 02 06 38 00 02 09 60 00
+T 2D 00 00 00 00 02 00 00 02 00 00 01
+R 00 00 00 00 02 03 72 00 02 06 35 00 02 09 34 00
+T 36 00 00 00 00 04 00 00 04 00 00 00
+R 00 00 00 00 02 03 5B 00 02 06 67 00 02 09 62 00
+T 3F 00 00 00 00 02 00 00 02 00 00 00
+R 00 00 00 00 02 03 1D 00 02 06 52 00 02 09 7E 00
+T 48 00 00 00 00 04 00 00 08 00 00 04
+R 00 00 00 00 02 03 7D 00 02 06 6E 00 02 09 73 00
+T 51 00 00 00 00 04 00 00 04 00 00 04
+R 00 00 00 00 02 03 04 00 02 06 63 00 02 09 08 00
+T 5A 00 00 00 00 04 00 00 04 00 00 03
+R 00 00 00 00 02 03 1A 00 02 06 7B 00 02 09 26 00
+T 63 00 00 00 00 04 00 00 00 00 00 08
+R 00 00 00 00 02 03 07 00 02 06 51 00 02 09 0B 00
+T 6C 00 00 00 00 00 00 00 00 00 00 02
+R 00 00 00 00 02 03 12 00 02 06 5A 00 02 09 6C 00
+T 75 00 00 00 00 04 00 00 04 00 00 01
+R 00 00 00 00 02 03 37 00 02 06 20 00 02 09 0F 00
+T 7E 00 00 00 00 02 00 00 05 00 00 05
+R 00 00 00 00 02 03 3D 00 02 06 1F 00 02 09 15 00
+T 87 00 00 00 00 08 00 00 01 00 00 02
+R 00 00 00 00 02 03 23 00 02 06 6D 00 02 09 1E 00
+T 90 00 00 00 00 02 00 00 03 00 00 02
+R 00 00 00 00 02 03 50 00 02 06 03 00 02 09 66 00
+T 99 00 00 00 00 04 00 00 02 00 00 05
+R 00 00 00 00 02 03 4F 00 02 06 28 00 02 09 65 00
+T A2 00 00 00 00 06 00 00 05 00 00 08
+R 00 00 00 00 02 03 19 00 02 06 69 00 02 09 00 00
+T AB 00 00 00 00 02 00 00 03 00 00 04
+R 00 00 00 00 02 03 11 00 02 06 5F 00 02 09 71 00
+T B4 00 00 00 00 03 00 00 03 00 00 03
+R 00 00 00 00 02 03 64 00 02 06 54 00 02 09 2C 00
+T BD 00 00 00 00 01 00 00 00 00 00 02
+R 00 00 00 00 02 03 44 00 02 06 75 00 02 09 3C 00
+T C6 00 00 00 00 00 00 00 02 00 00 03
+R 00 00 00 00 02 03 32 00 02 06 70 00 02 09 74 00
+T CF 00 00 00 00 04 00 00 06 00 00 04
+R 00 00 00 00 02 03 02 00 02 06 0E 00 02 09 14 00
+T D8 00 00 00 00 03 00 00 03 00 00 01
+R 00 00 00 00 02 03 53 00 02 06 7A 00 02 09 01 00
+T E1 00 00 00 00 01 00 00 05 00 00 05
+R 00 00 00 00 02 03 2A 00 02 06 1C 00 02 09 76 00
+T EA 00 00 00 00 06 00 00 00 00 00 00
+R 00 00 00 00 02 03 6B 00 02 06 13 00 02 09 41 00
+T F3 00 00 00 00 01 00 00 02 00 00 03
+R 00 00 00 00 02 03 43 00 02 06 42 00 02 09 5E 00
+T FC 00 00 00 00 04 00 00 01 00 00 01
+R 00 00 00 00 02 03 68 00 02 06 4B 00 02 09 4D 00
+T 05 01 00 00 00 04 00 00 02 00 00 06
+R 00 00 00 00 02 03 1B 00 02 06 59 00 02 09 79 00
+T 0E 01 00 00 00 08 00 00 05 00 00 01
+R 00 00 00 00 02 03 10 00 02 06 2B 00 02 09 4A 00
+T 17 01 00 00 00 07 00 00 01 00 00 04
+R 00 00 00 00 02 03 2E 00 02 06 2D 00 02 09 29 00
+T 20 01 00 00 00 00 00 00 01 00 00 01
+R 00 00 00 00 02 03 49 00 02 06 31 00 02 09 0A 00
+T 29 01 00 00 00 02 00 00 04 00 00 06
+R 00 00 00 00 02 03 3A 00 02 06 48 00 02 09 4E 00
+T 32 01 00 00 00 02 00 00 00 00 00 00
+R 00 00 00 00 02 03 7C 00 02 06 17 00 02 09 33 00
+T 3B 01 00 00 00 00 00 00 00 00 00 01
+R 00 00 00 00 02 03 6A 00 02 06 46 00 02 09 2F 00
+T 44 01 00 00 00 05 00 00 00 00 00 00 00 00 04
+R 00 00 00 00 02 03 16 00 02 0C 40 00
+T 50 01 00 00 00 02 00 00 01 00 00 01
+R 00 00 00 00 02 03 45 00 02 06 47 00 02 09 06 00
+T 59 01 00 00 00 02 00 00 02 00 00 06
+R 00 00 00 00 02 03 05 00 02 06 21 00 02 09 57 00
+T 62 01 00 00 00 06 00 00 00 00 00 03
+R 00 00 00 00 02 03 56 00 02 06 25 00 02 09 0D 00
+T 6B 01 00 00 00 03 00 00 01 00 00 02 00 00 00
+R 00 00 00 00 02 03 24 00 02 06 6F 00 02 09 18 00
+T 77 01 00 00 00 00 00 00 01 00 00 03 00 00 00
+R 00 00 00 00 02 03 3E 00 02 06 4C 00 02 09 55 00
+T 83 01 00 00 00 00 00 00 02 00 00 04
+R 00 00 00 00 02 06 0C 00 02 09 22 00

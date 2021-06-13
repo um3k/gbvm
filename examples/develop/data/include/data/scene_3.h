@@ -1,7 +1,7 @@
 #ifndef SCENE_3_H
 #define SCENE_3_H
 
-// Scene: Title Screen
+// Scene: Underground
 
 #include "gbs_types.h"
 

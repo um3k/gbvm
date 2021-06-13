@@ -1,7 +1,7 @@
-#ifndef SCENE_7_SPRITES_H
-#define SCENE_7_SPRITES_H
+#ifndef SCENE_8_SPRITES_H
+#define SCENE_8_SPRITES_H
 
-// Scene: Mine
+// Scene: Parallax
 // Sprites
 
 #include "gbs_types.h"

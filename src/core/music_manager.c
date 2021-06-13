@@ -15,9 +15,9 @@ const TRACK_T *current_track;
 UBYTE tone_frames;
 UBYTE channel_mask;
 UBYTE sound_channel;
+UBYTE current_track_bank;
 // --------------------------------------------
 #ifdef HUGE_TRACKER
-    UBYTE current_track_bank;
     UBYTE music_stopped;
     UBYTE huge_initialized;
 #endif
@@ -98,10 +98,11 @@ UBYTE music_events_poll() __banked {
 void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) __nonbanked {
     if (track == NULL) {
         music_stop();
-    } else if (track != current_track) {
+    } else if (track != current_track || bank != current_track_bank) {
         channel_mask = MASK_ALL_CHANNELS;
 #ifdef GBT_PLAYER
         UBYTE _save = _current_bank;
+        current_track_bank = bank;
         __critical {
             gbt_play(track, bank, 7);
             gbt_loop(loop);

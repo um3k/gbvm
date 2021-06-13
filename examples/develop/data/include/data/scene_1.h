@@ -1,7 +1,7 @@
 #ifndef SCENE_1_H
 #define SCENE_1_H
 
-// Scene: Underground
+// Scene: Logo
 
 #include "gbs_types.h"
 
