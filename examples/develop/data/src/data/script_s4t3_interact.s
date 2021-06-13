@@ -1,30 +1,33 @@
 .include "vm.i"
 .include "data/game_globals.i"
-.include "macro.i"
 
 .area _CODE_255
 
 ___bank_script_s4t3_interact = 255
 .globl ___bank_script_s4t3_interact
-.globl _pl_vel_x, _pl_vel_y
 
 _script_s4t3_interact::
-        VM_PUSH_CONST           28              ; bit less than 45 degrees 
-        VM_PUSH_CONST           100
-        VM_SIN_SCALE            .ARG0, .ARG1, 6 
-        VM_PUSH_CONST           100 
-        VM_COS_SCALE            .ARG0, .ARG2, 6
-        VM_RPN
-            .R_INT16    -360
-            .R_REF      .ARG1
-            .R_OPERATOR '*'
-            .R_INT16    220
-            .R_REF      .ARG0
-            .R_OPERATOR '*'
-            .R_STOP
-        VM_SET_INT16            _pl_vel_y, .ARG1
-        VM_SET_INT16            _pl_vel_x, .ARG0
+        VM_LOCK
 
-        VM_POP                  5
+        ; Text Dialogue
+        VM_LOAD_TEXT            0
+        .asciz "My TV."
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
+        ; Text Dialogue
+        VM_LOAD_TEXT            0
+        .asciz "It has a VHS\nplayer built in!"
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
+        ; Stop Script
         VM_STOP

@@ -1,109 +1,82 @@
 #pragma bank 255
 
-// Scene: Scene 5
+// Scene: Platform
 // Actors
 
 #include "gbs_types.h"
-#include "data/spritesheet_9.h"
-#include "data/spritesheet_10.h"
-#include "data/spritesheet_11.h"
+#include "data/spritesheet_12.h"
+#include "data/script_s5a0_interact.h"
+#include "data/script_s5a0_update.h"
+#include "data/spritesheet_6.h"
+#include "data/script_s5a1_interact.h"
+#include "data/spritesheet_5.h"
+#include "data/script_s5a2_interact.h"
 
 const void __at(255) __bank_scene_5_actors;
 
-#define elephant_x 180
-#define elephant_y 104
-
 const struct actor_t scene_5_actors[] = {
-  {
-    // Actor 1,
-    .pos = {
-      .x = (elephant_x + 8 + 3) * 16,
-      .y = (elephant_y - 40 + 2) * 16,
+    {
+        // Turnip 1,
+        .pos = {
+            .x = 576 * 16,
+            .y = 104 * 16
+        },
+        .bounds = {
+            .left = 0,
+            .bottom = 7,
+            .right = 15,
+            .top = -8
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(spritesheet_12),
+        .move_speed = 8,
+        .anim_tick = 15,
+        .pinned = FALSE,
+        .collision_group = COLLISION_GROUP_1,
+        .collision_enabled = TRUE,
+        .script = TO_FAR_PTR_T(script_s5a0_interact),
+        .script_update = TO_FAR_PTR_T(script_s5a0_update)
     },
-    .dir = DIR_LEFT,
-    .sprite = TO_FAR_PTR_T(spritesheet_9),
-    .bounds = {
-      .left = 0,
-      .bottom = 7,
-      .right = 15,
-      .top = -8
-    },  
-    .move_speed = 1,
-    .anim_tick = 7,
-    .frame = 0,
-    .frame_start = 0,
-    .frame_end = 0,
-    .pinned = FALSE,
-    .collision_group = COLLISION_GROUP_1,
-    .collision_enabled = TRUE
-  },
-  {
-    // Actor 2,
-    .pos = {
-      .x = (elephant_x + 32 + 2) * 16,
-      .y = (elephant_y - 40 + 2) * 16,
+    {
+        // Sign Post,
+        .pos = {
+            .x = 1072 * 16,
+            .y = 104 * 16
+        },
+        .bounds = {
+            .left = 0,
+            .bottom = 7,
+            .right = 15,
+            .top = -8
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(spritesheet_6),
+        .move_speed = 16,
+        .anim_tick = 15,
+        .pinned = FALSE,
+        .collision_group = COLLISION_GROUP_NONE,
+        .collision_enabled = TRUE,
+        .script = TO_FAR_PTR_T(script_s5a1_interact)
     },
-    .dir = DIR_RIGHT,
-    .sprite = TO_FAR_PTR_T(spritesheet_9),
-    .bounds = {
-      .left = 0,
-      .bottom = 7,
-      .right = 15,
-      .top = -8
-    },  
-    .move_speed = 1,
-    .anim_tick = 7,
-    .frame = 0,
-    .frame_start = 0,
-    .frame_end = 0,
-    .pinned = FALSE,
-    .collision_group = COLLISION_GROUP_1,
-    .collision_enabled = TRUE
-  },
-  {
-    // elephant,
-    .pos = {
-      .x = elephant_x * 16,
-      .y = elephant_y * 16,
-    },
-    .dir = DIR_DOWN,
-    .sprite = TO_FAR_PTR_T(spritesheet_10),
-    .bounds = {
-      .left = 0,
-      .right = 55,
-      .top = -32,
-      .bottom = 7
-    },
-    .move_speed = 1,
-    .anim_tick = 15,
-    .frame = 0,
-    .frame_start = 0,
-    .frame_end = 7,
-    .pinned = FALSE,
-    .collision_group = COLLISION_GROUP_1,
-    .collision_enabled = TRUE
-  },
-  {
-    // coin,
-    .pos = {
-      .x = (elephant_x - 16) * 16,
-      .y = (elephant_y - 64) * 16,
-    },
-    .dir = DIR_DOWN,
-    .sprite = TO_FAR_PTR_T(spritesheet_11),
-    .bounds = {
-      .left = 0,
-      .bottom = 7,
-      .right = 15,
-      .top = -8
-    },   
-    .move_speed = 1,
-    .anim_tick = 15,
-    .frame = 0,
-    .frame_start = 0,
-    .frame_end = 2,
-    .pinned = FALSE,
-    .collision_group = COLLISION_GROUP_1,
-    .collision_enabled = TRUE
-  }   
+    {
+        // Save Point,
+        .pos = {
+            .x = 936 * 16,
+            .y = 104 * 16
+        },
+        .bounds = {
+            .left = 0,
+            .bottom = 7,
+            .right = 15,
+            .top = -8
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(spritesheet_5),
+        .move_speed = 16,
+        .anim_tick = 31,
+        .pinned = FALSE,
+        .collision_group = COLLISION_GROUP_NONE,
+        .collision_enabled = TRUE,
+        .script = TO_FAR_PTR_T(script_s5a2_interact)
+    }
 };

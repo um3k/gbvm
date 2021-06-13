@@ -1,7 +1,7 @@
 #ifndef SCENE_5_COLLISIONS_H
 #define SCENE_5_COLLISIONS_H
 
-// Scene: Parallax Test
+// Scene: Platform
 // Collisions
 
 #include "gbs_types.h"

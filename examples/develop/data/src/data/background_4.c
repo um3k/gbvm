@@ -1,19 +1,19 @@
 #pragma bank 255
 
-// Background: underground
+// Background: logo_test
 
 #include "gbs_types.h"
-#include "data/background_4_tiles.h"
-#include "data/background_4_map.h"
-#include "data/scene_4_colors.h"
+#include "data/tileset_3.h"
+#include "data/tilemap_4.h"
+#include "data/tilemap_attr_4.h"
 
 const void __at(255) __bank_background_4;
 
 const struct background_t background_4 = {
-  .width = 32,
-  .height = 32,
-  .tileset = TO_FAR_PTR_T(background_4_tiles),
-  .cgb_tileset = {NULL, NULL},
-  .tilemap = TO_FAR_PTR_T(background_4_map),
-  .cgb_tilemap_attr = TO_FAR_PTR_T(scene_4_colors)
+    .width = 20,
+    .height = 18,
+    .tileset = TO_FAR_PTR_T(tileset_3),
+    .cgb_tileset = { NULL, NULL },
+    .tilemap = TO_FAR_PTR_T(tilemap_4),
+    .cgb_tilemap_attr = TO_FAR_PTR_T(tilemap_attr_4)
 };

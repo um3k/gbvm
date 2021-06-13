@@ -1,0 +1,31 @@
+XL3
+H A areas 9 global symbols
+M scene_2_triggers
+O -mgbz80
+S ___bank_script_s2t0_interact Ref000000
+S ___bank_script_s2t1_interact Ref000000
+S ___bank_script_s2t2_interact Ref000000
+S _script_s2t0_interact Ref000000
+S _script_s2t1_interact Ref000000
+S _script_s2t2_interact Ref000000
+S .__.ABS. Def000000
+S ___bank_scene_2_triggers Def00000B
+A _CODE size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_11 size 15 flags 0 addr 0
+S _scene_2_triggers Def000000
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 19 0D 02 02 00 00 00 00 00 18 08 02 01
+R 00 00 07 00 0B 07 00 00 02 0A 03 00
+T 0B 00 00 00 00 00 00 00 0A 08 02 01 00 00 00
+R 00 00 07 00 0B 03 01 00 02 06 04 00 0B 0C 02 00
+T 13 00 00 00 00
+R 00 00 07 00 02 03 05 00

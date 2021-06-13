@@ -1,0 +1,31 @@
+XL3
+H A areas 3 global symbols
+M palette_2
+O -mgbz80
+S ___bank_palette_2 Def00000B
+S .__.ABS. Def000000
+A _CODE size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_11 size 43 flags 0 addr 0
+S _palette_2 Def000000
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 FF E4 00 FF 7F B5 56 4A 29 00 00 FF 7F
+R 00 00 07 00
+T 0D 00 00 B5 56 4A 29 00 00 FF 7F B5 56 4A 29
+R 00 00 07 00
+T 19 00 00 00 00 FF 7F B5 56 4A 29 00 00 FF 7F
+R 00 00 07 00
+T 25 00 00 E0 03 E0 01 00 00 FF 7F 1F 00 0F 00
+R 00 00 07 00
+T 31 00 00 00 00 FF 7F 00 7C 00 3C 00 00 FF 7F
+R 00 00 07 00
+T 3D 00 00 B5 56 4A 29 00 00
+R 00 00 07 00

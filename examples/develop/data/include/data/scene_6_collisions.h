@@ -1,7 +1,7 @@
 #ifndef SCENE_6_COLLISIONS_H
 #define SCENE_6_COLLISIONS_H
 
-// Scene: Dancefloor
+// Scene: Deeper Underground
 // Collisions
 
 #include "gbs_types.h"

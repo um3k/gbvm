@@ -5,24 +5,20 @@
 .area _CODE
 
 _start_scene_x:: 
-        .dw 2560
+        .dw 0
 _start_scene_y:: 
-        .dw 0 
+        .dw 128 
 _start_scene_dir:: 
         .db .DIR_RIGHT
 _start_scene::
-        IMPORT_FAR_PTR_DATA _scene_7
+        IMPORT_FAR_PTR_DATA _scene_1
 _start_player_move_speed:: 
         .db 16
 _start_player_anim_tick:: 
-        .db 7
+        .db 15
 _ui_fonts:: 
-        IMPORT_FAR_PTR_DATA _vwf_font
-        IMPORT_FAR_PTR_DATA _vwf_font_bold
-        IMPORT_FAR_PTR_DATA _vwf_font_avatars
         IMPORT_FAR_PTR_DATA _font_0
-        IMPORT_FAR_PTR_DATA _font_ru
-        IMPORT_FAR_PTR_DATA _font_he
+
 
 ; define engine init VM routine which will be packed into some bank
 .area _CODE_255
@@ -30,16 +26,26 @@ _ui_fonts::
 ___bank_script_engine_init = 255
 .globl ___bank_script_engine_init
 
-.globl _plat_min_vel, _plat_walk_vel, _plat_climb_vel, _plat_run_vel, _plat_walk_acc, _plat_run_acc, _plat_dec, _plat_jump_vel, _plat_grav, _plat_hold_grav, _plat_max_fall_vel
-.globl  _topdown_grid
+.globl _plat_min_vel
+.globl _plat_walk_vel
+.globl _plat_run_vel
+.globl _plat_climb_vel
+.globl _plat_walk_acc
+.globl _plat_run_acc
+.globl _plat_dec
+.globl _plat_jump_vel
+.globl _plat_grav
+.globl _plat_hold_grav
+.globl _plat_max_fall_vel
+.globl _shooter_scroll_speed
+.globl _topdown_grid
 .globl _fade_style
 
 _script_engine_init::
-        ; platformer fields 
         VM_SET_CONST_INT16      _plat_min_vel, 304
         VM_SET_CONST_INT16      _plat_walk_vel, 6400
-        VM_SET_CONST_INT16      _plat_climb_vel, 4000
         VM_SET_CONST_INT16      _plat_run_vel, 10496
+        VM_SET_CONST_INT16      _plat_climb_vel, 4000
         VM_SET_CONST_INT16      _plat_walk_acc, 152
         VM_SET_CONST_INT16      _plat_run_acc, 228
         VM_SET_CONST_INT16      _plat_dec, 208
@@ -47,12 +53,9 @@ _script_engine_init::
         VM_SET_CONST_INT16      _plat_grav, 1792
         VM_SET_CONST_INT16      _plat_hold_grav, 512
         VM_SET_CONST_INT16      _plat_max_fall_vel, 20000
-        
-        ; topdown fields
-        VM_SET_CONST_INT8       _topdown_grid, 8
-        
-        ; other common fields
-        VM_SET_CONST_INT8       _fade_style, 1    
+        VM_SET_CONST_INT16      _shooter_scroll_speed, 16
+        VM_SET_CONST_INT16      _topdown_grid, 8
+        VM_SET_CONST_INT16      _fade_style, 0
 
         ; return from init routine
         VM_RET_FAR

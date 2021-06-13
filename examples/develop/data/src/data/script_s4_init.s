@@ -1,24 +1,25 @@
 .include "vm.i"
 .include "data/game_globals.i"
 
+.globl b_wait_frames, _wait_frames
+
 .area _CODE_255
 
 ___bank_script_s4_init = 255
 .globl ___bank_script_s4_init
-.globl ___bank_script_s4_timer1, _script_s4_timer1 
-.globl ___bank_script_s4_input1, _script_s4_input1
 
 _script_s4_init::
         VM_LOCK
 
-        ; Fade in
-        VM_FADE_IN              .UI_MODAL
+        ; Call Script: Init Menu
+        VM_CALL_FAR             ___bank_script_init_menu, _script_init_menu
 
-        VM_TIMER_PREPARE        1, ___bank_script_s4_timer1, _script_s4_timer1
-        VM_TIMER_SET            1, 2
+        ; Wait 1 Frame
+        VM_PUSH_CONST           1
+        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
-        VM_CONTEXT_PREPARE       1, ___bank_script_s4_input1, _script_s4_input1
-        VM_INPUT_ATTACH          0x40, 1
+        ; Fade In
+        VM_FADE_IN              1
 
         ; Stop Script
         VM_STOP

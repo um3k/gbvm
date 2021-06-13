@@ -1,0 +1,20 @@
+XL3
+H 2 areas 8 global symbols
+S ___bank_emote_1 Ref000000
+S _emote_1 Ref000000
+S ___bank_waveform_0 Ref000000
+S _waveform_0 Ref000000
+S .__.ABS. Def000000
+S ___size_waveform_0 Ref000000
+S ___bank_script_s2a0_interact Def00000B
+A _CODE size 0 flags 0 addr 0
+A _CODE_11 size 11 flags 0 addr 0
+S _script_s2a0_interact Def000000
+T 00 00 00
+R 00 00 01 00
+T 00 00 00 01 00 01 36 00 00 00 00 00 00 00 00 00
+R 00 00 01 00 8B 07 01 00 0B 0A 01 00 0B 0D 00 00
+T 07 00 00 FF FF 66 00 00 00 00 00 00 00 00 00
+R 00 00 01 00 8B 06 05 00 0B 09 05 00 8B 0C 03 00
+T 0D 00 00 00 00 00 00 00 00 20 00
+R 00 00 01 00 0B 03 03 00 0B 06 02 00

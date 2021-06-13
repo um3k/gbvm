@@ -1,7 +1,7 @@
 #ifndef BACKGROUND_7_H
 #define BACKGROUND_7_H
 
-// Background: 7 (360 tiles logo)
+// Background: 7
 
 #include "gbs_types.h"
 

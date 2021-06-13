@@ -1,7 +1,7 @@
 #ifndef SCENE_4_H
 #define SCENE_4_H
 
-// Scene: Platform Scene
+// Scene: Player's House
 
 #include "gbs_types.h"
 

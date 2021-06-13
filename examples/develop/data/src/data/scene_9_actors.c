@@ -1,38 +1,53 @@
 #pragma bank 255
 
-// Scene: Scene 10
+// Scene: Dancefloor
 // Actors
 
 #include "gbs_types.h"
-#include "data/spritesheet_0.h"
-#include "data/script_s2a0_interact.h"
-#include "data/script_s9a0_interact.h"
+#include "data/spritesheet_16.h"
+#include "data/spritesheet_14.h"
 
 const void __at(255) __bank_scene_9_actors;
 
 const struct actor_t scene_9_actors[] = {
-  {
-    // Actor 1,
-    .pos = {
-      .x = 102 * 16,
-      .y = 124 * 16,
+    {
+        // Actor 1,
+        .pos = {
+            .x = 32 * 16,
+            .y = 104 * 16
+        },
+        .bounds = {
+            .left = 0,
+            .bottom = 7,
+            .right = 15,
+            .top = -8
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(spritesheet_16),
+        .move_speed = 16,
+        .anim_tick = 15,
+        .pinned = FALSE,
+        .collision_group = COLLISION_GROUP_NONE,
+        .collision_enabled = TRUE
     },
-    .dir = DIR_DOWN,
-    .bounds = {
-      .left = 0,
-      .bottom = 7,
-      .right = 15,
-      .top = -8
-    },
-    .sprite = TO_FAR_PTR_T(spritesheet_0),
-    .move_speed = 1,
-    .anim_tick = 7,
-    .frame = 0,
-    .frame_start = 0,
-    .frame_end = 0,
-    .pinned = FALSE,
-    .collision_group = COLLISION_GROUP_NONE,
-    .collision_enabled = TRUE,
-    .script = TO_FAR_PTR_T(script_s9a0_interact),
-  }
+    {
+        // Actor 2,
+        .pos = {
+            .x = 112 * 16,
+            .y = 104 * 16
+        },
+        .bounds = {
+            .left = 0,
+            .bottom = 7,
+            .right = 15,
+            .top = -8
+        },
+        .dir = DIR_DOWN,
+        .sprite = TO_FAR_PTR_T(spritesheet_14),
+        .move_speed = 16,
+        .anim_tick = 15,
+        .pinned = FALSE,
+        .collision_group = COLLISION_GROUP_NONE,
+        .collision_enabled = TRUE
+    }
 };

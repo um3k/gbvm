@@ -1,7 +1,7 @@
 #ifndef SCENE_4_TRIGGERS_H
 #define SCENE_4_TRIGGERS_H
 
-// Scene: Platform Scene
+// Scene: Player's House
 // Triggers
 
 #include "gbs_types.h"

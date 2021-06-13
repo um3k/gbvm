@@ -1,7 +1,7 @@
 #ifndef SCENE_5_ACTORS_H
 #define SCENE_5_ACTORS_H
 
-// Scene: Parallax
+// Scene: Platform
 // Actors
 
 #include "gbs_types.h"

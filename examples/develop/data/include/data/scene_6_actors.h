@@ -1,7 +1,7 @@
 #ifndef SCENE_6_ACTORS_H
 #define SCENE_6_ACTORS_H
 
-// Scene: Dancefloor
+// Scene: Deeper Underground
 // Actors
 
 #include "gbs_types.h"

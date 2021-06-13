@@ -1,7 +1,7 @@
-#ifndef SCENE_7_ACTORS_H
-#define SCENE_7_ACTORS_H
+#ifndef SCENE_8_ACTORS_H
+#define SCENE_8_ACTORS_H
 
-// Scene: Mine
+// Scene: Parallax
 // Actors
 
 #include "gbs_types.h"

@@ -1,7 +1,7 @@
-#ifndef SPRITESHEET_1_H
-#define SPRITESHEET_1_H
+#ifndef SPRITESHEET_10_H
+#define SPRITESHEET_10_H
 
-// SpriteSheet: 1
+// SpriteSheet: 10
 
 #include "gbs_types.h"
 

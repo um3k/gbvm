@@ -1,0 +1,26 @@
+{
+    "files.associations": {
+        "__bit_reference": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "initializer_list": "c",
+        "string": "c",
+        "string_view": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "script_s0a2_interact.h": "c",
+        "spritesheet_2.h": "c",
+        "spritesheet_3.h": "c",
+        "spritesheet_2_tiles.h": "c",
+        "tileset_1.h": "c",
+        "scene_0_colors.h": "c",
+        "background_0_map.h": "c",
+        "background_0_tiles.h": "c",
+        "background_4_tiles.h": "c",
+        "background_5_map.h": "c",
+        "scene_5_triggers.h": "c",
+        "scene_5_colors.h": "c",
+        "script_s5_init.h": "c"
+    }
+}

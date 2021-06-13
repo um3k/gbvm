@@ -2,7 +2,7 @@
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl ___bank_scene_2, _scene_2
+.globl ___bank_scene_7, _scene_7
 
 .area _CODE_255
 
@@ -23,11 +23,12 @@ _script_s9t1_interact::
         ; Load Scene
         VM_FADE_OUT             2
         VM_SET_CONST            ACTOR, 0
-        VM_SET_CONST            ^/(ACTOR + 1)/, 3328
-        VM_SET_CONST            ^/(ACTOR + 2)/, 3200
+        VM_SET_CONST            ^/(ACTOR + 1)/, 2048
+        VM_SET_CONST            ^/(ACTOR + 2)/, 1664
         VM_ACTOR_SET_POS        ACTOR
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
+        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
-            IMPORT_FAR_PTR_DATA _scene_2
+            IMPORT_FAR_PTR_DATA _scene_7
+
         ; Stop Script
         VM_STOP

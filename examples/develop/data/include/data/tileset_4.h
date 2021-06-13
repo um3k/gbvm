@@ -1,7 +1,7 @@
 #ifndef TILESET_4_H
 #define TILESET_4_H
 
-// Tileset: 0
+// Tileset: 4
 
 #include "gbs_types.h"
 

@@ -1,0 +1,32 @@
+XL3
+H A areas 8 global symbols
+M logo
+O -mgbz80
+S _camera_offset_x Ref000000
+S b_logo_init Def000003
+S _camera_offset_y Ref000000
+S _game_time Ref000000
+S b_logo_update Def000003
+S .__.ABS. Def000000
+A _CODE size 0 flags 0 addr 0
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _CODE_3 size 13 flags 0 addr 0
+S _logo_init Def000000
+S _logo_update Def000012
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00
+R 00 00 07 00
+T 00 00 00 E5 21 00 00 36 00 21 00 00 36 00 21
+R 00 00 07 00 02 05 00 00 02 0A 02 00
+T 0C 00 00 00 00 36 00 E1 C9
+R 00 00 07 00 02 03 03 00
+T 12 00 00
+R 00 00 07 00
+T 12 00 00 C9
+R 00 00 07 00
