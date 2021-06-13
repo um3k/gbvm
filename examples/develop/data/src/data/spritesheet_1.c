@@ -7,6 +7,8 @@
 
 const void __at(255) __bank_spritesheet_1;
 
+#define SPRITE_1_STATE_DEFAULT 0
+
 const metasprite_t spritesheet_1_metasprite_0[]  = {
     {0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}
 };
@@ -50,9 +52,26 @@ const metasprite_t * const spritesheet_1_metasprites[] = {
     spritesheet_1_metasprite_7
 };
 
+const struct animation_t spritesheet_1_animations[] = {
+    { .start = 0, .end = 0 }, // bottom
+    { .start = 0, .end = 0 }, // right
+    { .start = 0, .end = 0 }, // top
+    { .start = 0, .end = 0 }, // left
+    { .start = 0, .end = 0 }, // bottom
+    { .start = 0, .end = 0 }, // right
+    { .start = 0, .end = 0 }, // top
+    { .start = 0, .end = 0 }, // left    
+};
+
+const UWORD spritesheet_1_animations_lookup[] = {
+    SPRITE_1_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_1 = {
   .n_metasprites = 6,
   .metasprites = spritesheet_1_metasprites,
+  .animations = spritesheet_1_animations,
+  .animations_lookup = spritesheet_1_animations_lookup,
   .bounds = {
     .left = 0,
     .bottom = 7,

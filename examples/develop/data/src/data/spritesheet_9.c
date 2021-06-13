@@ -7,6 +7,8 @@
 
 const void __at(255) __bank_spritesheet_9;
 
+#define SPRITE_9_STATE_DEFAULT 0
+
 const metasprite_t spritesheet_9_metasprite_0[]  = {
     {0, 0, 0, 0}, {0, 8, 2, 0}, {metasprite_end}
 };
@@ -50,21 +52,28 @@ const metasprite_t * const spritesheet_9_metasprites[] = {
     spritesheet_9_metasprite_7
 };
 
+const struct animation_t spritesheet_9_animations[] = {
+    // Idle
+    { .start = 0, .end = 0 }, // bottom
+    { .start = 4, .end = 4 }, // right
+    { .start = 2, .end = 2 }, // top
+    { .start = 6, .end = 6 }, // left
+    // Moving
+    { .start = 0, .end = 1 }, // bottom
+    { .start = 4, .end = 5 }, // right
+    { .start = 2, .end = 3 }, // top
+    { .start = 6, .end = 7 }, // left    
+};
+
+const UWORD spritesheet_9_animations_lookup[] = {
+    SPRITE_9_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_9 = {
   .n_metasprites = 6,
   .metasprites = spritesheet_9_metasprites,
-    .animations  = {
-        // Idle
-        { .start = 0, .end = 0 }, // bottom
-        { .start = 4, .end = 4 }, // right
-        { .start = 2, .end = 2 }, // top
-        { .start = 6, .end = 6 }, // left
-        // Moving
-        { .start = 0, .end = 1 }, // bottom
-        { .start = 4, .end = 5 }, // right
-        { .start = 2, .end = 3 }, // top
-        { .start = 6, .end = 7 }, // left
-    },
+  .animations = spritesheet_9_animations,
+  .animations_lookup = spritesheet_9_animations_lookup,    
   .bounds = {
     .left = 0,
     .bottom = 7,

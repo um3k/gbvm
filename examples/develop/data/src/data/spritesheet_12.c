@@ -7,6 +7,8 @@
 
 const void __at(255) __bank_spritesheet_12;
 
+#define SPRITE_12_STATE_DEFAULT 0
+
 // Right Idle
 
 const metasprite_t spritesheet_12_metasprite_right_idle_1[]  = {
@@ -153,21 +155,28 @@ const metasprite_t * const spritesheet_12_metasprites[] = {
     spritesheet_12_metasprite_climb_2,
 };
 
+const struct animation_t spritesheet_12_animations[] = {
+        // Idle
+        { .start = 23, .end = 23 }, // jump left
+        { .start = 0,  .end = 7 }, // right
+        { .start = 22, .end = 22 }, // jump right
+        { .start = 8,  .end = 15 }, // left
+        // Moving
+        { .start = 23, .end = 23 }, // jump left
+        { .start = 16, .end = 18 }, // right
+        { .start = 24, .end = 25 }, // climb
+        { .start = 19, .end = 21 }, // left
+};
+
+const UWORD spritesheet_12_animations_lookup[] = {
+    SPRITE_12_STATE_DEFAULT
+};
+
 const struct spritesheet_t spritesheet_12 = {
     .n_metasprites = 6,
     .metasprites = spritesheet_12_metasprites,
-    .animations  = {
-        // Idle
-        { .start = 0,  .end = 0 }, // bottom
-        { .start = 0,  .end = 7 }, // right
-        { .start = 24, .end = 25 }, // top
-        { .start = 8,  .end = 15 }, // left
-        // Moving
-        { .start = 23, .end = 23 }, // bottom
-        { .start = 16, .end = 18 }, // right
-        { .start = 22, .end = 22 }, // top
-        { .start = 19, .end = 21 }, // left
-    },
+    .animations = spritesheet_12_animations,
+    .animations_lookup = spritesheet_12_animations_lookup,
     .bounds = {
         .left = 0,
         .bottom = 7,
