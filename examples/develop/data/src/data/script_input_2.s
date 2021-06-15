@@ -7,6 +7,30 @@ ___bank_script_input_2 = 255
 .globl ___bank_script_input_2
 
 _script_input_2::
+        VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
+
+        ; Text Dialogue
+        VM_LOAD_TEXT            0
+        .asciz "\002\002\343\342 \361\367\370\357 \371\350 \341\351\355\n\356\340\345\353\346\341 \345\354\364\372\362 \356\366\340 \347\341\370\344"
+        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
+        VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
+        VM_SET_PRINT_DIR        .UI_PRINT_LEFTTORIGHT
+
+        ; Text Dialogue
+        VM_LOAD_TEXT            0
+        .asciz "\002\003\321\372\345\370\374 \345\371\270 \375\362\350\365 \354\377\343\352\350\365\n\364\360\340\355\366\363\347\361\352\350\365 \341\363\353\356\352,\n\344\340 \342\373\357\345\351 \367\340\376."
+        VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
+        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
                 VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
                     .DMG_PAL    3,2,1,0
         
@@ -76,39 +100,17 @@ _script_input_2::
         
                 VM_LOAD_TEXT            6
                     .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0
-                    .asciz "\001\001\002\00302\n13\001\003\004\001\377\002\001x1=%d y1=%d\nx2=%d y2=%d\n\004\376\001Chebyshev:\002\002%d\n\002\001Manhattan:\002\002%d\n\002\001\007\002This\007\001 is \002\002BOLD\002\001\nOk!"
+                    .asciz "\001\001\002\004@A\nBC\001\003\004\001\377\002\001x1=%d y1=%d\nx2=%d y2=%d\n\004\376\001Chebyshev:\002\002%d\n\002\001Manhattan:\002\002%d\n\002\001\007\002This\007\001 is \002\002BOLD\002\001\nOk!"
                 VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
                 VM_DISPLAY_TEXT
                 VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
         
                 VM_LOAD_TEXT            0
-                    .asciz "\001\001\002\00302\n13\001\003\004\002\377\002\001Hi, it's KOT speaking!\nWhere's SLON?\006\377\003\022\005\001\001\002\00346\n57\003\006\005\001\003\002\001Sorry, i have no idea\nwhat're you mean!"
+                    .asciz "\001\001\002\004@A\nBC\001\003\004\001\377\002\001Hi, it's KOT speaking!\nWhere's SLON?\006\377\003\022\005\001\001\002\004DE\nFG\003\006\005\001\003\002\001Sorry, i have no idea\nwhat're you mean!"
                 VM_OVERLAY_MOVE_TO      0, 11, .OVERLAY_TEXT_OUT_SPEED
                 VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
                 VM_DISPLAY_TEXT
                 VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
-        
-                VM_LOAD_TEXT            0
-                    .asciz "\002\004Hello, world!"
-                VM_OVERLAY_CLEAR        0, 0, 20, 3, .UI_COLOR_WHITE, .UI_DRAW_FRAME
-                VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
-                VM_DISPLAY_TEXT
-                VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
-        
-                VM_LOAD_TEXT            0
-                    .asciz "\002\006\343\342 \361\367\370\357 \371\350 \341\351\355\n\356\340\345\353\346\341 \345\354\364\372\362 \356\366\340 \347\341\370\344"
-                VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME
-                VM_DISPLAY_TEXT
-                VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
-        
-                VM_SET_PRINT_DIR        .UI_PRINT_LEFTTORIGHT
-        
-                VM_LOAD_TEXT            0
-                    .asciz "\002\005\302 \355\356\342\356\351 \342\345\360\361\350\350 GBStudio \354\356\346\355\356\n\341\363\344\345\362 \357\350\361\340\362\374 \362\356\353\374\352\356 \357\356-\360\363\361\361\352\350\n\n\321\353\340\342\340 \321\313\316\315\323."
-                VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME 
-                VM_DISPLAY_TEXT
-                VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
-        
         
                 VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ 
                 VM_LOAD_TEXT            0
@@ -119,7 +121,7 @@ _script_input_2::
                 VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
                 VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/
         
-                VM_POP                  ^/6 + 2/    ; 6 for local vars + 2 results of RPN calc
+                VM_POP                  ^/6 + 2/    ; 6 for local vars + 2 results of RPN calc\001\001\002\003DE\nFG\001\003\004\001\377\002\001\001\001\002\003@A\nBC\001\003\004\001\377\002\001
 
         ; Stop Script
         VM_STOP

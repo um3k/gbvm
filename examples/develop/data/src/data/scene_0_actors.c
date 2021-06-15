@@ -6,10 +6,12 @@
 #include "gbs_types.h"
 #include "data/spritesheet_2.h"
 #include "data/spritesheet_3.h"
+#include "data/script_s0a1_interact.h"
 #include "data/spritesheet_4.h"
 #include "data/script_s0a2_interact.h"
 #include "data/spritesheet_2.h"
 #include "data/spritesheet_3.h"
+#include "data/script_s0a4_interact.h"
 #include "data/spritesheet_5.h"
 #include "data/script_s0a5_interact.h"
 
@@ -54,7 +56,8 @@ const struct actor_t scene_0_actors[] = {
         .anim_tick = 7,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .script = TO_FAR_PTR_T(script_s0a1_interact)
     },
     {
         // Sage,
@@ -115,7 +118,8 @@ const struct actor_t scene_0_actors[] = {
         .anim_tick = 7,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .script = TO_FAR_PTR_T(script_s0a4_interact)
     },
     {
         // Save Point,

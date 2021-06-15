@@ -41,7 +41,20 @@
                     "animSpeed": 7,
                     "animate": true,
                     "frame": 0,
-                    "script": [],
+                    "script": [
+                        {
+                            "id": "2c795840-2f90-422f-91e8-fa48fa27bdc5",
+                            "command": "EVENT_TEXT",
+                            "args": {
+                                "text": "Hot!",
+                                "avatarId": "10c4f8fe-d3bf-4e45-99d2-9a1bd1de4ba8"
+                            }
+                        },
+                        {
+                            "id": "882241d6-dee7-458d-9dae-51ce65c58709",
+                            "command": "EVENT_END"
+                        }
+                    ],
                     "spriteType": "static",
                     "startScript": [],
                     "hit1Script": [],
@@ -132,7 +145,20 @@
                     "animSpeed": 7,
                     "animate": true,
                     "frame": 2,
-                    "script": [],
+                    "script": [
+                        {
+                            "id": "54fbe459-14c2-4fca-933f-93203ffbb3f3",
+                            "command": "EVENT_TEXT",
+                            "args": {
+                                "text": "Also Hot!",
+                                "avatarId": "a450445c-0c3a-49ac-9f69-ea3a668765f9"
+                            }
+                        },
+                        {
+                            "id": "27400a49-5741-4b84-9b25-7061a10b366b",
+                            "command": "EVENT_END"
+                        }
+                    ],
                     "spriteType": "static",
                     "startScript": [],
                     "hit1Script": [],
@@ -2000,8 +2026,8 @@
             "id": "3509d273-bf7e-4946-89ce-a489df5a449d",
             "name": "Underground",
             "backgroundId": "f3102db4-2273-411d-b33f-4d6f65959c60",
-            "x": 1047,
-            "y": 141,
+            "x": 1652,
+            "y": 49,
             "width": 32,
             "height": 32,
             "actors": [
@@ -11907,7 +11933,7 @@
                             "args": {
                                 "sceneId": "a15eed10-615c-488a-b972-b4b37ccfc14e",
                                 "x": 5,
-                                "y": 1,
+                                "y": 2,
                                 "direction": "up",
                                 "fadeSpeed": "2"
                             }
@@ -14708,10 +14734,45 @@
                     "children": {
                         "true": [
                             {
+                                "id": "6251bef4-aea4-4d84-8fe4-e7c0be7b1947",
+                                "command": "EVENT_GBVM_SCRIPT",
+                                "args": {
+                                    "script": "VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT"
+                                }
+                            },
+                            {
+                                "id": "3d2e9696-fda5-4441-bb38-ec87604ea8e7",
+                                "command": "EVENT_TEXT",
+                                "args": {
+                                    "text": [
+                                        "!F:ba1a5213-bb6f-40ec-8efc-fd0e9c543bb3!דג סקרן שט בים\nמאוכזב ולפתע מצא חברה"
+                                    ],
+                                    "avatarId": ""
+                                }
+                            },
+                            {
+                                "id": "ab938946-d2a7-470a-87d8-38f05f00236e",
+                                "command": "EVENT_GBVM_SCRIPT",
+                                "args": {
+                                    "script": "VM_SET_PRINT_DIR        .UI_PRINT_LEFTTORIGHT"
+                                }
+                            },
+                            {
+                                "id": "5bae42a6-8f4a-4993-868b-8298bed6ed2c",
+                                "command": "EVENT_TEXT",
+                                "args": {
+                                    "text": [
+                                        "!F:d1692d0d-71f4-41cc-926c-4eef96b89952!Съешь ещё этих мягких\nфранцузских булок,\nда выпей чаю."
+                                    ],
+                                    "avatarId": ""
+                                }
+                            },
+                            {
                                 "id": "9a4e73eb-fb72-4725-a058-bf47cb369f5b",
                                 "command": "EVENT_GBVM_SCRIPT",
                                 "args": {
-                                    "script": "        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n            .DMG_PAL    3,2,1,0\n\n        VM_PUSH_CONST           10\n        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X | .CAMERA_SHAKE_Y)/\n        VM_INVOKE       b_camera_shake_frames, _camera_shake_frames, 2, .ARG1\n\n        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n            .DMG_PAL    0,1,2,3\n\n        VM_RESERVE              6\n\n        VM_GET_INT8             .ARG0, __is_SGB \n        VM_IF_CONST     .EQ     .ARG0, 0, 1$, 0 \n        VM_SGB_TRANSFER   \n            .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet\n1$:\n\n        VM_RTC_START            .RTC_START\n        VM_RTC_LATCH\n        VM_RTC_GET              .ARG3, .RTC_SECONDS \n        VM_RTC_GET              .ARG2, .RTC_MINUTES \n        VM_RTC_GET              .ARG1, .RTC_HOURS \n        VM_RTC_GET              .ARG0, .RTC_DAYS \n        \n        VM_LOAD_TEXT            4\n            .dw .ARG0, .ARG1, .ARG2, .ARG3\n            .asciz \"\\002\\001DAY:%D8 TIME: %D2:%D2:%D2\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0\n        VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0\n\n        VM_OVERLAY_SET_SUBMAP   2, 2, 6, 5, 8, 4\n\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_SET_CONST            .ARG5, 0\n        VM_ACTOR_GET_POS        .ARG5\n\n        VM_SET_CONST            .ARG2, 1\n        VM_ACTOR_GET_POS        .ARG2\n\n        VM_RPN\n            ; chebyshev distance\n            .R_REF      .ARG4\n            .R_REF      .ARG1\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_REF      .ARG3\n            .R_REF      .ARG0\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_OPERATOR .MAX\n            ; manhattan distance\n            .R_REF      .ARG4\n            .R_REF      .ARG1\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_REF      .ARG3\n            .R_REF      .ARG0\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_OPERATOR .ADD\n\n            .R_STOP\n\n        VM_LOAD_TEXT            6\n            .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0\n            .asciz \"\\001\\001\\002\\00302\\n13\\001\\003\\004\\001\\377\\002\\001x1=%d y1=%d\\nx2=%d y2=%d\\n\\004\\376\\001Chebyshev:\\002\\002%d\\n\\002\\001Manhattan:\\002\\002%d\\n\\002\\001\\007\\002This\\007\\001 is \\002\\002BOLD\\002\\001\\nOk!\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_LOAD_TEXT            0\n            .asciz \"\\001\\001\\002\\00302\\n13\\001\\003\\004\\002\\377\\002\\001Hi, it's KOT speaking!\\nWhere's SLON?\\006\\377\\003\\022\\005\\001\\001\\002\\00346\\n57\\003\\006\\005\\001\\003\\002\\001Sorry, i have no idea\\nwhat're you mean!\"\n        VM_OVERLAY_MOVE_TO      0, 11, .OVERLAY_TEXT_OUT_SPEED\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_LOAD_TEXT            0\n            .asciz \"\\002\\004Hello, world!\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 3, .UI_COLOR_WHITE, .UI_DRAW_FRAME\n        VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_LOAD_TEXT            0\n            .asciz \"\\002\\006\\343\\342 \\361\\367\\370\\357 \\371\\350 \\341\\351\\355\\n\\356\\340\\345\\353\\346\\341 \\345\\354\\364\\372\\362 \\356\\366\\340 \\347\\341\\370\\344\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_SET_PRINT_DIR        .UI_PRINT_LEFTTORIGHT\n\n        VM_LOAD_TEXT            0\n            .asciz \"\\002\\005\\302 \\355\\356\\342\\356\\351 \\342\\345\\360\\361\\350\\350 GBStudio \\354\\356\\346\\355\\356\\n\\341\\363\\344\\345\\362 \\357\\350\\361\\340\\362\\374 \\362\\356\\353\\374\\352\\356 \\357\\356-\\360\\363\\361\\361\\352\\350\\n\\n\\321\\353\\340\\342\\340 \\321\\313\\316\\315\\323.\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ \n        VM_LOAD_TEXT            0\n            .asciz \"\\001\\005Terminal mode\\nLoading text...\\nText loaded!\\nLet's see how this text scrolls...\\rOne more line...\\rYes, it does!\\rLet's type something else...\\rI don't know what...\\rHello, world!\\rI think that is\\r\\002\\002ENOUGH\\002\\001.\"\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/\n\n        VM_POP                  ^/6 + 2/    ; 6 for local vars + 2 results of RPN calc"
+                                    "script": "        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n            .DMG_PAL    3,2,1,0\n\n        VM_PUSH_CONST           10\n        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X | .CAMERA_SHAKE_Y)/\n        VM_INVOKE       b_camera_shake_frames, _camera_shake_frames, 2, .ARG1\n\n        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n            .DMG_PAL    0,1,2,3\n\n        VM_RESERVE              6\n\n        VM_GET_INT8             .ARG0, __is_SGB \n        VM_IF_CONST     .EQ     .ARG0, 0, 1$, 0 \n        VM_SGB_TRANSFER   \n            .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet\n1$:\n\n        VM_RTC_START            .RTC_START\n        VM_RTC_LATCH\n        VM_RTC_GET              .ARG3, .RTC_SECONDS \n        VM_RTC_GET              .ARG2, .RTC_MINUTES \n        VM_RTC_GET              .ARG1, .RTC_HOURS \n        VM_RTC_GET              .ARG0, .RTC_DAYS \n        \n        VM_LOAD_TEXT            4\n            .dw .ARG0, .ARG1, .ARG2, .ARG3\n            .asciz \"\\002\\001DAY:%D8 TIME: %D2:%D2:%D2\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0\n        VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0\n\n        VM_OVERLAY_SET_SUBMAP   2, 2, 6, 5, 8, 4\n\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_SET_CONST            .ARG5, 0\n        VM_ACTOR_GET_POS        .ARG5\n\n        VM_SET_CONST            .ARG2, 1\n        VM_ACTOR_GET_POS        .ARG2\n\n        VM_RPN\n            ; chebyshev distance\n            .R_REF      .ARG4\n            .R_REF      .ARG1\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_REF      .ARG3\n            .R_REF      .ARG0\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_OPERATOR .MAX\n            ; manhattan distance\n            .R_REF      .ARG4\n            .R_REF      .ARG1\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_REF      .ARG3\n            .R_REF      .ARG0\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_OPERATOR .ADD\n\n            .R_STOP\n\n        VM_LOAD_TEXT            6\n            .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0\n            .asciz \"\\001\\001\\002\\004@A\\nBC\\001\\003\\004\\001\\377\\002\\001x1=%d y1=%d\\nx2=%d y2=%d\\n\\004\\376\\001Chebyshev:\\002\\002%d\\n\\002\\001Manhattan:\\002\\002%d\\n\\002\\001\\007\\002This\\007\\001 is \\002\\002BOLD\\002\\001\\nOk!\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_LOAD_TEXT            0\n            .asciz \"\\001\\001\\002\\004@A\\nBC\\001\\003\\004\\001\\377\\002\\001Hi, it's KOT speaking!\\nWhere's SLON?\\006\\377\\003\\022\\005\\001\\001\\002\\004DE\\nFG\\003\\006\\005\\001\\003\\002\\001Sorry, i have no idea\\nwhat're you mean!\"\n        VM_OVERLAY_MOVE_TO      0, 11, .OVERLAY_TEXT_OUT_SPEED\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ \n        VM_LOAD_TEXT            0\n            .asciz \"\\001\\005Terminal mode\\nLoading text...\\nText loaded!\\nLet's see how this text scrolls...\\rOne more line...\\rYes, it does!\\rLet's type something else...\\rI don't know what...\\rHello, world!\\rI think that is\\r\\002\\002ENOUGH\\002\\001.\"\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/\n\n        VM_POP                  ^/6 + 2/    ; 6 for local vars + 2 results of RPN calc\\001\\001\\002\\003DE\\nFG\\001\\003\\004\\001\\377\\002\\001\\001\\001\\002\\003@A\\nBC\\001\\003\\004\\001\\377\\002\\001",
+                                    "__collapse": false
                                 }
                             },
                             {
@@ -17970,8 +18031,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "black.png",
-            "inode": "19363203",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -18343,8 +18402,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "cave.png",
-            "inode": "19363204",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -18716,8 +18773,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "dancefloor.png",
-            "inode": "19406328",
-            "_v": 1623588258518,
             "tileColors": [
                 4,
                 4,
@@ -19089,8 +19144,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "digits.png",
-            "inode": "19537972",
-            "_v": 1623605073586,
             "tileColors": []
         },
         {
@@ -19101,8 +19154,6 @@
             "imageWidth": 128,
             "imageHeight": 112,
             "filename": "gbs-mono.png",
-            "inode": "19537936",
-            "_v": 1623605014011,
             "tileColors": []
         },
         {
@@ -19113,8 +19164,6 @@
             "imageWidth": 256,
             "imageHeight": 144,
             "filename": "hidden_cave.png",
-            "inode": "19363205",
-            "_v": 1623587681301,
             "tileColors": [
                 4,
                 4,
@@ -19702,8 +19751,6 @@
             "imageWidth": 256,
             "imageHeight": 144,
             "filename": "house-wide.png",
-            "inode": "19363206",
-            "_v": 1600011071075,
             "tileColors": []
         },
         {
@@ -19714,8 +19761,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "house.png",
-            "inode": "19363207",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -20087,8 +20132,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "launch_site.png",
-            "inode": "19363208",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -20460,8 +20503,6 @@
             "imageWidth": 2040,
             "imageHeight": 144,
             "filename": "leaving_earth.png",
-            "inode": "19363209",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -25063,8 +25104,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "logo.png",
-            "inode": "19363210",
-            "_v": 1600011071075,
             "tileColors": []
         },
         {
@@ -25075,8 +25114,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "logo_test.png",
-            "inode": "19363335",
-            "_v": 1623585248760,
             "tileColors": [
                 4,
                 4,
@@ -25448,8 +25485,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "menu.png",
-            "inode": "19363211",
-            "_v": 1600011071075,
             "tileColors": []
         },
         {
@@ -25460,8 +25495,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "menu_page1.png",
-            "inode": "19363212",
-            "_v": 1600011071075,
             "tileColors": []
         },
         {
@@ -25472,8 +25505,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "menu_page2.png",
-            "inode": "19363213",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -25845,8 +25876,6 @@
             "imageWidth": 256,
             "imageHeight": 256,
             "filename": "outside.png",
-            "inode": "19363214",
-            "_v": 1623604457704,
             "tileColors": [
                 0,
                 0,
@@ -26882,8 +26911,6 @@
             "imageWidth": 640,
             "imageHeight": 144,
             "filename": "parallax.png",
-            "inode": "19385023",
-            "_v": 1623586758150,
             "tileColors": [
                 1,
                 1,
@@ -28335,8 +28362,6 @@
             "imageWidth": 1288,
             "imageHeight": 144,
             "filename": "platform_path.png",
-            "inode": "19363215",
-            "_v": 1623587965660,
             "tileColors": [
                 1,
                 1,
@@ -31246,8 +31271,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "room.png",
-            "inode": "19363216",
-            "_v": 1600011071075,
             "tileColors": [
                 4,
                 4,
@@ -31619,8 +31642,6 @@
             "imageWidth": 448,
             "imageHeight": 448,
             "filename": "sample_town.png",
-            "inode": "19363217",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -34768,8 +34789,6 @@
             "imageWidth": 256,
             "imageHeight": 256,
             "filename": "stars.png",
-            "inode": "19363218",
-            "_v": 1600011071075,
             "tileColors": []
         },
         {
@@ -34780,8 +34799,6 @@
             "imageWidth": 2040,
             "imageHeight": 144,
             "filename": "stars_wide.png",
-            "inode": "19363219",
-            "_v": 1600011071075,
             "tileColors": []
         },
         {
@@ -34792,8 +34809,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "titlescreen.png",
-            "inode": "19363220",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -35165,8 +35180,6 @@
             "imageWidth": 256,
             "imageHeight": 256,
             "filename": "underground.png",
-            "inode": "19363221",
-            "_v": 1600011071075,
             "tileColors": [
                 0,
                 0,
@@ -36202,7 +36215,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "bullet.png",
-            "inode": "19363235",
             "checksum": "20f72d8c2befb3e03da3f64a307172a5d95853d1",
             "width": 16,
             "height": 16,
@@ -36322,8 +36334,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "32c48a4d-6ce6-4aca-a23a-a6300b5c9e3b",
@@ -36331,7 +36342,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "bullet_left.png",
-            "inode": "19363236",
             "checksum": "35ccc08a8a260fbbf530412dd81275900857ac78",
             "width": 32,
             "height": 16,
@@ -36482,8 +36492,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "450a3571-cc76-41be-8c95-818d60b83c59",
@@ -36491,7 +36500,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "bullet_right.png",
-            "inode": "19363237",
             "checksum": "8314b3c3b8f067e20f49bf3bd3cb63e03a457cc0",
             "width": 32,
             "height": 16,
@@ -36642,8 +36650,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "1e27bb8e-c805-435a-8b87-05b4f50da4f0",
@@ -36651,7 +36658,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "cat.png",
-            "inode": "19363238",
             "checksum": "acdc77db823a88d17537d263a436168ab01efe22",
             "width": 16,
             "height": 16,
@@ -36771,8 +36777,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "f0c3033d-e82a-407d-9fe2-3d5da4f59c09",
@@ -36780,7 +36785,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "checkbox.png",
-            "inode": "19363239",
             "checksum": "47fd516f3adb10b1cfde24450b5c7c928abf643e",
             "width": 32,
             "height": 16,
@@ -36931,8 +36935,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "d4206af4-4d12-4cfd-a4a8-faa11d4aff34",
@@ -36940,7 +36943,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "chest.png",
-            "inode": "19363240",
             "checksum": "c5d44f84742b12cbac9318755055a7965edb4ea3",
             "width": 32,
             "height": 16,
@@ -37167,8 +37169,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "a827b612-578f-4cb9-a2bf-fd54b197b83f",
@@ -37176,7 +37177,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "cursor.png",
-            "inode": "19363241",
             "checksum": "1f21ce7ede568c59e378eec3bce19e7abe50414a",
             "width": 32,
             "height": 16,
@@ -37350,8 +37350,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "17219846-cda9-4e84-bdfa-c3ff105d42cc",
@@ -37359,7 +37358,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "dog.png",
-            "inode": "19363242",
             "checksum": "d9bfa8cf4e196a4b89abc8811e1157b8cf3e4380",
             "width": 16,
             "height": 16,
@@ -37479,8 +37477,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "ede130e6-013a-42d1-a786-1aed3fd3cf32",
@@ -37488,7 +37485,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "duck.png",
-            "inode": "19363243",
             "checksum": "478ef3a9a69777125e9dd4431884adb5c7f079b3",
             "width": 32,
             "height": 16,
@@ -37639,8 +37635,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "de4ce569-5e24-4cf0-ad29-787aa040f842",
@@ -37648,7 +37643,6 @@
             "numFrames": 31.5,
             "type": "animated",
             "filename": "elephant.png",
-            "inode": "19487810",
             "checksum": "60284e758421739af1e232f7b70eaf126d4c7610",
             "width": 504,
             "height": 48,
@@ -39475,8 +39469,7 @@
             "boundsY": 0,
             "boundsWidth": 56,
             "boundsHeight": 39,
-            "animSpeed": 15,
-            "_v": 1623602633328
+            "animSpeed": 15
         },
         {
             "id": "954ffda3-81b7-40ea-a338-3b11ad4b75fb",
@@ -39484,7 +39477,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "enemy_ship.png",
-            "inode": "19363244",
             "checksum": "a785c97ea4ac2aeb9bd9c2418314cbe3d17312e8",
             "width": 32,
             "height": 16,
@@ -39635,8 +39627,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "493bdd1e-7e97-4911-b89a-c0677dfdcaaa",
@@ -39644,7 +39635,6 @@
             "numFrames": 4,
             "type": "animated",
             "filename": "explode.png",
-            "inode": "19363245",
             "checksum": "3bb5bb170d76027fce34694c0c0d8237c189690c",
             "width": 64,
             "height": 16,
@@ -39857,8 +39847,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "f2610e3c-8ff9-42fa-a9bb-d1591031fa17",
@@ -39866,7 +39855,6 @@
             "numFrames": 4,
             "type": "animated",
             "filename": "fire.png",
-            "inode": "19363246",
             "checksum": "178804359d94af9d2cd342cf77f92f4fb6373589",
             "width": 64,
             "height": 16,
@@ -40079,8 +40067,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "81b14fe6-2235-480e-bc3b-a5899aa66afe",
@@ -40088,7 +40075,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "hidden_stairs.png",
-            "inode": "19363247",
             "checksum": "958c815a9dff5938722bb9a6d012a10249134190",
             "width": 16,
             "height": 16,
@@ -40208,8 +40194,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "09ad70c6-3ce5-4b97-9e96-466221418a45",
@@ -40217,7 +40202,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "ice.png",
-            "inode": "19363248",
             "checksum": "e2bb5ba0ccb5b8d531b6afce09bf3b73d91971ea",
             "width": 16,
             "height": 16,
@@ -40337,8 +40321,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "8cb9c002-1abc-458c-9588-9b55af8efb08",
@@ -40346,7 +40329,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "machine.png",
-            "inode": "19363249",
             "checksum": "10e86bdc2747f98c29c83028783152acac542177",
             "width": 32,
             "height": 16,
@@ -40497,8 +40479,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "dfa75239-299d-41fe-a6cd-9e9438da1938",
@@ -40506,7 +40487,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "npc001.png",
-            "inode": "19363250",
             "checksum": "325c2370daedcc0afc0f8e6df58e4da01731dfc3",
             "width": 48,
             "height": 16,
@@ -40680,8 +40660,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "40dcd163-9f72-4861-8131-b01eb9baa000",
@@ -40689,7 +40668,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "npc002.png",
-            "inode": "19363251",
             "checksum": "5f3d41a6f7e0af6159c93b34cb6a480f14522c43",
             "width": 48,
             "height": 16,
@@ -40863,8 +40841,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "52ad34df-f245-4b2a-b94c-a82af1002871",
@@ -40872,7 +40849,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "npc003.png",
-            "inode": "19363252",
             "checksum": "a0c294cf5d64aee5d8748e5cbeafc8ea9e4cf8dd",
             "width": 96,
             "height": 16,
@@ -41220,8 +41196,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "46a3db76-878e-4896-892b-d1afa7d5e2f0",
@@ -41229,7 +41204,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "npc004.png",
-            "inode": "19363253",
             "checksum": "b5c1a454273623430add536a14de7a4328659389",
             "width": 96,
             "height": 16,
@@ -41577,8 +41551,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "7a27b229-5f3d-4eaa-b20c-07997673324d",
@@ -41586,7 +41559,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "npc005.png",
-            "inode": "19363254",
             "checksum": "fe2a346e79ea7e5c00b74d726e273a056cbffb28",
             "width": 96,
             "height": 16,
@@ -41934,8 +41906,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071075
+            "animSpeed": 15
         },
         {
             "id": "c475c713-9fd8-455a-b9bc-8c62b2b8fd5e",
@@ -41943,7 +41914,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "npc006.png",
-            "inode": "19363255",
             "checksum": "0588e9e69b43360b7f723efb9f7d77160e151bfe",
             "width": 96,
             "height": 16,
@@ -42291,8 +42261,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071080
+            "animSpeed": 15
         },
         {
             "id": "2b18f935-85a3-4f38-9f52-e5c4ea20776a",
@@ -42300,7 +42269,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "npc007.png",
-            "inode": "19363256",
             "checksum": "fef0013ed6ed8fac3e82ccea1d6358d05ad02dd8",
             "width": 48,
             "height": 16,
@@ -42474,8 +42442,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1623603415283
+            "animSpeed": 15
         },
         {
             "id": "ac1e8ef4-ffe6-47cd-b16f-9af5da77ec26",
@@ -42483,7 +42450,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "player.png",
-            "inode": "19363257",
             "checksum": "57d62a82877b5ce98f9b55b066672b11a74541af",
             "width": 96,
             "height": 16,
@@ -42831,8 +42797,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 8,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "384b4faa-26b1-48b0-a15c-b661b15c9fb4",
@@ -42840,7 +42805,6 @@
             "numFrames": 5.5,
             "type": "animated",
             "filename": "player_platform.png",
-            "inode": "19480308",
             "checksum": "eea46c3f4a89b044d31ad1e87b9854a4063aeb72",
             "width": 88,
             "height": 160,
@@ -43829,8 +43793,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1623602385479
+            "animSpeed": 15
         },
         {
             "id": "2f2d492c-dba2-434c-93c9-d1301e88d5e9",
@@ -43838,7 +43801,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "player_ship.png",
-            "inode": "19363258",
             "checksum": "29459697b548d556d45bb427c413f48d7b14f7b1",
             "width": 96,
             "height": 16,
@@ -44186,8 +44148,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "058c0142-0c1e-4762-b5ac-e085d84fc734",
@@ -44195,7 +44156,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "pod_door.png",
-            "inode": "19363259",
             "checksum": "b8f3e928d6ed27502f5a431e4a35496ecebb614a",
             "width": 48,
             "height": 16,
@@ -44369,8 +44329,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071080
+            "animSpeed": 15
         },
         {
             "id": "94eb6557-0cfc-453e-8e1f-ddb191ac8536",
@@ -44378,7 +44337,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "portal.png",
-            "inode": "19363260",
             "checksum": "ce76db1c019b417a9a1c469a56fe9996249e38e4",
             "width": 48,
             "height": 16,
@@ -44552,8 +44510,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "a0442b6a-634f-44da-9962-77938e3ed839",
@@ -44561,7 +44518,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "radio.png",
-            "inode": "19363261",
             "checksum": "ae9943b8ed1e48fe22fafe87bf1b64245dcbd31c",
             "width": 16,
             "height": 16,
@@ -44681,8 +44637,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "3939e8d2-3987-4a22-953e-f1d82134eccf",
@@ -44690,7 +44645,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "rock.png",
-            "inode": "19363262",
             "checksum": "b7cf1ef0e7291494c1aff13493d447801316d6e8",
             "width": 16,
             "height": 16,
@@ -44810,8 +44764,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071080
+            "animSpeed": 15
         },
         {
             "id": "e20ce140-53a5-4b1b-9964-138ba0c86925",
@@ -44819,7 +44772,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "sage.png",
-            "inode": "19363263",
             "checksum": "0f0fec264c85a7572c4dc810b886ea4a2bf8a3f5",
             "width": 16,
             "height": 16,
@@ -44939,8 +44891,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "000a6dde-cb60-436e-b357-30a529daa139",
@@ -44948,7 +44899,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "savepoint.png",
-            "inode": "19363264",
             "checksum": "0b8c6d14622922a2e3ea2f90add3ed89353a7a9b",
             "width": 32,
             "height": 16,
@@ -45099,8 +45049,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "30b8266a-0533-4f90-bd33-e97dc1d498ea",
@@ -45108,7 +45057,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "signpost.png",
-            "inode": "19363265",
             "checksum": "dfe9e69e950460ad1235405937d86c2de3a6df12",
             "width": 16,
             "height": 16,
@@ -45228,8 +45176,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "b4845aec-11e3-475b-8a9a-0a01b920c710",
@@ -45237,7 +45184,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "space_mine.png",
-            "inode": "19363266",
             "checksum": "d8c6e531c595f6d6dd3a59a07bad688ce45697bc",
             "width": 32,
             "height": 16,
@@ -45388,8 +45334,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "e9e61bf7-88fd-491d-ae01-4b7f76909108",
@@ -45397,7 +45342,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "torch.png",
-            "inode": "19363267",
             "checksum": "7115d29144680ee075cf63709a5bd562d327b0a4",
             "width": 16,
             "height": 16,
@@ -45517,8 +45461,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071076
+            "animSpeed": 15
         },
         {
             "id": "f88eea80-c5b4-4e10-b49f-7a8aa8bd477e",
@@ -45526,7 +45469,6 @@
             "numFrames": 2,
             "type": "animated",
             "filename": "turnip.png",
-            "inode": "19363268",
             "checksum": "c47b7c041728d50a5c924785a27c464e4ee2a462",
             "width": 32,
             "height": 16,
@@ -45677,8 +45619,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071080
+            "animSpeed": 15
         },
         {
             "id": "6f1e5757-a472-4531-8a65-aee22751e917",
@@ -45686,7 +45627,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "turnip_squash.png",
-            "inode": "19363269",
             "checksum": "dc169b98f1aa85d42c0ab615481169241d5b4d14",
             "width": 16,
             "height": 16,
@@ -45806,8 +45746,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071080
+            "animSpeed": 15
         },
         {
             "id": "735c26e5-eee4-43ad-a668-a2ab93f84bd8",
@@ -45815,7 +45754,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "ui_weapon.png",
-            "inode": "19363270",
             "checksum": "696a0c2153ca67099513669b7c04c4af32ddacfa",
             "width": 16,
             "height": 16,
@@ -45935,8 +45873,7 @@
             "boundsY": 0,
             "boundsWidth": 16,
             "boundsHeight": 16,
-            "animSpeed": 15,
-            "_v": 1600011071080
+            "animSpeed": 15
         }
     ],
     "palettes": [
@@ -47072,149 +47009,146 @@
             "name": "Rulz_BattleTheme",
             "filename": "Rulz_BattleTheme.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363223",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "4653812c-82b6-44ce-93b8-eea1d4b6fa71",
             "name": "Rulz_FastPaceSpeedRace",
             "filename": "Rulz_FastPaceSpeedRace.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363224",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "e571be0d-bbaa-44ae-a411-c2b2e6c5ff24",
             "name": "Rulz_GonaSpace",
             "filename": "Rulz_GonaSpace.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363225",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "2e3e140a-ae8d-4970-8e8b-37b2119c7208",
             "name": "Rulz_Into the woods",
             "filename": "Rulz_Into the woods.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363226",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "83b79b0b-6af5-4a01-ac40-2f86fd36ece8",
             "name": "Rulz_Intro",
             "filename": "Rulz_Intro.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363227",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "0f78c331-7318-48ca-8a6c-a57c15ef423a",
             "name": "Rulz_LightMood",
             "filename": "Rulz_LightMood.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363228",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "180f6b13-2ccc-4af9-8ebf-3e3931f2e824",
             "name": "Rulz_Outside",
             "filename": "Rulz_Outside.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363229",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "a98fc4b6-810e-4fb7-93ee-ef17be6ce95a",
             "name": "Rulz_Pause_Underground",
             "filename": "Rulz_Pause_Underground.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363230",
-            "_v": 1600011071068
+            "type": "mod"
         },
         {
             "id": "be5e3dd0-dc4f-46b3-aefe-9897de0775c3",
             "name": "Rulz_SpaceEmergency",
             "filename": "Rulz_SpaceEmergency.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363231",
-            "_v": 1600011071069
+            "type": "mod"
         },
         {
             "id": "4f7446cc-f5b4-4749-8fd0-f587afe35747",
             "name": "Rulz_UndergroundCave",
             "filename": "Rulz_UndergroundCave.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363232",
-            "_v": 1600011071069
+            "type": "mod"
         },
         {
             "id": "25b78895-f4b8-4021-b1e3-3ec681fc4338",
             "name": "dizzy",
             "filename": "dizzy.uge",
             "settings": {},
-            "type": "uge",
-            "inode": "19427521",
-            "_v": 1623593141700
+            "type": "uge"
         },
         {
             "id": "f50428ab-a084-4591-9bba-2ba10fe7b1c6",
             "name": "template",
             "filename": "template.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "19363233",
-            "_v": 1600011071069
+            "type": "mod"
         },
         {
             "id": "4b67e6f3-e455-498b-9d3d-762bb0235ea0",
             "name": "unreal_superhero2",
             "filename": "unreal_superhero2.uge",
             "settings": {},
-            "type": "uge",
-            "inode": "19427277",
-            "_v": 1623592971221
+            "type": "uge"
         },
         {
             "id": "8754e38e-a5bc-4778-985c-8d5f6bf37525",
             "name": "zilog_headbang_routine",
             "filename": "zilog_headbang_routine.uge",
             "settings": {},
-            "type": "uge",
-            "inode": "19428575",
-            "_v": 1623593424030
+            "type": "uge"
         }
     ],
     "fonts": [
+        {
+            "id": "ba1a5213-bb6f-40ec-8efc-fd0e9c543bb3",
+            "name": "font-he",
+            "width": 128,
+            "height": 112,
+            "filename": "font-he.png"
+        },
+        {
+            "id": "d1692d0d-71f4-41cc-926c-4eef96b89952",
+            "name": "font-ru",
+            "width": 128,
+            "height": 112,
+            "filename": "font-ru.png"
+        },
         {
             "id": "cab2d91d-5c2b-47e4-867c-7006ef39f7c6",
             "name": "font-vwf",
             "width": 128,
             "height": 48,
-            "filename": "font-vwf.png",
-            "inode": "19564965",
-            "_v": 1623606023206
+            "filename": "font-vwf.png"
         },
         {
             "id": "78f46f38-68fe-4547-ada8-e88ece6dc29a",
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "19363351",
-            "_v": 1623585530901
+            "filename": "gbs-mono.png"
         }
     ],
-    "avatars": [],
+    "avatars": [
+        {
+            "id": "10c4f8fe-d3bf-4e45-99d2-9a1bd1de4ba8",
+            "name": "cat",
+            "width": 16,
+            "height": 16,
+            "filename": "cat.png"
+        },
+        {
+            "id": "a450445c-0c3a-49ac-9f69-ea3a668765f9",
+            "name": "dog",
+            "width": 16,
+            "height": 16,
+            "filename": "dog.png"
+        }
+    ],
     "emotes": [],
     "variables": [
         {
@@ -47327,14 +47261,14 @@
     "settings": {
         "startSceneId": "382961a1-e615-4b92-92a7-f1a791b50b7a",
         "startX": 0,
-        "startY": 1,
+        "startY": 0,
         "startMoveSpeed": 1,
         "startAnimSpeed": 15,
         "startDirection": "right",
         "showCollisions": true,
         "showConnections": true,
-        "worldScrollX": 0,
-        "worldScrollY": 0,
+        "worldScrollX": 1,
+        "worldScrollY": 4,
         "zoom": 100,
         "customColorsEnabled": true,
         "sgbEnabled": true,
@@ -47363,12 +47297,12 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            725,
-            235,
-            235
+            484,
+            154,
+            154
         ],
         "showNavigator": true,
-        "defaultFontId": "",
+        "defaultFontId": "cab2d91d-5c2b-47e4-867c-7006ef39f7c6",
         "defaultCharacterEncoding": "",
         "defaultPlayerSprites": {
             "TOPDOWN": "ac1e8ef4-ffe6-47cd-b16f-9af5da77ec26",
