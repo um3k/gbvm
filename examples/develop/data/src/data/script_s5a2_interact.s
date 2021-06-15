@@ -11,7 +11,7 @@ _script_s5a2_interact::
 
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
-        .asciz "\001\001 Save Game\n Cancel"
+        .asciz "\001\001\003\003\002Save Game\n\003\003\003Cancel"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT

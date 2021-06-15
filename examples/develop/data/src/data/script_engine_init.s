@@ -7,7 +7,7 @@
 _start_scene_x:: 
         .dw 0
 _start_scene_y:: 
-        .dw 128 
+        .dw 0 
 _start_scene_dir:: 
         .db .DIR_RIGHT
 _start_scene::
@@ -18,7 +18,9 @@ _start_player_anim_tick::
         .db 15
 _ui_fonts:: 
         IMPORT_FAR_PTR_DATA _font_0
-
+        IMPORT_FAR_PTR_DATA _font_1
+        IMPORT_FAR_PTR_DATA _font_2
+        IMPORT_FAR_PTR_DATA _avatar_font_0
 
 ; define engine init VM routine which will be packed into some bank
 .area _CODE_255
