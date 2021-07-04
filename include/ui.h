@@ -57,6 +57,8 @@ extern font_desc_t vwf_current_font_desc;
 extern UBYTE vwf_current_font_bank;
 extern UBYTE vwf_tile_data[];
 
+extern UBYTE * text_render_base_addr;
+
 extern UBYTE * text_scroll_addr;
 extern UBYTE text_scroll_width, text_scroll_height;
 extern UBYTE text_scroll_fill;

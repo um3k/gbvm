@@ -63,6 +63,8 @@ font_desc_t vwf_current_font_desc;
 UBYTE vwf_current_font_bank;
 UBYTE vwf_current_font_idx;
 
+UBYTE * text_render_base_addr;
+
 UBYTE * text_scroll_addr;
 UBYTE text_scroll_width, text_scroll_height;
 UBYTE text_scroll_fill;
@@ -97,6 +99,8 @@ void ui_init() __banked {
     win_speed                   = 1;
     text_drawn                  = TRUE;
     text_draw_speed             = 1;
+
+    text_render_base_addr       = GetWinAddr();
 
     text_scroll_addr            = GetWinAddr();
     text_scroll_width           = 20; 
@@ -265,7 +269,7 @@ void ui_draw_text_buffer_char() __banked {
         // current char pointer
         ui_text_ptr = ui_text_data;
         // VRAM destination
-        ui_dest_base = GetWinAddr() + 32 + 1; // gotoxy(1,1)
+        ui_dest_base = text_render_base_addr + 32 + 1; // gotoxy(1,1)
         if (vwf_direction == UI_PRINT_RIGHTTOLEFT) ui_dest_base += 17;
         // with and initial pos correction
         // initialize current pointer with corrected base value
@@ -304,7 +308,7 @@ void ui_draw_text_buffer_char() __banked {
         }
         case 0x03:
             // gotoxy 
-            ui_dest_ptr = ui_dest_base = GetWinAddr() + (*++ui_text_ptr - 1u) + (*++ui_text_ptr - 1u) * 32u;
+            ui_dest_ptr = ui_dest_base = text_render_base_addr + (*++ui_text_ptr - 1u) + (*++ui_text_ptr - 1u) * 32u;
             if (vwf_current_offset) ui_print_reset();
             break;
         case 0x04: {
