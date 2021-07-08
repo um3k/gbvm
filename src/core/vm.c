@@ -224,6 +224,12 @@ void vm_push_value_ind(SCRIPT_CTX * THIS, INT16 idx) __banked {
     *(THIS->stack_ptr) = *((idx < 0) ? (THIS->stack_ptr + idx) : (script_memory + idx));
     THIS->stack_ptr++;
 }
+// translates idx into absolute index and pushes result to VM stack
+// if idx >= 0 then idx it is pushed as is, else idx is relative 
+void vm_push_reference(SCRIPT_CTX * THIS, INT16 idx) __banked {
+    *(THIS->stack_ptr) = ((idx < 0) ? ((((UWORD)(THIS->stack_ptr) - (UWORD)script_memory) >> 1) + idx) : idx);
+    THIS->stack_ptr++;
+}
 // manipulates VM stack pointer
 void vm_reserve(SCRIPT_CTX * THIS, INT8 ofs) __banked {
     THIS->stack_ptr += ofs;
