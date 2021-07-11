@@ -335,7 +335,7 @@ UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
 
     emote_actor = NULL;
 
-    if (init_data && scn.script_init.ptr) {
+    if ((init_data) && (scn.script_init.ptr != NULL)) {
         return (script_execute(scn.script_init.bank, scn.script_init.ptr, 0, 0) != 0);
     }
     return FALSE;

@@ -140,10 +140,13 @@ inline UBYTE VM_ISLOCKED() {
     return (vm_lock_state != 0);
 } 
 
+// enable check for pointer in script_execute(), disabled by default 
+// #define SAFE_SCRIPT_EXECUTE
+
 // initialize script runner contexts
 void script_runner_init(UBYTE reset) __banked;
 // execute a script in the new allocated context
-SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, INT8 nargs, ...) __banked;
+SCRIPT_CTX * script_execute(UBYTE bank, UBYTE * pc, UWORD * handle, UBYTE nargs, ...) __banked;
 // terminate script by ID; returns non zero if no such thread is running
 UBYTE script_terminate(UBYTE ID) __banked; 
 
