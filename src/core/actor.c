@@ -38,7 +38,6 @@ actor_t *invalid;
 UBYTE player_moving;
 UBYTE player_iframes;
 actor_t *player_collision_actor;
-far_ptr_t *script_p_hit1, script_p_hit2, script_p_hit3;
 actor_t *emote_actor;
 UBYTE emote_timer;
 
@@ -312,27 +311,9 @@ void actors_handle_player_collision() __banked {
     if (player_iframes == 0 && player_collision_actor != NULL) {
         if (player_collision_actor->collision_group) {
             // Execute scene player hit scripts based on actor's collision group
-            switch (player_collision_actor->collision_group) {
-                case COLLISION_GROUP_1: {
-                    if (PLAYER.script_hit1.bank) {
-                        script_execute(PLAYER.script_hit1.bank, PLAYER.script_hit1.ptr, 0, 0);
-                    }
-                    break;
-                }
-                case COLLISION_GROUP_2: {
-                    if (PLAYER.script_hit2.bank) {
-                        script_execute(PLAYER.script_hit2.bank, PLAYER.script_hit2.ptr, 0, 0);
-                    }
-                    break;
-                }                
-                case COLLISION_GROUP_3: {
-                    if (PLAYER.script_hit3.bank) {
-                        script_execute(PLAYER.script_hit3.bank, PLAYER.script_hit3.ptr, 0, 0);
-                    }
-                    break;
-                } 
+            if (PLAYER.script_hit1.bank) {
+                script_execute(PLAYER.script_hit1.bank, PLAYER.script_hit1.ptr, 0, 1, (UWORD)(player_collision_actor->collision_group));
             }
-  
             // Execute actor's onHit player script
             if (player_collision_actor->script.bank) {
                 script_execute(player_collision_actor->script.bank,
