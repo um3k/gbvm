@@ -1,5 +1,6 @@
 #pragma bank 4
 
+#include "gbs_types.h"
 #include "palette.h"
 
 #ifdef SGB
@@ -10,8 +11,9 @@
 #include "system.h"
 
 UBYTE DMG_palette[3];
+
 palette_entry_t SprPalette[8];
-palette_entry_t BkgPalette[8];
+//palette_entry_t BkgPalette[8]; // moved into absolute.c to free 64 bytes of WRAM (move after shadow_OAM[] which is 256-boundary aligned)
 
 void palette_init() __banked {
 #ifdef CGB

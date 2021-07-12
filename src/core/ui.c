@@ -53,7 +53,7 @@ static UBYTE ui_current_tile_bank;
 static UBYTE ui_prev_tile;
 static UBYTE ui_prev_tile_bank;
 static UBYTE vwf_current_offset;
-UBYTE vwf_tile_data[16 * 2];
+//UBYTE vwf_tile_data[16 * 2]; // moved into absolute.c to free 64 bytes of WRAM (move after shadow_OAM[] which is 256-boundary aligned)
 UBYTE vwf_current_mask;
 UBYTE vwf_current_rotate;
 UBYTE vwf_inverse_map;

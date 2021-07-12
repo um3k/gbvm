@@ -3,6 +3,8 @@
 
 #include "actor.h"
 
+extern volatile OAM_item_t shadow_OAM2[40];
+
 inline void toggle_shadow_OAM() {
     if (_shadow_OAM_base == (UBYTE)((UWORD)&shadow_OAM >> 8)) { 
         __render_shadow_OAM = (UBYTE)((UWORD)&shadow_OAM2 >> 8); 

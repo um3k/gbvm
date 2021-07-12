@@ -12,7 +12,6 @@ typedef struct metasprite_t {
 
 #define metasprite_end -128 
 
-extern volatile struct OAM_item_t shadow_OAM2[40];
 extern UINT8 hide_sprites;
 
 extern const void * __current_metasprite;
