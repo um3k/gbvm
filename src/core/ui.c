@@ -120,7 +120,10 @@ void ui_load_tiles() __banked {
     set_bkg_data(ui_black_tile, 1, vwf_tile_data);
 }
 
+void ui_draw_frame_row(void * dest, UBYTE tile, UBYTE width);
+
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
+    if (height == 0) return;
 #ifdef CGB
     if (_is_CGB) {
         VBK_REG = 1;
@@ -128,15 +131,16 @@ void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
         VBK_REG = 0;
     }
 #endif
-    fill_win_rect   (x + 1u,          y + 1u,          width - 2u, height - 2u,  ui_frame_bg_tiles);  // background
-    set_win_tile_xy (x,               y,                                         ui_frame_tl_tiles);
-    fill_win_rect   (x + 1u,          y,               width - 2u, 1u,           ui_frame_t_tiles );   // top
-    set_win_tile_xy (x + width - 1u,  y,                                         ui_frame_tr_tiles);
-    fill_win_rect   (x,               y + 1u,          1u,         height - 2u,  ui_frame_l_tiles );   // left
-    fill_win_rect   (x + width - 1u,  y + 1u,          1u,         height - 2u,  ui_frame_r_tiles );   // right
-    set_win_tile_xy (x,               y + height - 1u,                           ui_frame_bl_tiles);
-    fill_win_rect   (x + 1u,          y + height - 1u, width - 2u, 1u,           ui_frame_b_tiles );   // bottom
-    set_win_tile_xy (x + width - 1u,  y + height - 1u,                           ui_frame_br_tiles);
+    UBYTE * base_addr = GetWinAddr() + (y << 5) + x;
+    ui_draw_frame_row(base_addr, ui_frame_tl_tiles, width);
+    if (--height == 0) return;
+    if (height > 1)
+        for (UBYTE i = height - 1; i != 0; i--) {
+            base_addr += 32;
+            ui_draw_frame_row(base_addr, ui_frame_l_tiles, width);
+        }
+    base_addr += 32;
+    ui_draw_frame_row(base_addr, ui_frame_bl_tiles, width);
 }
 
 inline void ui_load_tile(const UBYTE * tiledata, UBYTE bank) {
