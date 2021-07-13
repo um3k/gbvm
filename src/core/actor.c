@@ -1,10 +1,11 @@
 #pragma bank 1
 
+#include "actor.h"
+
 #include <gb/gb.h>
 #include <gb/metasprites.h>
 #include <string.h>
 
-#include "actor.h"
 #include "game_time.h"
 #include "scroll.h"
 #include "linked_list.h"

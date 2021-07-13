@@ -1,6 +1,6 @@
 #pragma bank 2
 
-#include "vm.h"
+#include "vm_actor.h"
 
 #include <gb/metasprites.h>
 
