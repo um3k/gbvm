@@ -1,6 +1,7 @@
 #ifndef _SHADOW_H_INCLUDE
 #define _SHADOW_H_INCLUDE
 
+#include "oam_utils.h"
 #include "actor.h"
 
 extern volatile OAM_item_t shadow_OAM2[40];

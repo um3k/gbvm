@@ -34,6 +34,7 @@
 #endif
 #include "palette.h"
 #include "parallax.h"
+#include "oam_utils.h"
 #include "shadow.h"
 #include "data/data_bootstrap.h"
 

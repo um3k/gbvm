@@ -34,9 +34,10 @@ ___move_metasprite::
         ld      a, (hl-)
         add     a
         add     a
-        ld      e, a
+        ld      e, #0
         cp      #0xa0
-        jr      nc, 2$
+        ret     nc
+        ld      e, a
 
         ld      hl, #___current_metasprite
         ld      a, (hl+)
@@ -83,191 +84,6 @@ ___move_metasprite::
 
         ret
 
-___move_metasprite_hflip::
-        ldhl    sp, #4
-        ld      a, (hl-)
-        ld      b, a
-        ld      a, (hl-)
-        ld      c, a
-        ld      a, (hl-)
-        add     a
-        add     a
-        ld      e, a
-        cp      #0xa0
-        jr      nc, 2$
-
-        ld      hl, #___current_metasprite
-        ld      a, (hl+)
-        ld      h, (hl)
-        ld      l, a
-
-        ld      a, (___render_shadow_OAM)
-        ld      d, a
-1$:
-        ld      a, (hl+)
-        cp      #0x80
-        jr      z, 2$
-        cpl
-        inc     a
-        add     b
-        ld      b, a
-        ld      (de), a
-        inc     e
-
-        ld      a, (hl+)    ; dx
-        add     c
-        ld      c, a
-        ld      (de), a
-        inc     e
-
-        ld      a, (___current_base_tile)
-        add     (hl)        ; tile
-        inc     hl
-        ld      (de), a
-        inc     e
-
-        ld      a, (hl+)    ; props
-        xor     #0x40
-        ld      (de), a
-        inc     e
-
-        ld      a, e
-        cp      #0xa0
-        jr      c, 1$
-2$:
-        ldhl    sp, #2
-        ld      a, e
-        srl     a
-        srl     a
-        sub     (hl)
-        ld      e, a
-
-        ret
-
-___move_metasprite_vflip::
-        ldhl    sp, #4
-        ld      a, (hl-)
-        ld      b, a
-        ld      a, (hl-)
-        ld      c, a
-        ld      a, (hl-)
-        add     a
-        add     a
-        ld      e, a
-        cp      #0xa0
-        jr      nc, 2$
-
-        ld      hl, #___current_metasprite
-        ld      a, (hl+)
-        ld      h, (hl)
-        ld      l, a
-
-        ld      a, (___render_shadow_OAM)
-        ld      d, a
-1$:
-        ld      a, (hl+)    ; dy
-        cp      #0x80
-        jr      z, 2$
-        add     b
-        ld      b, a
-        ld      (de), a
-        inc     e
-
-        ld      a, (hl+)    ; dx
-        cpl
-        inc     a
-        add     c
-        ld      c, a
-        ld      (de), a
-        inc     e
-
-        ld      a, (___current_base_tile)
-        add     (hl)        ; tile
-        inc     hl
-        ld      (de), a
-        inc     e
-
-        ld      a, (hl+)    ; props
-        xor     #0x20
-        ld      (de), a
-        inc     e
-
-        ld      a, e
-        cp      #0xa0
-        jr      c, 1$
-2$:
-        ldhl    sp, #2
-        ld      a, e
-        srl     a
-        srl     a
-        sub     (hl)
-        ld      e, a
-
-        ret
-
-___move_metasprite_hvflip::
-        ldhl    sp, #4
-        ld      a, (hl-)
-        ld      b, a
-        ld      a, (hl-)
-        ld      c, a
-        ld      a, (hl-)
-        add     a
-        add     a
-        ld      e, a
-        cp      #0xa0
-        jr      nc, 2$
-
-        ld      hl, #___current_metasprite
-        ld      a, (hl+)
-        ld      h, (hl)
-        ld      l, a
-
-        ld      a, (___render_shadow_OAM)
-        ld      d, a
-1$:
-        ld      a, (hl+)
-        cp      #0x80
-        jr      z, 2$
-        cpl
-        inc     a
-        add     b
-        ld      b, a
-        ld      (de), a
-        inc     e
-
-        ld      a, (hl+)    ; dx
-        cpl
-        inc     a
-        add     c
-        ld      c, a
-        ld      (de), a
-        inc     e
-
-        ld      a, (___current_base_tile)
-        add     (hl)        ; tile
-        inc     hl
-        ld      (de), a
-        inc     e
-
-        ld      a, (hl+)    ; props
-        xor     #0x60
-        ld      (de), a
-        inc     e
-
-        ld      a, e
-        cp      #0xa0
-        jr      c, 1$
-2$:
-        ldhl    sp, #2
-        ld      a, e
-        srl     a
-        srl     a
-        sub     (hl)
-        ld      e, a
-
-        ret
-
 ; void hide_hardware_sprites(UINT8 from, UINT8 to)
 
 _hide_hardware_sprites::
@@ -291,12 +107,25 @@ _hide_hardware_sprites::
         ld      h, a
         ld      l, d
 
-        xor     a
-1$:
-        ld      (hl), a
+        ld      a, e
+        ld      e, b            ; b is 0
+
+        rra                     ; carry is never set here, because of ret c above
+        jr      nc, 1$
+
+        ld      (hl), e
         add     hl, bc
 
-        dec     e
+        ret     z               ; z is not affected by add hl, bc
+
+1$:
+        ld      (hl), e
+        add     hl, bc
+
+        ld      (hl), e
+        add     hl, bc
+
+        dec     a
         jr      nz, 1$
 
         ret

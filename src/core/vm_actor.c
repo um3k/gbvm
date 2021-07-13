@@ -2,13 +2,14 @@
 
 #include "vm.h"
 
+#include <gb/metasprites.h>
+
 #include "actor.h"
 #include "game_time.h"
 #include "data_manager.h"
 #include "scroll.h"
 #include "math.h"
 #include "macro.h"
-#include "metasprite.h"
 
 #define EMOTE_TOTAL_FRAMES         60
 #define MOVE_INACTIVE              0

@@ -2,8 +2,8 @@
 
 #include "interrupts.h"
 
+#include "oam_utils.h"
 #include "scroll.h"
-#include "metasprite.h"
 #include "parallax.h"
 #include "ui.h"
 

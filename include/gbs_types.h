@@ -1,11 +1,12 @@
 #ifndef GBS_TYPES_H
 #define GBS_TYPES_H
 
+#include <gb/gb.h>
 #include <gb/cgb.h>
+#include <gb/metasprites.h>
 
 #include "bankdata.h"
 #include "parallax.h"
-#include "metasprite.h"
 #include "collision.h"
 
 typedef enum {

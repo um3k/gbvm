@@ -1,6 +1,7 @@
 #pragma bank 1
 
 #include <gb/gb.h>
+#include <gb/metasprites.h>
 #include <string.h>
 
 #include "actor.h"
@@ -9,7 +10,6 @@
 #include "linked_list.h"
 #include "math.h"
 #include "collision.h"
-#include "metasprite.h"
 #include "vm.h"
 
 #ifdef STRICT
