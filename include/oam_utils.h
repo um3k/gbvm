@@ -1,8 +1,6 @@
 #ifndef _OAM_UTILS_H_INCLUDE
 #define _OAM_UTILS_H_INCLUDE
 
-extern UINT8 hide_sprites;
-
 /**
  * Hides all hardware sprites in range from <= X < to
  * @param from start OAM index

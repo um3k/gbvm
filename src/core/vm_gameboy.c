@@ -14,7 +14,7 @@
 #include "load_save.h"
 #include "bankdata.h"
 #include "data_manager.h"
-#include "oam_utils.h"
+#include "interrupts.h"
 
 void vm_show_sprites() __banked {
     hide_sprites = FALSE;

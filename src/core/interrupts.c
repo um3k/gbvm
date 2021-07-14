@@ -1,13 +1,16 @@
+#pragma bank 1
+
 #include <gb/gb.h>
 
 #include "interrupts.h"
 
-#include "oam_utils.h"
 #include "scroll.h"
 #include "parallax.h"
 #include "ui.h"
 
-void remove_LCD_ISRs() __critical {
+UBYTE hide_sprites = 0;
+
+void remove_LCD_ISRs() __critical __banked {
     remove_LCD(parallax_LCD_isr);
     remove_LCD(simple_LCD_isr);
     remove_LCD(fullscreen_LCD_isr);

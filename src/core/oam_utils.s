@@ -5,16 +5,6 @@
 
         .globl  ___render_shadow_OAM
 
-        .area   _DATA
-
-_hide_sprites::
-	.ds 	0x01
-
-        .area   _GSINIT
-
-        xor     a
-        ld      (_hide_sprites), a
-
         .area   _CODE
 
 ; void hide_hardware_sprites(UINT8 from, UINT8 to)
