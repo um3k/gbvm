@@ -15,38 +15,52 @@ _hide_hardware_sprites::
 
         add     a
         add     a
-        ld      d, a
+        ld      e, a
 
         ld      a, (hl-)
         sub     (hl)
-        ld      e, a
 
         ret     c
         ret     z
 
-        ld      bc, #4
+        ld      hl, #___render_shadow_OAM
+        ld      h, (hl)
+        ld      l, e
 
-        ld      a, (___render_shadow_OAM)
-        ld      h, a
-        ld      l, d
+        ld      de, #4
 
-        ld      a, e
-        ld      e, b            ; b is 0
+        rra                     ; carry is never set here, because of ret c above
+        jr      nc, 0$
 
+        ld      (hl), d
+        add     hl, de
+
+        ret     z               ; z is not affected by 16-bit add
+
+0$:
         rra                     ; carry is never set here, because of ret c above
         jr      nc, 1$
 
-        ld      (hl), e
-        add     hl, bc
+        ld      (hl), d
+        add     hl, de
 
-        ret     z               ; z is not affected by add hl, bc
+        ld      (hl), d
+        add     hl, de
+
+        ret     z               ; z is not affected by 16-bit add
 
 1$:
-        ld      (hl), e
-        add     hl, bc
+        ld      (hl), d
+        add     hl, de
 
-        ld      (hl), e
-        add     hl, bc
+        ld      (hl), d
+        add     hl, de
+
+        ld      (hl), d
+        add     hl, de
+
+        ld      (hl), d
+        add     hl, de
 
         dec     a
         jr      nz, 1$

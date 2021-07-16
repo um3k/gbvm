@@ -6,6 +6,6 @@
  * @param from start OAM index
  * @param to finish OAM index
  */ 
-void hide_hardware_sprites(UINT8 from, UINT8 to);
+void hide_hardware_sprites(UINT8 from, UINT8 to) __preserves_regs(b, c);
 
 #endif
