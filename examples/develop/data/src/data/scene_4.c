@@ -11,7 +11,7 @@
 #include "data/scene_4_triggers.h"
 #include "data/script_s4_init.h"
 
-const void __at(255) __bank_scene_4;
+BANKREF(scene_4)
 
 const struct scene_t scene_4 = {
     .width = 20,

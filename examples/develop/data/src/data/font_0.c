@@ -123,7 +123,7 @@ static const UBYTE font_0_bitmaps[] = {
     0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x50, 0x50, 0x88, 0x88, 0x88, 0x88, 0xF8, 0xF8, 0x00, 0x00
 };
 
-const void __at(255) __bank_font_0;
+BANKREF(font_0)
 const font_desc_t font_0 = {
     FONT_RECODE | FONT_VWF | FONT_VWF_1BIT, 
     FONT_RECODE_SIZE_7BIT,

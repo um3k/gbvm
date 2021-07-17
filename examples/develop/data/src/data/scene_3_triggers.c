@@ -7,7 +7,7 @@
 #include "data/script_s3t0_interact.h"
 #include "data/script_s3t1_interact.h"
 
-const void __at(255) __bank_scene_3_triggers;
+BANKREF(scene_3_triggers)
 
 const struct trigger_t scene_3_triggers[] = {
     {

@@ -9,7 +9,7 @@
 #include "data/palette_6.h"
 #include "data/spritesheet_1.h"
 
-const void __at(255) __bank_scene_10;
+BANKREF(scene_10)
 
 const struct scene_t scene_10 = {
     .width = 20,

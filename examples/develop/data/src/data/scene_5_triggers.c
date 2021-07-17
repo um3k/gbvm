@@ -10,7 +10,7 @@
 #include "data/script_s5t3_interact.h"
 #include "data/script_s5t4_interact.h"
 
-const void __at(255) __bank_scene_5_triggers;
+BANKREF(scene_5_triggers)
 
 const struct trigger_t scene_5_triggers[] = {
     {

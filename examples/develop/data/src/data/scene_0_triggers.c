@@ -6,7 +6,7 @@
 #include "gbs_types.h"
 #include "data/script_s0t0_interact.h"
 
-const void __at(255) __bank_scene_0_triggers;
+BANKREF(scene_0_triggers)
 
 const struct trigger_t scene_0_triggers[] = {
     {

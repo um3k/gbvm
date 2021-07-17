@@ -16,7 +16,7 @@
 #include "data/script_s4t9_interact.h"
 #include "data/script_s4t10_interact.h"
 
-const void __at(255) __bank_scene_4_triggers;
+BANKREF(scene_4_triggers)
 
 const struct trigger_t scene_4_triggers[] = {
     {

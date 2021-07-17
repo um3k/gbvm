@@ -12,7 +12,7 @@
 #include "data/spritesheet_5.h"
 #include "data/script_s5a2_interact.h"
 
-const void __at(255) __bank_scene_5_actors;
+BANKREF(scene_5_actors)
 
 const struct actor_t scene_5_actors[] = {
     {

@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_avatar_font_0;
+BANKREF_EXTERN(avatar_font_0)
 extern const unsigned char avatar_font_0[];
 
 #endif
