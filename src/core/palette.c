@@ -40,7 +40,7 @@ __asm
         ld b, #(8 * 4 * 2)
 1$:
         ldh a, (_STAT_REG)
-        and #0x02
+        bit STATF_B_BUSY, a
         jr nz, 1$
         xor a
         ldh (c), a

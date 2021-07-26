@@ -63,6 +63,10 @@ all: settings directories $(TARGET)
 .PHONY: directories clean release debug profile DMG CGB SGB MBC3 MBC5 hUGE GBT test
 .SECONDARY: $(OBJS) 
 
+AP:
+	$(eval GBDK = $(TOP)../gbdk.ap)
+	@echo "Analogue pocket build"
+
 release:
 	$(eval CFLAGS += -Wf'--max-allocs-per-node 50000')
 	@echo "RELEASE mode ON"
