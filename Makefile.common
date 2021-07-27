@@ -64,7 +64,8 @@ all: settings directories $(TARGET)
 .SECONDARY: $(OBJS) 
 
 AP:
-	$(eval GBDK = $(TOP)../gbdk.ap)
+	$(eval CFLAGS += -mgbz80/ap)
+	$(eval LFLAGS += -mgbz80/ap)
 	@echo "Analogue pocket build"
 
 release:
