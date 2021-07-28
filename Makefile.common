@@ -10,6 +10,7 @@ EMU	= $(TOP)../bgb/bgb
 GBSPACK = $(TOP)../gbspack/gbspack
 TEST_CHK = python $(CURDIR)/$(TEST_FW)/unit_checker.py
 GBS_CLI = node $(TOP)../gb-studio/out/cli/gb-studio-cli.js
+PLATFORM =
 
 ROMTITLE = "GBSTUDIO"
 
@@ -18,12 +19,12 @@ OBJDIR = obj
 REL_OBJDIR = obj/_rel
 
 
-CFLAGS = -I$(TOP)include -Wa-I$(TOP)include -Wa-I$(GBDKLIB)
+CFLAGS = $(PLATFORM) -I$(TOP)include -Wa-I$(TOP)include -Wa-I$(GBDKLIB)
 
 LFLAGS_NBANKS += -Wm-yoA -Wm-ya4
 LFLAGS_SYMBOLS = -Wl-j -Wl-m -Wl-w -Wm-yS
 
-LFLAGS = -Wm-yt$(CART_MBC) $(LFLAGS_NBANKS) $(LFLAGS_SYMBOLS) -Wl-klib -Wl-g.STACK=0xDF00 -Wi-e
+LFLAGS = $(PLATFORM) -Wm-yt$(CART_MBC) $(LFLAGS_NBANKS) $(LFLAGS_SYMBOLS) -Wl-klib -Wl-g.STACK=0xDF00 -Wi-e
 
 PACKFLAGS = -b 5 -f 255 -e rel -c
 
@@ -64,8 +65,7 @@ all: settings directories $(TARGET)
 .SECONDARY: $(OBJS) 
 
 AP:
-	$(eval CFLAGS += -mgbz80/ap)
-	$(eval LFLAGS += -mgbz80/ap)
+	$(eval PLATFORM = -mgbz80:ap)
 	@echo "Analogue pocket build"
 
 release:
