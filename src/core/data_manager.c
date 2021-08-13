@@ -326,10 +326,7 @@ UBYTE load_scene(const scene_t * scene, UBYTE bank, UBYTE init_data) __banked {
     }
 
     scroll_reset();
-
-    // Reset last trigger
-    last_trigger_tx = 0xFF;
-    last_trigger_ty = 0xFF;
+    trigger_reset();
 
     emote_actor = NULL;
 
