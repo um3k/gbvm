@@ -11,7 +11,7 @@ UBYTE last_trigger;
 
 UBYTE trigger_at_intersection(bounding_box_t *bb, upoint16_t *offset); 
 
-void trigger_reset() {
+void trigger_reset() __banked {
     last_trigger_tx = 0;
     last_trigger_ty = 0;
     last_trigger = NO_TRIGGER_COLLISON;

@@ -13,7 +13,10 @@
 extern trigger_t triggers[MAX_TRIGGERS];
 extern UBYTE triggers_len;
 
-void trigger_reset();
+/**
+ * Resets trigger collision flags on scene start
+ */
+void trigger_reset() __banked;
 
 /**
  * Find trigger at tile {tx,ty}
