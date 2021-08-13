@@ -12,8 +12,8 @@
 
 extern trigger_t triggers[MAX_TRIGGERS];
 extern UBYTE triggers_len;
-extern UBYTE last_trigger_tx;
-extern UBYTE last_trigger_ty;
+
+void trigger_reset();
 
 /**
  * Find trigger at tile {tx,ty}
