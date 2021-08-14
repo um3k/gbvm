@@ -3,7 +3,8 @@
 
 #include <gb/gb.h>
 
-#define BANKS_TO_SAVE 3
+#define SRAM_BANKS_TO_SAVE 3
+#define SRAM_BANK_SIZE 0x2000
 
 // initializes saving capabilities
 void data_init() __banked;

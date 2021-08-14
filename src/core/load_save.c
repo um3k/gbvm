@@ -14,6 +14,7 @@
     #include "flasher.h"
 #endif
 
+#define SIGN_BY_PTR(ptr) *((UINT32 *)(ptr))
 const UINT32 signature = 0x45564153;
 
 typedef struct save_point_t {
@@ -60,7 +61,7 @@ void data_init() __banked {
     }
 #ifdef BATTERYLESS
     // load from FLASH ROM
-    for (UBYTE i = 0; i < BANKS_TO_SAVE; i++) restore_sram_bank(i);
+    for (UBYTE i = 0; i < SRAM_BANKS_TO_SAVE; i++) restore_sram_bank(i);
 #endif
 }
 
@@ -68,10 +69,10 @@ UBYTE * data_slot_address(UBYTE slot, UBYTE *bank) {
     UWORD res = 0, res_bank = 0;
     for (UBYTE i = 0; i < slot; i++) {
         res += save_blob_size;
-        if (res > 0x2000) {
+        if (res > SRAM_BANK_SIZE) {
             res = 0;
             res_bank++;
-            if (res_bank >= BANKS_TO_SAVE) return NULL;
+            if (res_bank >= SRAM_BANKS_TO_SAVE) return NULL;
         }
     }
     *bank = res_bank;
@@ -83,14 +84,15 @@ void data_save(UBYTE slot) __banked {
     if (save_data == NULL) return;
     SWITCH_RAM_MBC5(data_bank);
 
-    *((UINT32 *)save_data) = signature; save_data += sizeof(signature);    
+    SIGN_BY_PTR(save_data) = signature; 
+    save_data += sizeof(signature);    
     for(const save_point_t * point = save_points; (point->target); point++) {
         memcpy(save_data, point->target, point->size);
         save_data += point->size;  
     }
 #ifdef BATTERYLESS
     // save to FLASH ROM
-    save_sram(BANKS_TO_SAVE);
+    save_sram(SRAM_BANKS_TO_SAVE);
 #endif
 }
 
@@ -98,7 +100,7 @@ UBYTE data_load(UBYTE slot) __banked {
     UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return FALSE;
     SWITCH_RAM_MBC5(data_bank);
-    if (*((UINT32 *)save_data) != signature) return FALSE;
+    if (SIGN_BY_PTR(save_data) != signature) return FALSE;
     save_data += sizeof(signature);
 
     for(const save_point_t * point = save_points; (point->target); point++) {
@@ -113,10 +115,10 @@ void data_clear(UBYTE slot) __banked {
     UBYTE * save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return;
     SWITCH_RAM_MBC5(data_bank);
-    *((UINT32 *)save_data) = 0;    
+    SIGN_BY_PTR(save_data) = 0;    
 #ifdef BATTERYLESS
     // save to FLASH ROM
-    save_sram(BANKS_TO_SAVE);
+    save_sram(SRAM_BANKS_TO_SAVE);
 #endif
 }
 
@@ -124,7 +126,7 @@ UBYTE data_peek(UBYTE slot, UINT16 idx, UBYTE count, UINT16 * dest) __banked {
     UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return FALSE;
     SWITCH_RAM_MBC5(data_bank);
-    if (*((UINT32 *)save_data) != signature) return FALSE;
+    if (SIGN_BY_PTR(save_data) != signature) return FALSE;
 
     if (count) memcpy(dest, save_data + sizeof(signature) + (idx << 1), count << 1);
     return TRUE;
