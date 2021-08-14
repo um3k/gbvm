@@ -8,9 +8,6 @@
 // initializes saving capabilities
 void data_init() __banked;
 
-// check SRAM contains valid save blob
-UBYTE data_is_saved(UBYTE slot) __banked;
-
 // save state to SRAM
 void data_save(UBYTE slot) __banked;
 
