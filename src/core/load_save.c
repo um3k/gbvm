@@ -60,36 +60,51 @@ void data_init() __banked {
     }
     // load from FLASH ROM
 #ifdef BATTERYLESS
-    UINT32 rom_signarture;
-    MemcpyBanked(&rom_signarture, (void *)0x4000, sizeof(rom_signarture), (UBYTE)&_start_save);
-    if (rom_signarture == signature) restore_sram_bank(0);
+    for (UBYTE i = 0; i < BANKS_TO_SAVE; i++) restore_sram_bank(i);
 #endif
 }
 
+static UBYTE * get_slot_address(UBYTE slot, UBYTE *bank) {
+    UWORD res = 0, res_bank = 0;
+    for (UBYTE i = 0; i < slot; i++) {
+        res += save_blob_size;
+        if (res > 0x2000) {
+            res = 0;
+            res_bank++;
+            if (res_bank >= BANKS_TO_SAVE) return NULL;
+        }
+    }
+    *bank = res_bank;
+    return (UBYTE *)0xA000u + res;
+}
+
 UBYTE data_is_saved(UBYTE slot) __banked {
-    SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot);
+    UBYTE data_bank, *save_data = get_slot_address(slot, &data_bank);
+    if (save_data == NULL) return FALSE;
+    SWITCH_RAM_MBC5(data_bank);
     return (*((UINT32 *)save_data) == signature);
 }
 
 void data_save(UBYTE slot) __banked {
-    SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot);
-    *((UINT32 *)save_data) = signature; save_data += sizeof(signature);
-    
+    UBYTE data_bank, *save_data = get_slot_address(slot, &data_bank);
+    if (save_data == NULL) return;
+    SWITCH_RAM_MBC5(data_bank);
+
+    *((UINT32 *)save_data) = signature; save_data += sizeof(signature);    
     for(const save_point_t * point = save_points; (point->target); point++) {
         memcpy(save_data, point->target, point->size);
         save_data += point->size;  
     }
 #ifdef BATTERYLESS
-    save_sram(1);
+    save_sram(BANKS_TO_SAVE);
 #endif
 }
 
 UBYTE data_load(UBYTE slot) __banked {
     if (!data_is_saved(slot)) return FALSE;
-    SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot) + sizeof(signature);
+
+    UBYTE data_bank, *save_data = get_slot_address(slot, &data_bank) + sizeof(signature);
+    SWITCH_RAM_MBC5(data_bank);
 
     for(const save_point_t * point = save_points; (point->target); point++) {
         memcpy(point->target, save_data, point->size);    
@@ -100,12 +115,14 @@ UBYTE data_load(UBYTE slot) __banked {
 }
 
 void data_clear(UBYTE slot) __banked {
-    SWITCH_RAM_MBC5(0);
-    UBYTE * save_data = (UBYTE *)0xA000 + (save_blob_size * slot);
+    UBYTE data_bank; 
+    UBYTE * save_data = get_slot_address(slot, &data_bank);
+    if (save_data == NULL) return;
+    SWITCH_RAM_MBC5(data_bank);
     *((UINT32 *)save_data) = 0;
     
 #ifdef BATTERYLESS
-    save_sram(1);
+    save_sram(BANKS_TO_SAVE);
 #endif
 }
 
@@ -113,9 +130,8 @@ UBYTE data_peek(UBYTE slot, UINT16 idx, UBYTE count, UINT16 * dest) __banked {
     if (!data_is_saved(slot)) return FALSE;
     // if zero length block is requested then just check that save exist
     if (count) {
-        SWITCH_RAM_MBC5(0);
-        UINT16 * save_data = (UBYTE *)0xA000 + (save_blob_size * slot) + sizeof(signature);
-        // get variable (VM memory always go first)
+        UBYTE data_bank, *save_data = get_slot_address(slot, &data_bank) + sizeof(signature);
+        SWITCH_RAM_MBC5(data_bank);
         memcpy(dest, save_data + idx, count << 1);
     }
     return TRUE;

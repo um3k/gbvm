@@ -3,6 +3,8 @@
 
 #include <gb/gb.h>
 
+#define BANKS_TO_SAVE 3
+
 // initializes saving capabilities
 void data_init() __banked;
 
