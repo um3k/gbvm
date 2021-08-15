@@ -69,10 +69,9 @@ UBYTE * data_slot_address(UBYTE slot, UBYTE *bank) {
     UWORD res = 0, res_bank = 0;
     for (UBYTE i = 0; i < slot; i++) {
         res += save_blob_size;
-        if (res > SRAM_BANK_SIZE) {
+        if ((res + save_blob_size) > SRAM_BANK_SIZE) {
+            if (++res_bank >= SRAM_BANKS_TO_SAVE) return NULL;
             res = 0;
-            res_bank++;
-            if (res_bank >= SRAM_BANKS_TO_SAVE) return NULL;
         }
     }
     *bank = res_bank;
@@ -111,8 +110,7 @@ UBYTE data_load(UBYTE slot) __banked {
 }
 
 void data_clear(UBYTE slot) __banked {
-    UBYTE data_bank; 
-    UBYTE * save_data = data_slot_address(slot, &data_bank);
+    UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return;
     SWITCH_RAM_MBC5(data_bank);
     SIGN_BY_PTR(save_data) = 0;    
