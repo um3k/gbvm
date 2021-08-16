@@ -29,20 +29,18 @@ void camera_reset() __banked {
 }
 
 void camera_update() __nonbanked {
-    if (camera_settings & CAMERA_LOCK_FLAG) {
-        // Camera locked to player
-        actor_t * actor = &PLAYER;
-
-        UWORD a_x = actor->pos.x >> 4;
-        UWORD a_y = actor->pos.y >> 4;
-
+    if ((camera_settings & CAMERA_LOCK_X_FLAG) == 0) {
+        UWORD a_x = PLAYER.pos.x >> 4;
         // Horizontal lock
         if (camera_x < a_x - camera_deadzone_x - camera_offset_x) { 
             camera_x = a_x - camera_deadzone_x - camera_offset_x;
         } else if (camera_x > a_x + camera_deadzone_x - camera_offset_x) { 
             camera_x = a_x + camera_deadzone_x - camera_offset_x;
         }
+    }
 
+    if ((camera_settings & CAMERA_LOCK_Y_FLAG) == 0) {
+        UWORD a_y = PLAYER.pos.y >> 4;
         // Vertical lock
         if (camera_y < a_y - camera_deadzone_y - camera_offset_y) { 
             camera_y = a_y - camera_deadzone_y - camera_offset_y;

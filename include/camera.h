@@ -8,7 +8,9 @@
 #define SCREEN_WIDTH_HALF 80
 #define SCREEN_HEIGHT_HALF 72
 
-#define CAMERA_LOCK_FLAG 0x1
+#define CAMERA_LOCK_FLAG 0x3
+#define CAMERA_LOCK_X_FLAG 0x01
+#define CAMERA_LOCK_Y_FLAG 0x02
 
 extern INT16 camera_x;
 extern INT16 camera_y;
