@@ -13,19 +13,14 @@ BYTE camera_deadzone_y;
 UBYTE camera_settings;
 
 void camera_init() __banked {
-    camera_x = 0;
-    camera_y = 0;
-    camera_offset_x = 0;
-    camera_offset_y = 0;
-    camera_deadzone_x = 0;
-    camera_deadzone_y = 0;
-    camera_settings = 0;
+    camera_x = camera_y = 0;
+    camera_offset_x = camera_offset_y = 0;
+    camera_reset();
 }
 
 void camera_reset() __banked {
-    camera_settings = CAMERA_LOCK_FLAG;
-    camera_deadzone_x = 0;
-    camera_deadzone_y = 0;
+    camera_deadzone_x = camera_deadzone_y = 0;
+    camera_settings = CAMERA_UNLOCKED;
 }
 
 void camera_update() __nonbanked {
