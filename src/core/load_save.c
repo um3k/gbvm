@@ -81,7 +81,7 @@ UBYTE * data_slot_address(UBYTE slot, UBYTE *bank) {
 void data_save(UBYTE slot) __banked {
     UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return;
-    SWITCH_RAM_MBC5(data_bank);
+    SWITCH_RAM(data_bank);
 
     SIGN_BY_PTR(save_data) = signature; 
     save_data += sizeof(signature);    
@@ -98,7 +98,7 @@ void data_save(UBYTE slot) __banked {
 UBYTE data_load(UBYTE slot) __banked {
     UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return FALSE;
-    SWITCH_RAM_MBC5(data_bank);
+    SWITCH_RAM(data_bank);
     if (SIGN_BY_PTR(save_data) != signature) return FALSE;
     save_data += sizeof(signature);
 
@@ -112,7 +112,7 @@ UBYTE data_load(UBYTE slot) __banked {
 void data_clear(UBYTE slot) __banked {
     UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return;
-    SWITCH_RAM_MBC5(data_bank);
+    SWITCH_RAM(data_bank);
     SIGN_BY_PTR(save_data) = 0;    
 #ifdef BATTERYLESS
     // save to FLASH ROM
@@ -123,7 +123,7 @@ void data_clear(UBYTE slot) __banked {
 UBYTE data_peek(UBYTE slot, UINT16 idx, UBYTE count, UINT16 * dest) __banked {
     UBYTE data_bank, *save_data = data_slot_address(slot, &data_bank);
     if (save_data == NULL) return FALSE;
-    SWITCH_RAM_MBC5(data_bank);
+    SWITCH_RAM(data_bank);
     if (SIGN_BY_PTR(save_data) != signature) return FALSE;
 
     if (count) memcpy(dest, save_data + sizeof(signature) + (idx << 1), count << 1);

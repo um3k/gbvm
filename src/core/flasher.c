@@ -8,7 +8,7 @@
 extern void _start_save;
 
 void restore_sram_bank(UINT8 bank) __banked {
-    SWITCH_RAM_MBC5(bank); 
+    SWITCH_RAM(bank); 
     MemcpyBanked((UINT8 *)0xA000, (UINT8 *)(0x4000 + ((bank & 1) << 13)), 0x2000, (UBYTE)&_start_save + (bank >> 1));
 }
 
