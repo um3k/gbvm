@@ -354,15 +354,19 @@ void ui_draw_text_buffer_char() __banked {
             break;
         case '\r':
             // line feed
-            scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, text_scroll_fill);
+            if ((ui_dest_ptr + 32u) >= (text_scroll_addr + ((UWORD)text_scroll_height << 5))) {
+                scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, text_scroll_fill);
 #ifdef CGB
-            if (_is_CGB) {
-                VBK_REG = 1;
-                scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, (UI_PALETTE & 0x07u));
-                VBK_REG = 0;
-            }
+                if (_is_CGB) {
+                    VBK_REG = 1;
+                    scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, (UI_PALETTE & 0x07u));
+                    VBK_REG = 0;
+                }
 #endif
-            ui_dest_ptr = ui_dest_base;
+                ui_dest_ptr = ui_dest_base;
+            } else {
+                ui_dest_ptr = ui_dest_base += 32u;
+            }
             if (vwf_current_offset) ui_print_reset();
             break;
         case '\n':
