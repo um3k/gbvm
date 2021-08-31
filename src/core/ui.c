@@ -354,7 +354,7 @@ void ui_draw_text_buffer_char() __banked {
             break;
         case '\r':
             // line feed
-            if ((ui_dest_ptr + 32u) >= (text_scroll_addr + ((UWORD)(text_scroll_height - 1) << 5) + text_scroll_width)) {
+            if ((ui_dest_ptr + 32u) > (UBYTE *)((((UWORD)text_scroll_addr + ((UWORD)text_scroll_height << 5)) & 0xFFE0) - 1)) {
                 scroll_rect(text_scroll_addr, text_scroll_width, text_scroll_height, text_scroll_fill);
 #ifdef CGB
                 if (_is_CGB) {
