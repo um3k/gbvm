@@ -10,7 +10,7 @@
 #include "data/spritesheet_7.h"
 #include "data/script_s14_init.h"
 
-const void __at(255) __bank_scene_14;
+BANKREF(scene_14)
 
 const struct scene_t scene_14 = {
     .width = 20,

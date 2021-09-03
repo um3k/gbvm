@@ -19,7 +19,7 @@
 #include "data/script_s0t12_interact.h"
 #include "data/script_s0t13_interact.h"
 
-const void __at(255) __bank_scene_0_triggers;
+BANKREF(scene_0_triggers)
 
 const struct trigger_t scene_0_triggers[] = {
     {
@@ -28,7 +28,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 13,
         .width = 2,
         .height = 2,
-        .script = TO_FAR_PTR_T(script_s0t0_interact)
+        .script = TO_FAR_PTR_T(script_s0t0_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 2,
@@ -36,7 +37,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 8,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t1_interact)
+        .script = TO_FAR_PTR_T(script_s0t1_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 3,
@@ -44,7 +46,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 8,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t2_interact)
+        .script = TO_FAR_PTR_T(script_s0t2_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 4,
@@ -52,7 +55,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 46,
         .width = 1,
         .height = 4,
-        .script = TO_FAR_PTR_T(script_s0t3_interact)
+        .script = TO_FAR_PTR_T(script_s0t3_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 5,
@@ -60,7 +64,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 46,
         .width = 1,
         .height = 4,
-        .script = TO_FAR_PTR_T(script_s0t4_interact)
+        .script = TO_FAR_PTR_T(script_s0t4_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 6,
@@ -68,7 +73,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 46,
         .width = 1,
         .height = 4,
-        .script = TO_FAR_PTR_T(script_s0t5_interact)
+        .script = TO_FAR_PTR_T(script_s0t5_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 7,
@@ -76,7 +82,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 40,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t6_interact)
+        .script = TO_FAR_PTR_T(script_s0t6_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 8,
@@ -84,7 +91,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 40,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t7_interact)
+        .script = TO_FAR_PTR_T(script_s0t7_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 9,
@@ -92,7 +100,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 0,
         .width = 13,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t8_interact)
+        .script = TO_FAR_PTR_T(script_s0t8_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 10,
@@ -100,7 +109,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 20,
         .width = 7,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t9_interact)
+        .script = TO_FAR_PTR_T(script_s0t9_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 11,
@@ -108,7 +118,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 29,
         .width = 10,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t10_interact)
+        .script = TO_FAR_PTR_T(script_s0t10_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 12,
@@ -116,7 +127,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 28,
         .width = 9,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t11_interact)
+        .script = TO_FAR_PTR_T(script_s0t11_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 13,
@@ -124,7 +136,8 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 20,
         .width = 6,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t12_interact)
+        .script = TO_FAR_PTR_T(script_s0t12_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 14,
@@ -132,6 +145,7 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 42,
         .width = 2,
         .height = 10,
-        .script = TO_FAR_PTR_T(script_s0t13_interact)
+        .script = TO_FAR_PTR_T(script_s0t13_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     }
 };

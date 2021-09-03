@@ -33,7 +33,7 @@ _script_s10t1_interact::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "\001\002PLEASE\001\005 \001\002HELP!!\001\004\nMy garden..."
+        .asciz "\001\001PLEASE\001\004 \001\001HELP!!\001\003\nMy garden..."
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT

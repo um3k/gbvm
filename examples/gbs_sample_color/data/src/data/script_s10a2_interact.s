@@ -31,7 +31,7 @@ _script_s10a2_interact::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "\001\006TURNIPS!"
+        .asciz "\001\005TURNIPS!"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT

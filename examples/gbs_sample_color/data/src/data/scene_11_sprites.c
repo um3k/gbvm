@@ -8,7 +8,7 @@
 #include "data/spritesheet_30.h"
 #include "data/spritesheet_18.h"
 
-const void __at(255) __bank_scene_11_sprites;
+BANKREF(scene_11_sprites)
 
 const far_ptr_t scene_11_sprites[] = {
     TO_FAR_PTR_T(spritesheet_29),

@@ -6,7 +6,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_scene_11_collisions;
+BANKREF_EXTERN(scene_11_collisions)
 extern const unsigned char scene_11_collisions[];
 
 #endif

@@ -4,7 +4,7 @@
 
 #include "gbs_types.h"
 
-const void __at(255) __bank_palette_3;
+BANKREF(palette_3)
 
 const struct palette_t palette_3 = {
     .mask = 0xFF,

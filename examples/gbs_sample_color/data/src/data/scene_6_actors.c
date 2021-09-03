@@ -11,7 +11,7 @@
 #include "data/spritesheet_23.h"
 #include "data/spritesheet_23.h"
 
-const void __at(255) __bank_scene_6_actors;
+BANKREF(scene_6_actors)
 
 const struct actor_t scene_6_actors[] = {
     {

@@ -6,7 +6,7 @@
 #include "gbs_types.h"
 #include "data/script_s2t0_interact.h"
 
-const void __at(255) __bank_scene_2_triggers;
+BANKREF(scene_2_triggers)
 
 const struct trigger_t scene_2_triggers[] = {
     {
@@ -15,6 +15,7 @@ const struct trigger_t scene_2_triggers[] = {
         .y = 16,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s2t0_interact)
+        .script = TO_FAR_PTR_T(script_s2t0_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     }
 };

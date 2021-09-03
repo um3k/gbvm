@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_turnip_init;
+BANKREF_EXTERN(script_turnip_init)
 extern const unsigned char script_turnip_init[];
 
 #endif

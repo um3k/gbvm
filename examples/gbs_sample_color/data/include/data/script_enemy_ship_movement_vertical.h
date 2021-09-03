@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_enemy_ship_movement_vertical;
+BANKREF_EXTERN(script_enemy_ship_movement_vertical)
 extern const unsigned char script_enemy_ship_movement_vertical[];
 
 #endif
