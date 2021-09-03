@@ -38,7 +38,7 @@ _script_s5_init::
 1$:
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
-        .asciz "\001\001 New Game\n Continue"
+        .asciz "\001\001\003\003\002New Game\n\003\003\003Continue"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
