@@ -2,7 +2,7 @@
     "name": "Custom Event Test",
     "author": "cmaltby",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "Level 1",
@@ -757,13 +757,11 @@
                                 "id": "512b1ba2-49e4-4c6d-b39f-78ec7cf76227",
                                 "command": "EVENT_TEXT",
                                 "args": {
-                                    "text": "Hello World",
+                                    "text": [
+                                        "Hello World"
+                                    ],
                                     "avatarId": ""
                                 }
-                            },
-                            {
-                                "id": "687bf07d-73c0-492b-b553-140b9a41c51d",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -775,10 +773,6 @@
                         "text": "After Call",
                         "avatarId": ""
                     }
-                },
-                {
-                    "id": "5f609ac8-946f-45b1-9df2-1e758baad68d",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -800,8 +794,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "sokoban.png",
-            "inode": "18568983",
-            "_v": 1618061794183,
             "tileColors": [
                 5,
                 5,
@@ -1173,7 +1165,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "box.png",
-            "inode": "10255152",
             "checksum": "d079e702065f8e9dd5c4f00975c5fabd327e6d3d",
             "width": 16,
             "height": 16,
@@ -1294,7 +1285,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1618061794183,
             "autoDetect": false
         },
         {
@@ -1303,7 +1293,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "player.png",
-            "inode": "10255153",
             "checksum": "57d62a82877b5ce98f9b55b066672b11a74541af",
             "width": 96,
             "height": 16,
@@ -1652,7 +1641,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1618061794183,
             "autoDetect": false
         }
     ],
@@ -1806,13 +1794,11 @@
                     "id": "512b1ba2-49e4-4c6d-b39f-78ec7cf76227",
                     "command": "EVENT_TEXT",
                     "args": {
-                        "text": "Hello World",
+                        "text": [
+                            "Hello World"
+                        ],
                         "avatarId": ""
                     }
-                },
-                {
-                    "id": "687bf07d-73c0-492b-b553-140b9a41c51d",
-                    "command": "EVENT_END"
                 }
             ]
         }
@@ -1824,9 +1810,7 @@
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18568985",
-            "_v": 1618061794179
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -1879,9 +1863,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            619,
-            206,
-            206
+            589,
+            195,
+            195
         ],
         "showNavigator": true,
         "defaultFontId": "",
@@ -1897,6 +1881,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "defaultFadeStyle": "white",
         "playerSpriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
     }
