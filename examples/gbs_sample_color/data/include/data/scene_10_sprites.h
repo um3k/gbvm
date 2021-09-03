@@ -6,7 +6,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_scene_10_sprites;
+BANKREF_EXTERN(scene_10_sprites)
 extern const far_ptr_t scene_10_sprites[];
 
 #endif

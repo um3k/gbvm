@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_tileset_29;
+BANKREF_EXTERN(tileset_29)
 extern const struct tileset_t tileset_29;
 
 #endif

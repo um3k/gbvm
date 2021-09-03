@@ -4,7 +4,7 @@
 
 #include "gbs_types.h"
 
-const void __at(255) __bank_tileset_32;
+BANKREF(tileset_32)
 
 const struct tileset_t tileset_32 = {
     .n_tiles = 4,

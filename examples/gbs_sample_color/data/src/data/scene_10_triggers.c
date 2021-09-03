@@ -10,7 +10,7 @@
 #include "data/script_s10t3_interact.h"
 #include "data/script_s10t4_interact.h"
 
-const void __at(255) __bank_scene_10_triggers;
+BANKREF(scene_10_triggers)
 
 const struct trigger_t scene_10_triggers[] = {
     {
@@ -19,7 +19,8 @@ const struct trigger_t scene_10_triggers[] = {
         .y = 17,
         .width = 3,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s10t0_interact)
+        .script = TO_FAR_PTR_T(script_s10t0_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 2,
@@ -27,7 +28,8 @@ const struct trigger_t scene_10_triggers[] = {
         .y = 0,
         .width = 1,
         .height = 14,
-        .script = TO_FAR_PTR_T(script_s10t1_interact)
+        .script = TO_FAR_PTR_T(script_s10t1_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 3,
@@ -35,7 +37,8 @@ const struct trigger_t scene_10_triggers[] = {
         .y = 17,
         .width = 5,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s10t2_interact)
+        .script = TO_FAR_PTR_T(script_s10t2_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 4,
@@ -43,7 +46,8 @@ const struct trigger_t scene_10_triggers[] = {
         .y = 13,
         .width = 1,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s10t3_interact)
+        .script = TO_FAR_PTR_T(script_s10t3_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 5,
@@ -51,6 +55,7 @@ const struct trigger_t scene_10_triggers[] = {
         .y = 12,
         .width = 2,
         .height = 2,
-        .script = TO_FAR_PTR_T(script_s10t4_interact)
+        .script = TO_FAR_PTR_T(script_s10t4_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     }
 };

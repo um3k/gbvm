@@ -7,7 +7,7 @@
 #include "data/tilemap_9.h"
 #include "data/tilemap_attr_6.h"
 
-const void __at(255) __bank_background_9;
+BANKREF(background_9)
 
 const struct background_t background_9 = {
     .width = 161,

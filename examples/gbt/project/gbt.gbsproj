@@ -2,7 +2,7 @@
     "name": "GBTTest",
     "author": "cmaltby",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "Scene 1",
@@ -12,12 +12,7 @@
             "type": "TOPDOWN",
             "paletteIds": [],
             "collisions": [],
-            "script": [
-                {
-                    "id": "3a4e3fc9-73b9-42f5-a9b4-3820091a2d47",
-                    "command": "EVENT_END"
-                }
-            ],
+            "script": [],
             "playerHit1Script": [],
             "playerHit2Script": [],
             "playerHit3Script": [],
@@ -58,10 +53,6 @@
                                         "args": {
                                             "variable": "L0"
                                         }
-                                    },
-                                    {
-                                        "id": "73b904f0-c3f4-45e1-8627-d92549900b1c",
-                                        "command": "EVENT_END"
                                     }
                                 ],
                                 "false": [
@@ -79,17 +70,9 @@
                                         "args": {
                                             "variable": "L0"
                                         }
-                                    },
-                                    {
-                                        "id": "d877f6a3-dac7-4a64-8d61-b653a77f9f9c",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "c1f0ccae-84f4-428d-a82f-cca7bb28022b",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -114,8 +97,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "placeholder.png",
-            "inode": "18571441",
-            "_v": 1617899920607,
             "tileColors": []
         }
     ],
@@ -126,7 +107,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "actor.png",
-            "inode": "10085874",
             "checksum": "8646d62a30fe76f9e39e3dbdb23aab0182a33146",
             "width": 48,
             "height": 16,
@@ -301,7 +281,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617899920607,
             "autoDetect": true
         },
         {
@@ -310,7 +289,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "actor_animated.png",
-            "inode": "10085872",
             "checksum": "cd6c8ebac31ccd6a325b8a7e94a05d442ae6725e",
             "width": 96,
             "height": 16,
@@ -659,7 +637,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617899920607,
             "autoDetect": true
         },
         {
@@ -668,7 +645,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "radio.png",
-            "inode": "8375657",
             "checksum": "ae9943b8ed1e48fe22fafe87bf1b64245dcbd31c",
             "width": 16,
             "height": 16,
@@ -789,7 +765,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617899920607,
             "autoDetect": true
         },
         {
@@ -798,7 +773,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "static.png",
-            "inode": "10085873",
             "checksum": "ed08d198cc3dd48f9bfba000769904ae41b36db8",
             "width": 16,
             "height": 16,
@@ -919,7 +893,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617899920607,
             "autoDetect": true
         }
     ],
@@ -1068,9 +1041,7 @@
             "name": "template",
             "filename": "template.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "18571445",
-            "_v": 1617899920580
+            "type": "mod"
         }
     ],
     "fonts": [
@@ -1079,9 +1050,7 @@
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18571443",
-            "_v": 1617899920606
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -1147,9 +1116,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            627,
-            202,
-            202
+            595,
+            192,
+            192
         ],
         "showNavigator": true,
         "defaultFontId": "",
@@ -1165,6 +1134,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "defaultFadeStyle": "white",
         "playerSpriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
     }

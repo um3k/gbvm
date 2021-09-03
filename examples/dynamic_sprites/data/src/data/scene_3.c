@@ -11,7 +11,7 @@
 #include "data/scene_3_actors.h"
 #include "data/scene_3_sprites.h"
 
-const void __at(255) __bank_scene_3;
+BANKREF(scene_3)
 
 const struct scene_t scene_3 = {
     .width = 20,

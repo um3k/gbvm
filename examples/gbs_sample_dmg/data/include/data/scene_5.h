@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_scene_5;
+BANKREF_EXTERN(scene_5)
 extern const struct scene_t scene_5;
 
 #endif

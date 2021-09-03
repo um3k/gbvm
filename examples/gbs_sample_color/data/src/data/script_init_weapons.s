@@ -3,6 +3,7 @@
 
 .area _CODE_255
 
+
 ___bank_script_init_weapons = 255
 .globl ___bank_script_init_weapons
 

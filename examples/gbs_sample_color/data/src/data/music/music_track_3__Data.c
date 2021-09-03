@@ -3,7 +3,9 @@
 
 #pragma bank 255
 
-const void __at(255) __bank_music_track_3__Data;
+#include "gbs_types.h"
+
+BANKREF(music_track_3__Data)
 
 
 const unsigned char music_track_3_0[] = {

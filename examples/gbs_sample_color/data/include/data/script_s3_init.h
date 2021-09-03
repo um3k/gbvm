@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_s3_init;
+BANKREF_EXTERN(script_s3_init)
 extern const unsigned char script_s3_init[];
 
 #endif

@@ -2,7 +2,7 @@
     "name": "LinkCableTest",
     "author": "cmaltby",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "Scene 1",
@@ -44,10 +44,6 @@
                                 "args": {
                                     "__collapse": false
                                 }
-                            },
-                            {
-                                "id": "dbc40c48-9f11-481d-80ea-2673355d086d",
-                                "command": "EVENT_END"
                             }
                         ],
                         "false": [
@@ -55,10 +51,6 @@
                                 "id": "1565493a-3641-46a5-9246-a77df2a150be",
                                 "command": "EVENT_LINK_JOIN",
                                 "args": {}
-                            },
-                            {
-                                "id": "2e346df3-b062-4adf-a2de-4e45b08e7eba",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -97,17 +89,9 @@
                                     ],
                                     "avatarId": ""
                                 }
-                            },
-                            {
-                                "id": "1cca50b5-08eb-4456-aa75-979f212c09eb",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "3f08749f-5e3e-4d36-9ea3-819687d46b03",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -129,8 +113,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "placeholder.png",
-            "inode": "18571624",
-            "_v": 1617741367947,
             "tileColors": []
         }
     ],
@@ -141,7 +123,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "actor.png",
-            "inode": "9997096",
             "checksum": "8646d62a30fe76f9e39e3dbdb23aab0182a33146",
             "width": 48,
             "height": 16,
@@ -316,7 +297,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617741367947,
             "autoDetect": true
         },
         {
@@ -325,7 +305,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "actor_animated.png",
-            "inode": "9997094",
             "checksum": "cd6c8ebac31ccd6a325b8a7e94a05d442ae6725e",
             "width": 96,
             "height": 16,
@@ -674,7 +653,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617741367947,
             "autoDetect": true
         },
         {
@@ -683,7 +661,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "static.png",
-            "inode": "9997095",
             "checksum": "ed08d198cc3dd48f9bfba000769904ae41b36db8",
             "width": 16,
             "height": 16,
@@ -804,7 +781,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1617741367947,
             "autoDetect": true
         }
     ],
@@ -954,9 +930,7 @@
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18571626",
-            "_v": 1617741367946
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -1018,9 +992,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            625,
-            203,
-            203
+            595,
+            192,
+            192
         ],
         "showNavigator": true,
         "defaultFontId": "",
@@ -1036,6 +1010,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "defaultFadeStyle": "white",
         "playerSpriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
     }

@@ -13,10 +13,8 @@
 #include "data/scene_7_sprites.h"
 #include "data/script_s7_init.h"
 #include "data/script_s7_p_hit1.h"
-#include "data/script_s7_p_hit2.h"
-#include "data/script_s7_p_hit3.h"
 
-const void __at(255) __bank_scene_7;
+BANKREF(scene_7)
 
 const struct scene_t scene_7 = {
     .width = 255,
@@ -37,7 +35,5 @@ const struct scene_t scene_7 = {
     .triggers = TO_FAR_PTR_T(scene_7_triggers),
     .sprites = TO_FAR_PTR_T(scene_7_sprites),
     .script_init = TO_FAR_PTR_T(script_s7_init),
-    .script_p_hit1 = TO_FAR_PTR_T(script_s7_p_hit1),
-    .script_p_hit2 = TO_FAR_PTR_T(script_s7_p_hit2),
-    .script_p_hit3 = TO_FAR_PTR_T(script_s7_p_hit3)
+    .script_p_hit1 = TO_FAR_PTR_T(script_s7_p_hit1)
 };

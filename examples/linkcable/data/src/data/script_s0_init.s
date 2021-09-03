@@ -5,6 +5,7 @@
 
 .area _CODE_255
 
+
 ___bank_script_s0_init = 255
 .globl ___bank_script_s0_init
 
@@ -20,7 +21,7 @@ _script_s0_init::
 
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
-        .asciz "\001\001 Host Game\n Join Game"
+        .asciz "\001\001\003\003\002Host Game\n\003\003\003Join Game"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT
@@ -42,7 +43,7 @@ _script_s0_init::
 3$:
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
-        .asciz "\001\001 1\n 0"
+        .asciz "\001\001\003\003\0021\n\003\003\0030"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_TEXT_IN_SPEED
         VM_DISPLAY_TEXT

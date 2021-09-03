@@ -5,6 +5,7 @@
 
 .area _CODE_255
 
+
 ___bank_script_s10a4_update = 255
 .globl ___bank_script_s10a4_update
 

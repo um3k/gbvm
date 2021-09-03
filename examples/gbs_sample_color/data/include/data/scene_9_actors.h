@@ -6,7 +6,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_scene_9_actors;
+BANKREF_EXTERN(scene_9_actors)
 extern const struct actor_t scene_9_actors[];
 
 #endif

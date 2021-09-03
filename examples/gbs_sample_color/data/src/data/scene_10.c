@@ -13,7 +13,7 @@
 #include "data/scene_10_sprites.h"
 #include "data/script_s10_init.h"
 
-const void __at(255) __bank_scene_10;
+BANKREF(scene_10)
 
 const struct scene_t scene_10 = {
     .width = 161,

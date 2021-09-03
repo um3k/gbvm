@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_tilemap_13;
+BANKREF_EXTERN(tilemap_13)
 extern const unsigned char tilemap_13[];
 
 #endif

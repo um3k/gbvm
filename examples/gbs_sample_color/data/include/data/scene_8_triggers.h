@@ -6,7 +6,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_scene_8_triggers;
+BANKREF_EXTERN(scene_8_triggers)
 extern const struct trigger_t scene_8_triggers[];
 
 #endif

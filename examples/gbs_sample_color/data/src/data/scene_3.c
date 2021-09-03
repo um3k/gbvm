@@ -10,7 +10,7 @@
 #include "data/spritesheet_7.h"
 #include "data/script_s3_init.h"
 
-const void __at(255) __bank_scene_3;
+BANKREF(scene_3)
 
 const struct scene_t scene_3 = {
     .width = 20,

@@ -5,6 +5,7 @@
 
 .area _CODE_255
 
+
 ___bank_script_enemy_ship_hit_player = 255
 .globl ___bank_script_enemy_ship_hit_player
 
