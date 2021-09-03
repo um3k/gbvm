@@ -12,7 +12,7 @@
 #include "data/spritesheet_6.h"
 #include "data/spritesheet_3.h"
 
-const void __at(255) __bank_scene_4_sprites;
+BANKREF(scene_4_sprites)
 
 const far_ptr_t scene_4_sprites[] = {
     TO_FAR_PTR_T(spritesheet_4),
