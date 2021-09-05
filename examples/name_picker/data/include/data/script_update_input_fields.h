@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_update_input_fields;
+BANKREF_EXTERN(script_update_input_fields)
 extern const unsigned char script_update_input_fields[];
 
 #endif
