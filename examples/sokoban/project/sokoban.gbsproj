@@ -2,7 +2,7 @@
     "name": "sokoban",
     "author": "cmaltby",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "Level 1",
@@ -762,10 +762,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "5ff3277a-5d88-4c74-a0fa-edad59aacc08",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -796,10 +792,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "89cfb219-4136-4e69-b348-8b0da3bef4d3",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -830,10 +822,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "ff652988-df07-4c00-a8bc-e36e8cd5e4c3",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -864,10 +852,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "638a5743-7799-40df-8b37-abbc4bf4f4e6",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -898,10 +882,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "ce9f8c83-d27c-4e71-b495-f65ae480656d",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -932,10 +912,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "cc37340e-6abf-464e-b983-c5a1230685c6",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -966,10 +942,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "6d252004-a20c-4aa6-87cd-7b1d78ef6cf9",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
@@ -994,8 +966,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "sokoban.png",
-            "inode": "18572019",
-            "_v": 1617308639538,
             "tileColors": [
                 5,
                 5,
@@ -1367,7 +1337,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "box.png",
-            "inode": "8937205",
             "checksum": "d079e702065f8e9dd5c4f00975c5fabd327e6d3d",
             "width": 16,
             "height": 16,
@@ -1488,7 +1457,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1616702109991,
             "autoDetect": false
         },
         {
@@ -1497,7 +1465,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "player.png",
-            "inode": "8937206",
             "checksum": "57d62a82877b5ce98f9b55b066672b11a74541af",
             "width": 96,
             "height": 16,
@@ -1846,7 +1813,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1616702109991,
             "autoDetect": false
         }
     ],
@@ -1996,9 +1962,7 @@
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18572021",
-            "_v": 1616702109991
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -2051,9 +2015,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            619,
-            206,
-            206
+            589,
+            195,
+            195
         ],
         "showNavigator": true,
         "defaultFontId": "",
@@ -2069,6 +2033,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "defaultFadeStyle": "white",
         "playerSpriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
     }
