@@ -2,7 +2,7 @@
     "name": "parallax_test",
     "author": "pautomas",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "Scene 1",
@@ -47,8 +47,6 @@
             "imageWidth": 320,
             "imageHeight": 144,
             "filename": "parallax_test.png",
-            "inode": "18571823",
-            "_v": 1620978301507,
             "tileColors": []
         },
         {
@@ -59,8 +57,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "placeholder.png",
-            "inode": "18571824",
-            "_v": 1600506915514,
             "tileColors": []
         }
     ],
@@ -71,7 +67,6 @@
             "numFrames": 3,
             "type": "actor",
             "filename": "actor.png",
-            "inode": "4395399015",
             "checksum": "8646d62a30fe76f9e39e3dbdb23aab0182a33146",
             "width": 48,
             "height": 16,
@@ -246,7 +241,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1600506915514,
             "autoDetect": true
         },
         {
@@ -255,7 +249,6 @@
             "numFrames": 6,
             "type": "actor_animated",
             "filename": "actor_animated.png",
-            "inode": "4395399016",
             "checksum": "cd6c8ebac31ccd6a325b8a7e94a05d442ae6725e",
             "width": 96,
             "height": 16,
@@ -604,7 +597,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1600506915514,
             "autoDetect": true
         },
         {
@@ -613,7 +605,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "static.png",
-            "inode": "4395399017",
             "checksum": "ed08d198cc3dd48f9bfba000769904ae41b36db8",
             "width": 16,
             "height": 16,
@@ -734,7 +725,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1600506915514,
             "autoDetect": true
         }
     ],
@@ -883,9 +873,7 @@
             "name": "template",
             "filename": "template.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "18571828",
-            "_v": 1600506915511
+            "type": "mod"
         }
     ],
     "fonts": [
@@ -894,9 +882,7 @@
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18571826",
-            "_v": 1620978317604
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -947,9 +933,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            619,
-            206,
-            206
+            589,
+            195,
+            195
         ],
         "showNavigator": true,
         "defaultFontId": "",
@@ -965,6 +951,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "defaultFadeStyle": "white",
         "playerSpriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
     }
