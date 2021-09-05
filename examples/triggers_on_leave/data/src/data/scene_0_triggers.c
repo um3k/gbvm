@@ -29,7 +29,7 @@
 #include "data/script_s0t22_interact.h"
 #include "data/script_s0t23_interact.h"
 
-const void __at(255) __bank_scene_0_triggers;
+BANKREF(scene_0_triggers)
 
 const struct trigger_t scene_0_triggers[] = {
     {
