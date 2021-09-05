@@ -6,7 +6,7 @@
 #include "gbs_types.h"
 #include "data/spritesheet_15.h"
 
-const void __at(255) __bank_scene_8_actors;
+BANKREF(scene_8_actors)
 
 const struct actor_t scene_8_actors[] = {
     {

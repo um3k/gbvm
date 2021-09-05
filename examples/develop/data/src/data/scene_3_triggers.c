@@ -16,7 +16,8 @@ const struct trigger_t scene_3_triggers[] = {
         .y = 31,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s3t0_interact)
+        .script = TO_FAR_PTR_T(script_s3t0_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 2,
@@ -24,6 +25,7 @@ const struct trigger_t scene_3_triggers[] = {
         .y = 11,
         .width = 2,
         .height = 2,
-        .script = TO_FAR_PTR_T(script_s3t1_interact)
+        .script = TO_FAR_PTR_T(script_s3t1_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     }
 };

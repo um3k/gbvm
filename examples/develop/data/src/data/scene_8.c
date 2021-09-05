@@ -12,7 +12,7 @@
 #include "data/scene_8_triggers.h"
 #include "data/scene_8_sprites.h"
 
-const void __at(255) __bank_scene_8;
+BANKREF(scene_8)
 
 const struct scene_t scene_8 = {
     .width = 80,

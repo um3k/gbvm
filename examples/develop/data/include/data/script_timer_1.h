@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_timer_1;
+BANKREF_EXTERN(script_timer_1)
 extern const unsigned char script_timer_1[];
 
 #endif

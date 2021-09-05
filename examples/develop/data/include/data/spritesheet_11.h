@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_spritesheet_11;
+BANKREF_EXTERN(spritesheet_11)
 extern const struct spritesheet_t spritesheet_11;
 
 #endif

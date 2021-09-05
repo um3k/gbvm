@@ -4,7 +4,7 @@
 #include "gbs_types.h"
 #include "data/tileset_22.h"
 
-const void __at(255) __bank_spritesheet_12;
+BANKREF(spritesheet_12)
 
 #define SPRITE_12_STATE_DEFAULT 0
 #define SPRITE_12_STATE_OPEN 0
