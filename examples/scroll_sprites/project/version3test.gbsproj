@@ -2,7 +2,7 @@
     "name": "Version 3.0 Test",
     "author": "",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "",
@@ -22,12 +22,7 @@
                 "0000cdf8-a3d3-4d7c-bb52-636d0af86a6a"
             ],
             "collisions": [],
-            "script": [
-                {
-                    "id": "d2ea140b-21e1-41b6-bdae-7ac4420b5d66",
-                    "command": "EVENT_END"
-                }
-            ],
+            "script": [],
             "playerHit1Script": [],
             "playerHit2Script": [],
             "playerHit3Script": [],
@@ -1174,18 +1169,9 @@
                         ],
                         "avatarId": ""
                     }
-                },
-                {
-                    "id": "dd8dbf30-f17a-4635-b73b-e153d2287522",
-                    "command": "EVENT_END"
                 }
             ],
-            "playerHit1Script": [
-                {
-                    "id": "65f71f87-a750-48ac-933a-d68607e2a2e5",
-                    "command": "EVENT_END"
-                }
-            ],
+            "playerHit1Script": [],
             "playerHit2Script": [],
             "playerHit3Script": [],
             "id": "a5d5c7eb-e42f-4774-8388-8c3a45239edc",
@@ -1214,19 +1200,10 @@
                                 ],
                                 "avatarId": ""
                             }
-                        },
-                        {
-                            "id": "09bf4ed8-d93d-4531-bffb-d5e969197a26",
-                            "command": "EVENT_END"
                         }
                     ],
                     "startScript": [],
-                    "updateScript": [
-                        {
-                            "id": "3970d793-e5b8-49ac-8e47-98d5b04d8213",
-                            "command": "EVENT_END"
-                        }
-                    ],
+                    "updateScript": [],
                     "hit1Script": [],
                     "hit2Script": [],
                     "hit3Script": [],
@@ -1352,10 +1329,6 @@
                             "args": {
                                 "time": 0.5
                             }
-                        },
-                        {
-                            "id": "cedca171-91dc-4816-b724-0bff8c6bc1b7",
-                            "command": "EVENT_END"
                         }
                     ],
                     "hit1Script": [],
@@ -1379,12 +1352,7 @@
                     "collisionGroup": "",
                     "script": [],
                     "startScript": [],
-                    "updateScript": [
-                        {
-                            "id": "d10e0c63-af41-48a9-8290-464096f3ceff",
-                            "command": "EVENT_END"
-                        }
-                    ],
+                    "updateScript": [],
                     "hit1Script": [],
                     "hit2Script": [],
                     "hit3Script": [],
@@ -1442,8 +1410,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "placeholder.png",
-            "inode": "18571928",
-            "_v": 1620356534973,
             "tileColors": [
                 1,
                 1,
@@ -1815,8 +1781,6 @@
             "imageWidth": 488,
             "imageHeight": 144,
             "filename": "town.png",
-            "inode": "18571929",
-            "_v": 1620671908418,
             "tileColors": [
                 1,
                 1,
@@ -2926,7 +2890,6 @@
             "numFrames": 4,
             "type": "animated",
             "filename": "6-colors.png",
-            "inode": "5348024557548673",
             "checksum": "7eb0f71280885cd8383bdbfa0bc72c2fa13a2332",
             "width": 64,
             "height": 32,
@@ -3820,7 +3783,6 @@
             "boundsWidth": 16,
             "boundsHeight": 8,
             "animSpeed": 15,
-            "_v": 1620672069046,
             "autoDetect": false
         },
         {
@@ -3829,7 +3791,6 @@
             "numFrames": 0.5,
             "type": "animated",
             "filename": "8x8.png",
-            "inode": "57139420272284973",
             "checksum": "896d5926b781d76408ca515feeea49aeb100abde",
             "width": 8,
             "height": 8,
@@ -3936,7 +3897,6 @@
             "boundsWidth": 8,
             "boundsHeight": 8,
             "animSpeed": 15,
-            "_v": 1620697152024,
             "autoDetect": false
         },
         {
@@ -3945,7 +3905,6 @@
             "numFrames": 5,
             "type": "animated",
             "filename": "panacea.png",
-            "inode": "13229323905523413",
             "checksum": "28c3c4160a635e2b9406f9df27289fc872d89303",
             "width": 80,
             "height": 16,
@@ -4209,7 +4168,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1620353232804,
             "autoDetect": false
         },
         {
@@ -4218,7 +4176,6 @@
             "numFrames": 4,
             "type": "animated",
             "filename": "slon.png",
-            "inode": "33214047251912385",
             "checksum": "8022756edc5ca4a5c2a19d195612da9e16728300",
             "width": 64,
             "height": 48,
@@ -4529,7 +4486,6 @@
             "boundsWidth": 48,
             "boundsHeight": 40,
             "animSpeed": 15,
-            "_v": 1620389311782,
             "autoDetect": false
         },
         {
@@ -4538,7 +4494,6 @@
             "numFrames": 4,
             "type": "animated",
             "filename": "slon_metaspritesheet.png",
-            "inode": "7036874417883933",
             "checksum": "06e98ad3690b118097a69e6a8d5e143ba9740080",
             "width": 64,
             "height": 64,
@@ -6456,7 +6411,6 @@
             "boundsWidth": 48,
             "boundsHeight": 40,
             "animSpeed": 15,
-            "_v": 1620678577996,
             "autoDetect": false
         },
         {
@@ -6465,7 +6419,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "static.png",
-            "inode": "844424930903725",
             "checksum": "ed08d198cc3dd48f9bfba000769904ae41b36db8",
             "width": 16,
             "height": 16,
@@ -6586,7 +6539,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1620671978340,
             "autoDetect": false
         }
     ],
@@ -6805,9 +6757,7 @@
             "name": "template",
             "filename": "template.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "18571936",
-            "_v": 1620225659533
+            "type": "mod"
         }
     ],
     "fonts": [
@@ -6816,27 +6766,21 @@
             "name": "font-ru",
             "width": 128,
             "height": 112,
-            "filename": "font-ru.png",
-            "inode": "18571932",
-            "_v": 1620324588376
+            "filename": "font-ru.png"
         },
         {
             "id": "3d0dd0c9-b0e2-4a89-88d4-4089d14ec976",
             "name": "font-serif",
             "width": 128,
             "height": 112,
-            "filename": "font-serif.png",
-            "inode": "18571933",
-            "_v": 1620680192737
+            "filename": "font-serif.png"
         },
         {
             "id": "9687fb60-5554-4900-856b-e4fe6ba715d9",
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18571934",
-            "_v": 1620225659712
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -6895,9 +6839,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            299,
             284,
-            447
+            270,
+            425
         ],
         "showNavigator": true,
         "defaultFontId": "3d0dd0c9-b0e2-4a89-88d4-4089d14ec976",
@@ -6913,6 +6857,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "defaultFadeStyle": "white",
         "playerSpriteSheetId": "581d34d0-9591-4e6e-a609-1d94f203b0cd"
     }
