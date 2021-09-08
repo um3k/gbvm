@@ -9,7 +9,7 @@
         ei
         jp .sio_ISR
 
-        .area   _BSS
+        .area   _DATA
 .start_sio_globals:
 
 _SIO_status::
