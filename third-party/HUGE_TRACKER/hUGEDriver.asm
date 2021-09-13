@@ -119,6 +119,7 @@ temp_note_value: dw
 row: db
 tick: db
 counter: db
+__current_ch3_wave::
 _hUGE_current_wave::
 current_wave: db
 
