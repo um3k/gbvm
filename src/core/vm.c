@@ -476,7 +476,7 @@ void vm_memcpy(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB, INT16 count) __banked 
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active
-UBYTE VM_STEP(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c) {
+UBYTE VM_STEP(SCRIPT_CTX * CTX) OLDCALL __naked __nonbanked __preserves_regs(b, c) {
     CTX;
 __asm
         lda hl, 2(sp)

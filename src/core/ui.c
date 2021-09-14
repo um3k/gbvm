@@ -120,7 +120,7 @@ void ui_load_tiles() __banked {
     set_bkg_data(ui_black_tile, 1, vwf_tile_data);
 }
 
-void ui_draw_frame_row(void * dest, UBYTE tile, UBYTE width);
+void ui_draw_frame_row(void * dest, UBYTE tile, UBYTE width) OLDCALL;
 
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) __banked {
     if (height == 0) return;
@@ -185,9 +185,9 @@ void ui_print_reset() {
     memset(vwf_tile_data, text_bkg_fill, sizeof(vwf_tile_data));
 }
 
-void ui_print_shift_char(void * dest, const void * src, UBYTE bank) __nonbanked;
-UWORD ui_print_make_mask_lr(UBYTE width, UBYTE ofs);
-UWORD ui_print_make_mask_rl(UBYTE width, UBYTE ofs);
+void ui_print_shift_char(void * dest, const void * src, UBYTE bank) OLDCALL;
+UWORD ui_print_make_mask_lr(UBYTE width, UBYTE ofs) OLDCALL;
+UWORD ui_print_make_mask_rl(UBYTE width, UBYTE ofs) OLDCALL;
 void ui_swap_tiles();
 
 UBYTE ui_print_render(const unsigned char ch) {

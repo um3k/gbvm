@@ -8,6 +8,8 @@
     #include <stdio.h>
 #endif
 
+#include "compat.h"
+
 typedef void * SCRIPT_CMD_FN;
 
 typedef struct _SCRIPT_CMD {
@@ -133,7 +135,7 @@ void vm_memcpy(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB, INT16 count) __banked;
 
 // return zero if script end
 // bank with VM code must be active
-UBYTE VM_STEP(SCRIPT_CTX * CTX) __naked __nonbanked __preserves_regs(b, c);
+UBYTE VM_STEP(SCRIPT_CTX * CTX) OLDCALL __naked __nonbanked __preserves_regs(b, c);
 
 // return TRUE if VM is in locked state
 inline UBYTE VM_ISLOCKED() {
