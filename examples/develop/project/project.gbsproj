@@ -2,7 +2,7 @@
     "name": "Develop",
     "author": "gbvm",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "id": "5e64882f-8ce6-423e-b582-70fdb2142ff6",
@@ -28,7 +28,8 @@
                     "hit1Script": [],
                     "hit2Script": [],
                     "hit3Script": [],
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "025c7320-2eb1-4209-bf74-c1eef183ecc8",
@@ -49,10 +50,6 @@
                                 "text": "Hot!",
                                 "avatarId": "10c4f8fe-d3bf-4e45-99d2-9a1bd1de4ba8"
                             }
-                        },
-                        {
-                            "id": "882241d6-dee7-458d-9dae-51ce65c58709",
-                            "command": "EVENT_END"
                         }
                     ],
                     "spriteType": "static",
@@ -62,7 +59,8 @@
                     "hit3Script": [],
                     "name": "Fire",
                     "paletteId": "0cae84a7-ed50-4b05-b39a-66be5af7ffd2",
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "15d7cf30-df3a-427b-883a-996b605edb40",
@@ -99,10 +97,6 @@
                             "args": {
                                 "variable": "3"
                             }
-                        },
-                        {
-                            "id": "f49f1e60-9513-4486-9d3b-6f86d1baa938",
-                            "command": "EVENT_END"
                         }
                     ],
                     "frame": 0,
@@ -115,7 +109,8 @@
                     "paletteId": "",
                     "moveSpeed": 1,
                     "animSpeed": 15,
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "e807b22f-7477-471b-b3b3-53b699df82ab",
@@ -132,7 +127,8 @@
                     "hit1Script": [],
                     "hit2Script": [],
                     "hit3Script": [],
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "ee80f72c-ec7c-46d1-9653-23b16fcce2d9",
@@ -153,10 +149,6 @@
                                 "text": "Also Hot!",
                                 "avatarId": "a450445c-0c3a-49ac-9f69-ea3a668765f9"
                             }
-                        },
-                        {
-                            "id": "27400a49-5741-4b84-9b25-7061a10b366b",
-                            "command": "EVENT_END"
                         }
                     ],
                     "spriteType": "static",
@@ -166,7 +158,8 @@
                     "hit3Script": [],
                     "name": "Fire",
                     "paletteId": "0cae84a7-ed50-4b05-b39a-66be5af7ffd2",
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "b5594786-5675-48cf-b382-18b6341b855c",
@@ -216,30 +209,13 @@
                                                     "args": {
                                                         "text": "It is now safe to\nturn off your\nsystem."
                                                     }
-                                                },
-                                                {
-                                                    "id": "66ba7dee-40ea-45fb-8274-430d061bad3b",
-                                                    "command": "EVENT_END"
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "id": "43f0ca1d-b01f-4ba2-a344-c965ba37e391",
-                                        "command": "EVENT_END"
                                     }
                                 ],
-                                "false": [
-                                    {
-                                        "id": "7196118b-d615-4ca0-925b-a1db35466bcd",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
+                                "false": []
                             }
-                        },
-                        {
-                            "id": "00cbc026-3976-457c-8d13-4d1170311053",
-                            "command": "EVENT_END"
                         }
                     ],
                     "frame": 0,
@@ -249,7 +225,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "name": "Save Point",
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 }
             ],
             "triggers": [
@@ -270,13 +247,10 @@
                                 "sceneId": "2017e4bb-16d3-47bc-a86c-9c47e1860e0c",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "f49f1e60-9513-4486-9d3b-6f86d1baa938",
-                            "command": "EVENT_END"
                         }
                     ],
-                    "id": "ec1bdb23-06f3-4053-9295-cc79ba27985b"
+                    "id": "ec1bdb23-06f3-4053-9295-cc79ba27985b",
+                    "leaveScript": []
                 }
             ],
             "collisions": [
@@ -677,26 +651,14 @@
                                                 "direction": "",
                                                 "fadeSpeed": "2"
                                             }
-                                        },
-                                        {
-                                            "id": "4cfdcd1f-eb5a-4c7d-a85b-9009e40d21e6",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 },
                                 "__type": "event"
-                            },
-                            {
-                                "id": "68060249-435b-453b-94d5-5b4c6322bd21",
-                                "command": "EVENT_END"
                             }
                         ]
                     },
                     "__type": "event"
-                },
-                {
-                    "id": "fb5431f6-333d-4714-864c-dcf2955a35e8",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -1481,10 +1443,6 @@
                                     "text": "hello",
                                     "avatarId": ""
                                 }
-                            },
-                            {
-                                "id": "bc792a36-ab7b-4b7f-b172-33e78f06c581",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -1514,17 +1472,9 @@
                                     "fadeSpeed": "2",
                                     "__comment": false
                                 }
-                            },
-                            {
-                                "id": "4cfafa51-a145-44dc-9e76-2cc3db083bba",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "262b6a60-ae31-496d-9b82-a0765f1f7965",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -1598,10 +1548,6 @@
                                                 "direction": "right",
                                                 "fadeSpeed": "4"
                                             }
-                                        },
-                                        {
-                                            "id": "90fc1fc6-b24c-482d-b56c-ef11f1f80a64",
-                                            "command": "EVENT_END"
                                         }
                                     ],
                                     "false": [
@@ -1615,10 +1561,6 @@
                                                         "id": "4a922761-48a9-410d-b603-00e7a7dd91ea",
                                                         "command": "EVENT_LOAD_DATA",
                                                         "args": {}
-                                                    },
-                                                    {
-                                                        "id": "f5866539-6ba8-4962-ae6e-0814d54fb4f9",
-                                                        "command": "EVENT_END"
                                                     }
                                                 ],
                                                 "false": [
@@ -1628,31 +1570,15 @@
                                                         "args": {
                                                             "text": "No Save Data\nFound..."
                                                         }
-                                                    },
-                                                    {
-                                                        "id": "a830176d-10b5-4ff2-b276-4a0e15a39ae9",
-                                                        "command": "EVENT_END"
                                                     }
                                                 ]
                                             }
-                                        },
-                                        {
-                                            "id": "c920bf80-2dde-4ae2-b3f2-52b225124458",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "bf72540e-d33a-41fd-9538-b51dc0f70623",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "262b6a60-ae31-496d-9b82-a0765f1f7965",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -2067,10 +1993,6 @@
                                     "value": 18
                                 }
                             }
-                        },
-                        {
-                            "id": "f5569ecd-cf2f-43e0-93ff-f6ccc1392f41",
-                            "command": "EVENT_END"
                         }
                     ],
                     "frame": 0,
@@ -2082,7 +2004,8 @@
                     "name": "Sign Post",
                     "moveSpeed": 1,
                     "animSpeed": 15,
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "27de6d44-f7c0-48df-a952-2c87471bbfd4",
@@ -2104,12 +2027,7 @@
                                 "__collapseElse": false
                             },
                             "children": {
-                                "true": [
-                                    {
-                                        "id": "ac70a280-3ffe-4cf6-9b5e-a402a8dd031b",
-                                        "command": "EVENT_END"
-                                    }
-                                ],
+                                "true": [],
                                 "false": [
                                     {
                                         "id": "d454b1ea-367d-442b-831b-6992b149eec8",
@@ -2156,23 +2074,10 @@
                                                     "args": {
                                                         "actorId": "a65cba5e-5d01-4f02-b32c-ed99c9276ad3"
                                                     }
-                                                },
-                                                {
-                                                    "id": "b71ad5df-f5c9-4c84-8a67-8328808f84bb",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
-                                            "false": [
-                                                {
-                                                    "id": "34628734-25cd-4660-89e2-1e963b4cd2c9",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ]
+                                            "false": []
                                         }
-                                    },
-                                    {
-                                        "id": "d6bd0e68-cf21-4041-86c7-d1902057c028",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
@@ -2184,10 +2089,6 @@
                                 "variable": "16",
                                 "__collapse": false
                             }
-                        },
-                        {
-                            "id": "e5484326-9a98-4da4-8c1c-39c679483b41",
-                            "command": "EVENT_END"
                         }
                     ],
                     "moveSpeed": 2,
@@ -2198,7 +2099,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "animSpeed": 15,
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "7c2b0a86-4cc1-46f4-9b4a-6ea987300848",
@@ -2214,10 +2116,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "e5484326-9a98-4da4-8c1c-39c679483b41",
-                            "command": "EVENT_END"
                         }
                     ],
                     "name": "Rock 3",
@@ -2229,7 +2127,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "animSpeed": 15,
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "f7bb6ed5-39b2-4f30-a66b-c2a62619d29c",
@@ -2245,10 +2144,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "e5484326-9a98-4da4-8c1c-39c679483b41",
-                            "command": "EVENT_END"
                         }
                     ],
                     "name": "Rock 2",
@@ -2260,7 +2155,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "animSpeed": 15,
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "id": "417dfd42-2e13-4850-92e8-c52efe866116",
@@ -2276,10 +2172,6 @@
                             "args": {
                                 "continue": false
                             }
-                        },
-                        {
-                            "id": "e5484326-9a98-4da4-8c1c-39c679483b41",
-                            "command": "EVENT_END"
                         }
                     ],
                     "name": "Rock 1",
@@ -2291,7 +2183,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "animSpeed": 15,
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "spriteSheetId": "81b14fe6-2235-480e-bc3b-a5899aa66afe",
@@ -2318,10 +2211,6 @@
                                         "args": {
                                             "actorId": "$self$"
                                         }
-                                    },
-                                    {
-                                        "id": "cb7059b8-8a00-4613-b178-fc49579c96ec",
-                                        "command": "EVENT_END"
                                     }
                                 ],
                                 "false": [
@@ -2331,17 +2220,9 @@
                                         "args": {
                                             "actorId": "$self$"
                                         }
-                                    },
-                                    {
-                                        "id": "5b65d825-8525-461b-bf27-2114233e2725",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "2e1f42b2-e47b-4dd6-8208-3680091fd544",
-                            "command": "EVENT_END"
                         }
                     ],
                     "name": "Hidden Stairs",
@@ -2349,7 +2230,8 @@
                     "hit1Script": [],
                     "hit2Script": [],
                     "hit3Script": [],
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 }
             ],
             "triggers": [
@@ -2371,12 +2253,9 @@
                                 "direction": "down",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "e5484326-9a98-4da4-8c1c-39c679483b41",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -2406,25 +2285,13 @@
                                             "direction": "right",
                                             "fadeSpeed": "2"
                                         }
-                                    },
-                                    {
-                                        "id": "5e919da8-dbaa-4be1-be8e-0a1df0a5ada9",
-                                        "command": "EVENT_END"
                                     }
                                 ],
-                                "false": [
-                                    {
-                                        "id": "4cc99008-2efd-4882-a862-083a4622dec3",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
+                                "false": []
                             }
-                        },
-                        {
-                            "id": "693ba9e6-e3c8-4489-812b-049832378c97",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 }
             ],
             "collisions": [
@@ -3489,18 +3356,10 @@
                                                 "direction": "",
                                                 "fadeSpeed": "2"
                                             }
-                                        },
-                                        {
-                                            "id": "2baef589-6d5e-4383-92aa-c0269eac903a",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 },
                                 "__type": "event"
-                            },
-                            {
-                                "id": "1cd67dff-bd51-480f-8541-63eb7362ce9f",
-                                "command": "EVENT_END"
                             }
                         ]
                     },
@@ -3539,30 +3398,13 @@
                                                     "value": 15
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "c654b47b-73f5-4527-8f34-d1606ac006c9",
-                                            "command": "EVENT_END"
                                         }
                                     ],
-                                    "false": [
-                                        {
-                                            "id": "9f3fe584-fa18-46e9-a655-40fbbee0d207",
-                                            "command": "EVENT_END"
-                                        }
-                                    ]
+                                    "false": []
                                 }
-                            },
-                            {
-                                "id": "f3a0ac7c-41f0-4e1b-9dc9-50292d2af3cf",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "c56398da-0d19-4cbc-ae36-1b903aa7ee1d",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -5351,13 +5193,9 @@
                                 "avatarId": ""
                             },
                             "__type": "event"
-                        },
-                        {
-                            "id": "279e6eec-0ccc-4d9d-a9b9-e936fc6b9505",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5376,13 +5214,9 @@
                                 ],
                                 "avatarId": ""
                             }
-                        },
-                        {
-                            "id": "3f96b015-4555-48eb-9703-9e848583b890",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5399,13 +5233,9 @@
                                 "text": "Nice poster!",
                                 "avatarId": ""
                             }
-                        },
-                        {
-                            "id": "efc4e2f7-c15c-483d-9e06-0a411911e5e8",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5432,13 +5262,9 @@
                                 "text": "It has a VHS\nplayer built in!",
                                 "avatarId": ""
                             }
-                        },
-                        {
-                            "id": "9fe74c69-ebd0-483f-b9dc-c26f6b6d1ace",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5455,13 +5281,9 @@
                                 "text": "Such a nice day to\ngo into town!",
                                 "avatarId": ""
                             }
-                        },
-                        {
-                            "id": "8e2ad535-d243-4c46-90ec-5ea12ea4915c",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5481,13 +5303,9 @@
                                 "avatarId": ""
                             },
                             "__type": "event"
-                        },
-                        {
-                            "id": "34022c3e-1885-4921-a55b-e8995f60f332",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5506,13 +5324,9 @@
                                 ],
                                 "avatarId": ""
                             }
-                        },
-                        {
-                            "id": "cda52f4d-4a80-4224-bda4-42ec9735f8da",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5532,13 +5346,9 @@
                                 "avatarId": ""
                             },
                             "__type": "event"
-                        },
-                        {
-                            "id": "82a4f0f7-59f8-4257-8aa5-f0a14a613cd7",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5558,13 +5368,9 @@
                                 "avatarId": ""
                             },
                             "__type": "event"
-                        },
-                        {
-                            "id": "ba891276-8438-4708-8038-68895f966147",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5584,13 +5390,9 @@
                                 "avatarId": ""
                             },
                             "__type": "event"
-                        },
-                        {
-                            "id": "f07d06cd-204a-4737-9e3d-d46186236b32",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -5610,13 +5412,9 @@
                                 "direction": "right",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "4961be73-09cb-4bc4-9818-a76ef1d02795",
-                            "command": "EVENT_END",
-                            "args": {}
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 }
             ],
             "script": [
@@ -5655,25 +5453,12 @@
                                                 "direction": "",
                                                 "fadeSpeed": "2"
                                             }
-                                        },
-                                        {
-                                            "id": "e9b11b91-6d17-4e31-a78f-b2150a7117aa",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "bc09bfeb-fdbc-4704-8c87-af25c6fc8d13",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "8851eddf-55a8-4a3d-abb9-bbc2226bdc75",
-                    "command": "EVENT_END",
-                    "args": {}
                 }
             ],
             "type": "POINTNCLICK",
@@ -11541,10 +11326,6 @@
                                                         "moveType": "horizontal",
                                                         "useCollisions": true
                                                     }
-                                                },
-                                                {
-                                                    "id": "b2fb2801-af49-4433-8da5-46e02f2b16e1",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "false": [
@@ -11558,10 +11339,6 @@
                                                         "moveType": "horizontal",
                                                         "useCollisions": true
                                                     }
-                                                },
-                                                {
-                                                    "id": "8d8e75f6-f1e4-42ee-9647-8558481b359c",
-                                                    "command": "EVENT_END"
                                                 }
                                             ]
                                         }
@@ -11572,17 +11349,9 @@
                                         "args": {
                                             "time": 1
                                         }
-                                    },
-                                    {
-                                        "id": "70d619c4-ad93-4a30-b939-191f29fce692",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "012a51f0-2fc6-4377-a663-0e725cef22db",
-                            "command": "EVENT_END"
                         }
                     ],
                     "collisionGroup": "1",
@@ -11665,10 +11434,6 @@
                                                     "args": {
                                                         "actorId": "0"
                                                     }
-                                                },
-                                                {
-                                                    "id": "520ae8f5-2dac-4030-8fec-6d1016f28b77",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "false": [
@@ -11693,24 +11458,12 @@
                                                     "args": {
                                                         "time": 0.5
                                                     }
-                                                },
-                                                {
-                                                    "id": "11c5b3bc-3880-443c-a67a-56e6035197ca",
-                                                    "command": "EVENT_END"
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "id": "db63226c-c627-4019-888a-f4d22f476d43",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "cd605014-d020-4893-9a05-b68ea723562b",
-                            "command": "EVENT_END"
                         }
                     ],
                     "name": "Turnip 1",
@@ -11756,30 +11509,13 @@
                                                             "value": 0
                                                         }
                                                     }
-                                                },
-                                                {
-                                                    "id": "562fcfb4-e75e-4cb2-a117-7d7e96145cfa",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
-                                            "false": [
-                                                {
-                                                    "id": "25c51fa9-3646-4d07-b87f-8ce6c2bafdb2",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ]
+                                            "false": []
                                         }
-                                    },
-                                    {
-                                        "id": "86217573-617b-40a1-a9a5-e2abc748e30e",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "089f0fd9-429a-44e2-9fac-34d6589eb519",
-                            "command": "EVENT_END"
                         }
                     ],
                     "hit1Script": [],
@@ -11805,10 +11541,6 @@
                                     "This way to\nElephant!"
                                 ]
                             }
-                        },
-                        {
-                            "id": "7d2cf8a4-f49d-4c1c-b741-587b80ed717f",
-                            "command": "EVENT_END"
                         }
                     ],
                     "frame": 0,
@@ -11817,7 +11549,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "name": "Sign Post",
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 },
                 {
                     "spriteSheetId": "000a6dde-cb60-436e-b357-30a529daa139",
@@ -11868,30 +11601,13 @@
                                                     "args": {
                                                         "text": "It is now safe to\nturn off your\nsystem."
                                                     }
-                                                },
-                                                {
-                                                    "id": "d8654df2-eaef-4da6-9ace-be4732af8a12",
-                                                    "command": "EVENT_END"
                                                 }
                                             ]
                                         }
-                                    },
-                                    {
-                                        "id": "9c43ed51-2608-40ee-8aac-8ce75361ef00",
-                                        "command": "EVENT_END"
                                     }
                                 ],
-                                "false": [
-                                    {
-                                        "id": "4d0ea89a-9c1b-4816-9dd8-84b1bea856f9",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
+                                "false": []
                             }
-                        },
-                        {
-                            "id": "2692aa95-3175-4def-b3b6-7b7def22c7e6",
-                            "command": "EVENT_END"
                         }
                     ],
                     "frame": 0,
@@ -11900,7 +11616,8 @@
                     "hit2Script": [],
                     "hit3Script": [],
                     "name": "Save Point",
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 }
             ],
             "triggers": [
@@ -11937,12 +11654,9 @@
                                 "direction": "up",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "84e29287-3310-4a50-83a1-b57ad6076dd9",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -11979,12 +11693,9 @@
                                 "direction": "right",
                                 "fadeSpeed": "4"
                             }
-                        },
-                        {
-                            "id": "33949415-b9e2-4600-8c7b-842d9787def6",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -12004,12 +11715,9 @@
                                 "direction": "up",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "c1e0b86f-38c2-4db2-ad06-b80385dc308b",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 },
                 {
                     "name": "",
@@ -12025,17 +11733,14 @@
                                 "direction": "down",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "e84c6c54-64e2-4f21-9414-2d4aea3ea198",
-                            "command": "EVENT_END"
                         }
                     ],
                     "id": "9e6ed578-c480-4a7e-aa6f-93a859e6d529",
                     "x": 6,
                     "y": 13,
                     "width": 2,
-                    "height": 1
+                    "height": 1,
+                    "leaveScript": []
                 },
                 {
                     "name": "",
@@ -12047,17 +11752,14 @@
                             "args": {
                                 "script": "        VM_PUSH_CONST           28              ; bit less than 45 degrees \n        VM_PUSH_CONST           100\n        VM_SIN_SCALE            .ARG0, .ARG1, 6 \n        VM_PUSH_CONST           100 \n        VM_COS_SCALE            .ARG0, .ARG2, 6\n        VM_RPN\n            .R_INT16    -360\n            .R_REF      .ARG1\n            .R_OPERATOR '*'\n            .R_INT16    220\n            .R_REF      .ARG0\n            .R_OPERATOR '*'\n            .R_STOP\n        VM_SET_INT16            _pl_vel_y, .ARG1\n        VM_SET_INT16            _pl_vel_x, .ARG0\n\n        VM_POP                  5"
                             }
-                        },
-                        {
-                            "id": "be0f1107-ed40-4ff8-a314-36d1916d1241",
-                            "command": "EVENT_END"
                         }
                     ],
                     "id": "87048e25-5900-4feb-9a3c-b5a8939e7d80",
                     "x": 13,
                     "y": 8,
                     "width": 2,
-                    "height": 1
+                    "height": 1,
+                    "leaveScript": []
                 }
             ],
             "type": "PLATFORM",
@@ -12097,18 +11799,10 @@
                                                 "direction": "",
                                                 "fadeSpeed": "2"
                                             }
-                                        },
-                                        {
-                                            "id": "103ee8c2-83ac-4be0-95fd-829dbbacd045",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 },
                                 "__type": "event"
-                            },
-                            {
-                                "id": "ce6a6855-bbff-4e39-820d-11d0e51282aa",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -12142,18 +11836,9 @@
                                 "args": {
                                     "variable": "12"
                                 }
-                            },
-                            {
-                                "id": "f2355fc5-9cd1-4993-a899-19ef10740728",
-                                "command": "EVENT_END"
                             }
                         ],
-                        "false": [
-                            {
-                                "id": "b04da193-1258-4805-993a-6fb3b84c0bfb",
-                                "command": "EVENT_END"
-                            }
-                        ]
+                        "false": []
                     }
                 },
                 {
@@ -12174,18 +11859,9 @@
                                 "args": {
                                     "variable": "12"
                                 }
-                            },
-                            {
-                                "id": "207e4be5-7d3e-4b16-b095-3648abbcd3d4",
-                                "command": "EVENT_END"
                             }
                         ],
-                        "false": [
-                            {
-                                "id": "019c09a2-d500-41fa-9378-3d6e8553fe95",
-                                "command": "EVENT_END"
-                            }
-                        ]
+                        "false": []
                     }
                 },
                 {
@@ -12206,23 +11882,10 @@
                                 "args": {
                                     "variable": "12"
                                 }
-                            },
-                            {
-                                "id": "6ec510ba-b1e0-466b-8dca-3eef0a3d2d4f",
-                                "command": "EVENT_END"
                             }
                         ],
-                        "false": [
-                            {
-                                "id": "0794799b-60dc-4987-8a40-ccc9213c1ad9",
-                                "command": "EVENT_END"
-                            }
-                        ]
+                        "false": []
                     }
-                },
-                {
-                    "id": "ab414b23-4e82-42ac-880d-54cef859c315",
-                    "command": "EVENT_END"
                 }
             ],
             "paletteIds": [
@@ -13431,23 +13094,10 @@
                                             "actorId": "$self$",
                                             "spriteStateId": "Open"
                                         }
-                                    },
-                                    {
-                                        "id": "04aeb8ff-caf2-4370-8a3a-4a49f5c53194",
-                                        "command": "EVENT_END"
                                     }
                                 ],
-                                "false": [
-                                    {
-                                        "id": "f389d514-adf5-4a4b-8596-19f1cb85d941",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
+                                "false": []
                             }
-                        },
-                        {
-                            "id": "101ce7e3-df05-4ff0-a135-c75eed641316",
-                            "command": "EVENT_END"
                         }
                     ],
                     "script": [
@@ -13467,10 +13117,6 @@
                                             "text": "Empty...",
                                             "avatarId": ""
                                         }
-                                    },
-                                    {
-                                        "id": "82c12058-a09f-4c97-9ed0-b747fb7c32bc",
-                                        "command": "EVENT_END"
                                     }
                                 ],
                                 "false": [
@@ -13498,24 +13144,17 @@
                                         "args": {
                                             "variable": "9"
                                         }
-                                    },
-                                    {
-                                        "id": "5ee032f7-10e8-4276-bc9a-672614fe8b00",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "ac7894d5-6c92-4158-8acc-78616d66642d",
-                            "command": "EVENT_END"
                         }
                     ],
                     "name": "Chest",
                     "hit1Script": [],
                     "hit2Script": [],
                     "hit3Script": [],
-                    "collisionGroup": ""
+                    "collisionGroup": "",
+                    "updateScript": []
                 }
             ],
             "triggers": [
@@ -13537,12 +13176,9 @@
                                 "direction": "right",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "43ab4da7-0922-4c2b-87e6-bc7f09a8d8ba",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 }
             ],
             "type": "PLATFORM",
@@ -13582,24 +13218,12 @@
                                                 "direction": "",
                                                 "fadeSpeed": "2"
                                             }
-                                        },
-                                        {
-                                            "id": "8f2112dd-626b-4617-938d-86878b2c6a36",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "63a42308-9acb-4df6-8f14-fc0cdfeae783",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "48bd332d-35cd-4a0c-af73-81640b454fb4",
-                    "command": "EVENT_END"
                 }
             ],
             "paletteIds": [
@@ -14683,10 +14307,6 @@
                                                     "value": 9
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "fa253a73-9f97-42be-a793-1d42e75f634c",
-                                            "command": "EVENT_END"
                                         }
                                     ],
                                     "false": [
@@ -14700,10 +14320,6 @@
                                                     "value": 16
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "a818f34c-7edd-49e4-81b6-19cd9e3d31da",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
@@ -14714,10 +14330,6 @@
                                 "args": {
                                     "script": "VM_PUSH_CONST           0x10\nVM_REPLACE_TILE         .ARG0, ___bank_tileset_4, _tileset_4 , VAR_S7_FLOWERSTATE, 1\nVM_POP                  1"
                                 }
-                            },
-                            {
-                                "id": "2f68b5a7-5d3e-4e9a-af99-54444515fc46",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -14771,20 +14383,12 @@
                                 "id": "9a4e73eb-fb72-4725-a058-bf47cb369f5b",
                                 "command": "EVENT_GBVM_SCRIPT",
                                 "args": {
-                                    "script": "        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n            .DMG_PAL    3,2,1,0\n\n        VM_PUSH_CONST           10\n        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X | .CAMERA_SHAKE_Y)/\n        VM_INVOKE       b_camera_shake_frames, _camera_shake_frames, 2, .ARG1\n\n        VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n            .DMG_PAL    0,1,2,3\n\n        VM_RESERVE              6\n\n        VM_GET_INT8             .ARG0, __is_SGB \n        VM_IF_CONST     .EQ     .ARG0, 0, 1$, 0 \n        VM_SGB_TRANSFER   \n            .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet\n1$:\n\n        VM_RTC_START            .RTC_START\n        VM_RTC_LATCH\n        VM_RTC_GET              .ARG3, .RTC_SECONDS \n        VM_RTC_GET              .ARG2, .RTC_MINUTES \n        VM_RTC_GET              .ARG1, .RTC_HOURS \n        VM_RTC_GET              .ARG0, .RTC_DAYS \n        \n        VM_LOAD_TEXT            4\n            .dw .ARG0, .ARG1, .ARG2, .ARG3\n            .asciz \"\\002\\001DAY:%D8 TIME: %D2:%D2:%D2\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0\n        VM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0\n\n        VM_OVERLAY_SET_SUBMAP   2, 2, 6, 5, 8, 4\n\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_SET_CONST            .ARG5, 0\n        VM_ACTOR_GET_POS        .ARG5\n\n        VM_SET_CONST            .ARG2, 1\n        VM_ACTOR_GET_POS        .ARG2\n\n        VM_RPN\n            ; chebyshev distance\n            .R_REF      .ARG4\n            .R_REF      .ARG1\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_REF      .ARG3\n            .R_REF      .ARG0\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_OPERATOR .MAX\n            ; manhattan distance\n            .R_REF      .ARG4\n            .R_REF      .ARG1\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_REF      .ARG3\n            .R_REF      .ARG0\n            .R_OPERATOR .SUB\n            .R_OPERATOR .ABS\n            .R_OPERATOR .ADD\n\n            .R_STOP\n\n        VM_LOAD_TEXT            6\n            .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0\n            .asciz \"\\001\\001\\002\\004@A\\nBC\\001\\003\\004\\001\\377\\002\\001x1=%d y1=%d\\nx2=%d y2=%d\\n\\004\\376\\001Chebyshev:\\002\\002%d\\n\\002\\001Manhattan:\\002\\002%d\\n\\002\\001\\007\\002This\\007\\001 is \\002\\002BOLD\\002\\001\\nOk!\"\n        VM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_LOAD_TEXT            0\n            .asciz \"\\001\\001\\002\\004@A\\nBC\\001\\003\\004\\001\\377\\002\\001Hi, it's KOT speaking!\\nWhere's SLON?\\006\\377\\003\\022\\005\\001\\001\\002\\004DE\\nFG\\003\\006\\005\\001\\003\\002\\001Sorry, i have no idea\\nwhat're you mean!\"\n        VM_OVERLAY_MOVE_TO      0, 11, .OVERLAY_TEXT_OUT_SPEED\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME \n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ \n        VM_LOAD_TEXT            0\n            .asciz \"\\001\\005Terminal mode\\nLoading text...\\nText loaded!\\nLet's see how this text scrolls...\\rOne more line...\\rYes, it does!\\rLet's type something else...\\rI don't know what...\\rHello, world!\\rI think that is\\r\\002\\002ENOUGH\\002\\001.\"\n        VM_DISPLAY_TEXT\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\n        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED\n        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/\n\n        VM_POP                  ^/6 + 2/    ; 6 for local vars + 2 results of RPN calc\\001\\001\\002\\003DE\\nFG\\001\\003\\004\\001\\377\\002\\001\\001\\001\\002\\003@A\\nBC\\001\\003\\004\\001\\377\\002\\001",
+                                    "script": "VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n    .DMG_PAL    3,2,1,0\n\nVM_PUSH_CONST           10\nVM_PUSH_CONST           ^/(.CAMERA_SHAKE_X | .CAMERA_SHAKE_Y)/\nVM_INVOKE       b_camera_shake_frames, _camera_shake_frames, 2, .ARG1\n\nVM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/\n    .DMG_PAL    0,1,2,3\n\nVM_RESERVE              6\n\nVM_GET_INT8             .ARG0, __is_SGB \nVM_IF_CONST     .EQ     .ARG0, 0, 1$, 0 \nVM_SGB_TRANSFER   \n    .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet\n1$:\n\nVM_RTC_START            .RTC_START\nVM_RTC_LATCH\nVM_RTC_GET              .ARG3, .RTC_SECONDS \nVM_RTC_GET              .ARG2, .RTC_MINUTES \nVM_RTC_GET              .ARG1, .RTC_HOURS \nVM_RTC_GET              .ARG0, .RTC_DAYS \n        \nVM_LOAD_TEXT            4\n    .dw .ARG0, .ARG1, .ARG2, .ARG3\n    .asciz \"\\002\\001DAY:%D8 TIME: %D2:%D2:%D2\"\nVM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_BLACK, 0\nVM_OVERLAY_MOVE_TO      0, 9, .OVERLAY_TEXT_IN_SPEED\nVM_DISPLAY_TEXT\nVM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0\n\nVM_OVERLAY_SET_SUBMAP   2, 2, 6, 5, 8, 4\n\nVM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\nVM_SET_CONST            .ARG5, 0\nVM_ACTOR_GET_POS        .ARG5\n\nVM_SET_CONST            .ARG2, 1\nVM_ACTOR_GET_POS        .ARG2\n\nVM_RPN\n    ; chebyshev distance\n    .R_REF      .ARG4\n    .R_REF      .ARG1\n    .R_OPERATOR .SUB\n    .R_OPERATOR .ABS\n    .R_REF      .ARG3\n    .R_REF      .ARG0\n    .R_OPERATOR .SUB\n    .R_OPERATOR .ABS\n    .R_OPERATOR .MAX\n    ; manhattan distance\n    .R_REF      .ARG4\n    .R_REF      .ARG1\n    .R_OPERATOR .SUB\n    .R_OPERATOR .ABS\n    .R_REF      .ARG3\n    .R_REF      .ARG0\n    .R_OPERATOR .SUB\n    .R_OPERATOR .ABS\n    .R_OPERATOR .ADD\n\n    .R_STOP\n\nVM_LOAD_TEXT            6\n    .dw .ARG6, .ARG5, .ARG3, .ARG2, .ARG1, .ARG0\n    .asciz \"\\001\\001\\002\\004@A\\nBC\\001\\003\\004\\001\\377\\002\\001x1=%d y1=%d\\nx2=%d y2=%d\\n\\004\\376\\001Chebyshev:\\002\\002%d\\n\\002\\001Manhattan:\\002\\002%d\\n\\002\\001\\007\\002This\\007\\001 is \\002\\002BOLD\\002\\001\\nOk!\"\nVM_OVERLAY_CLEAR        0, 0, 20, 9, .UI_COLOR_WHITE, .UI_DRAW_FRAME \nVM_DISPLAY_TEXT\nVM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\nVM_LOAD_TEXT            0\n    .asciz \"\\001\\001\\002\\004@A\\nBC\\001\\003\\004\\001\\377\\002\\001Hi, it's KOT speaking!\\nWhere's SLON?\\006\\377\\003\\022\\005\\001\\001\\002\\004DE\\nFG\\003\\006\\005\\001\\003\\002\\001Sorry, i have no idea\\nwhat're you mean!\"\nVM_OVERLAY_MOVE_TO      0, 11, .OVERLAY_TEXT_OUT_SPEED\nVM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, .UI_DRAW_FRAME \nVM_DISPLAY_TEXT\nVM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\nVM_OVERLAY_CLEAR        0, 0, 20, 7, .UI_COLOR_WHITE, ^/(.UI_DRAW_FRAME | .UI_AUTO_SCROLL)/ \nVM_LOAD_TEXT            0\n    .asciz \"\\001\\005Terminal mode\\rLoading text...\\rText loaded!\\rLet's see how this text\\rscrolls...\\rOne more line...\\rYes, it does!\\rLet's type something\\relse...\\rI don't know what...\\rHello, world!\\rI think that is\\r\\002\\002ENOUGH\\002\\001.\"\nVM_DISPLAY_TEXT\nVM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/\n\nVM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED\nVM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/\n\nVM_POP                  ^/6 + 2/    ; 6 for local vars + 2 results of RPN calc\\001\\001\\002\\003DE\\nFG\\001\\003\\004\\001\\377\\002\\001\\001\\001\\002\\003@A\\nBC\\001\\003\\004\\001\\377\\002\\001",
                                     "__collapse": false
                                 }
-                            },
-                            {
-                                "id": "354b8862-5640-4231-b91d-0c0e762c73ee",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "ccc1ab99-1ee9-4d96-850d-09f56ebeaa15",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -14875,10 +14479,6 @@
                                 "moveType": "horizontal",
                                 "useCollisions": true
                             }
-                        },
-                        {
-                            "id": "42e7e01d-ddc6-45c8-997c-1192b31662ba",
-                            "command": "EVENT_END"
                         }
                     ],
                     "hit1Script": [],
@@ -14907,13 +14507,10 @@
                                 "sceneId": "f8f027ef-b818-4038-9eda-0ac477facb41",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "f49f1e60-9513-4486-9d3b-6f86d1baa938",
-                            "command": "EVENT_END"
                         }
                     ],
-                    "id": "fc139bcd-a16b-4151-a9de-7b7e88e437d6"
+                    "id": "fc139bcd-a16b-4151-a9de-7b7e88e437d6",
+                    "leaveScript": []
                 },
                 {
                     "x": 24,
@@ -14932,13 +14529,10 @@
                                 "direction": "up",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "f49f1e60-9513-4486-9d3b-6f86d1baa938",
-                            "command": "EVENT_END"
                         }
                     ],
-                    "id": "4916f378-602b-4df7-a453-baeaaad59c3c"
+                    "id": "4916f378-602b-4df7-a453-baeaaad59c3c",
+                    "leaveScript": []
                 },
                 {
                     "id": "5eadc594-d498-43b4-9e0f-d7e83f03b30d",
@@ -14958,12 +14552,9 @@
                                 "direction": "up",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "e5484326-9a98-4da4-8c1c-39c679483b41",
-                            "command": "EVENT_END"
                         }
-                    ]
+                    ],
+                    "leaveScript": []
                 }
             ]
         },
@@ -16471,17 +16062,14 @@
                                 "direction": "left",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "46613c7f-74d1-4842-b24c-23e5a72ae56f",
-                            "command": "EVENT_END"
                         }
                     ],
                     "id": "c7c6303f-bd24-49d9-b096-0b2cbec894af",
                     "x": 0,
                     "y": 0,
                     "width": 1,
-                    "height": 14
+                    "height": 14,
+                    "leaveScript": []
                 },
                 {
                     "name": "",
@@ -16497,17 +16085,14 @@
                                 "direction": "right",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "2532905d-2115-4238-98ce-7c6cf11eb9ec",
-                            "command": "EVENT_END"
                         }
                     ],
                     "id": "ba9e2e58-75ee-4d3f-8c1e-7bcce4d7f970",
                     "x": 79,
                     "y": 0,
                     "width": 1,
-                    "height": 14
+                    "height": 14,
+                    "leaveScript": []
                 }
             ],
             "parallax": [
@@ -16982,10 +16567,6 @@
                                                     "value": "left"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "da4bbea5-7f4b-4268-b90a-de3e42756a5b",
-                                            "command": "EVENT_END"
                                         }
                                     ],
                                     "false": [
@@ -17045,17 +16626,9 @@
                                                     "value": "right"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "a35db39d-cdce-4b98-b088-e4bcd012f65d",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "3d2a4f8f-ebbf-4c1d-819c-3b535bcf52f5",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -17136,10 +16709,6 @@
                                                     "value": "left"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "f7eb19b1-a7d2-4b2b-8964-17d143c91e6b",
-                                            "command": "EVENT_END"
                                         }
                                     ],
                                     "false": [
@@ -17199,17 +16768,9 @@
                                                     "value": "right"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "83b0fa2a-695e-4a62-a4d1-a503c219f660",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "6f637c87-2a0b-439b-ab32-15a5a76dcba6",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -17290,10 +16851,6 @@
                                                     "value": "left"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "1500f626-245a-4505-a051-cfba4247d37a",
-                                            "command": "EVENT_END"
                                         }
                                     ],
                                     "false": [
@@ -17353,17 +16910,9 @@
                                                     "value": "right"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "59b301cc-6f81-463d-a28b-06d72095c81c",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "fed7e728-b40c-4a03-9d16-f20a94a88dba",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -17444,10 +16993,6 @@
                                                     "value": "left"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "a2176eb8-4084-4f76-8a7d-d93242852636",
-                                            "command": "EVENT_END"
                                         }
                                     ],
                                     "false": [
@@ -17507,17 +17052,9 @@
                                                     "value": "right"
                                                 }
                                             }
-                                        },
-                                        {
-                                            "id": "1a4d8a13-04cc-4593-a670-4efbd019b083",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
-                            },
-                            {
-                                "id": "b778be83-680a-4215-bf0a-906165d0c7ec",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -17529,10 +17066,6 @@
                         "musicId": "8754e38e-a5bc-4778-985c-8d5f6bf37525",
                         "loop": true
                     }
-                },
-                {
-                    "id": "eb7bb46a-d3f5-45fe-bbf3-ddfb9d8f4b11",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -17600,17 +17133,14 @@
                                 "direction": "left",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "469d3b13-26f8-473e-b3eb-a46e23aac39c",
-                            "command": "EVENT_END"
                         }
                     ],
                     "id": "c166f1e9-664d-4720-94a0-a677602fbf0d",
                     "x": 0,
                     "y": 0,
                     "width": 1,
-                    "height": 14
+                    "height": 14,
+                    "leaveScript": []
                 },
                 {
                     "name": "",
@@ -17626,17 +17156,14 @@
                                 "direction": "right",
                                 "fadeSpeed": "2"
                             }
-                        },
-                        {
-                            "id": "51206b31-7608-47cf-8e2a-b561a94d8bff",
-                            "command": "EVENT_END"
                         }
                     ],
                     "id": "154008e5-493d-43ee-9521-e7bae61cc40b",
                     "x": 19,
                     "y": 0,
                     "width": 1,
-                    "height": 14
+                    "height": 14,
+                    "leaveScript": []
                 }
             ],
             "playerSpriteSheetId": ""
@@ -46248,18 +45775,10 @@
                                     "direction": "",
                                     "fadeSpeed": "2"
                                 }
-                            },
-                            {
-                                "id": "103ee8c2-83ac-4be0-95fd-829dbbacd045",
-                                "command": "EVENT_END"
                             }
                         ]
                     },
                     "__type": "event"
-                },
-                {
-                    "id": "ce6a6855-bbff-4e39-820d-11d0e51282aa",
-                    "command": "EVENT_END"
                 }
             ]
         },
@@ -46296,19 +45815,10 @@
                                     ],
                                     "__collapse": false
                                 }
-                            },
-                            {
-                                "id": "26a7e24f-5080-4a84-a055-218c9ebf5215",
-                                "command": "EVENT_END",
-                                "args": {}
                             }
                         ]
                     },
                     "__type": "event"
-                },
-                {
-                    "id": "19c6abda-84f7-498a-b299-534eaa6ba7f3",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Attach bullets to A button for Shooter scenes"
@@ -46360,23 +45870,10 @@
                                         "value": 0
                                     }
                                 }
-                            },
-                            {
-                                "id": "562fcfb4-e75e-4cb2-a117-7d7e96145cfa",
-                                "command": "EVENT_END"
                             }
                         ],
-                        "false": [
-                            {
-                                "id": "25c51fa9-3646-4d07-b87f-8ce6c2bafdb2",
-                                "command": "EVENT_END"
-                            }
-                        ]
+                        "false": []
                     }
-                },
-                {
-                    "id": "86217573-617b-40a1-a9a5-e2abc748e30e",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Hide Turnip if already defeated"
@@ -46413,10 +45910,6 @@
                                     "moveType": "horizontal",
                                     "useCollisions": true
                                 }
-                            },
-                            {
-                                "id": "b2fb2801-af49-4433-8da5-46e02f2b16e1",
-                                "command": "EVENT_END"
                             }
                         ],
                         "false": [
@@ -46430,10 +45923,6 @@
                                     "moveType": "horizontal",
                                     "useCollisions": true
                                 }
-                            },
-                            {
-                                "id": "8d8e75f6-f1e4-42ee-9647-8558481b359c",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -46444,10 +45933,6 @@
                     "args": {
                         "time": 1
                     }
-                },
-                {
-                    "id": "70d619c4-ad93-4a30-b939-191f29fce692",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Move Turnip towards player"
@@ -46539,10 +46024,6 @@
                                 "args": {
                                     "actorId": "0"
                                 }
-                            },
-                            {
-                                "id": "520ae8f5-2dac-4030-8fec-6d1016f28b77",
-                                "command": "EVENT_END"
                             }
                         ],
                         "false": [
@@ -46567,17 +46048,9 @@
                                 "args": {
                                     "time": 0.5
                                 }
-                            },
-                            {
-                                "id": "11c5b3bc-3880-443c-a67a-56e6035197ca",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "db63226c-c627-4019-888a-f4d22f476d43",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Handle player jumping on turnips or being hurt"
@@ -46647,10 +46120,6 @@
                     "args": {
                         "actorId": "0"
                     }
-                },
-                {
-                    "id": "f3a3844d-23b8-46ba-8fc6-020b1c70ac39",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Play enemy explosion animation and play sound effect"
@@ -46678,10 +46147,6 @@
                         "duration": 0.5,
                         "wait": false
                     }
-                },
-                {
-                    "id": "69e4f683-d31c-4d46-b6e2-e644cf6848ad",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Shake screen and play sound effect"
@@ -46757,10 +46222,6 @@
                         "moveType": "vertical",
                         "useCollisions": false
                     }
-                },
-                {
-                    "id": "f32413f5-627d-4590-b03d-9000be66038f",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Move up and down shooting in middle of movement"
@@ -46836,10 +46297,6 @@
                         "moveType": "diagonal",
                         "useCollisions": false
                     }
-                },
-                {
-                    "id": "268a3a49-ea98-47d4-8bf6-e8fee3ccc80c",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Move diagonally backwards and forwards shooting in middle of movement"
@@ -46915,10 +46372,6 @@
                         "moveType": "diagonal",
                         "useCollisions": false
                     }
-                },
-                {
-                    "id": "24db8de8-5a43-45a8-9af2-0f7f0461ff64",
-                    "command": "EVENT_END"
                 }
             ],
             "description": "Move from top of screen to bottom of screen shooting in the middle"
@@ -46993,10 +46446,6 @@
                         "moveType": "diagonal",
                         "useCollisions": false
                     }
-                },
-                {
-                    "id": "c10c8bbb-8d67-47c1-bcc0-f35073466911",
-                    "command": "EVENT_END"
                 }
             ],
             "name": "Enemy Ship Movement Diagonal Bottom To Top",
@@ -47268,7 +46717,7 @@
         "showCollisions": true,
         "showConnections": true,
         "worldScrollX": 1,
-        "worldScrollY": 4,
+        "worldScrollY": 0,
         "zoom": 100,
         "customColorsEnabled": true,
         "sgbEnabled": true,
@@ -47297,9 +46746,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            484,
-            154,
-            154
+            599,
+            190,
+            190
         ],
         "showNavigator": true,
         "defaultFontId": "cab2d91d-5c2b-47e4-867c-7006ef39f7c6",
@@ -47315,6 +46764,10 @@
         "musicDriver": "huge",
         "cartType": "mbc3",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "customColorsWhite": "E8F8E0",
         "customColorsLight": "B0F088",
         "customColorsDark": "509878",

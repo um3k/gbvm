@@ -3,14 +3,17 @@
 
 .area _CODE_255
 
+
 ___bank_script_s0t11_interact = 255
 .globl ___bank_script_s0t11_interact
 
 _script_s0t11_interact::
         VM_LOCK
 
-        ; If Parameter .ARG0 Equals 1
-        VM_IF_CONST .EQ         .ARG0, 1, 1$, 0
+        ; If Parameter 0 Equals 1
+        VM_PUSH_CONST           0
+        VM_GET_TLOCAL           .ARG0, 0
+        VM_IF_CONST .EQ         .ARG0, 1, 1$, 1
         VM_JUMP                 2$
 1$:
         ; Text Dialogue
@@ -27,8 +30,10 @@ _script_s0t11_interact::
         VM_STOP
 2$:
 
-        ; If Parameter .ARG0 Equals 2
-        VM_IF_CONST .EQ         .ARG0, 2, 3$, 0
+        ; If Parameter 0 Equals 2
+        VM_PUSH_CONST           0
+        VM_GET_TLOCAL           .ARG0, 0
+        VM_IF_CONST .EQ         .ARG0, 2, 3$, 1
         VM_JUMP                 4$
 3$:
         ; Text Dialogue

@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_font_2;
+BANKREF_EXTERN(font_2)
 extern const unsigned char font_2[];
 
 #endif

@@ -3,6 +3,7 @@
 
 .area _CODE_255
 
+
 ___bank_script_s5a2_interact = 255
 .globl ___bank_script_s5a2_interact
 

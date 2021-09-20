@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_turnip_collisions;
+BANKREF_EXTERN(script_turnip_collisions)
 extern const unsigned char script_turnip_collisions[];
 
 #endif

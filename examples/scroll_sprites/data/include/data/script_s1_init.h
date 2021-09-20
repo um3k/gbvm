@@ -5,7 +5,7 @@
 
 #include "gbs_types.h"
 
-extern const void __bank_script_s1_init;
+BANKREF_EXTERN(script_s1_init)
 extern const unsigned char script_s1_init[];
 
 #endif

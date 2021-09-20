@@ -20,7 +20,6 @@ static const UBYTE avatar_font_0_bitmaps[] = {
 };
   
 BANKREF(avatar_font_0)
-
 const font_desc_t avatar_font_0 = {
     FONT_RECODE, 
     0x3F,

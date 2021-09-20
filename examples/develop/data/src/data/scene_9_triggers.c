@@ -7,7 +7,7 @@
 #include "data/script_s9t0_interact.h"
 #include "data/script_s9t1_interact.h"
 
-const void __at(255) __bank_scene_9_triggers;
+BANKREF(scene_9_triggers)
 
 const struct trigger_t scene_9_triggers[] = {
     {
@@ -16,7 +16,8 @@ const struct trigger_t scene_9_triggers[] = {
         .y = 0,
         .width = 1,
         .height = 14,
-        .script = TO_FAR_PTR_T(script_s9t0_interact)
+        .script = TO_FAR_PTR_T(script_s9t0_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     },
     {
         // Trigger 2,
@@ -24,6 +25,7 @@ const struct trigger_t scene_9_triggers[] = {
         .y = 0,
         .width = 1,
         .height = 14,
-        .script = TO_FAR_PTR_T(script_s9t1_interact)
+        .script = TO_FAR_PTR_T(script_s9t1_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     }
 };

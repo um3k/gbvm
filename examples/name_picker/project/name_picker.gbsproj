@@ -2,7 +2,7 @@
     "name": "Name Picker GBVM",
     "author": "pautomas",
     "_version": "2.0.0",
-    "_release": "8",
+    "_release": "10",
     "scenes": [
         {
             "name": "Scene 1",
@@ -491,10 +491,6 @@
                                             "maxValue": "255",
                                             "__comment": false
                                         }
-                                    },
-                                    {
-                                        "id": "d65716d8-9efc-4bea-a41e-9de6f65ad490",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
@@ -583,10 +579,6 @@
                                                         "minValue": "0",
                                                         "maxValue": "255"
                                                     }
-                                                },
-                                                {
-                                                    "id": "de85cc34-f426-44cd-a80b-4deca5ed60cf",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true1": [
@@ -603,10 +595,6 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "43662c3b-1f2e-4ccb-8eae-ef72ad95a0d7",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true2": [
@@ -623,10 +611,6 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "e471a400-05a7-43c8-84a5-848843a7d470",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true3": [
@@ -643,10 +627,6 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "644601e9-d187-4603-935d-8b47743323aa",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true4": [
@@ -663,78 +643,19 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "f900d0de-9c06-459c-889a-db7823c2c5bb",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
-                                            "true5": [
-                                                {
-                                                    "id": "74bf5ca2-3535-48b6-997a-f4c818c77124",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true6": [
-                                                {
-                                                    "id": "4e19501f-97d8-49f6-9b08-9b396a3b490e",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true7": [
-                                                {
-                                                    "id": "02c1bd4d-97dc-4326-a08e-113f2a72648a",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true8": [
-                                                {
-                                                    "id": "a71bde77-8b5b-429a-a453-4a27b095f563",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true9": [
-                                                {
-                                                    "id": "1e83ac40-d086-4139-8ef8-c0daa13f1560",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true10": [
-                                                {
-                                                    "id": "9848bd76-ff75-42ff-a778-01c2a79b2ab2",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true11": [
-                                                {
-                                                    "id": "17975798-b2d3-444d-8cde-3606a2e28f3d",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true12": [
-                                                {
-                                                    "id": "4cbf2d84-731e-4511-8895-5dbcaef5e11d",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true13": [
-                                                {
-                                                    "id": "c302c7bc-36b1-4265-877a-0edb30f66b89",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true14": [
-                                                {
-                                                    "id": "c6b97228-65a7-4f6d-b761-b7973565955d",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true15": [
-                                                {
-                                                    "id": "54f9ef1a-9f78-43e4-ba53-894b850e3267",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
+                                            "true5": [],
+                                            "true6": [],
+                                            "true7": [],
+                                            "true8": [],
+                                            "true9": [],
+                                            "true10": [],
+                                            "true11": [],
+                                            "true12": [],
+                                            "true13": [],
+                                            "true14": [],
+                                            "true15": [],
                                             "false": [
                                                 {
                                                     "id": "a7abf160-23c7-46b0-8c6b-e7d091ce733b",
@@ -748,10 +669,6 @@
                                                         "minValue": "0",
                                                         "maxValue": "255"
                                                     }
-                                                },
-                                                {
-                                                    "id": "885bb63f-541b-4033-9f43-b1b43fec9b66",
-                                                    "command": "EVENT_END"
                                                 }
                                             ]
                                         }
@@ -775,31 +692,13 @@
                                                     "args": {
                                                         "variable": "10"
                                                     }
-                                                },
-                                                {
-                                                    "id": "9e59a1d9-db90-4408-a57a-b04a50c17f63",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
-                                            "false": [
-                                                {
-                                                    "id": "63a66884-6427-4566-8d1a-435d45f4aa37",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ]
+                                            "false": []
                                         }
-                                    },
-                                    {
-                                        "id": "5ed0b3ea-c1dd-4528-aaa8-fab962adc0b2",
-                                        "command": "EVENT_END"
                                     }
                                 ],
-                                "false": [
-                                    {
-                                        "id": "c1c45f05-e1e7-479d-ba59-2baa7c90cc77",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
+                                "false": []
                             }
                         },
                         {
@@ -817,20 +716,13 @@
                                         "args": {
                                             "script": "VM_REPLACE_TILE_XY      7, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_0_\nVM_REPLACE_TILE_XY      8, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_1_\nVM_REPLACE_TILE_XY      9, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_2_\nVM_REPLACE_TILE_XY      10, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_3_\nVM_REPLACE_TILE_XY      11, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_4_\n"
                                         }
-                                    },
-                                    {
-                                        "id": "2d0df541-2848-46b9-96ad-b809fdb2fcb2",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "224d600c-7d5e-49da-ba99-a02da2544140",
-                            "command": "EVENT_END"
                         }
                     ],
-                    "name": "Caps Letters"
+                    "name": "Caps Letters",
+                    "leaveScript": []
                 },
                 {
                     "trigger": "walk",
@@ -946,10 +838,6 @@
                                             "maxValue": "255",
                                             "__comment": false
                                         }
-                                    },
-                                    {
-                                        "id": "bda07313-9529-4b19-aebb-ac809b8b1835",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
@@ -1038,10 +926,6 @@
                                                         "minValue": "0",
                                                         "maxValue": "255"
                                                     }
-                                                },
-                                                {
-                                                    "id": "18f45c9d-682d-429c-b173-786954ec5f16",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true1": [
@@ -1058,10 +942,6 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "02f4931e-53e8-48c6-aadd-64b19a7cfe1c",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true2": [
@@ -1078,10 +958,6 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "efb9df0f-38d9-4e80-87e2-9461afd439cd",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true3": [
@@ -1098,10 +974,6 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "b3f579af-0f90-4e72-a451-b332746ffa71",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
                                             "true4": [
@@ -1118,78 +990,19 @@
                                                         "maxValue": "255"
                                                     },
                                                     "__type": "event"
-                                                },
-                                                {
-                                                    "id": "b6aa9a85-82fc-4116-8a39-10d6e5cd009e",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
-                                            "true5": [
-                                                {
-                                                    "id": "527122c7-d150-4002-9fe2-1ce25e391543",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true6": [
-                                                {
-                                                    "id": "5aecd2b8-db96-4ccb-b424-7b7026f667b9",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true7": [
-                                                {
-                                                    "id": "d99de141-b42a-43cd-a2e6-67d438587636",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true8": [
-                                                {
-                                                    "id": "fe59b5f1-d11b-4ea9-947a-43bf6107f07a",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true9": [
-                                                {
-                                                    "id": "7c3369c6-8385-4149-bc09-0a5cf5a7c1ef",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true10": [
-                                                {
-                                                    "id": "f84295e7-d4ca-468a-8784-3ffd669da100",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true11": [
-                                                {
-                                                    "id": "cd171893-d250-4fba-9223-1af5fe79a06c",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true12": [
-                                                {
-                                                    "id": "c539dbb9-e1f1-4a98-aad5-ac0ccde1ecf4",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true13": [
-                                                {
-                                                    "id": "c1968ec7-dbff-4b53-9e5e-ffe10936816f",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true14": [
-                                                {
-                                                    "id": "a24ff1bb-d8a3-474f-b28b-b1d371327f23",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
-                                            "true15": [
-                                                {
-                                                    "id": "5df7a4dd-6c8c-46dc-947d-ef84e5f84c63",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ],
+                                            "true5": [],
+                                            "true6": [],
+                                            "true7": [],
+                                            "true8": [],
+                                            "true9": [],
+                                            "true10": [],
+                                            "true11": [],
+                                            "true12": [],
+                                            "true13": [],
+                                            "true14": [],
+                                            "true15": [],
                                             "false": [
                                                 {
                                                     "id": "bebab574-94ca-4abb-8f15-26ebbfacba9a",
@@ -1203,10 +1016,6 @@
                                                         "minValue": "0",
                                                         "maxValue": "255"
                                                     }
-                                                },
-                                                {
-                                                    "id": "733e86bc-3403-4ee2-937a-756b99df4b40",
-                                                    "command": "EVENT_END"
                                                 }
                                             ]
                                         }
@@ -1229,32 +1038,14 @@
                                                     "args": {
                                                         "variable": "10"
                                                     }
-                                                },
-                                                {
-                                                    "id": "d9f657ca-0536-45c1-bcf7-c9d8c249b02b",
-                                                    "command": "EVENT_END"
                                                 }
                                             ],
-                                            "false": [
-                                                {
-                                                    "id": "8da25857-1a89-4a1c-a9f2-52565e0b7498",
-                                                    "command": "EVENT_END"
-                                                }
-                                            ]
+                                            "false": []
                                         },
                                         "__type": "event"
-                                    },
-                                    {
-                                        "id": "aba8c8da-9c89-41c6-a1e8-806a0f91f373",
-                                        "command": "EVENT_END"
                                     }
                                 ],
-                                "false": [
-                                    {
-                                        "id": "bb51aaea-5acd-4f75-9ac9-2f493ab33f21",
-                                        "command": "EVENT_END"
-                                    }
-                                ]
+                                "false": []
                             }
                         },
                         {
@@ -1272,20 +1063,13 @@
                                         "args": {
                                             "script": "VM_REPLACE_TILE_XY      7, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_0_\nVM_REPLACE_TILE_XY      8, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_1_\nVM_REPLACE_TILE_XY      9, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_2_\nVM_REPLACE_TILE_XY      10, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_3_\nVM_REPLACE_TILE_XY      11, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_4_\n"
                                         }
-                                    },
-                                    {
-                                        "id": "2d0df541-2848-46b9-96ad-b809fdb2fcb2",
-                                        "command": "EVENT_END"
                                     }
                                 ]
                             }
-                        },
-                        {
-                            "id": "1b84ba1e-3b4b-4add-a426-1b4e42c49458",
-                            "command": "EVENT_END"
                         }
                     ],
-                    "name": "Low letters"
+                    "name": "Low letters",
+                    "leaveScript": []
                 }
             ],
             "type": "POINTNCLICK",
@@ -1332,18 +1116,9 @@
                                             "args": {
                                                 "variable": "10"
                                             }
-                                        },
-                                        {
-                                            "id": "80699e3b-720c-4db0-90c4-51f73d238f9c",
-                                            "command": "EVENT_END"
                                         }
                                     ],
-                                    "false": [
-                                        {
-                                            "id": "25caaa65-529e-46d8-ac88-63b622f7981a",
-                                            "command": "EVENT_END"
-                                        }
-                                    ]
+                                    "false": []
                                 }
                             },
                             {
@@ -1442,10 +1217,6 @@
                                                                         "minValue": "0",
                                                                         "maxValue": "255"
                                                                     }
-                                                                },
-                                                                {
-                                                                    "id": "9daf92d2-a561-43d4-bfe4-7e037d4fcfac",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ],
                                                             "true1": [
@@ -1462,10 +1233,6 @@
                                                                         "maxValue": "255"
                                                                     },
                                                                     "__type": "event"
-                                                                },
-                                                                {
-                                                                    "id": "6ae04900-b74e-4dfb-9f01-ddf735bcb685",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ],
                                                             "true2": [
@@ -1482,10 +1249,6 @@
                                                                         "maxValue": "255"
                                                                     },
                                                                     "__type": "event"
-                                                                },
-                                                                {
-                                                                    "id": "1b777f80-740d-49e1-8399-1bc22d31baed",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ],
                                                             "true3": [
@@ -1502,10 +1265,6 @@
                                                                         "maxValue": "255"
                                                                     },
                                                                     "__type": "event"
-                                                                },
-                                                                {
-                                                                    "id": "b1fa32ac-5692-4117-aec8-2f9d700ebe0f",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ],
                                                             "true4": [
@@ -1522,78 +1281,19 @@
                                                                         "maxValue": "255"
                                                                     },
                                                                     "__type": "event"
-                                                                },
-                                                                {
-                                                                    "id": "af137f6e-35b5-4131-830b-2e8a6036bc11",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ],
-                                                            "true5": [
-                                                                {
-                                                                    "id": "3436003b-355e-41c9-add4-d5b4fa43a7f7",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true6": [
-                                                                {
-                                                                    "id": "e6e495f1-3023-4473-919e-5e4aa86ced8d",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true7": [
-                                                                {
-                                                                    "id": "d0759eb0-ed20-4eeb-b0cd-3c1974b08be3",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true8": [
-                                                                {
-                                                                    "id": "c9ced259-d0eb-4e6a-ac98-9909c72b57dd",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true9": [
-                                                                {
-                                                                    "id": "c21b0d7e-8dfe-413a-90fa-feedf77f1eed",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true10": [
-                                                                {
-                                                                    "id": "f8e79095-e90f-4966-80d8-7c879f146064",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true11": [
-                                                                {
-                                                                    "id": "dc218227-bb08-4ab3-ad0c-b3dd6ed538e2",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true12": [
-                                                                {
-                                                                    "id": "8f5e8cf5-a76e-4018-8ce5-3ec074ee4516",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true13": [
-                                                                {
-                                                                    "id": "2681a74d-fa07-4e64-afc7-50632fce9d74",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true14": [
-                                                                {
-                                                                    "id": "22467440-615b-4bcf-9c4b-4994de50997e",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
-                                                            "true15": [
-                                                                {
-                                                                    "id": "db94b8cd-cbbf-4d20-90cb-2878c68bf912",
-                                                                    "command": "EVENT_END"
-                                                                }
-                                                            ],
+                                                            "true5": [],
+                                                            "true6": [],
+                                                            "true7": [],
+                                                            "true8": [],
+                                                            "true9": [],
+                                                            "true10": [],
+                                                            "true11": [],
+                                                            "true12": [],
+                                                            "true13": [],
+                                                            "true14": [],
+                                                            "true15": [],
                                                             "false": [
                                                                 {
                                                                     "id": "b5f2b08f-5e7b-455f-80e6-8b24a528add8",
@@ -1605,18 +1305,10 @@
                                                                             "value": 4
                                                                         }
                                                                     }
-                                                                },
-                                                                {
-                                                                    "id": "a1b1e33e-6b3e-444e-9009-a3f59b1fa31f",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ]
                                                         },
                                                         "__type": "event"
-                                                    },
-                                                    {
-                                                        "id": "47aa94e6-5577-40da-b0c6-328c3ae259c7",
-                                                        "command": "EVENT_END"
                                                     }
                                                 ],
                                                 "false": [
@@ -1635,10 +1327,6 @@
                                                                     "args": {
                                                                         "script": "VM_REPLACE_TILE_XY      7, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_0_\nVM_REPLACE_TILE_XY      8, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_1_\nVM_REPLACE_TILE_XY      9, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_2_\nVM_REPLACE_TILE_XY      10, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_3_\nVM_REPLACE_TILE_XY      11, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_4_\n"
                                                                     }
-                                                                },
-                                                                {
-                                                                    "id": "2d0df541-2848-46b9-96ad-b809fdb2fcb2",
-                                                                    "command": "EVENT_END"
                                                                 }
                                                             ]
                                                         }
@@ -1649,17 +1337,9 @@
                                                         "args": {
                                                             "label": "OUT"
                                                         }
-                                                    },
-                                                    {
-                                                        "id": "1f49a019-30d6-4a5d-9382-3cae4bbe0920",
-                                                        "command": "EVENT_END"
                                                     }
                                                 ]
                                             }
-                                        },
-                                        {
-                                            "id": "d2930082-1b4f-4ba3-8a7a-e94742eccd8b",
-                                            "command": "EVENT_END"
                                         }
                                     ]
                                 }
@@ -1677,10 +1357,6 @@
                                 "args": {
                                     "time": 0.2
                                 }
-                            },
-                            {
-                                "id": "52f6ef24-0c6b-496e-a631-7df361590418",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -1752,10 +1428,6 @@
                                     }
                                 },
                                 "__type": "event"
-                            },
-                            {
-                                "id": "a1c082ea-f2d9-44f6-ae66-610a7c396369",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
@@ -1775,17 +1447,9 @@
                                 "args": {
                                     "script": "VM_REPLACE_TILE_XY      7, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_0_\nVM_REPLACE_TILE_XY      8, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_1_\nVM_REPLACE_TILE_XY      9, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_2_\nVM_REPLACE_TILE_XY      10, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_3_\nVM_REPLACE_TILE_XY      11, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_4_\n"
                                 }
-                            },
-                            {
-                                "id": "2d0df541-2848-46b9-96ad-b809fdb2fcb2",
-                                "command": "EVENT_END"
                             }
                         ]
                     }
-                },
-                {
-                    "id": "1f30c08c-413f-4520-a4c5-2fb7b368ee63",
-                    "command": "EVENT_END"
                 }
             ],
             "playerHit1Script": [],
@@ -1821,8 +1485,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "00000-ascii.png",
-            "inode": "18571762",
-            "_v": 1618732076502,
             "tileColors": []
         },
         {
@@ -1833,8 +1495,6 @@
             "imageWidth": 160,
             "imageHeight": 144,
             "filename": "letters.png",
-            "inode": "18571763",
-            "_v": 1618732076502,
             "tileColors": []
         }
     ],
@@ -1845,7 +1505,6 @@
             "numFrames": 1,
             "type": "static",
             "filename": "static.png",
-            "inode": "4387496280",
             "checksum": "0fee21654f405d61b3ff283945f3debcc1f622fc",
             "width": 16,
             "height": 16,
@@ -1966,7 +1625,6 @@
             "boundsWidth": 16,
             "boundsHeight": 16,
             "animSpeed": 15,
-            "_v": 1618732076505,
             "autoDetect": true
         }
     ],
@@ -2122,10 +1780,6 @@
                     "args": {
                         "script": "VM_REPLACE_TILE_XY      7, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_0_\nVM_REPLACE_TILE_XY      8, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_1_\nVM_REPLACE_TILE_XY      9, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_2_\nVM_REPLACE_TILE_XY      10, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_3_\nVM_REPLACE_TILE_XY      11, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_4_\n"
                     }
-                },
-                {
-                    "id": "2d0df541-2848-46b9-96ad-b809fdb2fcb2",
-                    "command": "EVENT_END"
                 }
             ]
         }
@@ -2136,9 +1790,7 @@
             "name": "template",
             "filename": "template.mod",
             "settings": {},
-            "type": "mod",
-            "inode": "18571767",
-            "_v": 1618732076459
+            "type": "mod"
         }
     ],
     "fonts": [
@@ -2147,9 +1799,7 @@
             "name": "gbs-mono",
             "width": 128,
             "height": 112,
-            "filename": "gbs-mono.png",
-            "inode": "18571765",
-            "_v": 1618732076491
+            "filename": "gbs-mono.png"
         }
     ],
     "avatars": [],
@@ -2243,9 +1893,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            283,
-            206,
-            542
+            269,
+            195,
+            515
         ],
         "showNavigator": true,
         "defaultFontId": "",
@@ -2261,6 +1911,10 @@
         "musicDriver": "gbt",
         "cartType": "mbc5",
         "batterylessEnabled": false,
+        "favoriteEvents": [
+            "EVENT_TEXT",
+            "EVENT_SWITCH_SCENE"
+        ],
         "customColorsWhite": "E8F8E0",
         "customColorsLight": "B0F088",
         "customColorsDark": "509878",

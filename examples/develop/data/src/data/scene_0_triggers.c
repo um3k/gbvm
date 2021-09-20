@@ -15,6 +15,7 @@ const struct trigger_t scene_0_triggers[] = {
         .y = 17,
         .width = 2,
         .height = 1,
-        .script = TO_FAR_PTR_T(script_s0t0_interact)
+        .script = TO_FAR_PTR_T(script_s0t0_interact),
+        .script_flags = TRIGGER_HAS_ENTER_SCRIPT
     }
 };
