@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: hidden_stairs
+// SpriteSheet: rock
   
 #include "gbs_types.h"
 #include "data/tileset_19.h"
@@ -10,7 +10,7 @@ BANKREF(spritesheet_9)
 #define SPRITE_9_STATE_OPEN 0
 
 const metasprite_t spritesheet_9_metasprite_0[]  = {
-    { 0, 8, 0, 0 }, { 0, -8, 0, 32 },
+    { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
     {metasprite_end}
 };
 

@@ -4,7 +4,7 @@
 // Actors
 
 #include "gbs_types.h"
-#include "data/spritesheet_13.h"
+#include "data/spritesheet_14.h"
 #include "data/script_s6a0_interact.h"
 
 BANKREF(scene_6_actors)
@@ -23,7 +23,7 @@ const struct actor_t scene_6_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_13),
+        .sprite = TO_FAR_PTR_T(spritesheet_14),
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,

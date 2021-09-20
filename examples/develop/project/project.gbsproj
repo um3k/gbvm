@@ -2,7 +2,7 @@
     "name": "Develop",
     "author": "gbvm",
     "_version": "2.0.0",
-    "_release": "10",
+    "_release": "11",
     "scenes": [
         {
             "id": "5e64882f-8ce6-423e-b582-70fdb2142ff6",
@@ -14282,7 +14282,7 @@
                         "duration": 0.25,
                         "__scriptTabs": "end",
                         "__comment": false,
-                        "__collapse": true
+                        "__collapse": false
                     },
                     "children": {
                         "script": [
@@ -14391,7 +14391,16 @@
                     }
                 }
             ],
-            "playerHit1Script": [],
+            "playerHit1Script": [
+                {
+                    "command": "EVENT_ACTOR_EMOTE",
+                    "args": {
+                        "actorId": "$self$",
+                        "emoteId": "04abf4ce-fa59-4e92-b7b1-ad6bba14c41c"
+                    },
+                    "id": "b60279ed-20e8-4088-9b3d-b13473f85f7b"
+                }
+            ],
             "playerHit2Script": [],
             "playerHit3Script": [],
             "id": "2017e4bb-16d3-47bc-a86c-9c47e1860e0c",
@@ -14408,8 +14417,27 @@
                     "animSpeed": 15,
                     "paletteId": "",
                     "isPinned": false,
-                    "collisionGroup": "",
-                    "script": [],
+                    "collisionGroup": "1",
+                    "script": [
+                        {
+                            "command": "EVENT_TEXT",
+                            "args": {
+                                "text": [
+                                    "Ouch!"
+                                ],
+                                "avatarId": ""
+                            },
+                            "id": "2833c6bd-d177-4cfb-b6a6-63c6d79b7ba3"
+                        },
+                        {
+                            "command": "EVENT_ACTOR_EMOTE",
+                            "args": {
+                                "actorId": "421f79f2-8b1c-457a-a3d7-9f3b8f8c1076",
+                                "emoteId": 0
+                            },
+                            "id": "26edd2c0-bd1f-454c-81fb-375f589292e7"
+                        }
+                    ],
                     "startScript": [],
                     "updateScript": [
                         {
@@ -14481,12 +14509,93 @@
                             }
                         }
                     ],
-                    "hit1Script": [],
+                    "hit1Script": [
+                        {
+                            "command": "EVENT_TEXT",
+                            "args": {
+                                "text": [
+                                    "Hey!!"
+                                ],
+                                "avatarId": ""
+                            },
+                            "id": "6fa8247e-e06a-421e-b257-6e1551d04b23"
+                        },
+                        {
+                            "command": "EVENT_ACTOR_EMOTE",
+                            "args": {
+                                "actorId": "$self$",
+                                "emoteId": 0
+                            },
+                            "id": "f261f71c-d45f-4b11-9468-9fe3883c9abd"
+                        }
+                    ],
                     "hit2Script": [],
                     "hit3Script": [],
                     "id": "421f79f2-8b1c-457a-a3d7-9f3b8f8c1076",
                     "x": 21,
                     "y": 10
+                },
+                {
+                    "name": "",
+                    "frame": 0,
+                    "animate": false,
+                    "spriteSheetId": "e9e61bf7-88fd-491d-ae01-4b7f76909108",
+                    "direction": "down",
+                    "moveSpeed": 1,
+                    "animSpeed": 15,
+                    "paletteId": "",
+                    "isPinned": false,
+                    "collisionGroup": "",
+                    "script": [],
+                    "startScript": [],
+                    "updateScript": [
+                        {
+                            "command": "EVENT_VARIABLE_MATH_EVALUATE",
+                            "args": {
+                                "variable": "L0",
+                                "expression": "$L0$ + 8"
+                            },
+                            "id": "ca4d3229-1dbe-40c6-ba7f-a6ddba966a9b"
+                        },
+                        {
+                            "command": "EVENT_LAUNCH_PROJECTILE",
+                            "args": {
+                                "spriteSheetId": "ec0f660e-c420-43ee-9d1e-6d8e9f320213",
+                                "actorId": "$self$",
+                                "x": 0,
+                                "y": 8,
+                                "otherActorId": "$self$",
+                                "direction": "right",
+                                "angle": 80,
+                                "angleVariable": "L0",
+                                "directionType": "anglevar",
+                                "speed": 2,
+                                "animSpeed": 15,
+                                "lifeTime": 3,
+                                "collisionGroup": "1",
+                                "collisionMask": [
+                                    "1",
+                                    "player",
+                                    "2",
+                                    "3"
+                                ]
+                            },
+                            "id": "0eed0a23-8f1b-4088-8120-e0b1a750aa38"
+                        },
+                        {
+                            "command": "EVENT_WAIT",
+                            "args": {
+                                "time": 1
+                            },
+                            "id": "2cd0d994-2fcd-4a33-b819-08602dce33a6"
+                        }
+                    ],
+                    "hit1Script": [],
+                    "hit2Script": [],
+                    "hit3Script": [],
+                    "id": "88dde917-1f7c-4615-9fda-88b523406b1d",
+                    "x": 3,
+                    "y": 8
                 }
             ],
             "triggers": [
@@ -35857,10 +35966,10 @@
             "numTiles": 1,
             "canvasWidth": 16,
             "canvasHeight": 16,
-            "boundsX": 0,
-            "boundsY": 0,
-            "boundsWidth": 16,
-            "boundsHeight": 16,
+            "boundsX": 4,
+            "boundsY": 4,
+            "boundsWidth": 8,
+            "boundsHeight": 8,
             "animSpeed": 15
         },
         {
@@ -45804,16 +45913,19 @@
                                 "args": {
                                     "spriteSheetId": "450a3571-cc76-41be-8c95-818d60b83c59",
                                     "actorId": "player",
-                                    "direction": {
-                                        "type": "direction",
-                                        "value": "right"
-                                    },
+                                    "direction": "right",
                                     "speed": 3,
                                     "collisionGroup": "1",
                                     "collisionMask": [
                                         "1"
                                     ],
-                                    "__collapse": false
+                                    "__collapse": false,
+                                    "animSpeed": 7,
+                                    "lifeTime": 1,
+                                    "directionType": "direction",
+                                    "angleVariable": "0",
+                                    "angle": 0,
+                                    "otherActorId": "$self$"
                                 }
                             }
                         ]
@@ -46190,15 +46302,18 @@
                     "args": {
                         "spriteSheetId": "32c48a4d-6ce6-4aca-a23a-a6300b5c9e3b",
                         "actorId": "0",
-                        "direction": {
-                            "type": "direction",
-                            "value": "left"
-                        },
+                        "direction": "left",
                         "speed": 1,
                         "collisionGroup": "1",
                         "collisionMask": [
                             "player"
-                        ]
+                        ],
+                        "animSpeed": 7,
+                        "lifeTime": 1,
+                        "directionType": "direction",
+                        "angleVariable": "0",
+                        "angle": 0,
+                        "otherActorId": "$self$"
                     }
                 },
                 {
@@ -46265,15 +46380,18 @@
                     "args": {
                         "spriteSheetId": "32c48a4d-6ce6-4aca-a23a-a6300b5c9e3b",
                         "actorId": "0",
-                        "direction": {
-                            "type": "direction",
-                            "value": "left"
-                        },
+                        "direction": "left",
                         "speed": 1,
                         "collisionGroup": "1",
                         "collisionMask": [
                             "player"
-                        ]
+                        ],
+                        "animSpeed": 7,
+                        "lifeTime": 1,
+                        "directionType": "direction",
+                        "angleVariable": "0",
+                        "angle": 0,
+                        "otherActorId": "$self$"
                     }
                 },
                 {
@@ -46340,15 +46458,18 @@
                     "args": {
                         "spriteSheetId": "32c48a4d-6ce6-4aca-a23a-a6300b5c9e3b",
                         "actorId": "0",
-                        "direction": {
-                            "type": "direction",
-                            "value": "left"
-                        },
+                        "direction": "left",
                         "speed": 1,
                         "collisionGroup": "1",
                         "collisionMask": [
                             "player"
-                        ]
+                        ],
+                        "animSpeed": 7,
+                        "lifeTime": 1,
+                        "directionType": "direction",
+                        "angleVariable": "0",
+                        "angle": 0,
+                        "otherActorId": "$self$"
                     }
                 },
                 {
@@ -46414,15 +46535,18 @@
                     "args": {
                         "spriteSheetId": "32c48a4d-6ce6-4aca-a23a-a6300b5c9e3b",
                         "actorId": "0",
-                        "direction": {
-                            "type": "direction",
-                            "value": "left"
-                        },
+                        "direction": "left",
                         "speed": 1,
                         "collisionGroup": "1",
                         "collisionMask": [
                             "player"
-                        ]
+                        ],
+                        "animSpeed": 7,
+                        "lifeTime": 1,
+                        "directionType": "direction",
+                        "angleVariable": "0",
+                        "angle": 0,
+                        "otherActorId": "$self$"
                     }
                 },
                 {
@@ -46598,7 +46722,15 @@
             "filename": "dog.png"
         }
     ],
-    "emotes": [],
+    "emotes": [
+        {
+            "id": "04abf4ce-fa59-4e92-b7b1-ad6bba14c41c",
+            "name": "surprise",
+            "width": 16,
+            "height": 16,
+            "filename": "surprise.png"
+        }
+    ],
     "variables": [
         {
             "id": "0",
@@ -46699,6 +46831,10 @@
         {
             "id": "2017e4bb-16d3-47bc-a86c-9c47e1860e0c__L0",
             "name": "FlowerState"
+        },
+        {
+            "id": "88dde917-1f7c-4615-9fda-88b523406b1d__L0",
+            "name": "LaunchAngle"
         }
     ],
     "engineFieldValues": [

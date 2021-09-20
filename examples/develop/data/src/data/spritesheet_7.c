@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: ice
+// SpriteSheet: signpost
   
 #include "gbs_types.h"
 #include "data/tileset_17.h"

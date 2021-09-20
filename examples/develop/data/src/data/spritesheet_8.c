@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: rock
+// SpriteSheet: ice
   
 #include "gbs_types.h"
 #include "data/tileset_18.h"

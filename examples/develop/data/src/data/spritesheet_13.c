@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: chest
+// SpriteSheet: turnip
   
 #include "gbs_types.h"
 #include "data/tileset_23.h"
@@ -7,15 +7,15 @@
 BANKREF(spritesheet_13)
 
 #define SPRITE_13_STATE_DEFAULT 0
-#define SPRITE_13_STATE_OPEN 8
+#define SPRITE_13_STATE_OPEN 0
 
 const metasprite_t spritesheet_13_metasprite_0[]  = {
-    { 0, 8, 0, 0 }, { 0, -8, 0, 32 },
+    { 0, 8, 0, 0 }, { 0, -8, 2, 0 },
     {metasprite_end}
 };
 
 const metasprite_t spritesheet_13_metasprite_1[]  = {
-    { 0, 8, 2, 0 }, { 0, -8, 2, 32 },
+    { 0, 8, 4, 0 }, { 0, -8, 6, 0 },
     {metasprite_end}
 };
 
@@ -27,73 +27,40 @@ const metasprite_t * const spritesheet_13_metasprites[] = {
 const struct animation_t spritesheet_13_animations[] = {
     {
         .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 0,
-        .end = 0
-    },
-    {
-        .start = 1,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     },
     {
-        .start = 1,
+        .start = 0,
         .end = 1
     }
 };
 
 const UWORD spritesheet_13_animations_lookup[] = {
-    SPRITE_13_STATE_DEFAULT,
-    SPRITE_13_STATE_OPEN
+    SPRITE_13_STATE_DEFAULT
 };
 
 const struct spritesheet_t spritesheet_13 = {
