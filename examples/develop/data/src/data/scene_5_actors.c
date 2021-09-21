@@ -4,12 +4,12 @@
 // Actors
 
 #include "gbs_types.h"
-#include "data/spritesheet_12.h"
+#include "data/spritesheet_13.h"
 #include "data/script_s5a0_interact.h"
 #include "data/script_s5a0_update.h"
-#include "data/spritesheet_6.h"
+#include "data/spritesheet_7.h"
 #include "data/script_s5a1_interact.h"
-#include "data/spritesheet_5.h"
+#include "data/spritesheet_6.h"
 #include "data/script_s5a2_interact.h"
 
 BANKREF(scene_5_actors)
@@ -28,7 +28,7 @@ const struct actor_t scene_5_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_12),
+        .sprite = TO_FAR_PTR_T(spritesheet_13),
         .move_speed = 8,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -50,7 +50,7 @@ const struct actor_t scene_5_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_6),
+        .sprite = TO_FAR_PTR_T(spritesheet_7),
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -71,7 +71,7 @@ const struct actor_t scene_5_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_5),
+        .sprite = TO_FAR_PTR_T(spritesheet_6),
         .move_speed = 16,
         .anim_tick = 31,
         .pinned = FALSE,

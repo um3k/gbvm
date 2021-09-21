@@ -7,11 +7,13 @@
 #include "data/scene_7_collisions.h"
 #include "data/palette_3.h"
 #include "data/palette_6.h"
-#include "data/spritesheet_1.h"
+#include "data/spritesheet_2.h"
 #include "data/scene_7_actors.h"
 #include "data/scene_7_triggers.h"
 #include "data/scene_7_sprites.h"
+#include "data/scene_7_projectiles.h"
 #include "data/script_s7_init.h"
+#include "data/script_s7_p_hit1.h"
 
 BANKREF(scene_7)
 
@@ -26,12 +28,15 @@ const struct scene_t scene_7 = {
     },
     .palette = TO_FAR_PTR_T(palette_3),
     .sprite_palette = TO_FAR_PTR_T(palette_6),
-    .player_sprite = TO_FAR_PTR_T(spritesheet_1),
-    .n_actors = 1,
+    .player_sprite = TO_FAR_PTR_T(spritesheet_2),
+    .n_actors = 2,
     .n_triggers = 3,
-    .n_sprites = 1,
+    .n_sprites = 3,
+    .n_projectiles = 1,
     .actors = TO_FAR_PTR_T(scene_7_actors),
     .triggers = TO_FAR_PTR_T(scene_7_triggers),
     .sprites = TO_FAR_PTR_T(scene_7_sprites),
-    .script_init = TO_FAR_PTR_T(script_s7_init)
+    .projectiles = TO_FAR_PTR_T(scene_7_projectiles),
+    .script_init = TO_FAR_PTR_T(script_s7_init),
+    .script_p_hit1 = TO_FAR_PTR_T(script_s7_p_hit1)
 };

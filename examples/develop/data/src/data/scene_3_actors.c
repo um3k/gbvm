@@ -4,17 +4,17 @@
 // Actors
 
 #include "gbs_types.h"
-#include "data/spritesheet_6.h"
-#include "data/script_s3a0_interact.h"
 #include "data/spritesheet_7.h"
+#include "data/script_s3a0_interact.h"
+#include "data/spritesheet_8.h"
 #include "data/script_s3a1_interact.h"
-#include "data/spritesheet_8.h"
-#include "data/script_s3a2_interact.h"
-#include "data/spritesheet_8.h"
-#include "data/script_s3a3_interact.h"
-#include "data/spritesheet_8.h"
-#include "data/script_s3a4_interact.h"
 #include "data/spritesheet_9.h"
+#include "data/script_s3a2_interact.h"
+#include "data/spritesheet_9.h"
+#include "data/script_s3a3_interact.h"
+#include "data/spritesheet_9.h"
+#include "data/script_s3a4_interact.h"
+#include "data/spritesheet_10.h"
 
 BANKREF(scene_3_actors)
 
@@ -32,7 +32,7 @@ const struct actor_t scene_3_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_6),
+        .sprite = TO_FAR_PTR_T(spritesheet_7),
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -53,7 +53,7 @@ const struct actor_t scene_3_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_7),
+        .sprite = TO_FAR_PTR_T(spritesheet_8),
         .move_speed = 32,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -74,7 +74,7 @@ const struct actor_t scene_3_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_8),
+        .sprite = TO_FAR_PTR_T(spritesheet_9),
         .move_speed = 8,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -95,7 +95,7 @@ const struct actor_t scene_3_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_8),
+        .sprite = TO_FAR_PTR_T(spritesheet_9),
         .move_speed = 8,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -116,7 +116,7 @@ const struct actor_t scene_3_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_8),
+        .sprite = TO_FAR_PTR_T(spritesheet_9),
         .move_speed = 8,
         .anim_tick = 15,
         .pinned = FALSE,
@@ -137,7 +137,7 @@ const struct actor_t scene_3_actors[] = {
             .top = -8
         },
         .dir = DIR_DOWN,
-        .sprite = TO_FAR_PTR_T(spritesheet_9),
+        .sprite = TO_FAR_PTR_T(spritesheet_10),
         .move_speed = 16,
         .anim_tick = 15,
         .pinned = FALSE,

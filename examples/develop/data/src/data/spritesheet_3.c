@@ -1,5 +1,5 @@
 #pragma bank 255
-// SpriteSheet: fire
+// SpriteSheet: torch
   
 #include "gbs_types.h"
 #include "data/tileset_13.h"
@@ -14,60 +14,42 @@ const metasprite_t spritesheet_3_metasprite_0[]  = {
     {metasprite_end}
 };
 
-const metasprite_t spritesheet_3_metasprite_1[]  = {
-    { 0, 8, 4, 0 }, { 0, -8, 6, 0 },
-    {metasprite_end}
-};
-
-const metasprite_t spritesheet_3_metasprite_2[]  = {
-    { 0, 8, 8, 0 }, { 0, -8, 10, 0 },
-    {metasprite_end}
-};
-
-const metasprite_t spritesheet_3_metasprite_3[]  = {
-    { 0, 8, 12, 0 }, { 0, -8, 14, 0 },
-    {metasprite_end}
-};
-
 const metasprite_t * const spritesheet_3_metasprites[] = {
-    spritesheet_3_metasprite_0,
-    spritesheet_3_metasprite_1,
-    spritesheet_3_metasprite_2,
-    spritesheet_3_metasprite_3
+    spritesheet_3_metasprite_0
 };
 
 const struct animation_t spritesheet_3_animations[] = {
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     },
     {
         .start = 0,
-        .end = 3
+        .end = 0
     }
 };
 
@@ -76,7 +58,7 @@ const UWORD spritesheet_3_animations_lookup[] = {
 };
 
 const struct spritesheet_t spritesheet_3 = {
-    .n_metasprites = 4,
+    .n_metasprites = 1,
     .metasprites = spritesheet_3_metasprites,
     .animations = spritesheet_3_animations,
     .animations_lookup = spritesheet_3_animations_lookup,

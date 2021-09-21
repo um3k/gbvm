@@ -240,6 +240,17 @@ void vm_actor_get_dir(SCRIPT_CTX * THIS, INT16 idx, INT16 dest) OLDCALL __banked
     *A = actor->dir;
 }
 
+void vm_actor_get_angle(SCRIPT_CTX * THIS, INT16 idx, INT16 dest) OLDCALL __banked {
+    UWORD * A;
+    actor_t *actor;
+    
+    act_set_pos_t * params = VM_REF_TO_PTR(idx);
+    actor = actors + (UBYTE)(params->ID);
+
+    if (dest < 0) A = THIS->stack_ptr + dest; else A = script_memory + dest;
+    *A = dir_angle_lookup[actor->dir];
+}
+
 void vm_actor_emote(SCRIPT_CTX * THIS, INT16 idx, UBYTE emote_tiles_bank, const unsigned char *emote_tiles) OLDCALL __banked {
 
     // on first call load emote sprite 
