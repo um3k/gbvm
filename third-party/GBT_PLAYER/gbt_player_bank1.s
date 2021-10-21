@@ -1,6 +1,6 @@
 ;-------------------------------------------------------------------------------
 ;
-; GBT Player v2.2.1 rulz
+; GBT Player v2.2.2 rulz
 ;
 ; SPDX-License-Identifier: MIT
 ;
@@ -91,23 +91,28 @@ gbt_channel_1_handle:: ; de = info
 	bit	7,a
 	jr	nz,ch1_more_bytes$
 	bit	6,a
-	jr	z,ch1_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-	jr	ch1_one_more_byte$
+	jr	ch1_one_more_byte$ ; maybe use effect
 
 ch1_more_bytes$:
 
 	ld	a,(de)
 	inc	de
 	bit	7,a
-	jr	z,ch1_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-ch1_one_more_byte$:
+ch1_one_more_byte$: ; is muted effect
 
+	bit	3,a   ; is effect jump, speed, or volEnv
+	jr	nz,ch1_do_muted_effect$
 	inc	de
+	ret
 
-ch1_no_more_bytes_this_channel$:
+ch1_do_muted_effect$:
 
+	and	a,#0x0F ; a = effect
+	call	gbt_channel_1_set_effect ; Get effect data from de, inc de
 	ret
 
 channel1_enabled$:
@@ -527,23 +532,28 @@ gbt_channel_2_handle:: ; de = info
 	bit	7,a
 	jr	nz,ch2_more_bytes$
 	bit	6,a
-	jr	z,ch2_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-	jr	ch2_one_more_byte$
+	jr	ch2_one_more_byte$ ; maybe use effect
 
 ch2_more_bytes$:
 
 	ld	a,(de)
 	inc	de
 	bit	7,a
-	jr	z,ch2_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-ch2_one_more_byte$:
+ch2_one_more_byte$: ; is muted effect
 
+	bit	3,a   ; is effect jump, speed, or volEnv
+	jr	nz,ch2_do_muted_effect$
 	inc	de
+	ret
 
-ch2_no_more_bytes_this_channel$:
+ch2_do_muted_effect$:
 
+	and	a,#0x0F ; a = effect
+	call	gbt_channel_2_set_effect ; Get effect data from de, inc de
 	ret
 
 channel2_enabled$:
@@ -957,23 +967,30 @@ gbt_channel_3_handle:: ; de = info
 	bit	7,a
 	jr	nz,ch3_more_bytes$
 	bit	6,a
-	jr	z,ch3_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-	jr	ch3_one_more_byte$
+	jr	ch3_one_more_byte$ ; maybe use effect
 
 ch3_more_bytes$:
 
 	ld	a,(de)
 	inc	de
 	bit	7,a
-	jr	z,ch3_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
+    inc	de
+	ret
 
-ch3_one_more_byte$:
+ch3_one_more_byte$: ; is muted effect
 
+	bit	3,a   ; is effect jump, speed
+	jr	nz,ch3_do_muted_effect$
 	inc	de
+	ret
 
-ch3_no_more_bytes_this_channel$:
+ch3_do_muted_effect$:
 
+	and	a,#0x0F ; a = effect
+	call	gbt_channel_3_set_effect ; Get effect data from de, inc de
 	ret
 
 channel3_enabled$:
@@ -1390,23 +1407,28 @@ gbt_channel_4_handle:: ; de = info
 	bit	7,a
 	jr	nz,ch4_more_bytes$
 	bit	6,a
-	jr	z,ch4_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-	jr	ch4_one_more_byte$
+	jr	ch4_one_more_byte$ ; maybe use effect
 
 ch4_more_bytes$:
 
 	ld	a,(de)
 	inc	de
 	bit	7,a
-	jr	z,ch4_no_more_bytes_this_channel$
+	ret	z   ; no_more_bytes_this_channel
 
-ch4_one_more_byte$:
+ch4_one_more_byte$: ; is muted effect
 
+	bit	3,a   ; is effect jump, speed, or volEnv
+	jr	nz,ch4_do_muted_effect$
 	inc	de
+	ret
 
-ch4_no_more_bytes_this_channel$:
+ch4_do_muted_effect$:
 
+	and	a,#0x0F ; a = effect
+	call	gbt_channel_4_set_effect ; Get effect data from de, inc de
 	ret
 
 channel4_enabled$:
