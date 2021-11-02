@@ -39,7 +39,6 @@ extern UBYTE win_speed;
 extern UBYTE text_drawn;
 extern UBYTE text_wait;
 
-extern UBYTE current_text_speed;
 extern UBYTE text_in_speed;
 extern UBYTE text_out_speed;
 extern UBYTE text_draw_speed;

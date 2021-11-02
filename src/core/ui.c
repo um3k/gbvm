@@ -262,11 +262,13 @@ void ui_draw_text_buffer_char() __banked {
     }
 
     if (ui_text_ptr == 0) {
+        // set the delay mask
+        current_text_speed = ui_time_masks[text_draw_speed];
         // save font and color global properties
-        current_font_idx = vwf_current_font_idx;
-        current_text_bkg_fill = text_bkg_fill;
-        current_vwf_direction = vwf_direction;
-        current_text_ff_joypad = text_ff_joypad;
+        current_font_idx        = vwf_current_font_idx;
+        current_text_bkg_fill   = text_bkg_fill;
+        current_vwf_direction   = vwf_direction;
+        current_text_ff_joypad  = text_ff_joypad;
         current_text_draw_speed = text_draw_speed;
         // reset to first line
         // current char pointer
