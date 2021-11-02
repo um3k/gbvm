@@ -252,7 +252,7 @@ inline void ui_set_tile(UBYTE * addr, UBYTE tile, UBYTE bank) {
 }
 
 void ui_draw_text_buffer_char() __banked {
-    static UBYTE current_font_idx, current_text_bkg_fill, current_vwf_direction, current_text_ff_joypad;
+    static UBYTE current_font_idx, current_text_bkg_fill, current_vwf_direction, current_text_ff_joypad, current_text_draw_speed;
 
     if ((text_ff_joypad) && (INPUT_A_OR_B_PRESSED)) text_ff = TRUE;
 
@@ -267,6 +267,7 @@ void ui_draw_text_buffer_char() __banked {
         current_text_bkg_fill = text_bkg_fill;
         current_vwf_direction = vwf_direction;
         current_text_ff_joypad = text_ff_joypad;
+        current_text_draw_speed = text_draw_speed;
         // reset to first line
         // current char pointer
         ui_text_ptr = ui_text_data;
@@ -291,6 +292,7 @@ void ui_draw_text_buffer_char() __banked {
             text_bkg_fill = current_text_bkg_fill;
             vwf_direction = current_vwf_direction;
             text_ff_joypad = current_text_ff_joypad;
+            text_draw_speed = current_text_draw_speed;
             return;
         }
         case 0x01:
