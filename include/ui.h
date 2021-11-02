@@ -63,6 +63,7 @@ extern UBYTE * text_scroll_addr;
 extern UBYTE text_scroll_width, text_scroll_height;
 extern UBYTE text_scroll_fill;
 
+extern const UBYTE ui_time_masks[];
 
 void ui_init() __banked;
 void ui_update() __nonbanked;  // critical path, __nonbanked for speed
