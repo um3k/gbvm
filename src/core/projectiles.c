@@ -151,15 +151,15 @@ void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked {
     if (projectile) {
         memcpy(&projectile->def, &projectile_defs[index], sizeof(projectile_def_t));
 
-        WORD initial_offset = projectile->def.initial_offset;
+        UINT16 initial_offset = projectile->def.initial_offset;
         projectile->pos.x = pos->x;
         projectile->pos.y = pos->y;
 
         // Offset by initial amount
-        while (initial_offset >= 0xFF) {
+        while (initial_offset > 0xFFu) {
             projectile->pos.x += ((SIN(angle) * (0xFF)) >> 7);
             projectile->pos.y -= ((COS(angle) * (0xFF)) >> 7); 
-            initial_offset -= 0xFF;           
+            initial_offset -= 0xFFu;           
         }
         if (initial_offset > 0) {
             projectile->pos.x += ((SIN(angle) * (initial_offset)) >> 7);
