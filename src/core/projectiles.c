@@ -155,15 +155,17 @@ void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked {
         projectile->pos.x = pos->x;
         projectile->pos.y = pos->y;
 
+        INT8 sinv = SIN(angle), cosv = COS(angle);
+
         // Offset by initial amount
         while (initial_offset > 0xFFu) {
-            projectile->pos.x += ((SIN(angle) * (0xFF)) >> 7);
-            projectile->pos.y -= ((COS(angle) * (0xFF)) >> 7); 
+            projectile->pos.x += ((sinv * (0xFFu)) >> 7);
+            projectile->pos.y -= ((cosv * (0xFFu)) >> 7); 
             initial_offset -= 0xFFu;           
         }
         if (initial_offset > 0) {
-            projectile->pos.x += ((SIN(angle) * (initial_offset)) >> 7);
-            projectile->pos.y -= ((COS(angle) * (initial_offset)) >> 7); 
+            projectile->pos.x += ((sinv * (UINT8)(initial_offset)) >> 7);
+            projectile->pos.y -= ((cosv * (UINT8)(initial_offset)) >> 7); 
         }
 
         point_translate_angle_to_delta(&projectile->delta_pos, angle, projectile->def.move_speed);
