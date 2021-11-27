@@ -88,7 +88,7 @@ _script_turnip_collisions::
 
         ; Camera Shake
         VM_PUSH_CONST           30
-        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X)/
+        VM_PUSH_CONST           .CAMERA_SHAKE_X
         VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
 2$:
 

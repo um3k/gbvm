@@ -2,7 +2,7 @@
     "name": "Develop",
     "author": "gbvm",
     "_version": "2.0.0",
-    "_release": "11",
+    "_release": "14",
     "scenes": [
         {
             "id": "5e64882f-8ce6-423e-b582-70fdb2142ff6",
@@ -193,7 +193,9 @@
                                     {
                                         "id": "3bffb17d-feaa-4ecd-a795-836c7b032ae3",
                                         "command": "EVENT_SAVE_DATA",
-                                        "args": {},
+                                        "args": {
+                                            "saveSlot": 0
+                                        },
                                         "children": {
                                             "true": [
                                                 {
@@ -1554,13 +1556,17 @@
                                         {
                                             "id": "d2cd5812-f043-4aa5-b827-475dc79091e7",
                                             "command": "EVENT_IF_SAVED_DATA",
-                                            "args": {},
+                                            "args": {
+                                                "saveSlot": 0
+                                            },
                                             "children": {
                                                 "true": [
                                                     {
                                                         "id": "4a922761-48a9-410d-b603-00e7a7dd91ea",
                                                         "command": "EVENT_LOAD_DATA",
-                                                        "args": {}
+                                                        "args": {
+                                                            "saveSlot": 0
+                                                        }
                                                     }
                                                 ],
                                                 "false": [
@@ -11585,7 +11591,9 @@
                                     {
                                         "id": "3e99a702-de05-418b-b1c9-d4d05b8ec567",
                                         "command": "EVENT_SAVE_DATA",
-                                        "args": {},
+                                        "args": {
+                                            "saveSlot": 0
+                                        },
                                         "children": {
                                             "true": [
                                                 {
@@ -14282,7 +14290,7 @@
                         "duration": 0.25,
                         "__scriptTabs": "end",
                         "__comment": false,
-                        "__collapse": false
+                        "__collapse": true
                     },
                     "children": {
                         "script": [
@@ -14341,7 +14349,8 @@
                         "input": [
                             "start"
                         ],
-                        "__scriptTabs": "press"
+                        "__scriptTabs": "press",
+                        "__collapse": true
                     },
                     "children": {
                         "true": [
@@ -14389,6 +14398,44 @@
                             }
                         ]
                     }
+                },
+                {
+                    "command": "EVENT_SET_INPUT_SCRIPT",
+                    "args": {
+                        "input": [
+                            "b"
+                        ],
+                        "__scriptTabs": "press"
+                    },
+                    "children": {
+                        "true": [
+                            {
+                                "command": "EVENT_LAUNCH_PROJECTILE",
+                                "args": {
+                                    "spriteSheetId": "ec0f660e-c420-43ee-9d1e-6d8e9f320213",
+                                    "spriteStateId": "",
+                                    "actorId": "$self$",
+                                    "x": 0,
+                                    "y": 0,
+                                    "otherActorId": "$self$",
+                                    "direction": "right",
+                                    "angle": 0,
+                                    "angleVariable": "L0",
+                                    "directionType": "actor",
+                                    "initialOffset": 16,
+                                    "speed": 2,
+                                    "animSpeed": 15,
+                                    "lifeTime": 1,
+                                    "collisionGroup": "3",
+                                    "collisionMask": [
+                                        "1"
+                                    ]
+                                },
+                                "id": "73f350f4-6f18-4ace-a7d4-bbbc8a139403"
+                            }
+                        ]
+                    },
+                    "id": "cb0440ac-447b-47e3-a8c7-ca61f54c9738"
                 }
             ],
             "playerHit1Script": [

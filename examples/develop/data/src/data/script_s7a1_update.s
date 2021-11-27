@@ -41,7 +41,7 @@ _script_s7a1_update::
             .R_OPERATOR .ADD
             .R_REF      VAR_S7A1_LAUNCHANGLE
             .R_STOP
-        VM_PROJECTILE_LAUNCH    0, .ARG2
+        VM_PROJECTILE_LAUNCH    1, .ARG2
         VM_POP                  3
         ; Wait N Frames
         VM_PUSH_CONST           60

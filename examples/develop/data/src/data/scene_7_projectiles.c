@@ -5,12 +5,32 @@
 
 #include "gbs_types.h"
 #include "data/spritesheet_1.h"
+#include "data/spritesheet_1.h"
 
 BANKREF(scene_7_projectiles)
 
 const struct projectile_def_t scene_7_projectiles[] = {
     {
         // Projectile 0,
+        .sprite = TO_FAR_PTR_T(spritesheet_1),
+        .move_speed = 32,
+        .life_time = 60,
+        .collision_group = COLLISION_GROUP_3,
+        .collision_mask = COLLISION_GROUP_1,
+        .bounds = {
+            .left = 4,
+            .bottom = 3,
+            .right = 11,
+            .top = -4
+        },
+        .anim_tick = 15,
+        .frame = 0,
+        .frame_start = 0,
+        .frame_end = 1,
+        .initial_offset = 256
+    },
+    {
+        // Projectile 1,
         .sprite = TO_FAR_PTR_T(spritesheet_1),
         .move_speed = 32,
         .life_time = 180,
@@ -25,6 +45,7 @@ const struct projectile_def_t scene_7_projectiles[] = {
         .anim_tick = 15,
         .frame = 0,
         .frame_start = 0,
-        .frame_end = 1
+        .frame_end = 1,
+        .initial_offset = 0
     }
 };
