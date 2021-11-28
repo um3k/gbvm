@@ -26,7 +26,7 @@ _script_s5t1_interact::
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 20352
         VM_SET_CONST            ^/(ACTOR + 2)/, 1664
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_H_FIRST)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Load Scene

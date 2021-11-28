@@ -27,5 +27,9 @@ _script_s7_init::
         VM_CONTEXT_PREPARE      1, ___bank_script_input_2, _script_input_2
         VM_INPUT_ATTACH         128, 1
 
+        ; Input Script Attach
+        VM_CONTEXT_PREPARE      3, ___bank_script_input_3, _script_input_3
+        VM_INPUT_ATTACH         32, 3
+
         ; Stop Script
         VM_STOP
