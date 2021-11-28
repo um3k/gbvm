@@ -464,6 +464,21 @@ void vm_poll_loaded(SCRIPT_CTX * THIS, INT16 idx) OLDCALL __banked {
     *A = vm_loaded_state;
     vm_loaded_state = FALSE;
 }
+// call native function by far pointer;
+void vm_call_native(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS, UINT8 bank, const void * ptr) OLDCALL __nonbanked {
+    dummy0; dummy1; THIS; bank; ptr; // suppress warnings
+#if defined(NINTENDO)
+__asm
+        lda hl, 8(sp)
+        ld a, (hl+)
+        ld e, a
+        ld a, (hl+)
+        ld h, (hl)
+        ld l, a
+        jp ___sdcc_bcall_ehl
+__endasm;
+#endif
+}
 // memset for VM variables
 void vm_memset(SCRIPT_CTX * THIS, INT16 idx, INT16 value, INT16 count) OLDCALL __banked {
     memset(VM_REF_TO_PTR(idx), value, count << 1);
