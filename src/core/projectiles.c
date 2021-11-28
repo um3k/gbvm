@@ -159,8 +159,8 @@ void projectile_launch(UBYTE index, upoint16_t *pos, UBYTE angle) __banked {
 
         // Offset by initial amount
         while (initial_offset > 0xFFu) {
-            projectile->pos.x += ((sinv * (0xFFu)) >> 7);
-            projectile->pos.y -= ((cosv * (0xFFu)) >> 7); 
+            projectile->pos.x += ((sinv * (UINT8)(0xFF)) >> 7);
+            projectile->pos.y -= ((cosv * (UINT8)(0xFF)) >> 7); 
             initial_offset -= 0xFFu;           
         }
         if (initial_offset > 0) {
