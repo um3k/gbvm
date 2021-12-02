@@ -604,7 +604,7 @@ __endasm;
 }
 
 // global shared script memory
-UWORD script_memory[MAX_GLOBAL_VARS + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)];
+UWORD script_memory[VM_HEAP_SIZE + (SCRIPT_MAX_CONTEXTS * CONTEXT_STACK_SIZE)];
 
 // initialize script runner contexts
 // resets whole VM engine
@@ -613,7 +613,7 @@ void script_runner_init(UBYTE reset) __banked {
         memset(script_memory, 0, sizeof(script_memory));
         memset(CTXS, 0, sizeof(CTXS));
     }
-    UWORD * base_addr = &script_memory[MAX_GLOBAL_VARS];
+    UWORD * base_addr = &script_memory[VM_HEAP_SIZE];
     free_ctxs = CTXS, first_ctx = 0;
     SCRIPT_CTX * nxt = 0;
     SCRIPT_CTX * tmp = CTXS + (SCRIPT_MAX_CONTEXTS - 1);
