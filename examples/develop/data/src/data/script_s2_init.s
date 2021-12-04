@@ -35,7 +35,7 @@ _script_s2_init::
         ; Wait For Input
         VM_INPUT_WAIT           240
 
-1$:
+2$:
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
         .asciz "\001\001\003\003\002New Game\n\003\003\003Continue"
@@ -50,11 +50,11 @@ _script_s2_init::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; If Variable True
-        VM_IF_CONST .GT         VAR_S2_MENU_CHOICE, 0, 2$, 0
+        VM_IF_CONST .GT         VAR_S2_MENU_CHOICE, 0, 3$, 0
         ; If Variable True
         VM_PUSH_CONST           0
         VM_SAVE_PEEK            .ARG0, 0, 0, 0, 0
-        VM_IF_CONST .EQ         .ARG0, 1, 4$, 1
+        VM_IF_CONST .EQ         .ARG0, 1, 5$, 1
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "No Save Data\nFound..."
@@ -65,16 +65,16 @@ _script_s2_init::
         VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
-        VM_JUMP                 5$
-4$:
+        VM_JUMP                 6$
+5$:
         ; Load Data from Slot 0
         VM_RAISE                EXCEPTION_LOAD, 1
             .SAVE_SLOT 0
 
-5$:
+6$:
 
-        VM_JUMP                 3$
-2$:
+        VM_JUMP                 4$
+3$:
         ; Load Scene
         VM_FADE_OUT             4
         VM_SET_CONST            ACTOR, 0
@@ -85,8 +85,8 @@ _script_s2_init::
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
             IMPORT_FAR_PTR_DATA _scene_7
 
-3$:
+4$:
 
-        VM_JUMP                 1$
+        VM_JUMP                 2$
         ; Stop Script
         VM_STOP

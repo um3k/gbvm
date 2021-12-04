@@ -17,7 +17,7 @@ _script_s7a1_update::
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
 
-1$:
+2$:
         ; Variable L0 = VAR_S7A1_LAUNCHANGLE+8
         VM_RPN
             .R_REF      VAR_S7A1_LAUNCHANGLE
@@ -51,6 +51,6 @@ _script_s7a1_update::
         VM_PUSH_CONST           1
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
-        VM_JUMP                 1$
+        VM_JUMP                 2$
         ; Stop Script
         VM_STOP

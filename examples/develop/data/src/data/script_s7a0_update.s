@@ -17,7 +17,7 @@ _script_s7a0_update::
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
 
-1$:
+2$:
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 1
 
@@ -58,6 +58,6 @@ _script_s7a0_update::
         VM_PUSH_CONST           1
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
-        VM_JUMP                 1$
+        VM_JUMP                 2$
         ; Stop Script
         VM_STOP
