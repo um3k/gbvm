@@ -5,8 +5,8 @@
 
 #include "gbs_types.h"
 #include "data/spritesheet_13.h"
-#include "data/script_s5a0_interact.h"
 #include "data/script_s5a0_update.h"
+#include "data/script_s5a0_interact.h"
 #include "data/spritesheet_7.h"
 #include "data/script_s5a1_interact.h"
 #include "data/spritesheet_6.h"
@@ -34,8 +34,8 @@ const struct actor_t scene_5_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s5a0_interact),
         .script_update = TO_FAR_PTR_T(script_s5a0_update),
+        .script = TO_FAR_PTR_T(script_s5a0_interact),
         .exclusive_sprite = 4
     },
     {
