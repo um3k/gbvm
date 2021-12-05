@@ -5,9 +5,8 @@
 
 #include "gbs_types.h"
 #include "data/spritesheet_15.h"
-#include "data/script_s7a0_interact.h"
 #include "data/script_s7a0_update.h"
-#include "data/script_s7a0_hit1.h"
+#include "data/script_s7a0_interact.h"
 #include "data/spritesheet_3.h"
 #include "data/script_s7a1_update.h"
 
@@ -33,9 +32,8 @@ const struct actor_t scene_7_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s7a0_interact),
         .script_update = TO_FAR_PTR_T(script_s7a0_update),
-        .script_hit1 = TO_FAR_PTR_T(script_s7a0_hit1),
+        .script = TO_FAR_PTR_T(script_s7a0_interact),
         .exclusive_sprite = 0
     },
     {
