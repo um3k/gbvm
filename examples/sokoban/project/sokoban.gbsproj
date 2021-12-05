@@ -1,8 +1,8 @@
 {
     "name": "sokoban",
     "author": "cmaltby",
-    "_version": "2.0.0",
-    "_release": "10",
+    "_version": "3.0.0",
+    "_release": "1",
     "scenes": [
         {
             "name": "Level 1",
@@ -2015,9 +2015,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            589,
-            195,
-            195
+            731,
+            241,
+            241
         ],
         "showNavigator": true,
         "defaultFontId": "",
