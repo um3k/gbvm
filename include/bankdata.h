@@ -12,7 +12,7 @@
 #define BANK(VARNAME) ( (UBYTE) & __bank_ ## VARNAME )
 #endif
 #ifndef BANKREF
-#define BANKREF(VARNAME) void __func_ ## VARNAME() __banked __naked { \
+#define BANKREF(VARNAME) void __func_ ## VARNAME() BANKED __naked { \
 __asm \
     .local b___func_ ## VARNAME \
     ___bank_ ## VARNAME = b___func_ ## VARNAME \

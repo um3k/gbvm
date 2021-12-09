@@ -31,7 +31,7 @@ UBYTE routine_queue_head, routine_queue_tail;
 // music events struct
 script_event_t music_events[4];
 
-void sound_init() __banked {
+void sound_init() BANKED {
     NR52_REG = 0x80; 
     NR51_REG = 0xFF;
     NR50_REG = 0x77;
@@ -48,7 +48,7 @@ void sound_init() __banked {
 #endif
 }
 
-void music_init(UBYTE preserve) __banked {
+void music_init(UBYTE preserve) BANKED {
     if (preserve) {
         for (UBYTE i = 0; i < 4; i++) 
             music_events[i].handle = 0;
@@ -61,7 +61,7 @@ void music_init(UBYTE preserve) __banked {
 }
 
 #ifdef HUGE_TRACKER
-void hUGETrackerRoutine(unsigned char param, unsigned char ch, unsigned char tick) __nonbanked {
+void hUGETrackerRoutine(unsigned char param, unsigned char ch, unsigned char tick) NONBANKED {
     ch;
     if (tick) return; // return if not zero tick
     routine_queue_head++, routine_queue_head &= (MAX_ROUTINE_QUEUE_LEN - 1);
@@ -70,7 +70,7 @@ void hUGETrackerRoutine(unsigned char param, unsigned char ch, unsigned char tic
 }
 #endif
 
-void music_events_update() __nonbanked {
+void music_events_update() NONBANKED {
     while (routine_queue_head != routine_queue_tail) {
         UBYTE data;
         __critical {
@@ -84,7 +84,7 @@ void music_events_update() __nonbanked {
     }
 }
 
-UBYTE music_events_poll() __banked {
+UBYTE music_events_poll() BANKED {
     if (routine_queue_head != routine_queue_tail) {
         UBYTE data;
         __critical {
@@ -96,7 +96,7 @@ UBYTE music_events_poll() __banked {
     return 0;
 }
 
-void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) __nonbanked {
+void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) NONBANKED {
     if (track == NULL) {
         music_stop();
     } else if (track != current_track || bank != current_track_bank) {
@@ -135,7 +135,7 @@ void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) __nonbanked {
     }
 }
 
-void music_stop() __banked {
+void music_stop() BANKED {
 #ifdef GBT_PLAYER
     UBYTE _save = _current_bank;
     gbt_stop();
@@ -148,7 +148,7 @@ void music_stop() __banked {
     current_track = NULL;
 }
 
-void music_mute(UBYTE channels) OLDCALL __nonbanked __naked {
+void music_mute(UBYTE channels) OLDCALL NONBANKED __naked {
     channels;
 __asm
 #ifdef GBT_PLAYER
@@ -197,7 +197,7 @@ __endasm;
 }
 
 UINT8 ISR_counter = 0;
-void music_update() OLDCALL __nonbanked __naked {
+void music_update() OLDCALL NONBANKED __naked {
 __asm
         call _sample_play_isr
         ld hl, #_ISR_counter
@@ -258,7 +258,7 @@ const UINT8 FX_REG_SIZES[]  = {0, 5, 4, 5, 4};
 const UINT8 FX_ADDR_LO[]    = {0, 0x10, 0x16, 0x1a, 0x20};
 const UINT8 channel_masks[] = {0, 0x0e, 0x0d, 0x0b, 0x07};
 
-void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
+void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) BANKED {
     if (tone_frames) return;                        // exit if sound is already playing.
     if (frames == 0) return;                        // exit if length in frames is zero
     music_mute(channel_mask & channel_masks[3]);
@@ -267,7 +267,7 @@ void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) __banked {
     tone_frames = frames;
 }
 
-static void sound_load_regs(UBYTE reg, UBYTE len, UBYTE bank, const UBYTE * data) OLDCALL __nonbanked __naked {
+static void sound_load_regs(UBYTE reg, UBYTE len, UBYTE bank, const UBYTE * data) OLDCALL NONBANKED __naked {
     reg; len; bank; data;
 __asm
         ldhl sp, #2
@@ -300,7 +300,7 @@ __asm
 __endasm;
 }
 
-void sound_play(UBYTE frames, UBYTE channel, UBYTE bank, const UBYTE * data) __banked {
+void sound_play(UBYTE frames, UBYTE channel, UBYTE bank, const UBYTE * data) BANKED {
     if (tone_frames) return;                        // exit if sound is already playing.
     if (frames == 0) return;                        // exit if length in frames is zero
     if ((channel == 0) || (channel > 4)) return;    // exit if channel is out of bounds
@@ -317,7 +317,7 @@ void sound_play(UBYTE frames, UBYTE channel, UBYTE bank, const UBYTE * data) __b
     tone_frames = frames;
 }
 
-void sound_stop(UBYTE channel) __nonbanked {
+void sound_stop(UBYTE channel) NONBANKED {
     switch (channel) {
         case 1: NR12_REG = 0x00; break; 
         case 2: NR22_REG = 0x00; break; 

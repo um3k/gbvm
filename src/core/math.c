@@ -34,7 +34,7 @@ const UBYTE dir_angle_lookup[4] = {
     192,
 };
 
-UBYTE isqrt(uint16_t x) __nonbanked {
+UBYTE isqrt(uint16_t x) NONBANKED {
     uint16_t m, y, b;
     m = 0x4000;
     y = 0;

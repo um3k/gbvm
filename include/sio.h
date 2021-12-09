@@ -26,7 +26,7 @@ extern UBYTE link_packet_snd_len;
 extern const UBYTE * link_packet_snd_ptr;
 extern UBYTE link_packet_sent;
 
-void SIO_init() __banked;
+void SIO_init() BANKED;
 
 inline void SIO_set_mode(UBYTE mode) {
     link_operation_mode = mode;

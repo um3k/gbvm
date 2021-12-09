@@ -31,22 +31,22 @@ extern UINT8 pending_h_i;
 /**
  * Resets scroll settings on engine start
  */
-void scroll_reset() __banked;
+void scroll_reset() BANKED;
 
 /**
  * Initialise scroll variables, call on scene load
  */
-void scroll_init() __banked;
+void scroll_init() BANKED;
 
 /**
  * Update scroll position and load in any newly visible background tiles and actors
  */
-void scroll_update() __banked;
+void scroll_update() BANKED;
 
 /**
  * Resets scroll and update the whole screen 
  */
-void scroll_repaint() __banked;
+void scroll_repaint() BANKED;
 
 /**
  * Set vram tile at memory location to a value
@@ -89,7 +89,7 @@ UBYTE * set_bkg_tile_xy(UBYTE x, UBYTE y, UBYTE t) OLDCALL __preserves_regs(b, c
  * @param h height of the area
  * @param fill tile id to fill the bottom row 
  */
-void scroll_rect(UBYTE * base_addr, UBYTE w, UBYTE h, UBYTE fill) OLDCALL __banked __preserves_regs(b, c);
+void scroll_rect(UBYTE * base_addr, UBYTE w, UBYTE h, UBYTE fill) OLDCALL BANKED __preserves_regs(b, c);
 
 /**
  * copies scroll position variables into double buffered copies

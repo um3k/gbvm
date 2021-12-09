@@ -42,7 +42,7 @@ extern const UBYTE bootstrap_script[];
 
 extern void core_reset_hook(); 
 
-void core_reset() __banked {
+void core_reset() BANKED {
     // cleanup core stuff
     SIO_init();
     input_init();
@@ -180,7 +180,7 @@ void process_VM() {
     }
 }
 
-void core_run() __banked {
+void core_run() BANKED {
 #ifdef CGB
     if (_cpu == CGB_TYPE) cpu_fast();
 #endif

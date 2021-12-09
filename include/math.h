@@ -115,6 +115,6 @@ inline void point_translate_angle_to_delta(point16_t *point, uint8_t angle, uint
     point->y = ((COS(angle) * (speed)) >> 7);
 }
 
-uint8_t isqrt(uint16_t x) __nonbanked;
+uint8_t isqrt(uint16_t x) NONBANKED;
 
 #endif

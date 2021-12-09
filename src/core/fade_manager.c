@@ -233,7 +233,7 @@ void ApplyPaletteChangeDMG(UBYTE index) {
     }
 }
 
-void fade_init() __banked {
+void fade_init() BANKED {
     fade_frames_per_step = fade_speeds[2];
     fade_timer = FADED_OUT_FRAME;
     fade_running = FALSE;
@@ -246,7 +246,7 @@ void fade_init() __banked {
     ApplyPaletteChangeDMG(FADED_OUT_FRAME);    
 }
 
-void fade_in() __banked {
+void fade_in() BANKED {
     if (fade_timer == FADED_IN_FRAME) {
         return;
     }
@@ -263,7 +263,7 @@ void fade_in() __banked {
     ApplyPaletteChangeDMG(FADED_OUT_FRAME);
 }
 
-void fade_out() __banked {
+void fade_out() BANKED {
     if (fade_timer == FADED_OUT_FRAME) {
         return;
     }    
@@ -280,7 +280,7 @@ void fade_out() __banked {
         ApplyPaletteChangeDMG(FADED_IN_FRAME);
 }
 
-void fade_update() __banked {
+void fade_update() BANKED {
     if (fade_running) {
         if ((fade_frame++ & fade_frames_per_step) == 0) {
             if (fade_direction == FADE_IN) {
@@ -301,7 +301,7 @@ void fade_update() __banked {
     }
 }
 
-void fade_applypalettechange() __banked {
+void fade_applypalettechange() BANKED {
 #ifdef CGB
     if (_is_CGB) {
         ApplyPaletteChangeColor(fade_timer);
@@ -311,11 +311,11 @@ void fade_applypalettechange() __banked {
     ApplyPaletteChangeDMG(fade_timer);
 }
 
-void fade_setspeed(UBYTE speed) __banked {
+void fade_setspeed(UBYTE speed) BANKED {
     fade_frames_per_step = fade_speeds[speed];
 }
 
-void fade_in_modal() __banked {
+void fade_in_modal() BANKED {
     DISPLAY_ON;
     fade_in();
     while (fade_isfading()) {
@@ -324,7 +324,7 @@ void fade_in_modal() __banked {
     }
 }
 
-void fade_out_modal() __banked {
+void fade_out_modal() BANKED {
     fade_out();
     while (fade_isfading()) {
         wait_vbl_done();
