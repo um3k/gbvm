@@ -116,7 +116,11 @@ void actors_update() __nonbanked {
             actor->frame++;
             // Check reached end of animation
             if (actor->frame == actor->frame_end) {
-                actor->frame = actor->frame_start;
+                if (actor->anim_noloop) {
+                    // TODO: execute onAnimationEnd here
+                } else {
+                    actor->frame = actor->frame_start;
+                }
             }
         }
 

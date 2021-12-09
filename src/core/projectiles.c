@@ -54,7 +54,9 @@ void projectiles_update() __nonbanked {
             projectile->frame++;
             // Check reached end of animation
             if (projectile->frame == projectile->frame_end) {
-                projectile->frame = projectile->frame_start;
+                if (!projectile->anim_noloop) {
+                    projectile->frame = projectile->frame_start;
+                }
             }
         }
 
