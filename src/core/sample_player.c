@@ -6,7 +6,7 @@ UINT8 play_bank = 1;
 const UINT8 * play_sample = 0;
 UINT16 play_length = 0;
 
-void sample_play_isr() NONBANKED __naked {
+void sample_play_isr() NONBANKED NAKED {
     __asm
         ld hl, #_play_length    ; something left to play?
         ld a, (hl+)

@@ -16,7 +16,7 @@
 void ui_draw_frame(UBYTE x, UBYTE y, UBYTE width, UBYTE height) BANKED;
 
 extern UBYTE _itoa_fmt_len;
-UBYTE itoa_fmt(INT16 v, UBYTE * d) OLDCALL BANKED __preserves_regs(b, c);
+UBYTE itoa_fmt(INT16 v, UBYTE * d) OLDCALL BANKED PRESERVES_REGS(b, c);
 
 inline UBYTE itoa_format(INT16 v, UBYTE * d, UBYTE dlen) {
     _itoa_fmt_len = dlen;

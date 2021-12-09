@@ -4,8 +4,8 @@
 #include "sio.h"
 
 extern volatile UBYTE SIO_status;
-void SIO_send_byte(UBYTE data) __preserves_regs(b, c, d, e, h, l);
-void SIO_receive() __preserves_regs(b, c, d, e, h, l);
+void SIO_send_byte(UBYTE data) PRESERVES_REGS(b, c, d, e, h, l);
+void SIO_receive() PRESERVES_REGS(b, c, d, e, h, l);
 
 UBYTE link_operation_mode;
 

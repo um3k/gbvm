@@ -28,7 +28,7 @@ void palette_init() BANKED {
 }
 
 #ifdef CGB
-void CGBZeroPalette(UBYTE reg) OLDCALL BANKED __naked {
+void CGBZeroPalette(UBYTE reg) OLDCALL BANKED NAKED {
     reg;
 __asm
         ldhl sp, #6

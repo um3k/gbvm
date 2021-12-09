@@ -25,7 +25,7 @@ static FADE_DIRECTION fade_direction;
 
 #ifdef CGB
 
-void CGBFadeToWhiteStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) OLDCALL __naked {
+void CGBFadeToWhiteStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) OLDCALL NAKED {
     pal; reg; step;
 __asm
         ldhl sp, #5
@@ -79,7 +79,7 @@ __asm
 __endasm;
 }
 
-void CGBFadeToBlackStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) OLDCALL __naked {
+void CGBFadeToBlackStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) OLDCALL NAKED {
     pal; reg; step;
 __asm
         ldhl sp, #5
@@ -145,7 +145,7 @@ void ApplyPaletteChangeColor(UBYTE index) {
 }
 #endif
 
-UBYTE DMGFadeToWhiteStep(UBYTE pal, UBYTE step) OLDCALL __naked {
+UBYTE DMGFadeToWhiteStep(UBYTE pal, UBYTE step) OLDCALL NAKED {
     pal; step;
 __asm
         ldhl    SP, #3
@@ -182,7 +182,7 @@ __asm
 __endasm;
 }
 
-UBYTE DMGFadeToBlackStep(UBYTE pal, UBYTE step) OLDCALL __naked {
+UBYTE DMGFadeToBlackStep(UBYTE pal, UBYTE step) OLDCALL NAKED {
     pal; step;
 __asm
         ldhl    SP, #3

@@ -13,7 +13,7 @@ void parallax_init() BANKED {
     memcpy(parallax_rows, parallax_rows_defaults, sizeof(parallax_rows)); 
 }
 
-void parallax_LCD_isr() __naked NONBANKED {
+void parallax_LCD_isr() NONBANKED NAKED {
 __asm
         ld hl, #_parallax_row
         ld a, (hl+)

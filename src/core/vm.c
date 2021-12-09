@@ -341,9 +341,11 @@ void vm_rpn(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS) OLDCALL NONBANK
 void vm_test_terminate(SCRIPT_CTX * THIS, UBYTE flags) OLDCALL BANKED {
     THIS;
     if (flags & 1) wait_vbl_done();
+#if defined(__SDCC)
 __asm
         ld b, b
 __endasm;
+#endif
 }
 
 // puts context into a waitable state
@@ -465,9 +467,9 @@ void vm_poll_loaded(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
     vm_loaded_state = FALSE;
 }
 // call native function by far pointer;
-void vm_call_native(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS, UINT8 bank, const void * ptr) OLDCALL NONBANKED {
+void vm_call_native(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS, UINT8 bank, const void * ptr) OLDCALL NONBANKED NAKED {
     dummy0; dummy1; THIS; bank; ptr; // suppress warnings
-#if defined(NINTENDO)
+#if defined(__SDCC) && defined(NINTENDO) 
 __asm
         lda hl, 8(sp)
         ld a, (hl+)
@@ -491,8 +493,9 @@ void vm_memcpy(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB, INT16 count) OLDCALL B
 // executes one step in the passed context
 // return zero if script end
 // bank with VM code must be active
-UBYTE VM_STEP(SCRIPT_CTX * CTX) __naked NONBANKED STEP_FUNC_ATTR {
+UBYTE VM_STEP(SCRIPT_CTX * CTX) NAKED NONBANKED STEP_FUNC_ATTR {
     CTX;
+#if defined(__SDCC) && defined(NINTENDO) 
 __asm
         lda hl, 2(sp)
         ld a, (hl+)
@@ -601,6 +604,7 @@ __asm
 
         ret
 __endasm;
+#endif
 }
 
 // global shared script memory

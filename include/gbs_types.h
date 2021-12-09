@@ -129,7 +129,7 @@ typedef struct projectile_def_t
     animation_t animations[4];
     uint8_t anim_tick;
     uint8_t move_speed;
-    UINT16 initial_offset;
+    uint16_t initial_offset;
     collision_group_e collision_group;
     uint8_t collision_mask;
 } projectile_def_t;

@@ -11,11 +11,11 @@
 #include "compat.h"
 
 #if defined(NINTENDO)
-#define STEP_FUNC_ATTR OLDCALL __preserves_regs(b, c) 
+#define STEP_FUNC_ATTR OLDCALL PRESERVES_REGS(b, c) 
 typedef UWORD DUMMY0_t;
 typedef UWORD DUMMY1_t;
 #elif defined(SEGA)
-#define STEP_FUNC_ATTR __z88dk_fastcall
+#define STEP_FUNC_ATTR Z88DK_FASTCALL
 typedef UBYTE DUMMY0_t;
 typedef UWORD DUMMY1_t;
 #endif
@@ -146,7 +146,7 @@ void vm_memcpy(SCRIPT_CTX * THIS, INT16 idxA, INT16 idxB, INT16 count) OLDCALL B
 
 // return zero if script end
 // bank with VM code must be active
-UBYTE VM_STEP(SCRIPT_CTX * CTX) __naked NONBANKED STEP_FUNC_ATTR;
+UBYTE VM_STEP(SCRIPT_CTX * CTX) NAKED NONBANKED STEP_FUNC_ATTR;
 
 // return TRUE if VM is in locked state
 inline UBYTE VM_ISLOCKED() {

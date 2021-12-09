@@ -148,7 +148,7 @@ void music_stop() BANKED {
     current_track = NULL;
 }
 
-void music_mute(UBYTE channels) OLDCALL NONBANKED __naked {
+void music_mute(UBYTE channels) OLDCALL NONBANKED NAKED {
     channels;
 __asm
 #ifdef GBT_PLAYER
@@ -197,7 +197,7 @@ __endasm;
 }
 
 UINT8 ISR_counter = 0;
-void music_update() OLDCALL NONBANKED __naked {
+void music_update() OLDCALL NONBANKED NAKED {
 __asm
         call _sample_play_isr
         ld hl, #_ISR_counter
@@ -267,7 +267,7 @@ void wave_play(UBYTE frames, UBYTE bank, UBYTE * sample, UWORD size) BANKED {
     tone_frames = frames;
 }
 
-static void sound_load_regs(UBYTE reg, UBYTE len, UBYTE bank, const UBYTE * data) OLDCALL NONBANKED __naked {
+static void sound_load_regs(UBYTE reg, UBYTE len, UBYTE bank, const UBYTE * data) OLDCALL NONBANKED NAKED {
     reg; len; bank; data;
 __asm
         ldhl sp, #2
