@@ -55,7 +55,7 @@ void music_init(UBYTE preserve) BANKED {
     } else {
         memset(music_events, 0, sizeof(music_events));
     }
-    __critical {
+    CRITICAL {
         routine_queue_head = routine_queue_tail = 0;
     }
 }
@@ -73,7 +73,7 @@ void hUGETrackerRoutine(unsigned char param, unsigned char ch, unsigned char tic
 void music_events_update() NONBANKED {
     while (routine_queue_head != routine_queue_tail) {
         UBYTE data;
-        __critical {
+        CRITICAL {
             routine_queue_tail++, routine_queue_tail &= (MAX_ROUTINE_QUEUE_LEN - 1);
             data = routine_queue[routine_queue_tail];
         }
@@ -87,7 +87,7 @@ void music_events_update() NONBANKED {
 UBYTE music_events_poll() BANKED {
     if (routine_queue_head != routine_queue_tail) {
         UBYTE data;
-        __critical {
+        CRITICAL {
             routine_queue_tail++, routine_queue_tail &= (MAX_ROUTINE_QUEUE_LEN - 1);
             data = routine_queue[routine_queue_tail];
         }
@@ -104,7 +104,7 @@ void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) NONBANKED {
 #ifdef GBT_PLAYER
         UBYTE _save = _current_bank;
         current_track_bank = bank;
-        __critical {
+        CRITICAL {
             gbt_play(track, bank, 7);
             gbt_loop(loop);
             SWITCH_ROM(_save);
@@ -115,7 +115,7 @@ void music_play(const TRACK_T *track, UBYTE bank, UBYTE loop) NONBANKED {
         loop;
         UBYTE _save = _current_bank;
         current_track_bank = bank;
-        __critical {
+        CRITICAL {
             music_stop();
             SWITCH_ROM(current_track_bank);
             hUGE_init(track);

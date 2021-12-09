@@ -71,6 +71,6 @@ _wave_addr = _wave_addr + 1
     __endasm;
 }
 
-void set_sample(UINT8 bank, const UINT8 * sample, UINT16 length) BANKED __critical {
+void set_sample(UINT8 bank, const UINT8 * sample, UINT16 length) BANKED CRITICAL {
     play_bank = bank, play_sample = sample, play_length = length >> 4;
 }

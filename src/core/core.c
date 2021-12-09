@@ -149,7 +149,7 @@ void process_VM() {
                     }
                 }
 
-                __critical {
+                CRITICAL {
                     switch (scene_LCD_type) {
                         case LCD_parallax: 
                             add_LCD(parallax_LCD_isr);
@@ -216,7 +216,7 @@ void core_run() BANKED {
     // kill all threads and clear VM memory
     script_runner_init(TRUE);
 
-    __critical {
+    CRITICAL {
         parallax_row = parallax_rows;
         LYC_REG = 0u;
 
