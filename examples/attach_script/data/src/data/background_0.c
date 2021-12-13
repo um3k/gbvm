@@ -1,6 +1,6 @@
 #pragma bank 255
 
-// Background: cave
+// Background: placeholder
 
 #include "gbs_types.h"
 #include "data/tileset_0.h"
