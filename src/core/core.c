@@ -72,9 +72,9 @@ void process_VM() {
                     script_execute(BANK(bootstrap_script), bootstrap_script, 0, 0);
                     break;
                 }
-                if (joy != 0) events_update();
                 if (!VM_ISLOCKED()) {
-                    state_update();                                     // Update Current Scene Type
+                    if (joy != 0) events_update();                      // update joypad events (must be the first)
+                    state_update();                                     // update current scene, depending on its type
                     if ((game_time & 0x0F) == 0x00) timers_update();    // update timers
                     music_events_update();                              // update music events
                 }
