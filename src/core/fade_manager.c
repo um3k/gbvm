@@ -27,6 +27,7 @@ static FADE_DIRECTION fade_direction;
 
 void CGBFadeToWhiteStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) OLDCALL NAKED {
     pal; reg; step;
+#if defined(__SDCC) && defined(NINTENDO) 
 __asm
         ldhl sp, #5
         ld a, (hl-)
@@ -77,10 +78,12 @@ __asm
 
         ret   
 __endasm;
+#endif
 }
 
 void CGBFadeToBlackStep(const palette_entry_t * pal, UBYTE reg, UBYTE step) OLDCALL NAKED {
     pal; reg; step;
+#if defined(__SDCC) && defined(NINTENDO) 
 __asm
         ldhl sp, #5
         ld a, (hl-)
@@ -132,6 +135,7 @@ __asm
 
         ret   
 __endasm;
+#endif
 }
 
 void ApplyPaletteChangeColor(UBYTE index) {
@@ -147,6 +151,7 @@ void ApplyPaletteChangeColor(UBYTE index) {
 
 UBYTE DMGFadeToWhiteStep(UBYTE pal, UBYTE step) OLDCALL NAKED {
     pal; step;
+#if defined(__SDCC) && defined(NINTENDO) 
 __asm
         ldhl    SP, #3
         ld      A, (HL-)
@@ -180,10 +185,12 @@ __asm
         jr      NZ, 1$
         ret   
 __endasm;
+#endif
 }
 
 UBYTE DMGFadeToBlackStep(UBYTE pal, UBYTE step) OLDCALL NAKED {
     pal; step;
+#if defined(__SDCC) && defined(NINTENDO) 
 __asm
         ldhl    SP, #3
         ld      A, (HL-)
@@ -218,6 +225,7 @@ __asm
         jr      NZ, 1$
         ret   
 __endasm;
+#endif
 }
 
 void ApplyPaletteChangeDMG(UBYTE index) {
