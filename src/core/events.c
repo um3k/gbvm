@@ -28,6 +28,7 @@ void events_update() NONBANKED {
             if (*slot == 0) continue;
             script_event_t * event = &input_events[*slot - 1u];
             if (!event->script_addr) continue;
+            joy ^= key;     // reset key bit
             if ((event->handle == 0) || ((event->handle & SCRIPT_TERMINATED) != 0))
                 script_execute(event->script_bank, event->script_addr, &event->handle, 1, (int)key);
         }
