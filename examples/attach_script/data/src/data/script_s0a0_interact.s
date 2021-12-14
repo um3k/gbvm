@@ -14,7 +14,7 @@ _script_s0a0_interact::
 
         ; Input Script Attach
         VM_CONTEXT_PREPARE      4, ___bank_script_input_0, _script_input_0
-        VM_INPUT_ATTACH         16, 4
+        VM_INPUT_ATTACH         16, ^/(4 | .OVERRIDE_DEFAULT)/
 
         ; Stop Script
         VM_STOP
