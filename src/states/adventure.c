@@ -1,5 +1,6 @@
 #pragma bank 3
 
+#include "states/states_defines.h"
 #include "states/adventure.h"
 
 #include "actor.h"
@@ -14,7 +15,9 @@
 #include "vm.h"
 #include "math.h"
 
+#ifndef ADVENTURE_CAMERA_DEADZONE
 #define ADVENTURE_CAMERA_DEADZONE 8
+#endif
 
 void adventure_init() BANKED {
     // Set camera to follow player

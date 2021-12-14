@@ -1,5 +1,6 @@
 #pragma bank 3
 
+#include "states/states_defines.h"
 #include "states/pointnclick.h"
 
 #include "actor.h"
@@ -10,7 +11,9 @@
 #include "trigger.h"
 #include "vm.h"
 
+#ifndef POINT_N_CLICK_CAMERA_DEADZONE
 #define POINT_N_CLICK_CAMERA_DEADZONE 24
+#endif
 
 UBYTE last_hit_trigger = MAX_TRIGGERS;
 

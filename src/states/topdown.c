@@ -1,5 +1,6 @@
 #pragma bank 3
 
+#include "states/states_defines.h"
 #include "states/topdown.h"
 
 #include "actor.h"
@@ -12,7 +13,9 @@
 #include "math.h"
 #include "vm.h"
 
+#ifndef INPUT_TOPDOWN_INTERACT
 #define INPUT_TOPDOWN_INTERACT INPUT_A
+#endif
 
 UBYTE topdown_grid;
 

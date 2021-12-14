@@ -1,6 +1,8 @@
 #pragma bank 3
 
+#include "states/states_defines.h"
 #include "states/platform.h"
+
 #include "actor.h"
 #include "camera.h"
 #include "collision.h"
@@ -12,12 +14,21 @@
 #include "trigger.h"
 #include "vm.h"
 
+#ifndef INPUT_PLATFORM_JUMP
 #define INPUT_PLATFORM_JUMP        INPUT_A
+#endif
+#ifndef INPUT_PLATFORM_RUN
 #define INPUT_PLATFORM_RUN         INPUT_B
+#endif
+#ifndef INPUT_PLATFORM_INTERACT
 #define INPUT_PLATFORM_INTERACT    INPUT_A
-
+#endif
+#ifndef PLATFORM_CAMERA_DEADZONE_X
 #define PLATFORM_CAMERA_DEADZONE_X 4
+#endif
+#ifndef PLATFORM_CAMERA_DEADZONE_Y
 #define PLATFORM_CAMERA_DEADZONE_Y 16
+#endif
 
 UBYTE grounded;
 UBYTE on_ladder;

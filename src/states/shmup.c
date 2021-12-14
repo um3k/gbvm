@@ -1,6 +1,8 @@
 #pragma bank 3
 
+#include "states/states_defines.h"
 #include "states/shmup.h"
+
 #include "actor.h"
 #include "camera.h"
 #include "collision.h"
@@ -10,7 +12,9 @@
 #include "trigger.h"
 #include "vm.h"
 
+#ifndef SHOOTER_HURT_IFRAMES
 #define SHOOTER_HURT_IFRAMES 10
+#endif
 
 UINT8 shooter_scroll_speed = 16;
 UBYTE shooter_reached_end;

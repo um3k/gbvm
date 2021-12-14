@@ -1,5 +1,6 @@
 #pragma bank 3
 
+#include "states/states_defines.h"
 #include "states/logo.h"
 
 #include "camera.h"
