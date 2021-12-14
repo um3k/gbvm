@@ -11,12 +11,22 @@
 ___bank_script_input_0 = 255
 .globl ___bank_script_input_0
 
-_script_input_0::
-        ; Sound Play Beep
-        VM_SOUND_PLAY           30, 4, 0x01, 0xF2, 0x2C, 0xC0, 0x00
-        ; Wait N Frames
-        VM_PUSH_CONST           30
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+.globl _pl_vel_y
+.globl _grounded
 
+_script_input_0::
+
+        VM_PUSH_CONST           0
+        VM_GET_UINT8            .ARG0, _grounded
+
+        VM_IF_CONST             .EQ, .ARG0, 0, 1$, 1  
+
+;        pl_vel_y = -plat_jump_vel;
+        VM_SET_CONST_INT16      _pl_vel_y, -16384
+        
+;        grounded = FALSE;
+        VM_SET_CONST_UINT8      _grounded, 0
+
+1$:
         ; Stop Script
         VM_STOP
