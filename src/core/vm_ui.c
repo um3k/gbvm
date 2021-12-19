@@ -51,7 +51,7 @@ void vm_load_text(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS, UBYTE nar
                     break;
                 // char from variable
                 case 'c':
-                    if ((unsigned char)idx != 0) *d++ = (unsigned char)idx;
+                    *d++ = (unsigned char)idx;
                     break;
                 // text tempo from variable
                 case 't':
