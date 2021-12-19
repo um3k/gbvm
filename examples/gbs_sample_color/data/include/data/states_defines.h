@@ -1,0 +1,6 @@
+#ifndef __STATES_DEFINES_H
+#define __STATES_DEFINES_H
+
+#define INPUT_PLATFORM_INTERACT    INPUT_B
+
+#endif
