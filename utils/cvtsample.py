@@ -15,7 +15,7 @@ def main(argv=None):
         return
 
     sHDR = "#pragma bank 255\n\n// Wave file: {:s}\n\nBANKREF({:s})\n\nconst UINT8 {:s}[] = {{\n"
-    sFOOT = "};\n"
+    sFOOT = "}};\n\nconst void __at(sizeof({:s})) __size_{:s};\n"
     sEMIT = "0x{:x}"
     sNEW = ",\n"
     sNONEW = ","
@@ -37,7 +37,7 @@ def main(argv=None):
                         d.write(sNEW if (cnt % 16 == 0) else sNONEW)
                             
                     flag = not flag
-                d.write(sFOOT)
+                d.write(sFOOT.format(ident, ident))
         else:
             print("Invalid WAV file format: must be MONO 8KHz (64KBit) PCM")
 
