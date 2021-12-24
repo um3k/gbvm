@@ -15,7 +15,7 @@ inverse_bkg_palette:
         ret        
 
 _script_input_2::
-        VM_CALL_NATIVE .CURRENT_SCRIPT_BANK, inverse_bkg_palette 
+        VM_CALL_NATIVE          .CURRENT_SCRIPT_BANK, inverse_bkg_palette 
 
         VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
 
