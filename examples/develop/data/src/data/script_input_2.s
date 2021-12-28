@@ -8,15 +8,15 @@ ___bank_script_input_2 = 255
 .globl ___bank_script_input_2
 .CURRENT_SCRIPT_BANK == ___bank_script_input_2 
 
-inverse_bkg_palette:
+_script_input_2::
+        VM_CALL_NATIVE          .CURRENT_SCRIPT_BANK, 100$
+        VM_JUMP                 101$
+100$:
         ldh a, (0x47) ; BGP
         cpl
-        ldh (0x47), a ; BGP
+        ldh (0x47), a
         ret        
-
-_script_input_2::
-        VM_CALL_NATIVE          .CURRENT_SCRIPT_BANK, inverse_bkg_palette 
-
+101$:
         VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
 
         ; Text Dialogue
