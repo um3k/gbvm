@@ -911,7 +911,7 @@ OP_VM_LOAD_PALETTE       = 0x7C
 .PALETTE_BKG             = 2
 .PALETTE_SPRITE          = 4
 .macro .DMG_PAL COL1, COL2, COL3, COL4
-        .dw #((COL1 & 0x03) | ((COL2 & 0x03) << 2) | ((COL2 & 0x03) << 4) | ((COL4 & 0x03) << 6))
+        .dw #((COL1 & 0x03) | ((COL2 & 0x03) << 2) | ((COL3 & 0x03) << 4) | ((COL4 & 0x03) << 6))
         .dw 0,0,0 
 .endm
 .macro .CGB_PAL R1,G1,B1 R2,G2,B2 R3,G3,B3 R4,G4,B4
