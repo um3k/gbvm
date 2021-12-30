@@ -6,7 +6,7 @@
 #ifdef SGB
     #define MAX_JOYPADS 2
 #endif
-#define joy (joypads.joy0)
+#define joy (frame_joy)
 
 /* TRUE if any button is being held */
 #define INPUT_ANY (joy)

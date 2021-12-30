@@ -57,7 +57,7 @@ void vm_input_detach(SCRIPT_CTX * THIS, UBYTE mask) OLDCALL BANKED {
 
 void vm_input_get(SCRIPT_CTX * THIS, INT16 idx, UBYTE joyid) OLDCALL BANKED { 
     INT16 * A = VM_REF_TO_PTR(idx);
-    if (joyid == 0) *A = frame_joy; else *A = joypads.joypads[joyid];
+    *A = joypads.joypads[joyid];
 }
 
 void vm_fade_in(SCRIPT_CTX * THIS, UBYTE is_modal) OLDCALL BANKED {
