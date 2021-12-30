@@ -93,6 +93,7 @@
 #define INPUT_DPAD 0xF
 
 extern joypads_t joypads;
+extern UBYTE frame_joy;
 extern UBYTE last_joy;
 extern UBYTE recent_joy;
 
