@@ -958,3 +958,13 @@ OP_VM_COS_SCALE         = 0x8A
 .macro VM_COS_SCALE IDX, IDX_ANGLE, SCALE
         .db OP_VM_COS_SCALE, #<SCALE, #>IDX_ANGLE, #<IDX_ANGLE, #>IDX, #<IDX
 .endm
+
+; --- TEXT SOUND -------------------------------------
+
+; Set sound effect for text 
+OP_VM_SET_TEXT_SOUND    = 0x8B
+.macro VM_SET_TEXT_SOUND FRAMES, CH, ?A, ?B, ?C, ?D, ?E
+        .db OP_VM_SET_TEXT_SOUND, #<CH, #<FRAMES
+        .db #<A, #<B, #<C, #<D, #<E    
+.endm
+

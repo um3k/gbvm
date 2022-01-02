@@ -19,6 +19,9 @@ _script_input_2::
 101$:
         VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
 
+        VM_MUSIC_STOP
+        VM_SET_TEXT_SOUND       2, 1, 0x4c,0x81,0x43,0x73,0x86
+
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "\002\002\343\342 \361\367\370\357 \371\350 \341\351\355\n\356\340\345\353\346\341 \345\354\364\372\362 \356\366\340 \347\341\370\344"
