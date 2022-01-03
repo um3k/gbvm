@@ -19,12 +19,12 @@ type
     BankAlias: boolean;
     BankValue: Integer;
 
-    FileName: String;
-    LineNum, SectionID, Value: LongInt;
+    SourceFile, LineNum, SectionID, Value: LongInt;
   end;
 
   TRPatch = packed record
-    SourceFile: String;
+    SourceFile: LongInt;
+    LineNo: LongInt;
     Offset: LongInt;
     PCSectionID: LongInt;
     PCOffset: LongInt;
@@ -48,12 +48,24 @@ type
     Patches: array of TRPatch;
   end;
 
+  TRNode = packed record
+    ParentID: LongInt;
+    ParentLineNo: LongInt;
+    NodeType: Byte;
+
+    Name: String;
+    Depth: LongInt;
+    Iter: array of LongInt;
+  end;
+
   TRObj = packed record
     ID: array[0..3] of AnsiChar;
     RevisionNumber: LongInt;
     NumberOfSymbols: LongInt;
     NumberOfSections: LongInt;
+    NumberOfNodes: LongInt;
 
+    Nodes: array of TRNode;
     Symbols: array of TRSymbol;
     Sections: array of TRSection;
   end;
@@ -65,6 +77,7 @@ type
     rpnDiv,
     rpnMod,
     rpnNegate,
+    rpnExponent,
     rpnOr,
     rpnAnd,
     rpnXor,
@@ -83,6 +96,8 @@ type
     rpnBankSymbol,
     rpnBankSection,
     rpnCurrentBank,
+    rpnSizeOfSection,
+    rpnStartOfSection,
     rpnHramCheck,
     rpnRstCheck,
     rpnInteger,
@@ -91,9 +106,11 @@ type
   TRPNNode = record
                case Tag: TRPNTag of
                  rpnBankSymbol: (BankSymbol: Integer);
-                 rpnBankSection: (BankSection: Integer);
+                 rpnBankSection: (BankSection: ShortString);
                  rpnInteger: (IntValue: Integer);
                  rpnSymbol: (SymbolID: Integer);
+                 rpnSizeOfSection: (SizeOfSection: ShortString);
+                 rpnStartOfSection: (StartOfSection: ShortString);
              end;
   TRPN = array of TRPNNode;
 
@@ -135,7 +152,7 @@ const
   PATCH_JR = 3;
 
 procedure Die(const S: String); overload;
-begin WriteLn('ERROR:', S); Halt; end;
+begin WriteLn('ERROR: ', S); Halt; end;
 procedure Die(const fmt: String; const params: array of const); overload;
 begin Die(format(fmt, params)); end;
 
@@ -144,19 +161,43 @@ const Sign : array[0..3] of AnsiChar = 'RGB9';
 var I, J: Integer;
 begin
   with TObjFileStream.Create(afilename, fmOpenRead) do try 
-    Read(Result, SizeOf(TRObj) - SizeOf(Result.Symbols) - SizeOf(Result.Sections));
-    if not (CompareMem(@Result.ID, @Sign, sizeof(Result.ID)) and (Result.RevisionNumber = 5)) then Die('Unsupported object file version!');
+    Read(Result, SizeOf(TRObj) - SizeOf(Result.Symbols) - SizeOf(Result.Sections) - SizeOf(Result.Nodes));
+
+    if (not CompareMem(@Result.ID, @Sign, sizeof(Result.ID))) or (not InRange(Result.RevisionNumber, 6, 8)) then
+      Die(
+        'Unsupported object file version! This version of rgb2sdas supports RGB9, revision 6, 7, or 8 files. The provided file is '+
+        Result.ID+', revision '+IntToStr(Result.RevisionNumber)+'.'
+      );
+
     SetLength(Result.Symbols, Result.NumberOfSymbols);
     SetLength(Result.Sections, Result.NumberOfSections);
+    SetLength(Result.Nodes, Result.NumberOfNodes);
+
+    for I := Result.NumberOfNodes-1 downto 0 do begin
+      Result.Nodes[I] := Default(TRNode);
+      with Result.Nodes[I] do begin
+        Read(ParentID, SizeOf(ParentID));
+        Read(ParentLineNo, SizeOf(ParentLineNo));
+        Read(NodeType, SizeOf(NodeType));
+
+        if NodeType <> 0 then
+          Name := ReadNullTerm
+        else begin
+          Read(Depth, SizeOf(Depth));
+          SetLength(Iter, Depth);
+          Read(Iter[0], Depth*SizeOf(LongInt));
+        end;
+      end;
+    end;
 
     for I := 0 to Result.NumberOfSymbols-1 do begin
       Result.Symbols[I] := Default(TRSymbol);
       with Result.Symbols[I] do begin
         ID := I;
         Name := ReadNullTerm;
-        Read(SymType, 1);
+        Read(SymType, SizeOf(SymType));
         if ((SymType and $7F) <> SYM_IMPORT) then begin
-          FileName := ReadNullTerm;
+          Read(SourceFile, SizeOf(SourceFile));
           Read(LineNum, SizeOf(LineNum));
           Read(SectionID, SizeOf(SectionID));
           Read(Value, SizeOf(Value));
@@ -185,7 +226,8 @@ begin
 
       for J := 0 to Result.Sections[I].NumberOfPatches-1 do begin
         with Result.Sections[I].Patches[J] do begin
-          SourceFile := ReadNullTerm;
+          Read(SourceFile, SizeOf(SourceFile));
+          Read(LineNo, SizeOf(LineNo));
           Read(Offset, SizeOf(Offset));
           Read(PCSectionID, SizeOf(PCSectionID));
           Read(PCOffset, SizeOf(PCOffset));
@@ -217,6 +259,22 @@ var
     Result := SwapEndian(Result);
   end;
 
+  function ReadNullTermRPN: String;
+  var
+    C: Integer;
+  begin
+    Result := '';
+
+    C := RPN[I];
+    Inc(I);
+    while C <> 0 do begin
+      Result += Chr(C);
+
+      C := RPN[I];
+      Inc(I);
+    end;
+  end;
+
 begin
   Result := '';
 
@@ -229,6 +287,7 @@ begin
       $03: begin Result += '/ ';   Inc(I); end;
       $04: begin Result += '% ';   Inc(I); end;
       $05: begin Result += 'neg '; Inc(I); end;
+      $06: begin Result += '** ';  Inc(I); end;
       $10: begin Result += '| ';   Inc(I); end;
       $11: begin Result += '& ';   Inc(I); end;
       $12: begin Result += '^ ';   Inc(I); end;
@@ -245,13 +304,15 @@ begin
       $40: begin Result += '<< ';  Inc(I); end;
       $41: begin Result += '>> ';  Inc(I); end;
       $50: begin Result += '(bank-sym ' + IntToStr(ReadLong)+') '; end;
-      $51: begin Result += '(bank-section ' + IntToStr(ReadLong)+') '; end;
+      $51: begin Result += '(bank-section ' + ReadNullTermRPN+') '; end;
       $52: begin Result += 'current-bank'; Inc(I); end;
+      $53: begin Result += '(size-of '+ReadNullTermRPN+') '; end;
+      $54: begin Result += '(start-of '+ReadNullTermRPN+') '; end;
       $60: begin Result += 'hram-check';   Inc(I); end;
       $61: begin Result += 'rst-check';    Inc(I); end;
       $80: begin Result += '(int ' + IntToStr(ReadLong)+') '; end;
       $81: begin Result += '(sym ' + Syms[ReadLong].Name+') '; end;
-      else Exit('INVALID!');
+      else Die('Invalid opcode in RPN detected: ', [RPN[I]]);
     end;
   end;
 end;
@@ -275,6 +336,22 @@ var
     Result := SwapEndian(Result);
   end;
 
+  function ReadNullTermRPN: String;
+  var
+    C: Integer;
+  begin
+    Result := '';
+
+    C := RPN[I];
+    Inc(I);
+    while C <> 0 do begin
+      Result += Chr(C);
+
+      C := RPN[I];
+      Inc(I);
+    end;
+  end;
+
   function nd(Tag: TRPNTag): TRPNNode;
   begin Result.Tag := Tag; end;
 
@@ -288,7 +365,6 @@ begin
   SetLength(Result, 0);
   I := Low(RPN);
   while I <= High(RPN) do begin
-    //Writeln(Format('Parsing %x, len=%d', [RPN[I], Length(Result)]));
     case RPN[I] of
       $00: begin PushRPN(Nd(rpnPlus));         Inc(I); end;
       $01: begin PushRPN(Nd(rpnMinus));        Inc(I); end;
@@ -296,6 +372,7 @@ begin
       $03: begin PushRPN(Nd(rpnDiv));          Inc(I); end;
       $04: begin PushRPN(Nd(rpnMod));          Inc(I); end;
       $05: begin PushRPN(Nd(rpnNegate));       Inc(I); end;
+      $06: begin PushRPN(Nd(rpnExponent));     Inc(I); end;
       $10: begin PushRPN(Nd(rpnOr));           Inc(I); end;
       $11: begin PushRPN(Nd(rpnAnd));          Inc(I); end;
       $12: begin PushRPN(Nd(rpnXor));          Inc(I); end;
@@ -318,10 +395,20 @@ begin
            end;
       $51: begin
              Node.Tag := rpnBankSection;
-             Node.BankSection := ReadLong;
+             Node.BankSection := ReadNullTermRPN;
              PushRPN(Node);
            end;
       $52: begin PushRPN(Nd(rpnCurrentBank));  Inc(I); end;
+      $53: begin
+             Node.Tag := rpnSizeOfSection;
+             Node.SizeOfSection := ReadNullTermRPN;
+             PushRPN(Node);
+           end;
+      $54: begin
+             Node.Tag := rpnStartOfSection;
+             Node.StartOfSection := ReadNullTermRPN;
+             PushRPN(Node);
+           end;
       $60: begin PushRPN(Nd(rpnHramCheck));    Inc(I); end;
       $61: begin PushRPN(Nd(rpnRstCheck));     Inc(I); end;
       $80: begin
