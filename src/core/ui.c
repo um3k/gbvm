@@ -352,7 +352,7 @@ UBYTE ui_draw_text_buffer_char() BANKED {
                 // wait for key press (parameter is a mask)
                 if ((joy & ~last_joy) & *++ui_text_ptr) {
                     text_ff_joypad = current_text_ff_joypad;
-                    joy = last_joy = 0;  // reset joypad
+                    INPUT_RESET;
                     break;
                 }
                 ui_text_ptr--;
