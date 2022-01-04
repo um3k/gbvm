@@ -14,7 +14,7 @@ def main(argv=None):
         print("usage: cvtsample.py SOURCE [IDENTIFIER]")
         return
 
-    sHDR = "#pragma bank 255\n\n// Wave file: {:s}\n\nBANKREF({:s})\n\nconst UINT8 {:s}[] = {{\n"
+    sHDR = "#pragma bank 255\n\n#include <gb/gb.h>\n\n// Wave file: {:s}\n\nBANKREF({:s})\n\nconst UINT8 {:s}[] = {{\n"
     sFOOT = "}};\n\nconst void __at(sizeof({:s})) __size_{:s};\n"
     sEMIT = "0x{:x}"
     sNEW = ",\n"
