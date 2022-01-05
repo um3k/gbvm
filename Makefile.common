@@ -147,9 +147,6 @@ $(TOP)$(OBJDIR)/%.o:	$(TOP)src/%.c
 $(TOP)$(OBJDIR)/%.o:	$(TOP)src/%.s
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-$(TOP)$(OBJDIR)/test_main.o:	$(TOP)test/framework/test_main.c
-	$(CC) $(CFLAGS) -Wf-MMD -c -o $@ $<
-
 $(REL_OBJDIR)/linkfile.lk:	$(OBJS)
 	mkdir -p $(REL_OBJDIR)
 
