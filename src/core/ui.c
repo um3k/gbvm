@@ -71,7 +71,8 @@ UBYTE text_scroll_width, text_scroll_height;
 UBYTE text_scroll_fill;
 
 UBYTE text_sound_frames, text_sound_ch;
-UBYTE text_sound_bank, * text_sound_data;
+UBYTE text_sound_bank; 
+const UBYTE * text_sound_data;
 
 void ui_init() BANKED {
     vwf_direction               = UI_PRINT_LEFTTORIGHT;
@@ -81,7 +82,7 @@ void ui_init() BANKED {
 
     text_in_speed               = 0;
     text_out_speed              = 0;
-    text_ff_joypad              = 1;
+    text_ff_joypad              = TRUE;
     text_bkg_fill               = TEXT_BKG_FILL_W;
 
     ui_text_ptr                 = 0;
