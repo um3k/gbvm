@@ -8,7 +8,7 @@
 
 @del /Q hUGEDriver.lib
 
-%RRGBDS%\rgbasm -ohUGEDriver.obj hUGEDriver.asm
+%RRGBDS%\rgbasm -DGBDK -ohUGEDriver.obj hUGEDriver.asm
 %RGB2SDAS%\rgb2sdas %CVTFLAGS% hUGEDriver.obj
 %GBDK%\sdar q hUGEDriver.lib hUGEDriver.obj.o
 

@@ -6,9 +6,21 @@
 
 ___bank_script_input_2 = 255
 .globl ___bank_script_input_2
+.CURRENT_SCRIPT_BANK == ___bank_script_input_2 
 
 _script_input_2::
+        VM_CALL_NATIVE          .CURRENT_SCRIPT_BANK, 100$
+        VM_JUMP                 101$
+100$:
+        ldh a, (0x47) ; BGP
+        cpl
+        ldh (0x47), a
+        ret        
+101$:
         VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
+
+        VM_MUSIC_STOP
+        VM_SET_TEXT_SOUND       2, 1, 0x4c,0x81,0x43,0x73,0x86
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
