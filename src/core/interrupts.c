@@ -29,7 +29,10 @@ void simple_LCD_isr() NONBANKED {
             LYC_REG = WY_REG - 1; 
         } else if ((WX_REG == 7u) && (show_actors_on_overlay == FALSE)) HIDE_SPRITES;
     } else {
-        if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u) && (show_actors_on_overlay == FALSE)) HIDE_SPRITES;
+        if ((LY_REG < SCREENHEIGHT) && (WX_REG == 7u) && (show_actors_on_overlay == FALSE)) {
+            while (STAT_REG & STATF_BUSY) ;
+            HIDE_SPRITES;
+        }
         LYC_REG = LYC_SYNC_VALUE;
     }
 }
@@ -42,6 +45,7 @@ void fullscreen_LCD_isr() NONBANKED {
         if (!hide_sprites) SHOW_SPRITES;
         LYC_REG = (9 * 8) - 1;    
     } else {
+        while (STAT_REG & STATF_BUSY) ;
         LCDC_REG |= LCDCF_BG8000;
         LYC_REG = LYC_SYNC_VALUE;
     }
