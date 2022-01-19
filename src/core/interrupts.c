@@ -52,13 +52,8 @@ void fullscreen_LCD_isr() NONBANKED {
 }
 
 void VBL_isr() NONBANKED {
-    if ((win_pos_y < MAXWNDPOSY) && (win_pos_x < SCREENWIDTH - 1)) {
-        WX_REG = win_pos_x + MINWNDPOSX;
-        WY_REG = win_pos_y;
-        SHOW_WIN;
-    } else {
-        HIDE_WIN;
-    }
-    scroll_shadow_update();
+    WX_REG = win_pos_x + MINWNDPOSX;
+    if ((WY_REG = win_pos_y) < MENU_CLOSED_Y) SHOW_WIN; else HIDE_WIN;
     if (hide_sprites) HIDE_SPRITES; else SHOW_SPRITES;
+    scroll_shadow_update();
 }
