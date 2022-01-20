@@ -4,8 +4,7 @@
 #include "vm.h"
 #include "gbs_types.h"
 
-void vm_show_sprites() OLDCALL BANKED;
-void vm_hide_sprites() OLDCALL BANKED;
+void vm_set_sprites_visible(SCRIPT_CTX * THIS, UBYTE mode) OLDCALL BANKED;
 void vm_input_wait(SCRIPT_CTX * THIS, UBYTE mask) OLDCALL BANKED;
 void vm_context_prepare(SCRIPT_CTX * THIS, UBYTE slot, UBYTE bank, UBYTE * pc) OLDCALL BANKED;
 void vm_input_attach(SCRIPT_CTX * THIS, UBYTE mask, UBYTE slot) OLDCALL BANKED;

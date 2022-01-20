@@ -661,14 +661,18 @@ OP_VM_OVERLAY_SET_SUBMAP = 0x4F
 
 ; --- GAMEBOY ------------------------------------------
 
-OP_VM_SHOW_SPRITES      = 0x50
-.macro VM_SHOW_SPRITES
-        .db OP_VM_SHOW_SPRITES
+OP_VM_SET_SPRITE_VISIBLE = 0x51
+.SPRITES_SHOW           = 0
+.SPRITES_HIDE           = 1
+.macro VM_SET_SPRITE_VISIBLE MODE
+        .db OP_VM_SET_SPRITE_VISIBLE, #<MODE 
 .endm
 
-OP_VM_HIDE_SPRITES      = 0x51
+.macro VM_SHOW_SPRITES
+        VM_SET_SPRITE_VISIBLE .SPRITES_SHOW
+.endm
 .macro VM_HIDE_SPRITES
-        .db OP_VM_HIDE_SPRITES
+        VM_SET_SPRITE_VISIBLE .SPRITES_HIDE
 .endm
 
 OP_VM_INPUT_WAIT        = 0x52

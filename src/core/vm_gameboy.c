@@ -16,14 +16,9 @@
 #include "data_manager.h"
 #include "interrupts.h"
 
-void vm_show_sprites() OLDCALL BANKED {
-    hide_sprites = FALSE;
-    SHOW_SPRITES;
-}
-
-void vm_hide_sprites() OLDCALL BANKED {
-    hide_sprites = TRUE;
-    HIDE_SPRITES;
+void vm_set_sprites_visible(SCRIPT_CTX * THIS, UBYTE mode) OLDCALL BANKED {
+    THIS;
+    if (hide_sprites = mode) SHOW_SPRITES; else HIDE_SPRITES;
 }
 
 void vm_input_wait(SCRIPT_CTX * THIS, UBYTE mask) OLDCALL BANKED { 

@@ -104,8 +104,8 @@ const SCRIPT_CMD script_cmds[] = {
     {vm_overlay_set_submap,     6}, // 0x4F
 
     // gameboy features instructions section
-    {vm_show_sprites,           0}, // 0x50
-    {vm_hide_sprites,           0}, // 0x51
+    {0, 0},
+    {vm_set_sprites_visible,    1}, // 0x51
     {vm_input_wait,             1}, // 0x52
     {vm_input_attach,           2}, // 0x53
     {vm_input_get,              3}, // 0x54
