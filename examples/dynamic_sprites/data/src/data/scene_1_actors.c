@@ -31,7 +31,8 @@ const struct actor_t scene_1_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s1a0_interact)
+        .script = TO_FAR_PTR_T(script_s1a0_interact),
+        .exclusive_sprite = 0
     },
     {
         // Signpost,
@@ -52,6 +53,7 @@ const struct actor_t scene_1_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s1a1_interact)
+        .script = TO_FAR_PTR_T(script_s1a1_interact),
+        .exclusive_sprite = 0
     }
 };

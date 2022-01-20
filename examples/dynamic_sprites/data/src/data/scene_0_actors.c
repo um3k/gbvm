@@ -43,7 +43,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a0_interact)
+        .script = TO_FAR_PTR_T(script_s0a0_interact),
+        .exclusive_sprite = 0
     },
     {
         // SignpostLeft,
@@ -64,7 +65,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a1_interact)
+        .script = TO_FAR_PTR_T(script_s0a1_interact),
+        .exclusive_sprite = 0
     },
     {
         // SignpostTop,
@@ -85,7 +87,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a2_interact)
+        .script = TO_FAR_PTR_T(script_s0a2_interact),
+        .exclusive_sprite = 0
     },
     {
         // SignpostRight,
@@ -106,7 +109,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a3_interact)
+        .script = TO_FAR_PTR_T(script_s0a3_interact),
+        .exclusive_sprite = 0
     },
     {
         // PortalRight,
@@ -127,7 +131,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a4_interact)
+        .script = TO_FAR_PTR_T(script_s0a4_interact),
+        .exclusive_sprite = 0
     },
     {
         // PortalTop,
@@ -148,7 +153,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a5_interact)
+        .script = TO_FAR_PTR_T(script_s0a5_interact),
+        .exclusive_sprite = 0
     },
     {
         // SignpostBottom,
@@ -169,7 +175,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a6_interact)
+        .script = TO_FAR_PTR_T(script_s0a6_interact),
+        .exclusive_sprite = 0
     },
     {
         // PortalBottom,
@@ -190,6 +197,7 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a7_interact)
+        .script = TO_FAR_PTR_T(script_s0a7_interact),
+        .exclusive_sprite = 0
     }
 };

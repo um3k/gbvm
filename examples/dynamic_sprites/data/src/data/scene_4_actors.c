@@ -41,7 +41,8 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a0_interact)
+        .script = TO_FAR_PTR_T(script_s4a0_interact),
+        .exclusive_sprite = 0
     },
     {
         // Signpost,
@@ -62,7 +63,8 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a1_interact)
+        .script = TO_FAR_PTR_T(script_s4a1_interact),
+        .exclusive_sprite = 0
     },
     {
         // SetActorToPlayer,
@@ -83,7 +85,8 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a2_interact)
+        .script = TO_FAR_PTR_T(script_s4a2_interact),
+        .exclusive_sprite = 0
     },
     {
         // SetActorToCat,
@@ -104,7 +107,8 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a3_interact)
+        .script = TO_FAR_PTR_T(script_s4a3_interact),
+        .exclusive_sprite = 0
     },
     {
         // SetActorToDog,
@@ -125,7 +129,8 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a4_interact)
+        .script = TO_FAR_PTR_T(script_s4a4_interact),
+        .exclusive_sprite = 0
     },
     {
         // SetActorToNPC006,
@@ -146,7 +151,8 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a5_interact)
+        .script = TO_FAR_PTR_T(script_s4a5_interact),
+        .exclusive_sprite = 0
     },
     {
         // DynamicActor,
@@ -167,6 +173,7 @@ const struct actor_t scene_4_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s4a6_interact)
+        .script = TO_FAR_PTR_T(script_s4a6_interact),
+        .exclusive_sprite = 24
     }
 };
