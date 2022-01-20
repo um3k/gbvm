@@ -29,7 +29,7 @@ const struct actor_t scene_9_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Actor 2,
@@ -50,6 +50,6 @@ const struct actor_t scene_9_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     }
 };
