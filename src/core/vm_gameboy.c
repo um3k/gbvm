@@ -55,14 +55,13 @@ void vm_input_get(SCRIPT_CTX * THIS, INT16 idx, UBYTE joyid) OLDCALL BANKED {
     *A = joypads.joypads[joyid];
 }
 
-void vm_fade_in(SCRIPT_CTX * THIS, UBYTE is_modal) OLDCALL BANKED {
+void vm_fade(SCRIPT_CTX * THIS, UBYTE mode) OLDCALL BANKED {
     THIS; 
-    if (is_modal) fade_in_modal(); else fade_in();
-}
-
-void vm_fade_out(SCRIPT_CTX * THIS, UBYTE is_modal) OLDCALL BANKED { 
-    THIS;
-    if (is_modal) fade_out_modal(); else fade_out();
+    if (mode & FADE_DIR_IN) {
+        if (mode & FADE_MODE_MODAL) fade_in_modal(); else fade_in();
+    } else {
+        if (mode & FADE_MODE_MODAL) fade_out_modal(); else fade_out();
+    }
 }
 
 void vm_timer_prepare(SCRIPT_CTX * THIS, UBYTE timer, UBYTE bank, UBYTE * pc) OLDCALL BANKED {

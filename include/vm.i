@@ -700,14 +700,28 @@ OP_VM_CONTEXT_PREPARE   = 0x55
         .db OP_VM_CONTEXT_PREPARE, #>ADDR, #<ADDR, #<BANK, #<SLOT
 .endm
 
-OP_VM_FADE_IN           = 0x56
-.macro VM_FADE_IN IS_MODAL
-        .db OP_VM_FADE_IN, #<IS_MODAL
+OP_VM_FADE              = 0x57
+.FADE_NONMODAL          = 0x00
+.FADE_MODAL             = 0x01
+.FADE_OUT               = 0x00
+.FADE_IN                = 0x02
+.macro VM_FADE FLAGS
+        .db OP_VM_FADE, #<FLAGS
 .endm
 
-OP_VM_FADE_OUT          = 0x57
+.macro VM_FADE_IN IS_MODAL
+        .if IS_MODAL
+                VM_FADE ^/(.FADE_IN | .FADE_MODAL)/
+        .else
+                VM_FADE ^/(.FADE_IN)/
+        .endif
+.endm
 .macro VM_FADE_OUT IS_MODAL
-        .db OP_VM_FADE_OUT, #<IS_MODAL
+        .if IS_MODAL
+                VM_FADE ^/(.FADE_OUT | .FADE_MODAL)/
+        .else
+                VM_FADE ^/(.FADE_OUT)/
+        .endif
 .endm
 
 ; Load script into timer context
