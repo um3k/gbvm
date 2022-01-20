@@ -1,3 +1,5 @@
+.module script_input_2
+
 .include "vm.i"
 .include "data/game_globals.i"
 

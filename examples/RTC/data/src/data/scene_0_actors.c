@@ -27,6 +27,7 @@ const struct actor_t scene_0_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     }
 };

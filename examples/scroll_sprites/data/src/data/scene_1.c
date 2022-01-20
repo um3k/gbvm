@@ -25,10 +25,12 @@ const struct scene_t scene_1 = {
     },
     .palette = TO_FAR_PTR_T(palette_1),
     .sprite_palette = TO_FAR_PTR_T(palette_3),
+    .reserve_tiles = 0,
     .player_sprite = TO_FAR_PTR_T(spritesheet_1),
     .n_actors = 4,
     .n_triggers = 0,
     .n_sprites = 3,
+    .n_projectiles = 0,
     .actors = TO_FAR_PTR_T(scene_1_actors),
     .sprites = TO_FAR_PTR_T(scene_1_sprites),
     .script_init = TO_FAR_PTR_T(script_s1_init)

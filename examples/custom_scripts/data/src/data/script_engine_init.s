@@ -1,5 +1,6 @@
 .include "vm.i"
 .include "macro.i"
+.include "data/game_globals.i"
 
 ; define constants in rom bank 0
 .area _CODE
@@ -25,6 +26,7 @@ _ui_fonts::
 
 ___bank_script_engine_init = 255
 .globl ___bank_script_engine_init
+.CURRENT_SCRIPT_BANK == ___bank_script_engine_init
 
 .globl _plat_min_vel
 .globl _plat_walk_vel
@@ -56,6 +58,8 @@ _script_engine_init::
         VM_SET_CONST_INT16      _shooter_scroll_speed, 16
         VM_SET_CONST_INT16      _topdown_grid, 16
         VM_SET_CONST_INT16      _fade_style, 0
+
+
 
         ; return from init routine
         VM_RET_FAR

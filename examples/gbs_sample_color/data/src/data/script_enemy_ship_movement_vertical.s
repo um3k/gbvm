@@ -1,3 +1,5 @@
+.module script_enemy_ship_movement_vertical
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_enemy_ship_movement_vertical = 255
 .globl ___bank_script_enemy_ship_movement_vertical
+.CURRENT_SCRIPT_BANK == ___bank_script_enemy_ship_movement_vertical
 
 _script_enemy_ship_movement_vertical::
         ; Local Actor
@@ -52,9 +55,6 @@ _script_enemy_ship_movement_vertical::
         VM_POP                  2
         VM_SET_CONST            ^/(ACTOR + 3)/, 0
         VM_ACTOR_MOVE_TO        ACTOR
-
-        ; Variable Set To Value
-        VM_SET_CONST            VAR_TEMP_0, .DIR_LEFT
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/

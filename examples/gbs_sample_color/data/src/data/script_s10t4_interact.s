@@ -1,8 +1,10 @@
+.module script_s10t4_interact
+
 .include "vm.i"
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl b_wait_frames, _wait_frames, ___bank_scene_8, _scene_8
+.globl b_wait_frames, _wait_frames, _fade_frames_per_step, ___bank_scene_8, _scene_8
 
 .area _CODE_255
 
@@ -10,6 +12,7 @@ ACTOR = -4
 
 ___bank_script_s10t4_interact = 255
 .globl ___bank_script_s10t4_interact
+.CURRENT_SCRIPT_BANK == ___bank_script_s10t4_interact
 
 _script_s10t4_interact::
         VM_LOCK
@@ -42,7 +45,8 @@ _script_s10t4_interact::
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
         ; Load Scene
-        VM_FADE_OUT             2
+        VM_SET_CONST_INT8       _fade_frames_per_step, 3
+        VM_FADE_OUT             1
         VM_SET_CONST            ACTOR, 0
         VM_SET_CONST            ^/(ACTOR + 1)/, 1152
         VM_SET_CONST            ^/(ACTOR + 2)/, 768

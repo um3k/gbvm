@@ -11,6 +11,7 @@
 #include "data/scene_7_actors.h"
 #include "data/scene_7_triggers.h"
 #include "data/scene_7_sprites.h"
+#include "data/scene_7_projectiles.h"
 #include "data/script_s7_init.h"
 #include "data/script_s7_p_hit1.h"
 
@@ -27,13 +28,16 @@ const struct scene_t scene_7 = {
     },
     .palette = TO_FAR_PTR_T(palette_3),
     .sprite_palette = TO_FAR_PTR_T(palette_8),
+    .reserve_tiles = 18,
     .player_sprite = TO_FAR_PTR_T(spritesheet_7),
     .n_actors = 16,
     .n_triggers = 1,
-    .n_sprites = 7,
+    .n_sprites = 3,
+    .n_projectiles = 2,
     .actors = TO_FAR_PTR_T(scene_7_actors),
     .triggers = TO_FAR_PTR_T(scene_7_triggers),
     .sprites = TO_FAR_PTR_T(scene_7_sprites),
+    .projectiles = TO_FAR_PTR_T(scene_7_projectiles),
     .script_init = TO_FAR_PTR_T(script_s7_init),
     .script_p_hit1 = TO_FAR_PTR_T(script_s7_p_hit1)
 };

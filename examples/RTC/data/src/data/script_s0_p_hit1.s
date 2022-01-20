@@ -1,3 +1,5 @@
+.module script_s0_p_hit1
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -6,6 +8,7 @@
 
 ___bank_script_s0_p_hit1 = 255
 .globl ___bank_script_s0_p_hit1
+.CURRENT_SCRIPT_BANK == ___bank_script_s0_p_hit1
 
 _script_s0_p_hit1::
         ; If Parameter 0 Equals 2

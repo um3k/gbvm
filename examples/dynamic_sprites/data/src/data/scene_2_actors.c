@@ -40,7 +40,7 @@ const struct actor_t scene_2_actors[] = {
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s2a0_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Signpost,
@@ -62,7 +62,7 @@ const struct actor_t scene_2_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s2a1_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // SetPlayerToPlayer,
@@ -84,7 +84,7 @@ const struct actor_t scene_2_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s2a2_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // SetPlayerToCat,
@@ -106,7 +106,7 @@ const struct actor_t scene_2_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s2a3_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // SetPlayerToDog,
@@ -128,7 +128,7 @@ const struct actor_t scene_2_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s2a4_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // SetPlayerToNPC006,
@@ -150,6 +150,6 @@ const struct actor_t scene_2_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s2a5_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     }
 };

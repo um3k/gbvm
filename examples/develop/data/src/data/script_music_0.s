@@ -1,3 +1,5 @@
+.module script_music_0
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_music_0 = 255
 .globl ___bank_script_music_0
+.CURRENT_SCRIPT_BANK == ___bank_script_music_0
 
 _script_music_0::
         ; Local Actor

@@ -7,16 +7,16 @@
 #include "data/spritesheet_13.h"
 #include "data/script_s10a0_interact.h"
 #include "data/spritesheet_27.h"
-#include "data/script_s10a1_interact.h"
 #include "data/script_s10a1_update.h"
+#include "data/script_s10a1_interact.h"
 #include "data/spritesheet_28.h"
 #include "data/script_s10a2_interact.h"
 #include "data/spritesheet_27.h"
-#include "data/script_s10a3_interact.h"
 #include "data/script_s10a3_update.h"
+#include "data/script_s10a3_interact.h"
 #include "data/spritesheet_27.h"
-#include "data/script_s10a4_interact.h"
 #include "data/script_s10a4_update.h"
+#include "data/script_s10a4_interact.h"
 #include "data/spritesheet_13.h"
 #include "data/script_s10a5_interact.h"
 #include "data/spritesheet_18.h"
@@ -44,7 +44,8 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s10a0_interact)
+        .script = TO_FAR_PTR_T(script_s10a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Turnip 1,
@@ -65,8 +66,9 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
+        .script_update = TO_FAR_PTR_T(script_s10a1_update),
         .script = TO_FAR_PTR_T(script_s10a1_interact),
-        .script_update = TO_FAR_PTR_T(script_s10a1_update)
+        .reserve_tiles = 4
     },
     {
         // Gardener,
@@ -87,7 +89,8 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s10a2_interact)
+        .script = TO_FAR_PTR_T(script_s10a2_interact),
+        .reserve_tiles = 0
     },
     {
         // Turnip 2,
@@ -108,8 +111,9 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
+        .script_update = TO_FAR_PTR_T(script_s10a3_update),
         .script = TO_FAR_PTR_T(script_s10a3_interact),
-        .script_update = TO_FAR_PTR_T(script_s10a3_update)
+        .reserve_tiles = 4
     },
     {
         // Turnip 3,
@@ -130,8 +134,9 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_1,
         .collision_enabled = TRUE,
+        .script_update = TO_FAR_PTR_T(script_s10a4_update),
         .script = TO_FAR_PTR_T(script_s10a4_interact),
-        .script_update = TO_FAR_PTR_T(script_s10a4_update)
+        .reserve_tiles = 4
     },
     {
         // Sign Post,
@@ -152,7 +157,8 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s10a5_interact)
+        .script = TO_FAR_PTR_T(script_s10a5_interact),
+        .reserve_tiles = 0
     },
     {
         // Save Point,
@@ -173,6 +179,7 @@ const struct actor_t scene_10_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s10a6_interact)
+        .script = TO_FAR_PTR_T(script_s10a6_interact),
+        .reserve_tiles = 0
     }
 };

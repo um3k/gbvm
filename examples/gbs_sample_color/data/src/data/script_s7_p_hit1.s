@@ -1,3 +1,5 @@
+.module script_s7_p_hit1
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -8,6 +10,7 @@
 
 ___bank_script_s7_p_hit1 = 255
 .globl ___bank_script_s7_p_hit1
+.CURRENT_SCRIPT_BANK == ___bank_script_s7_p_hit1
 
 _script_s7_p_hit1::
         ; If Parameter 0 Equals 2
@@ -18,7 +21,7 @@ _script_s7_p_hit1::
 1$:
         ; Camera Shake
         VM_PUSH_CONST           30
-        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X)/
+        VM_PUSH_CONST           .CAMERA_SHAKE_X
         VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
         ; Stop Script
         VM_STOP
@@ -32,7 +35,7 @@ _script_s7_p_hit1::
 3$:
         ; Camera Shake
         VM_PUSH_CONST           30
-        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X)/
+        VM_PUSH_CONST           .CAMERA_SHAKE_X
         VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
         ; Stop Script
         VM_STOP
@@ -46,7 +49,7 @@ _script_s7_p_hit1::
 5$:
         ; Camera Shake
         VM_PUSH_CONST           30
-        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X)/
+        VM_PUSH_CONST           .CAMERA_SHAKE_X
         VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
         ; Stop Script
         VM_STOP

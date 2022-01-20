@@ -8,6 +8,7 @@
 #include "data/palette_0.h"
 #include "data/palette_6.h"
 #include "data/spritesheet_2.h"
+#include "data/script_s10_init.h"
 
 BANKREF(scene_10)
 
@@ -22,9 +23,11 @@ const struct scene_t scene_10 = {
     },
     .palette = TO_FAR_PTR_T(palette_0),
     .sprite_palette = TO_FAR_PTR_T(palette_6),
+    .reserve_tiles = 0,
     .player_sprite = TO_FAR_PTR_T(spritesheet_2),
     .n_actors = 0,
     .n_triggers = 0,
     .n_sprites = 0,
-    .n_projectiles = 0
+    .n_projectiles = 0,
+    .script_init = TO_FAR_PTR_T(script_s10_init)
 };

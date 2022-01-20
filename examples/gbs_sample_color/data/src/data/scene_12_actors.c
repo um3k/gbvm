@@ -6,8 +6,8 @@
 #include "gbs_types.h"
 #include "data/spritesheet_31.h"
 #include "data/spritesheet_32.h"
-#include "data/script_s12a1_interact.h"
 #include "data/script_s12a1_update.h"
+#include "data/script_s12a1_interact.h"
 #include "data/spritesheet_33.h"
 #include "data/script_s12a2_interact.h"
 #include "data/spritesheet_33.h"
@@ -38,7 +38,8 @@ const struct actor_t scene_12_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Scientist,
@@ -59,8 +60,9 @@ const struct actor_t scene_12_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
+        .script_update = TO_FAR_PTR_T(script_s12a1_update),
         .script = TO_FAR_PTR_T(script_s12a1_interact),
-        .script_update = TO_FAR_PTR_T(script_s12a1_update)
+        .reserve_tiles = 0
     },
     {
         // Machine,
@@ -81,7 +83,8 @@ const struct actor_t scene_12_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s12a2_interact)
+        .script = TO_FAR_PTR_T(script_s12a2_interact),
+        .reserve_tiles = 0
     },
     {
         // Machine,
@@ -102,7 +105,8 @@ const struct actor_t scene_12_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s12a3_interact)
+        .script = TO_FAR_PTR_T(script_s12a3_interact),
+        .reserve_tiles = 0
     },
     {
         // Machine,
@@ -123,7 +127,8 @@ const struct actor_t scene_12_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s12a4_interact)
+        .script = TO_FAR_PTR_T(script_s12a4_interact),
+        .reserve_tiles = 0
     },
     {
         // Machine,
@@ -144,6 +149,7 @@ const struct actor_t scene_12_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s12a5_interact)
+        .script = TO_FAR_PTR_T(script_s12a5_interact),
+        .reserve_tiles = 0
     }
 };

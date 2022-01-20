@@ -1,3 +1,5 @@
+.module script_s7a14_update
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -8,6 +10,7 @@
 
 ___bank_script_s7a14_update = 255
 .globl ___bank_script_s7a14_update
+.CURRENT_SCRIPT_BANK == ___bank_script_s7a14_update
 
 _script_s7a14_update::
 1$:

@@ -1,3 +1,5 @@
+.module script_timer_0
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -6,6 +8,7 @@
 
 ___bank_script_timer_0 = 255
 .globl ___bank_script_timer_0
+.CURRENT_SCRIPT_BANK == ___bank_script_timer_0
 
 _script_timer_0::
                 VM_PUSH_CONST           0

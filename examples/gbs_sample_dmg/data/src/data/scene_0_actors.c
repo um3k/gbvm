@@ -10,8 +10,8 @@
 #include "data/script_s0a1_interact.h"
 #include "data/spritesheet_3.h"
 #include "data/spritesheet_4.h"
-#include "data/script_s0a3_interact.h"
 #include "data/script_s0a3_update.h"
+#include "data/script_s0a3_interact.h"
 #include "data/spritesheet_5.h"
 #include "data/script_s0a4_interact.h"
 #include "data/spritesheet_6.h"
@@ -41,7 +41,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a0_interact)
+        .script = TO_FAR_PTR_T(script_s0a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Actor 2,
@@ -62,7 +63,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a1_interact)
+        .script = TO_FAR_PTR_T(script_s0a1_interact),
+        .reserve_tiles = 0
     },
     {
         // Actor 3,
@@ -82,7 +84,8 @@ const struct actor_t scene_0_actors[] = {
         .anim_tick = 63,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Actor 4,
@@ -103,8 +106,9 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
+        .script_update = TO_FAR_PTR_T(script_s0a3_update),
         .script = TO_FAR_PTR_T(script_s0a3_interact),
-        .script_update = TO_FAR_PTR_T(script_s0a3_update)
+        .reserve_tiles = 0
     },
     {
         // Actor 5,
@@ -125,7 +129,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a4_interact)
+        .script = TO_FAR_PTR_T(script_s0a4_interact),
+        .reserve_tiles = 0
     },
     {
         // Actor 6,
@@ -146,7 +151,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a5_interact)
+        .script = TO_FAR_PTR_T(script_s0a5_interact),
+        .reserve_tiles = 0
     },
     {
         // Actor 7,
@@ -167,6 +173,7 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a6_interact)
+        .script = TO_FAR_PTR_T(script_s0a6_interact),
+        .reserve_tiles = 0
     }
 };

@@ -29,6 +29,7 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a0_interact)
+        .script = TO_FAR_PTR_T(script_s0a0_interact),
+        .reserve_tiles = 0
     }
 };

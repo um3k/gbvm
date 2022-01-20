@@ -11,6 +11,7 @@
 #include "data/scene_8_actors.h"
 #include "data/scene_8_triggers.h"
 #include "data/scene_8_sprites.h"
+#include "data/script_s8_init.h"
 
 BANKREF(scene_8)
 
@@ -25,6 +26,7 @@ const struct scene_t scene_8 = {
     },
     .palette = TO_FAR_PTR_T(palette_4),
     .sprite_palette = TO_FAR_PTR_T(palette_6),
+    .reserve_tiles = 0,
     .player_sprite = TO_FAR_PTR_T(spritesheet_12),
     .n_actors = 1,
     .n_triggers = 2,
@@ -32,5 +34,6 @@ const struct scene_t scene_8 = {
     .n_projectiles = 0,
     .actors = TO_FAR_PTR_T(scene_8_actors),
     .triggers = TO_FAR_PTR_T(scene_8_triggers),
-    .sprites = TO_FAR_PTR_T(scene_8_sprites)
+    .sprites = TO_FAR_PTR_T(scene_8_sprites),
+    .script_init = TO_FAR_PTR_T(script_s8_init)
 };

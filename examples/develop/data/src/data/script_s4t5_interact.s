@@ -1,3 +1,5 @@
+.module script_s4t5_interact
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -6,6 +8,7 @@
 
 ___bank_script_s4t5_interact = 255
 .globl ___bank_script_s4t5_interact
+.CURRENT_SCRIPT_BANK == ___bank_script_s4t5_interact
 
 _script_s4t5_interact::
         VM_LOCK

@@ -1,3 +1,5 @@
+.module script_s12a1_update
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -9,6 +11,7 @@ ACTOR = -4
 
 ___bank_script_s12a1_update = 255
 .globl ___bank_script_s12a1_update
+.CURRENT_SCRIPT_BANK == ___bank_script_s12a1_update
 
 _script_s12a1_update::
         ; Local Actor
@@ -47,7 +50,7 @@ _script_s12a1_update::
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 768
         VM_SET_CONST            ^/(ACTOR + 2)/, 1536
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_H_FIRST)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active
@@ -70,7 +73,7 @@ _script_s12a1_update::
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 512
         VM_SET_CONST            ^/(ACTOR + 2)/, 1280
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_H_FIRST)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active

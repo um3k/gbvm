@@ -1,3 +1,5 @@
+.module script_turnip_init
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_turnip_init = 255
 .globl ___bank_script_turnip_init
+.CURRENT_SCRIPT_BANK == ___bank_script_turnip_init
 
 _script_turnip_init::
         ; Local Actor

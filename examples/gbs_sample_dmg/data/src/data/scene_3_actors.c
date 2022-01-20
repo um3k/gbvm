@@ -30,7 +30,8 @@ const struct actor_t scene_3_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s3a0_interact)
+        .script = TO_FAR_PTR_T(script_s3a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Actor 2,
@@ -50,6 +51,7 @@ const struct actor_t scene_3_actors[] = {
         .anim_tick = 3,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     }
 };

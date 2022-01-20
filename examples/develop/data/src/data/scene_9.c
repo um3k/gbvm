@@ -26,6 +26,7 @@ const struct scene_t scene_9 = {
     },
     .palette = TO_FAR_PTR_T(palette_5),
     .sprite_palette = TO_FAR_PTR_T(palette_7),
+    .reserve_tiles = 0,
     .player_sprite = TO_FAR_PTR_T(spritesheet_12),
     .n_actors = 2,
     .n_triggers = 2,

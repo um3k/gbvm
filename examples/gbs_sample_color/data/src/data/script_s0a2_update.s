@@ -1,3 +1,5 @@
+.module script_s0a2_update
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -9,6 +11,7 @@ ACTOR = -4
 
 ___bank_script_s0a2_update = 255
 .globl ___bank_script_s0a2_update
+.CURRENT_SCRIPT_BANK == ___bank_script_s0a2_update
 
 _script_s0a2_update::
         ; Local Actor
@@ -45,7 +48,7 @@ _script_s0a2_update::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
         VM_ACTOR_MOVE_TO        ACTOR
 
         VM_JUMP                 6$
@@ -68,7 +71,7 @@ _script_s0a2_update::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
         VM_ACTOR_MOVE_TO        ACTOR
 
         VM_JUMP                 6$
@@ -91,7 +94,7 @@ _script_s0a2_update::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
         VM_ACTOR_MOVE_TO        ACTOR
 
         VM_JUMP                 6$
@@ -114,7 +117,7 @@ _script_s0a2_update::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_CHECK_COLL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
         VM_ACTOR_MOVE_TO        ACTOR
 
         VM_JUMP                 6$

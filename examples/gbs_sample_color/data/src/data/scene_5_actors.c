@@ -38,7 +38,8 @@ const struct actor_t scene_5_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s5a0_interact)
+        .script = TO_FAR_PTR_T(script_s5a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Ice Block,
@@ -59,7 +60,8 @@ const struct actor_t scene_5_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s5a1_interact)
+        .script = TO_FAR_PTR_T(script_s5a1_interact),
+        .reserve_tiles = 0
     },
     {
         // Rock 3,
@@ -80,7 +82,8 @@ const struct actor_t scene_5_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s5a2_interact)
+        .script = TO_FAR_PTR_T(script_s5a2_interact),
+        .reserve_tiles = 0
     },
     {
         // Rock 2,
@@ -101,7 +104,8 @@ const struct actor_t scene_5_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s5a3_interact)
+        .script = TO_FAR_PTR_T(script_s5a3_interact),
+        .reserve_tiles = 0
     },
     {
         // Rock 1,
@@ -122,7 +126,8 @@ const struct actor_t scene_5_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s5a4_interact)
+        .script = TO_FAR_PTR_T(script_s5a4_interact),
+        .reserve_tiles = 0
     },
     {
         // Hidden Stairs,
@@ -142,6 +147,7 @@ const struct actor_t scene_5_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     }
 };

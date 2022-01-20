@@ -1,3 +1,5 @@
+.module script_enemy_ship_destroy
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -9,6 +11,7 @@ ACTOR = -4
 
 ___bank_script_enemy_ship_destroy = 255
 .globl ___bank_script_enemy_ship_destroy
+.CURRENT_SCRIPT_BANK == ___bank_script_enemy_ship_destroy
 
 _script_enemy_ship_destroy::
         ; Local Actor
