@@ -9,6 +9,44 @@ ___bank_script_input_2 = 255
 .CURRENT_SCRIPT_BANK == ___bank_script_input_2 
 
 _script_input_2::
+
+; --- VM_SWITCH example ------------------------------
+        VM_PUSH_CONST           10
+        VM_SWITCH               .ARG0, 3, 0
+            .dw 0,  11$
+            .dw 1,  12$
+            .dw 10, 13$
+
+        VM_LOAD_TEXT            1
+            .dw .ARG0
+            .asciz "Default; value: %d"
+        VM_JUMP                 10$
+11$:
+        VM_LOAD_TEXT            1
+            .dw .ARG0
+            .asciz "Zero; value: %d"
+        VM_JUMP                 10$
+12$:
+        VM_LOAD_TEXT            1
+            .dw .ARG0
+            .asciz "One; value: %d"
+        VM_JUMP                 10$
+13$:
+        VM_LOAD_TEXT            1
+            .dw .ARG0
+            .asciz "Ten; value: %d"
+        VM_JUMP                 10$
+10$:
+        VM_POP                  1
+
+        VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
+        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_IN_SPEED
+        VM_DISPLAY_TEXT
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
+
+; --- VM_CALL_NATIVE example -------------------------
         VM_CALL_NATIVE          .CURRENT_SCRIPT_BANK, 100$
         VM_JUMP                 101$
 100$:
@@ -17,6 +55,8 @@ _script_input_2::
         ldh (0x47), a
         ret        
 101$:
+
+; --- Text features various examples -----------------
         VM_SET_PRINT_DIR        .UI_PRINT_RIGHTTOLEFT
 
         VM_MUSIC_STOP
@@ -24,7 +64,7 @@ _script_input_2::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "\002\002\343\342 \361\367\370\357 \371\350 \341\351\355\n\356\340\345\353\346\341 \345\354\364\372\362 \356\366\340 \347\341\370\344"
+            .asciz "\002\002\343\342 \361\367\370\357 \371\350 \341\351\355\n\356\340\345\353\346\341 \345\354\364\372\362 \356\366\340 \347\341\370\344"
         VM_OVERLAY_CLEAR        0, 0, 20, 4, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 14, .OVERLAY_IN_SPEED
         VM_DISPLAY_TEXT
@@ -36,7 +76,7 @@ _script_input_2::
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
-        .asciz "\002\003\321\372\345\370\374 \345\371\270 \375\362\350\365 \354\377\343\352\350\365\n\364\360\340\355\366\363\347\361\352\350\365 \341\363\353\356\352,\n\344\340 \342\373\357\345\351 \367\340\376."
+            .asciz "\002\003\321\372\345\370\374 \345\371\270 \375\362\350\365 \354\377\343\352\350\365\n\364\360\340\355\366\363\347\361\352\350\365 \341\363\353\356\352,\n\344\340 \342\373\357\345\351 \367\340\376."
         VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
         VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_IN_SPEED
         VM_DISPLAY_TEXT
@@ -54,14 +94,16 @@ _script_input_2::
         VM_LOAD_PALETTE         0x01, ^/.PALETTE_COMMIT | .PALETTE_BKG/
             .DMG_PAL    0,1,2,3
         
-        VM_RESERVE              6
-        
+; --- VM_SGB_TRANSFER example ------------------------
+        VM_PUSH_CONST           0
         VM_GET_INT8             .ARG0, __is_SGB 
-        VM_IF_CONST     .EQ     .ARG0, 0, 1$, 0 
+        VM_IF_CONST     .EQ     .ARG0, 0, 1$, 1 
         VM_SGB_TRANSFER   
             .db ((0x04 << 3) | 1), 1, 0x07, ((0x01 << 4) | (0x02 << 2) | 0x03), 5,5, 10,10,  0, 0, 0, 0, 0, 0, 0, 0 ; ATTR_BLK packet
-        1$:
-        
+1$:
+
+; --- RTC Clock example ------------------------------
+        VM_RESERVE              6
         VM_RTC_START            .RTC_START
         VM_RTC_LATCH
         VM_RTC_GET              .ARG3, .RTC_SECONDS 
@@ -77,10 +119,12 @@ _script_input_2::
         VM_DISPLAY_TEXT
         VM_OVERLAY_SHOW         0, 9, .UI_COLOR_BLACK, 0
         
+; --- VM_OVERLAY_SET_SUBMAP example ------------------
         VM_OVERLAY_SET_SUBMAP   2, 2, 6, 5, 8, 4
         
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_ANY)/
         
+; --- RPN Calculator example -------------------------
         VM_SET_CONST            .ARG5, 0
         VM_ACTOR_GET_POS        .ARG5
         

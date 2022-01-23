@@ -20,12 +20,12 @@ const SCRIPT_CMD script_cmds[] = {
     // system instructions section
     {vm_push,                   2}, // 0x01
     {vm_pop,                    1}, // 0x02
-    {vm_call_rel,               1}, // 0x03
+    {0, 0},
     {vm_call,                   2}, // 0x04
     {vm_ret,                    1}, // 0x05
-    {vm_loop_rel,               4}, // 0x06
+    {0, 0},
     {vm_loop,                   5}, // 0x07
-    {vm_jump_rel,               1}, // 0x08
+    {vm_switch,                 4}, // 0x08
     {vm_jump,                   2}, // 0x09
     {vm_call_far,               3}, // 0x0A
     {vm_ret_far,                1}, // 0x0B

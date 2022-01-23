@@ -100,14 +100,12 @@ extern const void * vm_exception_params_offset;
 // script core functions
 void vm_push(SCRIPT_CTX * THIS, UWORD value) OLDCALL BANKED;
 UWORD vm_pop(SCRIPT_CTX * THIS, UBYTE n) OLDCALL BANKED;
-void vm_call_rel(SCRIPT_CTX * THIS, INT8 ofs) OLDCALL BANKED;
 void vm_call(SCRIPT_CTX * THIS, UBYTE * pc) OLDCALL BANKED;
 void vm_ret(SCRIPT_CTX * THIS, UBYTE n) OLDCALL BANKED;
 void vm_call_far(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * pc) OLDCALL BANKED;
 void vm_ret_far(SCRIPT_CTX * THIS, UBYTE n) OLDCALL BANKED;
-void vm_loop_rel(SCRIPT_CTX * THIS, INT16 idx, INT8 ofs, UBYTE n) OLDCALL BANKED;
 void vm_loop(SCRIPT_CTX * THIS, INT16 idx, UINT8 * pc, UBYTE n) OLDCALL BANKED;
-void vm_jump_rel(SCRIPT_CTX * THIS, INT8 ofs) OLDCALL BANKED;
+void vm_switch(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS, INT16 idx, UBYTE size, UBYTE n) OLDCALL NONBANKED;
 void vm_jump(SCRIPT_CTX * THIS, UBYTE * pc) OLDCALL BANKED;
 void vm_systime(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED;
 void vm_invoke(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * fn, UBYTE nparams, INT16 idx) OLDCALL BANKED;
