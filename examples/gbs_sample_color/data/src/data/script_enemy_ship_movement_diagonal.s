@@ -1,3 +1,5 @@
+.module script_enemy_ship_movement_diagonal
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_enemy_ship_movement_diagonal = 255
 .globl ___bank_script_enemy_ship_movement_diagonal
+.CURRENT_SCRIPT_BANK == ___bank_script_enemy_ship_movement_diagonal
 
 _script_enemy_ship_movement_diagonal::
         ; Local Actor
@@ -31,7 +34,7 @@ _script_enemy_ship_movement_diagonal::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_DIAGONAL
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active
@@ -50,11 +53,8 @@ _script_enemy_ship_movement_diagonal::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_DIAGONAL
         VM_ACTOR_MOVE_TO        ACTOR
-
-        ; Variable Set To Value
-        VM_SET_CONST            VAR_TEMP_0, .DIR_LEFT
 
         ; Actor Set Active
         VM_SET                  ACTOR, ^/(.ARG2 - 4)/
@@ -75,7 +75,7 @@ _script_enemy_ship_movement_diagonal::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_DIAGONAL
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active
@@ -94,7 +94,7 @@ _script_enemy_ship_movement_diagonal::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_DIAGONAL)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_DIAGONAL
         VM_ACTOR_MOVE_TO        ACTOR
 
         VM_POP                  4

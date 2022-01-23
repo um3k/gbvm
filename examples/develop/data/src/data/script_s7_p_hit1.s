@@ -1,3 +1,5 @@
+.module script_s7_p_hit1
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_s7_p_hit1 = 255
 .globl ___bank_script_s7_p_hit1
+.CURRENT_SCRIPT_BANK == ___bank_script_s7_p_hit1
 
 _script_s7_p_hit1::
         ; Local Actor

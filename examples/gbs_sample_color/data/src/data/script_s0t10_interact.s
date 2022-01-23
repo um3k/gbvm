@@ -1,3 +1,5 @@
+.module script_s0t10_interact
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_s0t10_interact = 255
 .globl ___bank_script_s0t10_interact
+.CURRENT_SCRIPT_BANK == ___bank_script_s0t10_interact
 
 _script_s0t10_interact::
         VM_LOCK
@@ -69,7 +72,7 @@ _script_s0t10_interact::
         ; Actor Move To
         VM_SET_CONST            ^/(ACTOR + 1)/, 6016
         VM_SET_CONST            ^/(ACTOR + 2)/, 3200
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_H_FIRST)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
         VM_ACTOR_MOVE_TO        ACTOR
 
 4$:

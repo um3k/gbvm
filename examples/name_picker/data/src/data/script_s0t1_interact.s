@@ -1,3 +1,5 @@
+.module script_s0t1_interact
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_s0t1_interact = 255
 .globl ___bank_script_s0t1_interact
+.CURRENT_SCRIPT_BANK == ___bank_script_s0t1_interact
 
 _script_s0t1_interact::
         VM_LOCK
@@ -37,7 +40,7 @@ _script_s0t1_interact::
         ; Variables .SUB Value
         VM_RPN
             .R_REF      VAR_TEMP_0
-            .R_INT8     11
+            .R_INT16    11
             .R_OPERATOR .SUB
             .R_STOP
         VM_SET                  VAR_TEMP_0, .ARG0
@@ -46,7 +49,7 @@ _script_s0t1_interact::
         ; Variables .SUB Value
         VM_RPN
             .R_REF      VAR_TEMP_1
-            .R_INT8     2
+            .R_INT16    2
             .R_OPERATOR .SUB
             .R_STOP
         VM_SET                  VAR_TEMP_1, .ARG0
@@ -55,7 +58,7 @@ _script_s0t1_interact::
         ; Variables .DIV Value
         VM_RPN
             .R_REF      VAR_TEMP_1
-            .R_INT8     2
+            .R_INT16    2
             .R_OPERATOR .DIV
             .R_STOP
         VM_SET                  VAR_TEMP_1, .ARG0
@@ -89,7 +92,7 @@ _script_s0t1_interact::
         ; Variables .ADD Value
         VM_RPN
             .R_REF      VAR_S0T1_LOCAL_0
-            .R_INT8     35
+            .R_INT16    35
             .R_OPERATOR .ADD
             .R_STOP
         VM_SET                  VAR_S0T1_LOCAL_0, .ARG0

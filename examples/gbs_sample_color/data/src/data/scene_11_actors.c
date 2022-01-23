@@ -32,7 +32,8 @@ const struct actor_t scene_11_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s11a0_interact)
+        .script = TO_FAR_PTR_T(script_s11a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Portal,
@@ -52,7 +53,8 @@ const struct actor_t scene_11_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Save Point,
@@ -73,6 +75,7 @@ const struct actor_t scene_11_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s11a2_interact)
+        .script = TO_FAR_PTR_T(script_s11a2_interact),
+        .reserve_tiles = 0
     }
 };

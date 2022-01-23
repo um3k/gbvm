@@ -1,8 +1,10 @@
+.module script_input_1
+
 .include "vm.i"
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl ___bank_scene_2, _scene_2
+.globl _fade_frames_per_step, ___bank_scene_2, _scene_2
 
 .area _CODE_255
 
@@ -10,6 +12,7 @@ ACTOR = -4
 
 ___bank_script_input_1 = 255
 .globl ___bank_script_input_1
+.CURRENT_SCRIPT_BANK == ___bank_script_input_1
 
 _script_input_1::
         ; Local Actor
@@ -19,7 +22,8 @@ _script_input_1::
         VM_PUSH_CONST           0
 
         ; Load Scene
-        VM_FADE_OUT             2
+        VM_SET_CONST_INT8       _fade_frames_per_step, 3
+        VM_FADE_OUT             1
         VM_SET_CONST            ACTOR, 0
         VM_SET_CONST            ^/(ACTOR + 1)/, 0
         VM_SET_CONST            ^/(ACTOR + 2)/, 0

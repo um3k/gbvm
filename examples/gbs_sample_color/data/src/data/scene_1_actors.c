@@ -34,7 +34,8 @@ const struct actor_t scene_1_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Fire,
@@ -54,7 +55,8 @@ const struct actor_t scene_1_actors[] = {
         .anim_tick = 7,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Sage,
@@ -75,7 +77,8 @@ const struct actor_t scene_1_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s1a2_interact)
+        .script = TO_FAR_PTR_T(script_s1a2_interact),
+        .reserve_tiles = 0
     },
     {
         // Actor 4,
@@ -95,7 +98,8 @@ const struct actor_t scene_1_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Fire,
@@ -115,7 +119,8 @@ const struct actor_t scene_1_actors[] = {
         .anim_tick = 7,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Save Point,
@@ -136,6 +141,7 @@ const struct actor_t scene_1_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s1a5_interact)
+        .script = TO_FAR_PTR_T(script_s1a5_interact),
+        .reserve_tiles = 0
     }
 };

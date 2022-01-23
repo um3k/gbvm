@@ -1,8 +1,10 @@
+.module script_s12t1_interact
+
 .include "vm.i"
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl b_wait_frames, _wait_frames, b_camera_shake_frames, _camera_shake_frames, ___bank_scene_7, _scene_7
+.globl b_wait_frames, _wait_frames, b_camera_shake_frames, _camera_shake_frames, _fade_frames_per_step, ___bank_scene_7, _scene_7
 
 .area _CODE_255
 
@@ -10,6 +12,7 @@ ACTOR = -4
 
 ___bank_script_s12t1_interact = 255
 .globl ___bank_script_s12t1_interact
+.CURRENT_SCRIPT_BANK == ___bank_script_s12t1_interact
 
 _script_s12t1_interact::
         VM_LOCK
@@ -76,13 +79,14 @@ _script_s12t1_interact::
 
         ; Camera Shake
         VM_PUSH_CONST           60
-        VM_PUSH_CONST           ^/(.CAMERA_SHAKE_X)/
+        VM_PUSH_CONST           .CAMERA_SHAKE_X
         VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
         ; Variable Set To True
         VM_SET_CONST            VAR_QUEST9, 1
 
         ; Load Scene
-        VM_FADE_OUT             2
+        VM_SET_CONST_INT8       _fade_frames_per_step, 3
+        VM_FADE_OUT             1
         VM_SET_CONST            ACTOR, 0
         VM_SET_CONST            ^/(ACTOR + 1)/, 0
         VM_SET_CONST            ^/(ACTOR + 2)/, 1152
@@ -103,20 +107,20 @@ _script_s12t1_interact::
         VM_LOAD_TEXT            0
         .asciz "Hey! Do you want\nto end up in\nspace??"
         VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
-        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
+        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
-        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Because that's how\nyou end up in\nspace..."
         VM_OVERLAY_CLEAR        0, 0, 20, 5, .UI_COLOR_WHITE, ^/(.UI_AUTO_SCROLL | .UI_DRAW_FRAME)/
-        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_TEXT_IN_SPEED
+        VM_OVERLAY_MOVE_TO      0, 13, .OVERLAY_IN_SPEED
         VM_DISPLAY_TEXT
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT | .UI_WAIT_BTN_A)/
-        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_TEXT_OUT_SPEED
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_OUT_SPEED
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
@@ -135,7 +139,7 @@ _script_s12t1_interact::
         VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
         VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, ^/(.ACTOR_ATTR_H_FIRST)/
+        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
         VM_ACTOR_MOVE_TO        ACTOR
 
         ; Actor Set Active

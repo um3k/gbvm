@@ -1,3 +1,5 @@
+.module script_turnip_movement
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -9,6 +11,7 @@ ACTOR = -4
 
 ___bank_script_turnip_movement = 255
 .globl ___bank_script_turnip_movement
+.CURRENT_SCRIPT_BANK == ___bank_script_turnip_movement
 
 _script_turnip_movement::
         ; Local Actor

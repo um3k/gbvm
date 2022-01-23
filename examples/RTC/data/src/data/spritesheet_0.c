@@ -9,7 +9,7 @@ BANKREF(spritesheet_0)
 #define SPRITE_0_STATE_DEFAULT 0
 
 const metasprite_t spritesheet_0_metasprite_0[]  = {
-    { 0, 8, 4, 64 }, { 0, -8, 4, 96 },
+    { 0, 8, 8, 0 }, { 0, -8, 4, 96 },
     {metasprite_end}
 };
 
@@ -19,7 +19,7 @@ const metasprite_t spritesheet_0_metasprite_1[]  = {
 };
 
 const metasprite_t spritesheet_0_metasprite_2[]  = {
-    { 0, 8, 4, 0 }, { 0, -8, 4, 32 },
+    { 0, 8, 4, 0 }, { 0, -8, 6, 0 },
     {metasprite_end}
 };
 
@@ -76,6 +76,10 @@ const UWORD spritesheet_0_animations_lookup[] = {
 
 const struct spritesheet_t spritesheet_0 = {
     .n_metasprites = 4,
+    .emote_origin = {
+        .x = 0,
+        .y = -16
+    },
     .metasprites = spritesheet_0_metasprites,
     .animations = spritesheet_0_animations,
     .animations_lookup = spritesheet_0_animations_lookup,

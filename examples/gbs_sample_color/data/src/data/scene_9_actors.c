@@ -31,7 +31,8 @@ const struct actor_t scene_9_actors[] = {
         .anim_tick = 255,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Quest8,
@@ -51,7 +52,8 @@ const struct actor_t scene_9_actors[] = {
         .anim_tick = 255,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Quest9,
@@ -71,7 +73,8 @@ const struct actor_t scene_9_actors[] = {
         .anim_tick = 255,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Quest10,
@@ -91,7 +94,8 @@ const struct actor_t scene_9_actors[] = {
         .anim_tick = 255,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Quest11,
@@ -111,6 +115,7 @@ const struct actor_t scene_9_actors[] = {
         .anim_tick = 255,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     }
 };

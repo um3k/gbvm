@@ -34,7 +34,7 @@ const struct actor_t scene_7_actors[] = {
         .collision_enabled = TRUE,
         .script_update = TO_FAR_PTR_T(script_s7a0_update),
         .script = TO_FAR_PTR_T(script_s7a0_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Actor 2,
@@ -56,6 +56,6 @@ const struct actor_t scene_7_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script_update = TO_FAR_PTR_T(script_s7a1_update),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     }
 };

@@ -1,3 +1,5 @@
+.module script_input_1
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -7,6 +9,7 @@ ACTOR = -4
 
 ___bank_script_input_1 = 255
 .globl ___bank_script_input_1
+.CURRENT_SCRIPT_BANK == ___bank_script_input_1
 
 _script_input_1::
         ; Local Actor
@@ -14,9 +17,6 @@ _script_input_1::
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
         VM_PUSH_CONST           0
-
-        ; Variable Set To Value
-        VM_SET_CONST            VAR_TEMP_0, .DIR_RIGHT
 
         ; Actor Set Active
         VM_SET_CONST            ACTOR, 0

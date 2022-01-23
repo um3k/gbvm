@@ -37,7 +37,8 @@ const struct actor_t scene_2_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s2a0_interact)
+        .script = TO_FAR_PTR_T(script_s2a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Radio,
@@ -58,7 +59,8 @@ const struct actor_t scene_2_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s2a1_interact)
+        .script = TO_FAR_PTR_T(script_s2a1_interact),
+        .reserve_tiles = 0
     },
     {
         // Sign Post 3,
@@ -79,7 +81,8 @@ const struct actor_t scene_2_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s2a2_interact)
+        .script = TO_FAR_PTR_T(script_s2a2_interact),
+        .reserve_tiles = 0
     },
     {
         // Sign Post 2,
@@ -100,7 +103,8 @@ const struct actor_t scene_2_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s2a3_interact)
+        .script = TO_FAR_PTR_T(script_s2a3_interact),
+        .reserve_tiles = 0
     },
     {
         // Sign Post 1,
@@ -121,6 +125,7 @@ const struct actor_t scene_2_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s2a4_interact)
+        .script = TO_FAR_PTR_T(script_s2a4_interact),
+        .reserve_tiles = 0
     }
 };

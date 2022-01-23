@@ -1,3 +1,5 @@
+.module script_timer_1
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -6,6 +8,7 @@
 
 ___bank_script_timer_1 = 255
 .globl ___bank_script_timer_1
+.CURRENT_SCRIPT_BANK == ___bank_script_timer_1
 
 _script_timer_1::
         ; If Variable .EQ Value

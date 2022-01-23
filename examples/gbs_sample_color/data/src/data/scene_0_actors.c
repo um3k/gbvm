@@ -8,8 +8,8 @@
 #include "data/script_s0a0_interact.h"
 #include "data/spritesheet_9.h"
 #include "data/spritesheet_10.h"
-#include "data/script_s0a2_interact.h"
 #include "data/script_s0a2_update.h"
+#include "data/script_s0a2_interact.h"
 #include "data/spritesheet_11.h"
 #include "data/script_s0a3_interact.h"
 #include "data/spritesheet_12.h"
@@ -44,7 +44,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a0_interact)
+        .script = TO_FAR_PTR_T(script_s0a0_interact),
+        .reserve_tiles = 0
     },
     {
         // Duck,
@@ -64,7 +65,8 @@ const struct actor_t scene_0_actors[] = {
         .anim_tick = 63,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     },
     {
         // Pet Owner,
@@ -85,8 +87,9 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
+        .script_update = TO_FAR_PTR_T(script_s0a2_update),
         .script = TO_FAR_PTR_T(script_s0a2_interact),
-        .script_update = TO_FAR_PTR_T(script_s0a2_update)
+        .reserve_tiles = 0
     },
     {
         // Cat,
@@ -107,7 +110,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a3_interact)
+        .script = TO_FAR_PTR_T(script_s0a3_interact),
+        .reserve_tiles = 0
     },
     {
         // Angry Guy,
@@ -128,7 +132,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a4_interact)
+        .script = TO_FAR_PTR_T(script_s0a4_interact),
+        .reserve_tiles = 0
     },
     {
         // Oblivious Guy,
@@ -149,7 +154,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a5_interact)
+        .script = TO_FAR_PTR_T(script_s0a5_interact),
+        .reserve_tiles = 0
     },
     {
         // Sign Post,
@@ -170,7 +176,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a6_interact)
+        .script = TO_FAR_PTR_T(script_s0a6_interact),
+        .reserve_tiles = 0
     },
     {
         // Hider,
@@ -191,7 +198,8 @@ const struct actor_t scene_0_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .script = TO_FAR_PTR_T(script_s0a7_interact)
+        .script = TO_FAR_PTR_T(script_s0a7_interact),
+        .reserve_tiles = 0
     },
     {
         // Florist,
@@ -211,6 +219,7 @@ const struct actor_t scene_0_actors[] = {
         .anim_tick = 15,
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
-        .collision_enabled = TRUE
+        .collision_enabled = TRUE,
+        .reserve_tiles = 0
     }
 };

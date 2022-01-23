@@ -58,6 +58,10 @@ const UWORD spritesheet_21_animations_lookup[] = {
 
 const struct spritesheet_t spritesheet_21 = {
     .n_metasprites = 1,
+    .emote_origin = {
+        .x = 0,
+        .y = -16
+    },
     .metasprites = spritesheet_21_metasprites,
     .animations = spritesheet_21_animations,
     .animations_lookup = spritesheet_21_animations_lookup,

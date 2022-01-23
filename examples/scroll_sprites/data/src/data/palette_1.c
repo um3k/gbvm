@@ -9,7 +9,7 @@ BANKREF(palette_1)
 const struct palette_t palette_1 = {
     .mask = 0xFF,
     .palette = {
-        DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK),
+        DMG_PALETTE(DMG_WHITE, DMG_LITE_GRAY, DMG_DARK_GRAY, DMG_BLACK)
     },
     .cgb_palette = {
         CGB_PALETTE(RGB(30, 30, 30), RGB(25, 29, 31), RGB(18, 26, 30), RGB(6, 19, 29)),

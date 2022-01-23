@@ -1,3 +1,5 @@
+.module script_s5a0_update
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -8,9 +10,10 @@
 
 ___bank_script_s5a0_update = 255
 .globl ___bank_script_s5a0_update
+.CURRENT_SCRIPT_BANK == ___bank_script_s5a0_update
 
 _script_s5a0_update::
-2$:
+1$:
         ; Call Script: Turnip Movement
         VM_PUSH_CONST           1 ; Actor .ARG2
         VM_CALL_FAR             ___bank_script_turnip_movement, _script_turnip_movement
@@ -20,6 +23,6 @@ _script_s5a0_update::
         VM_PUSH_CONST           1
         VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
 
-        VM_JUMP                 2$
+        VM_JUMP                 1$
         ; Stop Script
         VM_STOP

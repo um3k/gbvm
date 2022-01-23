@@ -1,8 +1,10 @@
+.module script_s13t0_interact
+
 .include "vm.i"
 .include "data/game_globals.i"
 .include "macro.i"
 
-.globl ___bank_scene_5, _scene_5
+.globl _fade_frames_per_step, ___bank_scene_5, _scene_5
 
 .area _CODE_255
 
@@ -10,6 +12,7 @@ ACTOR = -4
 
 ___bank_script_s13t0_interact = 255
 .globl ___bank_script_s13t0_interact
+.CURRENT_SCRIPT_BANK == ___bank_script_s13t0_interact
 
 _script_s13t0_interact::
         VM_LOCK
@@ -21,7 +24,8 @@ _script_s13t0_interact::
         VM_PUSH_CONST           0
 
         ; Load Scene
-        VM_FADE_OUT             2
+        VM_SET_CONST_INT8       _fade_frames_per_step, 3
+        VM_FADE_OUT             1
         VM_SET_CONST            ACTOR, 0
         VM_SET_CONST            ^/(ACTOR + 1)/, 1408
         VM_SET_CONST            ^/(ACTOR + 2)/, 1280

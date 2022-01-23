@@ -36,7 +36,7 @@ const struct actor_t scene_5_actors[] = {
         .collision_enabled = TRUE,
         .script_update = TO_FAR_PTR_T(script_s5a0_update),
         .script = TO_FAR_PTR_T(script_s5a0_interact),
-        .exclusive_sprite = 4
+        .reserve_tiles = 4
     },
     {
         // Sign Post,
@@ -58,7 +58,7 @@ const struct actor_t scene_5_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s5a1_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Save Point,
@@ -80,6 +80,6 @@ const struct actor_t scene_5_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s5a2_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     }
 };

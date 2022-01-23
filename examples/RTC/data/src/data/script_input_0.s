@@ -1,3 +1,5 @@
+.module script_input_0
+
 .include "vm.i"
 .include "data/game_globals.i"
 
@@ -6,6 +8,7 @@
 
 ___bank_script_input_0 = 255
 .globl ___bank_script_input_0
+.CURRENT_SCRIPT_BANK == ___bank_script_input_0
 
 _script_input_0::
         ; If Variable True

@@ -30,6 +30,6 @@ const struct actor_t scene_6_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s6a0_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     }
 };

@@ -39,7 +39,7 @@ const struct actor_t scene_3_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s3a0_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Ice Block,
@@ -61,7 +61,7 @@ const struct actor_t scene_3_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s3a1_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Rock 3,
@@ -83,7 +83,7 @@ const struct actor_t scene_3_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s3a2_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Rock 2,
@@ -105,7 +105,7 @@ const struct actor_t scene_3_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s3a3_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Rock 1,
@@ -127,7 +127,7 @@ const struct actor_t scene_3_actors[] = {
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
         .script = TO_FAR_PTR_T(script_s3a4_interact),
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     },
     {
         // Hidden Stairs,
@@ -148,6 +148,6 @@ const struct actor_t scene_3_actors[] = {
         .pinned = FALSE,
         .collision_group = COLLISION_GROUP_NONE,
         .collision_enabled = TRUE,
-        .exclusive_sprite = 0
+        .reserve_tiles = 0
     }
 };
