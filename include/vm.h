@@ -131,7 +131,7 @@ void vm_set_int8(SCRIPT_CTX * THIS, INT8 * addr, INT16 idxA) OLDCALL BANKED;
 void vm_set_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 idxA) OLDCALL BANKED;
 void vm_set_const_int8(SCRIPT_CTX * THIS, UINT8 * addr, UINT8 v) OLDCALL BANKED;
 void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) OLDCALL BANKED;
-void vm_randomize() OLDCALL BANKED;
+void vm_init_rng(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED;
 void vm_rand(SCRIPT_CTX * THIS, INT16 idx, UINT16 min, UINT16 limit, UINT16 mask) OLDCALL BANKED;
 void vm_lock(SCRIPT_CTX * THIS) OLDCALL BANKED;
 void vm_unlock(SCRIPT_CTX * THIS) OLDCALL BANKED;

@@ -313,9 +313,16 @@ OP_VM_SET_CONST_INT16 = 0x22
 .endm
 
 ; Initializes RNG seed
-OP_VM_RANDOMIZE       = 0x23
+OP_VM_INIT_RNG        = 0x23
+.macro VM_INIT_RNG IDX
+        .db OP_VM_INIT_RNG, #>IDX, #<IDX
+.endm
+
 .macro VM_RANDOMIZE
-        .db OP_VM_RANDOMIZE
+        VM_PUSH_CONST   0
+        VM_GET_UINT8    .ARG0, _DIV_REG
+        VM_INIT_RNG     .ARG0
+        VM_POP          1
 .endm
 
 ; Returns random value between MIN and MIN+LIMIT

@@ -12,6 +12,8 @@ ___bank_script_input_2 = 255
 
 _script_input_2::
 
+        VM_RANDOMIZE
+
 ; --- VM_SWITCH example ------------------------------
         VM_PUSH_CONST           10
         VM_SWITCH               .ARG0, 3, 0

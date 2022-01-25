@@ -102,7 +102,7 @@ void vm_switch(DUMMY0_t dummy0, DUMMY1_t dummy1, SCRIPT_CTX * THIS, INT16 idx, U
     table = (INT16 *)(THIS->PC);
     while (size) {
         if (value == *table++) {
-            THIS->PC = (UBYTE *)(*table);   // conditio met, perform jump
+            THIS->PC = (UBYTE *)(*table);   // condition met, perform jump
             SWITCH_ROM(_save);              // restore bank
             return; 
         } else table++;
@@ -405,8 +405,10 @@ void vm_set_const_int16(SCRIPT_CTX * THIS, INT16 * addr, INT16 v) OLDCALL BANKED
 }
 
 // initializes random number generator
-void vm_randomize() OLDCALL BANKED {
-    initrand(DIV_REG);
+void vm_init_rng(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
+    UINT16 * A;
+    if (idx < 0) A = THIS->stack_ptr + idx; else A = script_memory + idx;
+    initrand(*A);
 }
 
 // sets value on stack indexed by idx to random value from given range 0 <= n < limit, mask is calculated by macro 
