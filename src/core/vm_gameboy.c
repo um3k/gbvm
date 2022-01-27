@@ -185,3 +185,42 @@ void vm_rumble(SCRIPT_CTX * THIS, UBYTE enable) OLDCALL BANKED {
     THIS;
     if (enable) *(UBYTE *)0x4000 |= RUMBLE_ENABLE; else *(UBYTE *)0x4000 &= (~RUMBLE_ENABLE);
 }
+
+void vm_load_tileset(SCRIPT_CTX * THIS, INT16 idx, UBYTE bank, const background_t * background) OLDCALL BANKED {
+    UBYTE base_tile = *(INT16 *)(VM_REF_TO_PTR(idx));
+    far_ptr_t tileset;
+#ifdef CGB
+    if (_is_CGB) {
+        ReadBankedFarPtr(&tileset, (void *)&(background->cgb_tileset), bank);
+        if (tileset.bank) {
+            VBK_REG = 1;
+            UWORD n_tiles = ReadBankedUWORD(tileset.ptr, tileset.bank);
+            SetBankedBkgData(base_tile, n_tiles, (UBYTE *)(tileset.ptr) + 2, tileset.bank);
+            VBK_REG = 0;
+        }
+    }
+#endif
+    ReadBankedFarPtr(&tileset, (void *)&(background->tileset), bank);
+    UWORD n_tiles = ReadBankedUWORD(tileset.ptr, tileset.bank);
+    SetBankedBkgData(base_tile, n_tiles, (UBYTE *)(tileset.ptr) + 2, tileset.bank);
+}
+
+void vm_overlay_set_map(SCRIPT_CTX * THIS, INT16 idx, UBYTE x, UBYTE y, UBYTE bank, const background_t * background) OLDCALL BANKED {
+    far_ptr_t tilemap;
+    UBYTE w = ReadBankedUBYTE((void *)&(background->width), bank);
+    UBYTE h = ReadBankedUBYTE((void *)&(background->height), bank);
+    _map_tile_offset = *(INT16 *)(VM_REF_TO_PTR(idx));
+#ifdef CGB
+    if (_is_CGB) {
+        ReadBankedFarPtr(&tilemap, (void *)&(background->cgb_tilemap_attr), bank);
+        if (tilemap.bank) {
+            VBK_REG = 1;
+            SetBankedWinTiles(x, y, w, h, tilemap.ptr, tilemap.bank);
+            VBK_REG = 0;
+        }
+    }
+#endif
+    ReadBankedFarPtr(&tilemap, (void *)&(background->tilemap), bank);
+    SetBankedWinTiles(x, y, w, h, tilemap.ptr, tilemap.bank);
+    _map_tile_offset = 0;
+}

@@ -656,6 +656,11 @@ OP_VM_OVERLAY_SET_SUBMAP = 0x4F
 
 ; --- GAMEBOY ------------------------------------------
 
+OP_VM_LOAD_TILESET      = 0x50
+.macro VM_LOAD_TILESET IDX, BANK, BKG
+        .db OP_VM_LOAD_TILESET, #>BKG, #<BKG, #<BANK, #>IDX, #<IDX
+.endm
+
 OP_VM_SET_SPRITE_VISIBLE = 0x51
 .SPRITES_SHOW           = 0
 .SPRITES_HIDE           = 1
@@ -693,6 +698,11 @@ OP_VM_INPUT_GET         = 0x54
 OP_VM_CONTEXT_PREPARE   = 0x55
 .macro VM_CONTEXT_PREPARE SLOT, BANK, ADDR
         .db OP_VM_CONTEXT_PREPARE, #>ADDR, #<ADDR, #<BANK, #<SLOT
+.endm
+
+OP_VM_OVERLAY_SET_MAP   = 0x56
+.macro VM_OVERLAY_SET_MAP IDX, X, Y, BANK, BKG
+        .db OP_VM_OVERLAY_SET_MAP, #>BKG, #<BKG, #<BANK, #<Y, #<X, #>IDX, #<IDX
 .endm
 
 OP_VM_FADE              = 0x57
