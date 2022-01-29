@@ -204,23 +204,3 @@ void vm_load_tileset(SCRIPT_CTX * THIS, INT16 idx, UBYTE bank, const background_
     UWORD n_tiles = ReadBankedUWORD(&((tileset_t *)(tileset.ptr))->n_tiles, tileset.bank);
     SetBankedBkgData(base_tile, n_tiles, ((tileset_t *)(tileset.ptr))->tiles, tileset.bank);
 }
-
-void vm_overlay_set_map(SCRIPT_CTX * THIS, INT16 idx, UBYTE x, UBYTE y, UBYTE bank, const background_t * background) OLDCALL BANKED {
-    far_ptr_t tilemap;
-    UBYTE w = ReadBankedUBYTE((void *)&(background->width), bank);
-    UBYTE h = ReadBankedUBYTE((void *)&(background->height), bank);
-    _map_tile_offset = *(INT16 *)(VM_REF_TO_PTR(idx));
-#ifdef CGB
-    if (_is_CGB) {
-        ReadBankedFarPtr(&tilemap, (void *)&(background->cgb_tilemap_attr), bank);
-        if (tilemap.bank) {
-            VBK_REG = 1;
-            SetBankedWinTiles(x, y, w, h, tilemap.ptr, tilemap.bank);
-            VBK_REG = 0;
-        }
-    }
-#endif
-    ReadBankedFarPtr(&tilemap, (void *)&(background->tilemap), bank);
-    SetBankedWinTiles(x, y, w, h, tilemap.ptr, tilemap.bank);
-    _map_tile_offset = 0;
-}

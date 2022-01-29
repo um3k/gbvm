@@ -35,6 +35,5 @@ void vm_replace_tile_xy(SCRIPT_CTX * THIS, UBYTE x, UBYTE y, UBYTE tileset_bank,
 void vm_rumble(SCRIPT_CTX * THIS, UBYTE enable) OLDCALL BANKED;
 
 void vm_load_tileset(SCRIPT_CTX * THIS, INT16 idx, UBYTE bank, const background_t * background) OLDCALL BANKED;
-void vm_overlay_set_map(SCRIPT_CTX * THIS, INT16 idx, UBYTE x, UBYTE y, UBYTE bank, const background_t * background) OLDCALL BANKED;
 
 #endif
