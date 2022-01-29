@@ -319,8 +319,14 @@ OP_VM_INIT_RNG        = 0x23
 .endm
 
 .macro VM_RANDOMIZE
-        VM_PUSH_CONST   0
+        VM_RESERVE      2
         VM_GET_UINT8    .ARG0, _DIV_REG
+        VM_GET_UINT8    .ARG1, _game_time
+        VM_RPN
+            .R_INT16    256
+            .R_OPERATOR .MUL
+            .R_OPERATOR .ADD
+            .R_STOP
         VM_INIT_RNG     .ARG0
         VM_POP          1
 .endm

@@ -12,6 +12,9 @@ ___bank_script_input_2 = 255
 
 _script_input_2::
 
+        VM_RANDOMIZE
+
+; --- VM_LOAD_TILESET/VM_OVERLAY_SET_MAP example -----
         VM_PUSH_CONST           128
         VM_LOAD_TILESET         .ARG0, ___bank_background_0, _background_0
         VM_OVERLAY_SET_MAP      .ARG0, 0, 0, ___bank_background_0, _background_0
