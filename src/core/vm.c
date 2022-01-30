@@ -44,8 +44,9 @@ void vm_call(SCRIPT_CTX * THIS, UBYTE * pc) OLDCALL BANKED {
 // return instruction returns to a point where call was invoked
 void vm_ret(SCRIPT_CTX * THIS, UBYTE n) OLDCALL BANKED {
     // pop VM PC from VM stack
-    THIS->stack_ptr -= (n + 1);
+    THIS->stack_ptr--;
     THIS->PC = (const UBYTE *)*(THIS->stack_ptr);
+    if (n) THIS->stack_ptr -= n;
 }
 
 // far call to another bank
@@ -57,10 +58,11 @@ void vm_call_far(SCRIPT_CTX * THIS, UBYTE bank, UBYTE * pc) OLDCALL BANKED {
 }
 // ret from far call
 void vm_ret_far(SCRIPT_CTX * THIS, UBYTE n) OLDCALL BANKED {
-    THIS->stack_ptr -= (n + 1);
+    THIS->stack_ptr--;
     THIS->bank = (UBYTE)(*(THIS->stack_ptr));
     THIS->stack_ptr--;
     THIS->PC = (const UBYTE *)*(THIS->stack_ptr);
+    if (n) THIS->stack_ptr -= n;
 }
 
 // you can also invent calling convention and pass parameters to scripts on VM stack,
