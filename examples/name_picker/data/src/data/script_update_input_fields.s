@@ -8,7 +8,6 @@
 
 ___bank_script_update_input_fields = 255
 .globl ___bank_script_update_input_fields
-.CURRENT_SCRIPT_BANK == ___bank_script_update_input_fields
 
 _script_update_input_fields::
         VM_REPLACE_TILE_XY      7, 12, ___bank_tileset_0, _tileset_0, VAR_STRING_0_

@@ -8,7 +8,6 @@
 
 ___bank_script_init_menu = 255
 .globl ___bank_script_init_menu
-.CURRENT_SCRIPT_BANK == ___bank_script_init_menu
 
 _script_init_menu::
         ; Input Script Attach

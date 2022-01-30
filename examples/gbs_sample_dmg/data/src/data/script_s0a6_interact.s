@@ -5,20 +5,15 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s0a6_interact = 255
 .globl ___bank_script_s0a6_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s0a6_interact
 
 _script_s0a6_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
@@ -34,10 +29,10 @@ _script_s0a6_interact::
         VM_SET_CONST            VAR_SEEN_DUCK, 1
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 7
+        VM_SET_CONST            .LOCAL_ACTOR, 7
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_DOWN
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_DOWN
 
         ; Stop Script
         VM_STOP

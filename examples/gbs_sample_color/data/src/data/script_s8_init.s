@@ -7,20 +7,16 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -4
 
 ___bank_script_s8_init = 255
 .globl ___bank_script_s8_init
-.CURRENT_SCRIPT_BANK == ___bank_script_s8_init
 
 _script_s8_init::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Call Script: Init Menu
         VM_CALL_FAR             ___bank_script_init_menu, _script_init_menu
@@ -29,12 +25,12 @@ _script_s8_init::
         VM_MUSIC_PLAY           ___bank_music_track_3__Data, _music_track_3__Data, .MUSIC_LOOP
 
         ; Player Set Spritesheet
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_SPRITESHEET ACTOR, ___bank_spritesheet_5, _spritesheet_5
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_SPRITESHEET .LOCAL_ACTOR, ___bank_spritesheet_5, _spritesheet_5
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Fade In
         VM_SET_CONST_INT8       _fade_frames_per_step, 1

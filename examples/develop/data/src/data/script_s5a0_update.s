@@ -7,21 +7,22 @@
 
 .area _CODE_255
 
+.LOCAL_TMP0_WAIT_ARGS = -1
 
 ___bank_script_s5a0_update = 255
 .globl ___bank_script_s5a0_update
-.CURRENT_SCRIPT_BANK == ___bank_script_s5a0_update
 
 _script_s5a0_update::
+        VM_RESERVE              1
+
 1$:
         ; Call Script: Turnip Movement
-        VM_PUSH_CONST           1 ; Actor .ARG2
+        VM_PUSH_CONST           1 ; Actor SCRIPT_ARG_0_ACTOR
         VM_CALL_FAR             ___bank_script_turnip_movement, _script_turnip_movement
-        VM_POP                  1
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP0_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP0_WAIT_ARGS
 
         VM_JUMP                 1$
         ; Stop Script

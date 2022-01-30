@@ -5,31 +5,26 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s0t1_interact = 255
 .globl ___bank_script_s0t1_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s0t1_interact
 
 _script_s0t1_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 0
+        VM_SET_CONST            .LOCAL_ACTOR, 0
 
         ; Store Position In Variables
-        VM_ACTOR_GET_POS        ACTOR
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    128
             .R_OPERATOR .DIV
-            .R_REF      ^/(ACTOR + 2)/
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    128
             .R_OPERATOR .DIV
             .R_STOP
@@ -99,45 +94,47 @@ _script_s0t1_interact::
         VM_POP                  1
 
         ; Switch Variable
+        VM_SWITCH               VAR_STRING_INDEX, 5, 0
+        .dw 0, 3$
+        .dw 1, 4$
+        .dw 2, 5$
+        .dw 3, 6$
+        .dw 4, 7$
+
+        ; Variable Copy
+        VM_SET                  VAR_STRING_4_, VAR_S0T1_LOCAL_0
+
+        VM_JUMP                 8$
         ; case 0:
-        VM_IF_CONST .NE         VAR_STRING_INDEX, 0, 3$, 0
+3$:
         ; Variable Copy
         VM_SET                  VAR_STRING_0_, VAR_S0T1_LOCAL_0
 
         VM_JUMP                 8$
-3$:
         ; case 1:
-        VM_IF_CONST .NE         VAR_STRING_INDEX, 1, 4$, 0
+4$:
         ; Variable Copy
         VM_SET                  VAR_STRING_1_, VAR_S0T1_LOCAL_0
 
         VM_JUMP                 8$
-4$:
         ; case 2:
-        VM_IF_CONST .NE         VAR_STRING_INDEX, 2, 5$, 0
+5$:
         ; Variable Copy
         VM_SET                  VAR_STRING_2_, VAR_S0T1_LOCAL_0
 
         VM_JUMP                 8$
-5$:
         ; case 3:
-        VM_IF_CONST .NE         VAR_STRING_INDEX, 3, 6$, 0
+6$:
         ; Variable Copy
         VM_SET                  VAR_STRING_3_, VAR_S0T1_LOCAL_0
 
         VM_JUMP                 8$
-6$:
         ; case 4:
-        VM_IF_CONST .NE         VAR_STRING_INDEX, 4, 7$, 0
+7$:
         ; Variable Copy
         VM_SET                  VAR_STRING_4_, VAR_S0T1_LOCAL_0
 
         VM_JUMP                 8$
-7$:
-        ; default:
-        ; Variable Copy
-        VM_SET                  VAR_STRING_4_, VAR_S0T1_LOCAL_0
-
 8$:
 
         ; If Variable .LT Value

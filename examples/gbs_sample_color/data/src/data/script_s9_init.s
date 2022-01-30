@@ -7,31 +7,27 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -4
 
 ___bank_script_s9_init = 255
 .globl ___bank_script_s9_init
-.CURRENT_SCRIPT_BANK == ___bank_script_s9_init
 
 _script_s9_init::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_QUEST7, 0, 1$, 0
         VM_JUMP                 2$
 1$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 1
+        VM_SET_CONST            .LOCAL_ACTOR, 1
 
         ; Actor Set Animation Frame
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1
-        VM_ACTOR_SET_ANIM_FRAME ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
 2$:
 
@@ -40,11 +36,11 @@ _script_s9_init::
         VM_JUMP                 4$
 3$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Animation Frame
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1
-        VM_ACTOR_SET_ANIM_FRAME ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
 4$:
 
@@ -53,11 +49,11 @@ _script_s9_init::
         VM_JUMP                 6$
 5$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SET_CONST            .LOCAL_ACTOR, 3
 
         ; Actor Set Animation Frame
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1
-        VM_ACTOR_SET_ANIM_FRAME ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
 6$:
 
@@ -66,11 +62,11 @@ _script_s9_init::
         VM_JUMP                 8$
 7$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 4
+        VM_SET_CONST            .LOCAL_ACTOR, 4
 
         ; Actor Set Animation Frame
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1
-        VM_ACTOR_SET_ANIM_FRAME ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
 8$:
 
@@ -79,22 +75,22 @@ _script_s9_init::
         VM_JUMP                 10$
 9$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 5
+        VM_SET_CONST            .LOCAL_ACTOR, 5
 
         ; Actor Set Animation Frame
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1
-        VM_ACTOR_SET_ANIM_FRAME ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1
+        VM_ACTOR_SET_ANIM_FRAME .LOCAL_ACTOR
 
 10$:
 
         ; Actor Hide
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_HIDDEN     ACTOR, 1
-        VM_ACTOR_DEACTIVATE     ACTOR
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_HIDDEN     .LOCAL_ACTOR, 1
+        VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Fade In
         VM_SET_CONST_INT8       _fade_frames_per_step, 1
