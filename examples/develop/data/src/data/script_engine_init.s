@@ -28,7 +28,6 @@ _ui_fonts::
 
 ___bank_script_engine_init = 255
 .globl ___bank_script_engine_init
-.CURRENT_SCRIPT_BANK == ___bank_script_engine_init
 
 .globl _plat_min_vel
 .globl _plat_walk_vel

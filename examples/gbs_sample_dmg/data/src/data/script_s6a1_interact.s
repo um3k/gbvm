@@ -5,108 +5,104 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_PUSH_DIR_VAR = -5
 
 ___bank_script_s6a1_interact = 255
 .globl ___bank_script_s6a1_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s6a1_interact
 
 _script_s6a1_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              5
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; If Actor At Position
-        VM_ACTOR_GET_POS        ACTOR
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    1920
             .R_OPERATOR .EQ
-            .R_REF      ^/(ACTOR + 2)/
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    1280
             .R_OPERATOR .EQ
             .R_OPERATOR .AND
             .R_STOP
         VM_IF_CONST .EQ         .ARG0, 0, 1$, 1
+
         VM_JUMP                 2$
 1$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Push
-        VM_SET_CONST            ACTOR, 0
-        VM_PUSH_CONST           0
-        VM_ACTOR_GET_DIR        ^/(ACTOR - 1)/, .ARG0
-        VM_SET_CONST            ^/(ACTOR - 1)/, 2
-        VM_ACTOR_GET_POS        ^/(ACTOR - 1)/
-        VM_IF_CONST .EQ         .ARG0, .DIR_UP, 3$, 0
-        VM_IF_CONST .EQ         .ARG0, .DIR_LEFT, 4$, 0
-        VM_IF_CONST .EQ         .ARG0, .DIR_RIGHT, 5$, 0
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_GET_DIR        .LOCAL_ACTOR, .LOCAL_TMP1_PUSH_DIR_VAR
+        VM_SET_CONST            .LOCAL_ACTOR, 2
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
+        VM_IF_CONST .EQ         .LOCAL_TMP1_PUSH_DIR_VAR, .DIR_UP, 3$, 0
+        VM_IF_CONST .EQ         .LOCAL_TMP1_PUSH_DIR_VAR, .DIR_LEFT, 4$, 0
+        VM_IF_CONST .EQ         .LOCAL_TMP1_PUSH_DIR_VAR, .DIR_RIGHT, 5$, 0
         VM_RPN
-            .R_REF      ^/(ACTOR + 2 - 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    12800
             .R_OPERATOR .ADD
             .R_STOP
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 1)/, .ARG0
         VM_POP                  1
         VM_JUMP                 6$
 3$:
         VM_RPN
-            .R_REF      ^/(ACTOR + 2 - 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    12800
             .R_OPERATOR .SUB
             .R_INT16    0
             .R_OPERATOR .MAX
             .R_STOP
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 1)/, .ARG0
         VM_POP                  1
         VM_JUMP                 6$
 4$:
         VM_RPN
-            .R_REF      ^/(ACTOR + 1 - 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    12800
             .R_OPERATOR .SUB
             .R_INT16    0
             .R_OPERATOR .MAX
             .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG0
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 1)/, .ARG0
         VM_POP                  1
         VM_JUMP                 6$
 5$:
         VM_RPN
-            .R_REF      ^/(ACTOR + 1 - 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    12800
             .R_OPERATOR .ADD
             .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG0
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 1)/, .ARG0
         VM_POP                  1
 6$:
-        VM_POP                  1
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
-        VM_ACTOR_MOVE_TO        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; If Actor At Position
-        VM_ACTOR_GET_POS        ACTOR
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    1920
             .R_OPERATOR .EQ
-            .R_REF      ^/(ACTOR + 2)/
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    1280
             .R_OPERATOR .EQ
             .R_OPERATOR .AND
             .R_STOP
         VM_IF_CONST .EQ         .ARG0, 0, 7$, 1
+
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "Success!"

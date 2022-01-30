@@ -5,20 +5,15 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s10t1_interact = 255
 .globl ___bank_script_s10t1_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s10t1_interact
 
 _script_s10t1_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_S10T1_LOCAL_0, 0, 1$, 0
@@ -26,13 +21,13 @@ _script_s10t1_interact::
         VM_SET_CONST            VAR_S10T1_LOCAL_0, 1
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SET_CONST            .LOCAL_ACTOR, 3
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_LEFT
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SET_CONST            .LOCAL_ACTOR, 3
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

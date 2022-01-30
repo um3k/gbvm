@@ -5,20 +5,15 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s10a2_interact = 255
 .globl ___bank_script_s10a2_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s10a2_interact
 
 _script_s10a2_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_S10A2_SPOKEN_TO_GARDENER, 0, 1$, 0
@@ -63,10 +58,10 @@ _script_s10a2_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SET_CONST            .LOCAL_ACTOR, 3
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_RIGHT
 
         VM_JUMP                 4$
 3$:
@@ -91,7 +86,7 @@ _script_s10a2_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SET_CONST            .LOCAL_ACTOR, 3
 
         ; Variable Set To True
         VM_SET_CONST            VAR_QUEST8, 1

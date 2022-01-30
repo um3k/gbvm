@@ -5,49 +5,44 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s0t5_interact = 255
 .globl ___bank_script_s0t5_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s0t5_interact
 
 _script_s0t5_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Actor Hide
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_HIDDEN     ACTOR, 1
-        VM_ACTOR_DEACTIVATE     ACTOR
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_HIDDEN     .LOCAL_ACTOR, 1
+        VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 0
+        VM_SET_CONST            .LOCAL_ACTOR, 0
 
         ; Actor Move Relative
-        VM_ACTOR_GET_POS        ACTOR
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
         VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
             .R_INT16    -384
             .R_OPERATOR .ADD
-            .R_REF      ^/(ACTOR + 2)/
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
             .R_INT16    0
             .R_OPERATOR .ADD
             .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
         VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
-        VM_ACTOR_MOVE_TO        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         ; Actor Show
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_HIDDEN     ACTOR, 0
-        VM_ACTOR_ACTIVATE       ACTOR
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_HIDDEN     .LOCAL_ACTOR, 0
+        VM_ACTOR_ACTIVATE       .LOCAL_ACTOR
 
         ; Stop Script
         VM_STOP

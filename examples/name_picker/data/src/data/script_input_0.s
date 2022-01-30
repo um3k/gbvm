@@ -7,12 +7,14 @@
 
 .area _CODE_255
 
+.LOCAL_TMP0_WAIT_ARGS = -1
 
 ___bank_script_input_0 = 255
 .globl ___bank_script_input_0
-.CURRENT_SCRIPT_BANK == ___bank_script_input_0
 
 _script_input_0::
+        VM_RESERVE              1
+
         ; If Variable .GT Value
         VM_IF_CONST .GT         VAR_STRING_INDEX, 0, 1$, 0
         VM_JUMP                 2$
@@ -50,45 +52,47 @@ _script_input_0::
         VM_POP                  1
 
         ; Switch Variable
+        VM_SWITCH               VAR_TEMP_0, 5, 0
+        .dw 0, 8$
+        .dw 1, 9$
+        .dw 2, 10$
+        .dw 3, 11$
+        .dw 4, 12$
+
+        ; Variable Set To Value
+        VM_SET_CONST            VAR_STRING_INDEX, 4
+
+        VM_JUMP                 13$
         ; case 0:
-        VM_IF_CONST .NE         VAR_TEMP_0, 0, 8$, 0
+8$:
         ; Variable Set To Value
         VM_SET_CONST            VAR_STRING_0_, 1
 
         VM_JUMP                 13$
-8$:
         ; case 1:
-        VM_IF_CONST .NE         VAR_TEMP_0, 1, 9$, 0
+9$:
         ; Variable Set To Value
         VM_SET_CONST            VAR_STRING_1_, 1
 
         VM_JUMP                 13$
-9$:
         ; case 2:
-        VM_IF_CONST .NE         VAR_TEMP_0, 2, 10$, 0
+10$:
         ; Variable Set To Value
         VM_SET_CONST            VAR_STRING_2_, 1
 
         VM_JUMP                 13$
-10$:
         ; case 3:
-        VM_IF_CONST .NE         VAR_TEMP_0, 3, 11$, 0
+11$:
         ; Variable Set To Value
         VM_SET_CONST            VAR_STRING_3_, 1
 
         VM_JUMP                 13$
-11$:
         ; case 4:
-        VM_IF_CONST .NE         VAR_TEMP_0, 4, 12$, 0
+12$:
         ; Variable Set To Value
         VM_SET_CONST            VAR_STRING_4_, 1
 
         VM_JUMP                 13$
-12$:
-        ; default:
-        ; Variable Set To Value
-        VM_SET_CONST            VAR_STRING_INDEX, 4
-
 13$:
 
 6$:
@@ -96,8 +100,8 @@ _script_input_0::
         VM_JUMP                 4$
 7$:
         ; Wait N Frames
-        VM_PUSH_CONST           12
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP0_WAIT_ARGS, 12
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP0_WAIT_ARGS
 
         ; Stop Script
         VM_STOP

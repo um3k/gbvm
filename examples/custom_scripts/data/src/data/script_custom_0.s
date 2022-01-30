@@ -8,7 +8,6 @@
 
 ___bank_script_custom_0 = 255
 .globl ___bank_script_custom_0
-.CURRENT_SCRIPT_BANK == ___bank_script_custom_0
 
 _script_custom_0::
         ; Text Dialogue

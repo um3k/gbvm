@@ -8,7 +8,6 @@
 
 ___bank_script_s0t22_interact = 255
 .globl ___bank_script_s0t22_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s0t22_interact
 
 _script_s0t22_interact::
         VM_LOCK

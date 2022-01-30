@@ -8,7 +8,6 @@
 
 ___bank_script_init_weapons = 255
 .globl ___bank_script_init_weapons
-.CURRENT_SCRIPT_BANK == ___bank_script_init_weapons
 
 _script_init_weapons::
         ; Input Script Attach

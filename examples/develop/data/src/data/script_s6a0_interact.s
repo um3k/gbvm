@@ -5,28 +5,23 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s6a0_interact = 255
 .globl ___bank_script_s6a0_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s6a0_interact
 
 _script_s6a0_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_QUEST10, 0, 1$, 0
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 1
+        VM_SET_CONST            .LOCAL_ACTOR, 1
 
         ; Actor Set Animation State
-        VM_ACTOR_SET_ANIM_SET   ACTOR, STATE_OPEN
+        VM_ACTOR_SET_ANIM_SET   .LOCAL_ACTOR, STATE_OPEN
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
