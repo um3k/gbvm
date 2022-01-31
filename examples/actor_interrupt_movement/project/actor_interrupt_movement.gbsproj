@@ -24,7 +24,7 @@
                     "animate": false,
                     "spriteSheetId": "11b5452b-187c-43a3-afb1-a1f4f74ffda2",
                     "direction": "down",
-                    "moveSpeed": 0.5,
+                    "moveSpeed": 1,
                     "animSpeed": 15,
                     "paletteId": "",
                     "isPinned": false,
@@ -131,15 +131,6 @@
                                         "id": "61262b37-5aea-4e74-97ae-445c6e6d2218"
                                     },
                                     {
-                                        "command": "EVENT_GBVM_SCRIPT",
-                                        "args": {
-                                            "script": "VM_PUSH_CONST 1\nVM_ACTOR_INTERRUPT_MOVEMENT .ARG0\nVM_POP 1",
-                                            "__collapse": false,
-                                            "__comment": true
-                                        },
-                                        "id": "849c10b1-3e33-46ab-a0ce-09594ceadf84"
-                                    },
-                                    {
                                         "command": "EVENT_ACTOR_INTERRUPT_MOVEMENT",
                                         "args": {
                                             "actorId": "$self$"
@@ -170,7 +161,7 @@
                     "animate": false,
                     "spriteSheetId": "11b5452b-187c-43a3-afb1-a1f4f74ffda2",
                     "direction": "down",
-                    "moveSpeed": 0.5,
+                    "moveSpeed": 1,
                     "animSpeed": 15,
                     "paletteId": "",
                     "isPinned": false,
@@ -277,15 +268,6 @@
                                         "id": "25165797-3982-42fa-aa4d-bf5603d3c23a"
                                     },
                                     {
-                                        "command": "EVENT_GBVM_SCRIPT",
-                                        "args": {
-                                            "script": "VM_PUSH_CONST 1\nVM_ACTOR_INTERRUPT_MOVEMENT .ARG0\nVM_POP 1",
-                                            "__collapse": false,
-                                            "__comment": true
-                                        },
-                                        "id": "4fcb668c-57ca-4d3c-a637-21d8a46941e3"
-                                    },
-                                    {
                                         "command": "EVENT_ACTOR_INTERRUPT_MOVEMENT",
                                         "args": {
                                             "actorId": "$self$"
@@ -316,7 +298,7 @@
                     "animate": false,
                     "spriteSheetId": "11b5452b-187c-43a3-afb1-a1f4f74ffda2",
                     "direction": "down",
-                    "moveSpeed": 0.5,
+                    "moveSpeed": 1,
                     "animSpeed": 15,
                     "paletteId": "",
                     "isPinned": false,
@@ -421,15 +403,6 @@
                                             "__comment": false
                                         },
                                         "id": "f1c85dea-75b9-4422-bdce-c05cc5a80d96"
-                                    },
-                                    {
-                                        "command": "EVENT_GBVM_SCRIPT",
-                                        "args": {
-                                            "script": "VM_PUSH_CONST 1\nVM_ACTOR_INTERRUPT_MOVEMENT .ARG0\nVM_POP 1",
-                                            "__collapse": false,
-                                            "__comment": true
-                                        },
-                                        "id": "5bc47d2e-adc5-407d-8653-a710b8a06789"
                                     },
                                     {
                                         "command": "EVENT_ACTOR_INTERRUPT_MOVEMENT",
@@ -1498,8 +1471,8 @@
         "startDirection": "up",
         "showCollisions": true,
         "showConnections": true,
-        "worldScrollX": 1814,
-        "worldScrollY": 1562,
+        "worldScrollX": 1379.3333740234375,
+        "worldScrollY": 1396,
         "zoom": 325,
         "customColorsEnabled": true,
         "sgbEnabled": false,
@@ -1528,9 +1501,9 @@
         "defaultUIPaletteId": "default-ui",
         "playerPaletteId": "",
         "navigatorSplitSizes": [
-            596,
-            180,
-            180
+            823,
+            247,
+            247
         ],
         "showNavigator": true,
         "defaultFontId": "4bd653f0-e08d-424e-9e5b-c1f3aaa21e47",
