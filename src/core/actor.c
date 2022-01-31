@@ -176,7 +176,7 @@ void activate_actor(actor_t *actor) BANKED {
         return;
     }
 #endif
-    if (actor->enabled) return;
+    if (actor->enabled || actor->hidden) return;
     actor->enabled = TRUE;
     actor_set_anim_idle(actor);
     DL_REMOVE_ITEM(actors_inactive_head, actor);
