@@ -624,13 +624,25 @@ fx_set_master_volume:
 ;;; Param: ZF = Set if and only if on tick 0
 ;;; Destroy: Anything the routine does
 fx_call_routine:
-    sla c
-    ld a, [routines]
-    add c
-    ld l, a
-    ld a, [routines+1]
-    adc 0
+;    sla c
+;    ld a, [routines]
+;    add c
+;    ld l, a
+;    ld a, [routines+1]
+;    adc 0
+;    ld h, a
+
+    ld hl, routines
+    ld a, $0f
+    and c
+    add a
+    add [hl]
+    ld e, a
+    inc hl
+    ld a, $0
+    adc [hl]
     ld h, a
+    ld l, e
 
     ld a, [hl+]
     ld h, [hl]
