@@ -16,6 +16,7 @@
 #define MOVE_ACTIVE                1
 #define MOVE_ALLOW_H               2
 #define MOVE_ALLOW_V               4
+#define LOWEST_7_BITS              0b1111111
 
 typedef struct act_move_to_t {
     UBYTE ID;
@@ -105,17 +106,18 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
     // Interrupt actor movement
     if (actor->movement_interrupt) {
         // Set new X destination to next tile
-        if (actor->pos.x < params->X && (actor->pos.x & 0b1111111)) {
-            params->X = ((actor->pos.x >> 7) << 7) + 128;
+        if (actor->pos.x < params->X && (actor->pos.x & LOWEST_7_BITS)) {   // Bitmask to check for non-grid-aligned position
+            params->X = ((actor->pos.x >> 7) << 7) + 128;                   // If moving in positive direction, round up to next tile
         } else {
-            params->X = ((actor->pos.x >> 7) << 7);
+            params->X = ((actor->pos.x >> 7) << 7);                         // Otherwise, round down
         }
         // Set new Y destination to next tile
-        if (actor->pos.y < params->Y && (actor->pos.y & 0b1111111)) {
+        if (actor->pos.y < params->Y && (actor->pos.y & LOWEST_7_BITS)) {
             params->Y = ((actor->pos.y >> 7) << 7) + 128;
         } else {
             params->Y = ((actor->pos.y >> 7) << 7); 
         }
+        actor->movement_interrupt = FALSE;
     }
 
     // Actor reached destination
