@@ -109,13 +109,13 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
     if (actor->movement_interrupt) {
         // Set new X destination to next tile
         if ((actor->pos.x < params->X) && (actor->pos.x & TILE_FRACTION_MASK)) {   // Bitmask to check for non-grid-aligned position
-            params->X = (actor->pos.x & ~TILE_FRACTION_MASK) | ONE_TILE_DISTANCE;  // If moving in positive direction, round up to next tile
+            params->X = (actor->pos.x & ~TILE_FRACTION_MASK) + ONE_TILE_DISTANCE;  // If moving in positive direction, round up to next tile
         } else {
             params->X = actor->pos.x  & ~TILE_FRACTION_MASK;                       // Otherwise, round down
         }
         // Set new Y destination to next tile
         if ((actor->pos.y < params->Y) && (actor->pos.y & TILE_FRACTION_MASK)) {
-            params->Y = (actor->pos.y & ~TILE_FRACTION_MASK) | ONE_TILE_DISTANCE;
+            params->Y = (actor->pos.y & ~TILE_FRACTION_MASK) + ONE_TILE_DISTANCE;
         } else {
             params->Y = actor->pos.y  & ~TILE_FRACTION_MASK; 
         }
