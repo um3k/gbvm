@@ -16,7 +16,9 @@
 #define MOVE_ACTIVE                1
 #define MOVE_ALLOW_H               2
 #define MOVE_ALLOW_V               4
-#define LOWEST_7_BITS              0b1111111
+#define TILE_FRACTION_MASK         0b1111111
+#define ONE_TILE_DISTANCE          128
+
 
 typedef struct act_move_to_t {
     UBYTE ID;
@@ -106,16 +108,16 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
     // Interrupt actor movement
     if (actor->movement_interrupt) {
         // Set new X destination to next tile
-        if (actor->pos.x < params->X && (actor->pos.x & LOWEST_7_BITS)) {   // Bitmask to check for non-grid-aligned position
-            params->X = ((actor->pos.x >> 7) << 7) + 128;                   // If moving in positive direction, round up to next tile
+        if ((actor->pos.x < params->X) && (actor->pos.x & TILE_FRACTION_MASK)) {   // Bitmask to check for non-grid-aligned position
+            params->X = (actor->pos.x & ~TILE_FRACTION_MASK) | ONE_TILE_DISTANCE;  // If moving in positive direction, round up to next tile
         } else {
-            params->X = ((actor->pos.x >> 7) << 7);                         // Otherwise, round down
+            params->X = actor->pos.x  & ~TILE_FRACTION_MASK;                       // Otherwise, round down
         }
         // Set new Y destination to next tile
-        if (actor->pos.y < params->Y && (actor->pos.y & LOWEST_7_BITS)) {
-            params->Y = ((actor->pos.y >> 7) << 7) + 128;
+        if ((actor->pos.y < params->Y) && (actor->pos.y & TILE_FRACTION_MASK)) {
+            params->Y = (actor->pos.y & ~TILE_FRACTION_MASK) | ONE_TILE_DISTANCE;
         } else {
-            params->Y = ((actor->pos.y >> 7) << 7); 
+            params->Y = actor->pos.y  & ~TILE_FRACTION_MASK; 
         }
         actor->movement_interrupt = FALSE;
     }
