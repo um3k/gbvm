@@ -5,18 +5,13 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_music_0 = 255
 .globl ___bank_script_music_0
-.CURRENT_SCRIPT_BANK == ___bank_script_music_0
 
 _script_music_0::
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_S9_LIGHTSSTATE, 0, 1$, 0
@@ -30,16 +25,16 @@ _script_music_0::
         .CGB_PAL                31, 18, 18, 31, 18, 18, 30, 7, 7, 9, 4, 4
         .CGB_PAL                31, 18, 18, 31, 18, 18, 30, 7, 7, 9, 4, 4
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 1
+        VM_SET_CONST            .LOCAL_ACTOR, 1
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_RIGHT
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_RIGHT
 
         VM_JUMP                 2$
 1$:
@@ -53,16 +48,16 @@ _script_music_0::
         VM_SET_CONST            VAR_S9_LIGHTSSTATE, 0
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 1
+        VM_SET_CONST            .LOCAL_ACTOR, 1
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_LEFT
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_LEFT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_LEFT
 
 2$:
 

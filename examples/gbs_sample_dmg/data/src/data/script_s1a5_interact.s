@@ -5,13 +5,15 @@
 
 .area _CODE_255
 
+.LOCAL_TMP0_HAS_LOADED = -1
 
 ___bank_script_s1a5_interact = 255
 .globl ___bank_script_s1a5_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s1a5_interact
 
 _script_s1a5_interact::
         VM_LOCK
+
+        VM_RESERVE              1
 
         ; Text Multiple Choice
         VM_LOAD_TEXT            0
@@ -33,9 +35,8 @@ _script_s1a5_interact::
         ; Save Data to Slot 0
         VM_RAISE                EXCEPTION_SAVE, 1
             .SAVE_SLOT 0
-        VM_PUSH_CONST           0
-        VM_POLL_LOADED          .ARG0
-        VM_IF_CONST .EQ         .ARG0, 1, 3$, 1
+        VM_POLL_LOADED          .LOCAL_TMP0_HAS_LOADED
+        VM_IF_CONST .EQ         .LOCAL_TMP0_HAS_LOADED, 1, 3$, 0
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

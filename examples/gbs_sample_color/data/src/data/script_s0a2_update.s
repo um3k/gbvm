@@ -7,131 +7,130 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_TMP0_WAIT_ARGS = -4
+.LOCAL_TMP1_WAIT_ARGS = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP3_WAIT_ARGS = -7
 
 ___bank_script_s0a2_update = 255
 .globl ___bank_script_s0a2_update
-.CURRENT_SCRIPT_BANK == ___bank_script_s0a2_update
 
 _script_s0a2_update::
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              7
 
 1$:
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP0_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP0_WAIT_ARGS
 
         ; Variable Set To Random
-        VM_RANDOMIZE
         VM_RAND                 VAR_TEMP_0, 0, 6
 
         ; Switch Variable
-        ; case 1:
-        VM_IF_CONST .NE         VAR_TEMP_0, 1, 2$, 0
-        ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SWITCH               VAR_TEMP_0, 4, 0
+        .dw 1, 2$
+        .dw 2, 3$
+        .dw 3, 4$
+        .dw 4, 5$
 
-        ; Actor Move Relative
-        VM_ACTOR_GET_POS        ACTOR
-        VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    256
-            .R_OPERATOR .ADD
-            .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
-        VM_ACTOR_MOVE_TO        ACTOR
-
-        VM_JUMP                 6$
-2$:
-        ; case 2:
-        VM_IF_CONST .NE         VAR_TEMP_0, 2, 3$, 0
-        ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
-
-        ; Actor Move Relative
-        VM_ACTOR_GET_POS        ACTOR
-        VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    -256
-            .R_OPERATOR .ADD
-            .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
-        VM_ACTOR_MOVE_TO        ACTOR
-
-        VM_JUMP                 6$
-3$:
-        ; case 3:
-        VM_IF_CONST .NE         VAR_TEMP_0, 3, 4$, 0
-        ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
-
-        ; Actor Move Relative
-        VM_ACTOR_GET_POS        ACTOR
-        VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    -256
-            .R_OPERATOR .ADD
-            .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
-        VM_ACTOR_MOVE_TO        ACTOR
-
-        VM_JUMP                 6$
-4$:
-        ; case 4:
-        VM_IF_CONST .NE         VAR_TEMP_0, 4, 5$, 0
-        ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
-
-        ; Actor Move Relative
-        VM_ACTOR_GET_POS        ACTOR
-        VM_RPN
-            .R_REF      ^/(ACTOR + 1)/
-            .R_INT16    256
-            .R_OPERATOR .ADD
-            .R_REF      ^/(ACTOR + 2)/
-            .R_INT16    0
-            .R_OPERATOR .ADD
-            .R_STOP
-        VM_SET                  ^/(ACTOR + 1 - 2)/, .ARG1
-        VM_SET                  ^/(ACTOR + 2 - 2)/, .ARG0
-        VM_POP                  2
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
-        VM_ACTOR_MOVE_TO        ACTOR
-
-        VM_JUMP                 6$
-5$:
-        ; default:
         ; Wait N Frames
-        VM_PUSH_CONST           30
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 30
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
+        VM_JUMP                 6$
+        ; case 1:
+2$:
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 3
+
+        ; Actor Move Relative
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    256
+            .R_OPERATOR .ADD
+            .R_STOP
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
+        VM_POP                  2
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
+
+        VM_JUMP                 6$
+        ; case 2:
+3$:
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 3
+
+        ; Actor Move Relative
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    -256
+            .R_OPERATOR .ADD
+            .R_STOP
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
+        VM_POP                  2
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
+
+        VM_JUMP                 6$
+        ; case 3:
+4$:
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 3
+
+        ; Actor Move Relative
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
+            .R_INT16    -256
+            .R_OPERATOR .ADD
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_STOP
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
+        VM_POP                  2
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
+
+        VM_JUMP                 6$
+        ; case 4:
+5$:
+        ; Actor Set Active
+        VM_SET_CONST            .LOCAL_ACTOR, 3
+
+        ; Actor Move Relative
+        VM_ACTOR_GET_POS        .LOCAL_ACTOR
+        VM_RPN
+            .R_REF      ^/(.LOCAL_ACTOR + 1)/
+            .R_INT16    256
+            .R_OPERATOR .ADD
+            .R_REF      ^/(.LOCAL_ACTOR + 2)/
+            .R_INT16    0
+            .R_OPERATOR .ADD
+            .R_STOP
+        VM_SET                  ^/(.LOCAL_ACTOR + 1 - 2)/, .ARG1
+        VM_SET                  ^/(.LOCAL_ACTOR + 2 - 2)/, .ARG0
+        VM_POP                  2
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_CHECK_COLL
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
+
+        VM_JUMP                 6$
 6$:
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP3_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP3_WAIT_ARGS
 
         VM_JUMP                 1$
         ; Stop Script

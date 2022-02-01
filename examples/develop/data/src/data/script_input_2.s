@@ -8,11 +8,21 @@
 
 ___bank_script_input_2 = 255
 .globl ___bank_script_input_2
-.CURRENT_SCRIPT_BANK == ___bank_script_input_2 
 
 _script_input_2::
 
         VM_RANDOMIZE
+
+; --- VM_LOAD_TILESET/VM_OVERLAY_SET_MAP example -----
+        VM_PUSH_CONST           128
+        VM_LOAD_TILESET         .ARG0, ___bank_background_0, _background_0
+        VM_OVERLAY_SET_MAP      .ARG0, 0, 0, ___bank_background_0, _background_0
+        VM_POP                  1
+
+        VM_OVERLAY_MOVE_TO      0, 0, .OVERLAY_IN_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_BTN_A)/
+        VM_OVERLAY_MOVE_TO      0, 18, .OVERLAY_OUT_SPEED
+        VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW)/
 
 ; --- VM_SWITCH example ------------------------------
         VM_PUSH_CONST           10
@@ -51,7 +61,7 @@ _script_input_2::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
 ; --- VM_CALL_NATIVE example -------------------------
-        VM_CALL_NATIVE          .CURRENT_SCRIPT_BANK, 100$
+        VM_CALL_NATIVE          ___bank_script_input_2, 100$
         VM_JUMP                 101$
 100$:
         ldh a, (0x47) ; BGP

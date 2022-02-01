@@ -8,29 +8,26 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -5
+.LOCAL_TMP2_SAVE_PEEK = -5
 
 ___bank_script_s2_init = 255
 .globl ___bank_script_s2_init
-.CURRENT_SCRIPT_BANK == ___bank_script_s2_init
 
 _script_s2_init::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              5
 
         ; Actor Hide
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_HIDDEN     ACTOR, 1
-        VM_ACTOR_DEACTIVATE     ACTOR
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_HIDDEN     .LOCAL_ACTOR, 1
+        VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Fade In
         VM_SET_CONST_INT8       _fade_frames_per_step, 1
@@ -56,9 +53,9 @@ _script_s2_init::
         ; If Variable True
         VM_IF_CONST .GT         VAR_S2_MENU_CHOICE, 0, 3$, 0
         ; If Variable True
-        VM_PUSH_CONST           0
-        VM_SAVE_PEEK            .ARG0, 0, 0, 0, 0
-        VM_IF_CONST .EQ         .ARG0, 1, 5$, 1
+        VM_SAVE_PEEK            .LOCAL_TMP2_SAVE_PEEK, 0, 0, 0, 0
+        VM_IF_CONST .EQ         .LOCAL_TMP2_SAVE_PEEK, 1, 5$, 0
+
         ; Text Dialogue
         VM_LOAD_TEXT            0
         .asciz "No Save Data\nFound..."
@@ -82,11 +79,11 @@ _script_s2_init::
         ; Load Scene
         VM_SET_CONST_INT8       _fade_frames_per_step, 15
         VM_FADE_OUT             1
-        VM_SET_CONST            ACTOR, 0
-        VM_SET_CONST            ^/(ACTOR + 1)/, 2048
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1664
-        VM_ACTOR_SET_POS        ACTOR
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 2048
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 1664
+        VM_ACTOR_SET_POS        .LOCAL_ACTOR
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_RIGHT
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
             IMPORT_FAR_PTR_DATA _scene_7
 

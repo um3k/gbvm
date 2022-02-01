@@ -5,20 +5,15 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s6a0_interact = 255
 .globl ___bank_script_s6a0_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s6a0_interact
 
 _script_s6a0_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
@@ -41,12 +36,12 @@ _script_s6a0_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Position
-        VM_SET_CONST            ^/(ACTOR + 1)/, 3072
-        VM_SET_CONST            ^/(ACTOR + 2)/, 2304
-        VM_ACTOR_SET_POS        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 3072
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 2304
+        VM_ACTOR_SET_POS        .LOCAL_ACTOR
 
         ; Stop Script
         VM_STOP

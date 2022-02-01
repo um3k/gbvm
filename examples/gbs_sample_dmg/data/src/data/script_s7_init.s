@@ -7,35 +7,31 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -4
 
 ___bank_script_s7_init = 255
 .globl ___bank_script_s7_init
-.CURRENT_SCRIPT_BANK == ___bank_script_s7_init
 
 _script_s7_init::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Actor Hide
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_HIDDEN     ACTOR, 1
-        VM_ACTOR_DEACTIVATE     ACTOR
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_HIDDEN     .LOCAL_ACTOR, 1
+        VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_QUEST1, 0, 1$, 0
         VM_JUMP                 2$
 1$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 1
+        VM_SET_CONST            .LOCAL_ACTOR, 1
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
 2$:
 
@@ -44,10 +40,10 @@ _script_s7_init::
         VM_JUMP                 4$
 3$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
 4$:
 
@@ -56,10 +52,10 @@ _script_s7_init::
         VM_JUMP                 6$
 5$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 3
+        VM_SET_CONST            .LOCAL_ACTOR, 3
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
 6$:
 
@@ -68,10 +64,10 @@ _script_s7_init::
         VM_JUMP                 8$
 7$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 4
+        VM_SET_CONST            .LOCAL_ACTOR, 4
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
 8$:
 
@@ -80,10 +76,10 @@ _script_s7_init::
         VM_JUMP                 10$
 9$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 5
+        VM_SET_CONST            .LOCAL_ACTOR, 5
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
 10$:
 
@@ -92,16 +88,16 @@ _script_s7_init::
         VM_JUMP                 12$
 11$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 6
+        VM_SET_CONST            .LOCAL_ACTOR, 6
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
 12$:
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Fade In
         VM_SET_CONST_INT8       _fade_frames_per_step, 1

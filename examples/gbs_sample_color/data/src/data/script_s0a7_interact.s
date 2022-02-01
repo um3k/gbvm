@@ -5,23 +5,18 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s0a7_interact = 255
 .globl ___bank_script_s0a7_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s0a7_interact
 
 _script_s0a7_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 8
+        VM_SET_CONST            .LOCAL_ACTOR, 8
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

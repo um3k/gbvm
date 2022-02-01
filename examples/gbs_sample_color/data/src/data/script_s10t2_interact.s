@@ -7,32 +7,29 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_CAMERA_SHAKE_ARGS = -4
 
 ___bank_script_s10t2_interact = 255
 .globl ___bank_script_s10t2_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s10t2_interact
 
 _script_s10t2_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 0
+        VM_SET_CONST            .LOCAL_ACTOR, 0
 
         ; Actor Set Position
-        VM_SET_CONST            ^/(ACTOR + 1)/, 12800
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1664
-        VM_ACTOR_SET_POS        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 12800
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 1664
+        VM_ACTOR_SET_POS        .LOCAL_ACTOR
 
         ; Camera Shake
-        VM_PUSH_CONST           6
-        VM_PUSH_CONST           .CAMERA_SHAKE_X
-        VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 2, .ARG1
+        VM_SET_CONST            .LOCAL_TMP1_CAMERA_SHAKE_ARGS, 6
+        VM_SET_CONST            ^/(.LOCAL_TMP1_CAMERA_SHAKE_ARGS + 1)/, .CAMERA_SHAKE_X
+        VM_INVOKE               b_camera_shake_frames, _camera_shake_frames, 0, .LOCAL_TMP1_CAMERA_SHAKE_ARGS
+
         ; Stop Script
         VM_STOP

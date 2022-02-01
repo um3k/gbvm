@@ -5,20 +5,15 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s0a4_interact = 255
 .globl ___bank_script_s0a4_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s0a4_interact
 
 _script_s0a4_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_SEEN_DUCK, 0, 1$, 0
@@ -33,10 +28,10 @@ _script_s0a4_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 5
+        VM_SET_CONST            .LOCAL_ACTOR, 5
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
         VM_JUMP                 2$
 1$:

@@ -7,18 +7,14 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -5
 
 ___bank_script_input_0 = 255
 .globl ___bank_script_input_0
-.CURRENT_SCRIPT_BANK == ___bank_script_input_0
 
 _script_input_0::
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              5
 
         ; Text Dialogue
         VM_LOAD_TEXT            0
@@ -31,20 +27,20 @@ _script_input_0::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 0
+        VM_SET_CONST            .LOCAL_ACTOR, 0
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
         ; Wait N Frames
-        VM_PUSH_CONST           30
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 30
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 0
+        VM_SET_CONST            .LOCAL_ACTOR, 0
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_RIGHT
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_RIGHT
 
         ; Stop Script
         VM_STOP

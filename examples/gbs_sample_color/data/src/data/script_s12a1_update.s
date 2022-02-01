@@ -7,109 +7,113 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -5
+.LOCAL_TMP2_WAIT_ARGS = -5
+.LOCAL_TMP3_WAIT_ARGS = -5
+.LOCAL_TMP4_WAIT_ARGS = -5
+.LOCAL_TMP5_WAIT_ARGS = -5
+.LOCAL_TMP6_WAIT_ARGS = -5
+.LOCAL_TMP7_WAIT_ARGS = -5
+.LOCAL_TMP8_WAIT_ARGS = -5
+.LOCAL_TMP9_WAIT_ARGS = -13
 
 ___bank_script_s12a1_update = 255
 .globl ___bank_script_s12a1_update
-.CURRENT_SCRIPT_BANK == ___bank_script_s12a1_update
 
 _script_s12a1_update::
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              13
 
 1$:
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Move To
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1024
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1536
-        VM_SET_CONST            ^/(ACTOR + 3)/, 0
-        VM_ACTOR_MOVE_TO        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1024
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 1536
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, 0
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP2_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP2_WAIT_ARGS
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Move To
-        VM_SET_CONST            ^/(ACTOR + 1)/, 768
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1536
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
-        VM_ACTOR_MOVE_TO        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 768
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 1536
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP3_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP3_WAIT_ARGS
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP4_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP4_WAIT_ARGS
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Move To
-        VM_SET_CONST            ^/(ACTOR + 1)/, 512
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1280
-        VM_SET_CONST            ^/(ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
-        VM_ACTOR_MOVE_TO        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 512
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 1280
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, .ACTOR_ATTR_H_FIRST
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Set Direction
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_UP
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_UP
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP5_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP5_WAIT_ARGS
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP6_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP6_WAIT_ARGS
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP7_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP7_WAIT_ARGS
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP8_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP8_WAIT_ARGS
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 2
+        VM_SET_CONST            .LOCAL_ACTOR, 2
 
         ; Actor Move To
-        VM_SET_CONST            ^/(ACTOR + 1)/, 1024
-        VM_SET_CONST            ^/(ACTOR + 2)/, 1536
-        VM_SET_CONST            ^/(ACTOR + 3)/, 0
-        VM_ACTOR_MOVE_TO        ACTOR
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 1024
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 1536
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 3)/, 0
+        VM_ACTOR_MOVE_TO        .LOCAL_ACTOR
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP9_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP9_WAIT_ARGS
 
         VM_JUMP                 1$
         ; Stop Script

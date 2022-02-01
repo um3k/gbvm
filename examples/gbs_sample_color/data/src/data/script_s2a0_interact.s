@@ -5,20 +5,15 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
 
 ___bank_script_s2a0_interact = 255
 .globl ___bank_script_s2a0_interact
-.CURRENT_SCRIPT_BANK == ___bank_script_s2a0_interact
 
 _script_s2a0_interact::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              4
 
         ; If Variable True
         VM_IF_CONST .GT         VAR_USED_RADIO, 0, 1$, 0
@@ -45,7 +40,7 @@ _script_s2a0_interact::
         VM_OVERLAY_WAIT         .UI_MODAL, ^/(.UI_WAIT_WINDOW | .UI_WAIT_TEXT)/
 
         ; Actor Set Active
-        VM_SET_CONST            ACTOR, 1
+        VM_SET_CONST            .LOCAL_ACTOR, 1
 
         ; Text Dialogue
         VM_LOAD_TEXT            0

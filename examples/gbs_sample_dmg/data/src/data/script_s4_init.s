@@ -8,32 +8,30 @@
 
 .area _CODE_255
 
-ACTOR = -4
+.LOCAL_ACTOR = -4
+.LOCAL_TMP1_WAIT_ARGS = -5
+.LOCAL_TMP2_WAIT_ARGS = -5
+.LOCAL_TMP3_WAIT_ARGS = -5
 
 ___bank_script_s4_init = 255
 .globl ___bank_script_s4_init
-.CURRENT_SCRIPT_BANK == ___bank_script_s4_init
 
 _script_s4_init::
         VM_LOCK
 
-        ; Local Actor
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
-        VM_PUSH_CONST           0
+        VM_RESERVE              5
 
         ; Actor Hide
-        VM_SET_CONST            ACTOR, 0
-        VM_ACTOR_SET_HIDDEN     ACTOR, 1
-        VM_ACTOR_DEACTIVATE     ACTOR
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_ACTOR_SET_HIDDEN     .LOCAL_ACTOR, 1
+        VM_ACTOR_DEACTIVATE     .LOCAL_ACTOR
 
         ; Overlay Show
         VM_OVERLAY_SHOW         0, 0, 0, 0
 
-        ; Wait 1 Frame
-        VM_PUSH_CONST           1
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        ; Wait N Frames
+        VM_SET_CONST            .LOCAL_TMP1_WAIT_ARGS, 1
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP1_WAIT_ARGS
 
         ; Fade In
         VM_SET_CONST_INT8       _fade_frames_per_step, 1
@@ -44,21 +42,21 @@ _script_s4_init::
         VM_OVERLAY_WAIT         .UI_MODAL, .UI_WAIT_WINDOW
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP2_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP2_WAIT_ARGS
 
         ; Wait N Frames
-        VM_PUSH_CONST           60
-        VM_INVOKE               b_wait_frames, _wait_frames, 1, .ARG0
+        VM_SET_CONST            .LOCAL_TMP3_WAIT_ARGS, 60
+        VM_INVOKE               b_wait_frames, _wait_frames, 0, .LOCAL_TMP3_WAIT_ARGS
 
         ; Load Scene
         VM_SET_CONST_INT8       _fade_frames_per_step, 3
         VM_FADE_OUT             1
-        VM_SET_CONST            ACTOR, 0
-        VM_SET_CONST            ^/(ACTOR + 1)/, 0
-        VM_SET_CONST            ^/(ACTOR + 2)/, 0
-        VM_ACTOR_SET_POS        ACTOR
-        VM_ACTOR_SET_DIR        ACTOR, .DIR_DOWN
+        VM_SET_CONST            .LOCAL_ACTOR, 0
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 1)/, 0
+        VM_SET_CONST            ^/(.LOCAL_ACTOR + 2)/, 0
+        VM_ACTOR_SET_POS        .LOCAL_ACTOR
+        VM_ACTOR_SET_DIR        .LOCAL_ACTOR, .DIR_DOWN
         VM_RAISE                EXCEPTION_CHANGE_SCENE, 3
             IMPORT_FAR_PTR_DATA _scene_5
 
