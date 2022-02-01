@@ -204,7 +204,7 @@ void vm_actor_move_to(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
     return;
 }
 
-void vm_actor_interrupt_movement(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
+void vm_actor_move_cancel(SCRIPT_CTX * THIS, INT16 idx) OLDCALL BANKED {
     UBYTE * n_actor = VM_REF_TO_PTR(idx);
     actor_t * actor = actors + *n_actor;
 
